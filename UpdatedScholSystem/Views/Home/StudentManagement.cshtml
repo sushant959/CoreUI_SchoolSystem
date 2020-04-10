@@ -5,48 +5,91 @@
 }
 
 <div id="StudentDashboard" @*style="border: 1px solid silver; padding:20px"*@>
-        <a href="/Home/StudentForm" class="btn btn-success">Add New Student</a>
-    <hr/>
-    <div id="divStudentReport">
-                <h4 id="reportname">List of all student </h4>
-        <div class="flexContainer" style="justify-content:center">
-            <div style="text-align:center;">
+         <a href="/Home/StudentForm" class="btn pull-right btn-default"> + Add New Student</a>
+   
+         <div id="divStudentReport">
+             <h4 class="clearfix" id="reportname">List of all student </h4>
+             <div class="row">
+                 <div class="col-sm-2">
+                     <div class="input-group mt-2">
+                         <div class="input-group-prepend">
+                             <label class="input-group-text" style="width:50px">Batch</label>
+                         </div>
+                         <select id="searchBatch" class="form-control"></select>
 
-                <div class="flexContainer" style="margin-left:25px;">
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">Batch</label>
-                        <select id="searchBatch" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">Class</label>
-                        <select id="searchClass" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">Section</label>
-                        <select id="searchSection" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">FirstName</label>
-                        <input type="text" class="form-control" id="txtnamefield" placeholder="" />
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">Status</label>
-                        <select id="searchStatus" class="form-control" style="width:auto">
-                            <option value="">select</option>
-                            <option value="Active">Active</option>
-                            <option value="NotActive">Not-Active</option>
-                        </select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label class="fieldname">Type</label>
-                        <select id="searchType" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none;">
-                        <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
-                    </div>
-                </div>
-            </div>
-        </div><br/>
+                     </div>
+                 </div>
+                 <div class="col-sm-2">
+                     <div class="input-group mt-2">
+                         <div class="input-group-prepend">
+                             <label class="input-group-text" style="width:50px">Class</label>
+                         </div>
+                         <select id="searchClass" class="form-control"></select>
+
+                     </div>
+                 </div>
+                 <div class="col-sm-2">
+                     <div class="input-group mt-2">
+                         <div class="input-group-prepend">
+                             <label class="input-group-text" style="width:60px">Section</label>
+                         </div>
+                         <select id="searchSection" class="form-control"></select>
+
+                     </div>
+                 </div>
+                 <div class="col-sm-2">
+                     <div class="input-group mt-2">
+                         <div class="input-group-prepend">
+                             <label class="input-group-text" style="width:50px">Name</label>
+                         </div>
+                         <input type="text" class="form-control" id="txtnamefield" placeholder="" />
+
+                     </div>
+                 </div>
+                 <div class="col-sm-2">
+                     <div class="input-group mt-2">
+                         <div class="input-group-prepend">
+                             <label class="input-group-text" style="width:50px">Type</label>
+                         </div>
+                         <select id="searchType" class="form-control"></select>
+
+                     </div>
+                 </div>
+
+                 <div class="col-sm-1">
+                     <button class="btn btn-warning btn-block" style="margin-top:5px;" id="btnSearch" type="submit" data-name="">Search</button>
+                 </div>
+
+                 @*<div style="flex:none; text-align:center; min-width:120px">
+            <label class="fieldname">Class</label>
+            <select id="searchClass" class="form-control" style="width:auto"></select>
+        </div>&nbsp;&nbsp;
+        <div style="flex:none; text-align:center; min-width:120px">
+            <label class="fieldname">Section</label>
+            <select id="searchSection" class="form-control" style="width:auto"></select>
+        </div>&nbsp;&nbsp;
+        <div style="flex:none; text-align:center; min-width:120px">
+            <label class="fieldname">FirstName</label>
+            <input type="text" class="form-control" id="txtnamefield" placeholder="" />
+        </div>&nbsp;&nbsp;
+        <div style="flex:none; text-align:center; min-width:120px">
+            <label class="fieldname">Status</label>
+            <select id="searchStatus" class="form-control" style="width:auto">
+                <option value="">select</option>
+                <option value="Active">Active</option>
+                <option value="NotActive">Not-Active</option>
+            </select>
+        </div>&nbsp;&nbsp;
+        <div style="flex:none; text-align:center; min-width:120px">
+            <label class="fieldname">Type</label>
+            <select id="searchType" class="form-control" style="width:auto"></select>
+        </div>&nbsp;&nbsp;
+        <div style="flex:none;">
+            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
+        </div>*@
+
+
+             </div><br/>
        
         <div class="row">
             <div class="col-sm-12">
@@ -241,7 +284,7 @@
                     'title': 'Action',
                     'data': 'Action',
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='/Home/EditStudentDetails/" + row.StudentId + "' title='edit'> <img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='deleteStudent(\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.Class + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='/Home/ViewStudentDetails/" + row.StudentId + "' title='view'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a></div>";
+                        return "<div style='display:flex'><a href='/Home/EditStudentDetails/" + row.StudentId + "' title='edit'><i class='fa fa-edit fa-lg'></i></a>&nbsp;<a href='#' onclick='deleteStudent(\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.Class + "\")' title='delete'><i class='fa fa-trash fa-lg'></i></a>&nbsp;<a href='/Home/ViewStudentDetails/" + row.StudentId + "' title='view'><i class='fa fa-info-circle fa-lg'></i></a></div>";
                     },
                     'sortable': false,
                 },
@@ -419,10 +462,9 @@
         var _class =$("#searchClass").val();
         var section = $("#searchSection").val();
         var name = $("#txtnamefield").val();
-        var status = $("#searchStatus").val();
         var type = $("#searchType").val();
         debugger;
-        if (batch == '' && _class == '' && section == '' && name == '' && status == '' && type == '') {
+        if (batch == '' && _class == '' && section == '' && name == '' && type == '') {
            // ShowDownloadReportLink();
             loadData();
             return;
@@ -437,7 +479,6 @@
                     Class: _class,
                     Section: section,
                     Name: name,
-                    Status: status,
                     Type: type,
                     CompanyId:@Session["CompanyId"],
                 },

@@ -1,47 +1,50 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    margin-top:30px;
-    padding-left: 30px;
+    padding-left: 15px;
     padding-right: 15px;
 }
-.flexContainer {
-    display: flex;
-    align-items: center;
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
 }
 
-.modal-dialog {
-    padding-top: 50px;
-    width: 700px !important;
-    margin: auto;
+.form-control {
+    min-width: 50px
 }
 
-.bordered-table {
-    width: 100%;
+label {
+    font-weight: 600
 }
 
-    .bordered-table td,
-    .bordered-table th {
-        border: 1px solid #dddddd;
-        padding: 3px;
-        height: auto;
-        width: auto;
+.header-text {
+    color: blueviolet
+}
+
+.btn-default {
+    background-color: blueviolet !important;
+    color: white !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius: 20px !important;
+}
+
+    .btn-default:hover {
+        background-color: indigo !important;
     }
 
-    .bordered-table th {
-        padding: 5px;
-        text-align: center;
-    }
-
-.radio-label {
-    font-weight: lighter;
+a {
+    color: blueviolet !important;
 }
 
-.flexContainer {
-    display: flex;
-    align-items: center;
+    a:hover {
+        color: indigo !important;
+    }
+
+.sidebar a {
+    color: white !important;
 }

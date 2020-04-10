@@ -29,7 +29,7 @@
     <h4 id="totalStudent" class="h4style"></h4>
     <br />
     <h4 class="h4style">Total Student by:</h4>
-    <div id="divSummary" class="row" style="margin-left:-70px;">
+    <div id="divSummary" class="row" style="margin-right:20px;">
 
     </div><br />
     <h4 class="h4style">Payment Details By Month:</h4>
@@ -217,7 +217,7 @@
                     $('#divSummaryContainer').show();
                     $("#divSummary").html("");
                     for (var r in res.aggTotal) {
-                        $("#divSummary").append(`<div class="col-md-4" id="divSummary${r}"></div >`);
+                        $("#divSummary").append(`<div class="col-sm-4" id="divSummary${r}"></div >`);
                         drawPieChart(result[r], Object.keys(result[r][0])[0], `divSummary${r}`);
                     }
 

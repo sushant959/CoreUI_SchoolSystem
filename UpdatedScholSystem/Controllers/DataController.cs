@@ -5604,10 +5604,9 @@ namespace UpdatedScholSystem.Controllers
             var Class = data["Class"];
             var Section = data["Section"];
             var Name = data["Name"];
-            var Status = data["Status"];
             var Type = data["Type"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var result = StudentDBServices.Instance.GetSearchedStudent(Batch, Class, Section, Name,Status,Type,CompanyId);
+            var result = StudentDBServices.Instance.GetSearchedStudent(Batch, Class, Section, Name,Type,CompanyId);
             //
            
             //var filename = Utilities.ExportToPdf(result, title);

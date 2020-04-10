@@ -496,7 +496,7 @@ namespace UpdatedScholSystem.Service
             conn.Dispose();
             return dt;
         }
-        public DataTable GetSearchedStudent(string Batch,string Class,string Section,string Name,string Status,string Type,int CompanyId)
+        public DataTable GetSearchedStudent(string Batch,string Class,string Section,string Name,string Type,int CompanyId)
         {
            
             DataTable dt = new DataTable();
@@ -508,7 +508,6 @@ namespace UpdatedScholSystem.Service
                 cmd.Parameters.AddWithValue("@_Class", Class);
                 cmd.Parameters.AddWithValue("@_Section", Section);
                 cmd.Parameters.AddWithValue("@_FirstName", Name);
-                cmd.Parameters.AddWithValue("@_Status", Status);
                 cmd.Parameters.AddWithValue("@_Type", Type);
                 cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);
                 adap.SelectCommand = cmd;
