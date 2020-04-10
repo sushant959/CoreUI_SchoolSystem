@@ -1,0 +1,519 @@
+﻿
+@{
+    ViewBag.Title = "TransportationManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="StartPoint" data-text="Start Place details" autocomplete="off" checked>Start Place
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="TransportationDetails" data-text="Transportation details" autocomplete="off" />Transportation
+    </label>
+</div>
+<br /><br />
+      <div id="divstartpoint">
+          <div class="row">
+              <div class="col-sm-3">
+                  <h4 id="batchname"></h4>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                      <h4 id="titlestartpoint" style="color:orangered"></h4>
+                      <table id="tblStartPoint" class="table table-bordered table-striped" style="width:100%"></table>
+              </div>
+          </div>
+      </div>
+<div id="divStartPlaceDetails">
+    <br />
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Start Place</h4>
+            <form id="formStartPoint" class="well well-sm">
+                <div class="flexContainer">
+                <input type="hidden" name="PlaceId" />
+                <input type="hidden" name="CompanyId" />
+                    <label style="flex:1">Start Place :&nbsp;</label>
+                    <input type="text" class="form-control" name="Place" style="flex:1.5" required />&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartPoint">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="divTransportationDetails">
+    <br />
+    <div class="col-md-11">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Transportation Fee</h4>
+            <form id="formtransportation" class="well well-sm">
+                <div class="flexContainer">
+                    <div style="flex:none; text-align:center">
+                        <label>Place</label>
+                        <input type="hidden" name="TransportationId" value="" />
+                        <input type="hidden" name="CompanyId" />
+                        <div class="flexContainer">
+                            <input type="text" id="placefrom" class="form-control" placeholder="start" style="max-width:120px;" required readonly/>↔
+                            <input type="text" name="PlaceTo" class="form-control" placeholder="destination" style="max-width:120px;" required />
+                        </div>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center">
+                        <label>Distance(In Km)</label>
+                        <div class="flexContainer">
+                            <input type="text" name="DistaneFrom" class="form-control" placeholder="From(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                            <input type="text" name="DistanceTo" class="form-control" placeholder="To(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                        </div>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    <div style="flex:none; text-align:center">
+                        <label>Amount</label>
+                        <div class="flexContainer">
+                            <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                            <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                        </div>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" id="btnSaveTransportationDetails">Add</button>
+                </div>
+
+            </form>
+        </div><br />
+    </div>
+    <div class="col-md-12">
+        <div id="transportationDetails" style="width:100%;overflow:auto;">
+            <h4 id="titlename" style="color:orangered"></h4>
+            <table id="tblTransportationDetails" class="table table-bordered table-striped" style="width:100%"></table>
+        </div><br /><br />
+    </div>
+</div>
+
+<div id="modalEditTransport" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm" style="width:900px!important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Transport Fee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalTransportDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <div style="flex:none; text-align:center">
+                                <label>Place</label>
+                                <input type="hidden" name="TransportationId" value="" />
+                                <input type="hidden" name="CompanyId" />
+                                <div class="flexContainer">
+                                    <input type="text" name="PlaceFrom" class="form-control" placeholder="start" style="max-width:120px;" readonly required />↔
+                                    <input type="text" name="PlaceTo" class="form-control" placeholder="destination" style="max-width:120px;" readonly required />
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div style="flex:none; text-align:center">
+                                <label>Distance(In Km)</label>
+                                <div class="flexContainer">
+                                    <input type="text" name="DistaneFrom" class="form-control" placeholder="From(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                                    <input type="text" name="DistanceTo" class="form-control" placeholder="To(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div style="flex:none; text-align:center">
+                                <label>Amount</label>
+                                <div class="flexContainer">
+                                    <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                                    <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalTransport">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditStartPoint" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Start Point</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStartPoint" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="PlaceId" />
+                            <input type="hidden" name="CompanyId" />
+                            <label style="flex:1">Start Place :&nbsp;</label>
+                            <input type="text" class="form-control" name="Place" style="flex:1.5" required />&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnModalSaveStartPoint">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        debugger;
+        hideAll();
+        loadData(listType);
+    })
+    $("input[name ='Tab']").on('change', function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        var titlename = $("input[name='Tab']:checked").data('text');
+        debugger;
+        hideAll();
+        loadData(listType);
+    })
+
+    $("#btnSaveStartPoint").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formStartPoint").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.Place == '') return;
+        $.ajax({
+            url: "/api/PostStartPoint",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("#formStartPoint").find("input[type=text],input[type=hidden]").val("");
+                loadData("StartPoint");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnModalSaveStartPoint").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formModalStartPoint").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.Place == '') return;
+        $.ajax({
+            url: "/api/PostStartPoint",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("#modalEditStartPoint").modal('hide');
+                loadData("StartPoint");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveTransportationDetails").on('click', function (e) {
+        e.preventDefault();
+        $("#oneway").attr('disabled', false);
+        $("#twoway").attr('disabled', false);
+        var fd = $("#formtransportation").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.PlaceTo == '' || fd.DistanceFrom == '' || fd.DistanceTo == '' || fd.OneWayAmount == '' || fd.TwoWayAmount == '') return;
+
+        $.ajax({
+            url: "/api/PostTransportDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#formtransportation").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+                loadData("TransportationDetails");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalTransport").on('click', function () {
+        debugger;
+        var fd = $("#formModalTransportDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.DistanceFrom == '' || fd.DistanceTo == '' || fd.OneWayAmount == '' || fd.TwoWayAmount == '') return;
+
+        $.ajax({
+            url: "/api/PostTransportDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modalEditTransport").modal('hide');
+                $("#formModalTransportDetails").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+                loadData("TransportationDetails");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var loadData = function (urlName) {
+        debugger;
+        $.ajax({
+            url: "/api/GetAllTransportInfo",
+            method: "Get",
+            data: {
+                urlName: urlName.toLowerCase(),
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == 0 && urlName == "StartPoint") {
+                    hideAll();
+                    $("#divStartPlaceDetails").show();
+                }
+                else if (urlName == "StartPoint") {
+                    hideAll();
+                    $("#divstartpoint").show();
+                    showStartPoint(result);
+                }
+                else if (urlName == "TransportationDetails") {
+                    hideAll();
+                    $("#divTransportationDetails").show();
+                    $.ajax({
+                        url: "/api/GetAllTransportInfo",
+                        method: "Get",
+                        data: {
+                            urlName: "startpoint",
+                            CompanyId:@Session["CompanyId"],
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            if (result != 0) {
+                                $("#placefrom").val(result[0]["Place"]);
+                            }
+                            else {
+                                $("#placefrom").val('');
+                            }
+                        },
+                        error: function (e) {
+
+                        }
+                    })
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showStartPoint = function (result) {
+        debugger;
+        $("#tblStartPoint").dataTable({
+            data: result,
+            'destroy': true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "searching":false,
+            columns: [
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'StartPoint',
+                    'data': 'Place'
+                },
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editStartPoint(\"" + row.PlaceId + "\",\"" + row.Place + "\")'>Edit</a></div>";
+                    }
+                },
+               
+            ]
+        });
+        debugger;
+        $("#titlestartpoint").html("Bus Start Point");
+    }
+
+    var showResultData = function (result) {
+        debugger;
+
+
+        $("#tblTransportationDetails").dataTable({
+            data: result,
+            'destroy': true,
+                
+            columns: [
+
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editTransportDetails(\"" + row.TransportationId + "\",\"" + row.PlaceTo + "\",\"" + row.DistanceFrom + "\",\"" + row.DistanceTo + "\",\"" + row.OneWayAmount + "\",\"" + row.TwoWayAmount + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteTransportDetails(\"" + row.TransportationId + "\",\"" + row.PlaceTo + "\",\"" + row.DistanceFrom + "\",\"" + row.DistanceTo + "\",\"" + row.OneWayAmount + "\",\"" + row.TwoWayAmount + "\")'>Delete</a></div>";
+                    }
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'PlaceTo',
+                    'data': 'PlaceTo'
+                },
+                {
+                    'title': 'DistanceFrom',
+                    'data': 'DistanceFrom'
+                },
+                {
+                    'title': 'DistanceTo',
+                    'data': 'DistanceTo'
+                },
+                {
+                    'title': 'Amount(oneway)',
+                    'data': 'OneWayAmount'
+                },
+                {
+                    'title': 'Amount(twoway)',
+                    'data': 'TwoWayAmount'
+                },
+
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Transport Details");
+    }
+
+    function editTransportDetails(id,placeto, distancefrom, distanceto, oneway, twoway) {
+        debugger;
+        $("#modalEditTransport").modal('show');
+        $("#modalEditTransport [name='TransportationId']").val(id);
+        $("#modalEditTransport [name='PlaceTo']").val(placeto);
+        $("#modalEditTransport [name='DistaneFrom']").val(distancefrom);
+        $("#modalEditTransport [name='DistanceTo']").val(distanceto);
+        $("#modalEditTransport [name='OneWayAmount']").val(oneway);
+        $("#modalEditTransport [name='TwoWayAmount']").val(twoway);
+        $.ajax({
+            url: "/api/GetStartingPoint",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                $("#modalEditTransport [name='PlaceFrom']").val(result[0]["Place"]);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    function editStartPoint(id, place) {
+        $("#modalEditStartPoint").modal('show');
+        $("#modalEditStartPoint [name='PlaceId']").val(id);
+        $("#modalEditStartPoint [name='Place']").val(place);
+    }
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    var deleteTransportDetails = function (id,placeto, distancefrom, distanceto, oneway, twoway) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Confirm");
+        $('#modalDelete .modal-body').html("Do You want to delete Transport details of:<br/><br/>Place To:<b> " + placeto + "</b><br/> One Way Amount:<b>" + oneway + "</b><br/>Two Way Amount:<b>" + twoway + "<b> ?");
+
+        $('#btnDeleteModal').data('id', id);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "/api/DeleteTransportDetails",
+            method: "POST",
+            data: {
+                Id:id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                loadData("TransportationDetails");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var hideAll = function () {
+        $("#divstartpoint").hide();
+        $("#divStartPlaceDetails").hide();
+        $("#divTransportationDetails").hide();
+    }
+</script>
+

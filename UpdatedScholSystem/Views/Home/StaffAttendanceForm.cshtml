@@ -1,0 +1,383 @@
+﻿
+@{
+    ViewBag.Title = "StaffAttendanceForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" id="divStaffInfo">
+    <div class="col-sm-12">
+        <div class="panel panel-default" style="background-color:floralwhite !important;">
+            <div class="panel-heading" id="titleStaffAttendanceForm" style="background-color:aqua">Staff Attendance Form</div>
+            <div class="panel-body" style="background-color:transparent">
+                <form id="formStaffAttendance">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" />
+                        <label style="flex:1.3">Date:&nbsp;&nbsp;</label>
+                        <input type="text" name="Date" class="form-control nepali-calendar" id="txtdatefield" placeholder="साल-महिना-गते" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Batch :&nbsp;</label>
+                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1.3">Department:&nbsp;&nbsp;</label>
+                        <select id="department" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Designation :&nbsp;</label>
+                        <select id="designation" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div id="tblStaffList" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                    </div><br />
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
+                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.nepali-calendar').nepaliDatePicker();
+        getClassBatchFaculty();
+        getDepartment();
+    })
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                //if (classDetails != undefined) {
+                //    debugger;
+                //    var v = "<option value=''>--Select--</option>";
+                //    for (var i in classDetails) {
+                //        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                //    }
+                //    $(".class").html(v);
+                //    $("#searchClass").html(v);
+                //}
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#batch").html(v);
+                }
+               
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getDepartment = function () {
+        $.ajax({
+            url: "/api/GetAllDesignation",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var department = result[0];
+                var designation = result[1];
+                if (department != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in department) {
+                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                    }
+                    $("#department").html(v);
+                }
+                if (designation != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in designation) {
+                        v += "<option value=" + designation[i]['Designation'] + ">" + designation[i]['Designation'] + "</option>";
+                    }
+                    $("#designation").html(v);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#txtdatefield").on('click', function (e) {
+        e.preventDefault();
+        $("#batch").val('');
+        $("#department").val('');
+        $("#designation").val('');
+        $("#tblStaffList").html("");
+    })
+
+    $("#batch").on('change', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#batch").val();
+        var date = $("#txtdatefield").val();
+        $("#department").attr('disabled', false);
+        $("#designation").attr('disabled', true);
+        $("#department").val('');
+        $("#designation").val('');
+        $("#tblStaffList").html("");
+        staffListByBatch(batch, date);
+    })
+    $("#department").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        $("#designation").attr('disabled', false);
+        $("#designation").val('');
+        var batch = $("#batch").val();
+        var department = $("#department").val();
+        var date = $("#txtdatefield").val();
+        $("#tblStaffList").html("");
+        staffListByDepartment(batch,department, date);
+    })
+
+    $("#designation").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        var batch = $("#batch").val();
+        var department = $("#department").val();
+        var designation = $("#designation").val();
+        var date = $("#txtdatefield").val();
+        $("#tblStaffList").html("");
+        staffListByDesignation(batch,department,designation, date);
+    })
+
+
+    var staffListByBatch = function (batch, date) {
+        debugger;
+        $.ajax({
+            url: "/api/GetStaffListByBatch",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Date: date,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                var html = `<table class="bordered-table table-striped">`;
+                html += `<thead><th>Teacher Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
+                html += ` <tbody class='rowTable'>`;
+
+                for (var r in result) {
+                    html += `<tr>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
+                                <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
+                                <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
+                            </select></td>`;
+                    html += `</tr>`;
+                    i++;
+                }
+                html += `</tbody>`;
+                html += `</table>`;
+                html += `<br/>`;
+                $("#tblStaffList").append(html);
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+
+    var staffListByDepartment = function (batch,department, date) {
+        $.ajax({
+            url: "/api/GetStaffListByDepartment",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Department: department,
+                Date: date,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                var html = `<table class="bordered-table table-striped">`;
+                html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
+                html += ` <tbody class='rowTable'>`;
+
+                for (var r in result) {
+                    html += `<tr>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
+                                <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
+                                <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
+                            </select></td>`;
+                    html += `</tr>`;
+                    i++;
+                }
+                html += `</tbody>`;
+                html += `</table>`;
+                html += `<br/>`;
+                $("#tblStaffList").append(html);
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var staffListByDesignation = function (batch,department,designation, date) {
+        $.ajax({
+            url: "/api/GetStaffListByDesignation",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Department: department,
+                Designation: designation,
+                Date: date,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                var html = `<table class="bordered-table table-striped">`;
+                html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
+                html += ` <tbody class='rowTable'>`;
+
+                for (var r in result) {
+                    html += `<tr>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
+                                <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
+                                <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
+                            </select></td>`;
+                    html += `</tr>`;
+                    i++;
+                }
+                html += `</tbody>`;
+                html += `</table>`;
+                html += `<br/>`;
+                $("#tblStaffList").append(html);
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#btnsubmit").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("form").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.Batch == '' || fd.Date == '') {
+            alert("Please select batch and Date");
+            return;
+        }
+        $.ajax({
+            url: "/api/PostStaffAttendance",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html(" Successful.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    $("form").find("input[type=text],select").val("");
+                    location.href = "/Home/StaffAttendance";
+                })
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    var cancel = function () {
+        debugger;
+
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+
+    }
+
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        location.href = "/Home/StaffAttendance";
+    });
+</script>

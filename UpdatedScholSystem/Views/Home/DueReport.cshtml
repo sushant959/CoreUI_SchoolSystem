@@ -1,0 +1,815 @@
+﻿
+@{
+    ViewBag.Title = "DueReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="DueReport" data-text="Due Report" autocomplete="off" checked>Due Report
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="FollowUp" data-text="Follow Up" autocomplete="off" />Follow Up
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ExpectedPayment" data-text="Expected Payment Date" autocomplete="off" />Expected Payment Date
+    </label>
+</div><br /><br />
+            <div id="divDueReport">
+                        <h4 class="titlename">List of Due Report</h4>
+                <div class="flexContainer" style="justify-content:center">
+                    <div style="text-align:center;">
+                        <div class="flexContainer" style="margin-left:10px;">
+                            <div style="flex:none; text-align:center; min-width:120px">
+                                <label>Batch</label>
+                                <select id="searchBatch" class="form-control" style="width:auto"></select>
+                            </div>&nbsp;&nbsp;
+                            <div style="flex:none; text-align:center; min-width:120px">
+                                <label>Class</label>
+                                <select id="searchClass" class="form-control" style="width:auto"></select>
+                            </div>&nbsp;&nbsp;
+
+                            <div style="flex:none; text-align:center; min-width:120px">
+                                <label>Month</label>
+                                <select id="searchMonth" class="form-control" style="width:auto">
+                                    <option value="">---select--</option>
+                                    <option value="01">Baisakh</option>
+                                    <option value="02">Jesth</option>
+                                    <option value="03">Asar</option>
+                                    <option value="04">Sawan</option>
+                                    <option value="05">Bhadau</option>
+                                    <option value="06">Aaswin</option>
+                                    <option value="07">Kartik</option>
+                                    <option value="08">Mangsir</option>
+                                    <option value="09">Push</option>
+                                    <option value="10">Magh</option>
+                                    <option value="11">Falgun</option>
+                                    <option value="12">Chait</option>
+                                </select>
+                            </div>&nbsp;&nbsp;
+                            <div style="flex:none; text-align:center; min-width:120px;margin-top:20px">
+                                <label>StudentId&nbsp;</label>
+                                <input type="text" class="form-control" name="StudentId" style="flex:auto;" id="searchStudentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>&nbsp;&nbsp;
+                            <div style="flex:none;">
+                                <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDueReport" type="submit" data-name="">Search</button>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-success pull-right" id="generatePdf">Generate PDF</button>
+                        <button class="btn btn-success pull-right" id="generatePdfInline" style="margin-right:20px;">Generate PDF1</button>
+
+                    </div>
+                </div><br/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="width:100%;overflow:auto;" id="divDue">
+                            <table id="tblDueReport" class="table table-bordered table-striped">
+                                @*<thead></thead>*@
+                            </table>
+                        </div>
+                        <div style="width:100%;overflow:auto;" id="divDue1">
+                            <table id="tblDueReport1" class="table table-bordered table-striped">
+                                @*<thead></thead>*@
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div id="divFollowUp">
+    
+            <h4 id="reportname">List of Follow Up </h4>
+    <div class="flexContainer form-inline" style="justify-content:center">
+        <div style="text-align:center;">
+            <label>FollowUp Date:&nbsp;</label>
+            <input type="date" class="form-control" id="followup1" />&nbsp;&nbsp;
+            <input type="date" class="form-control" id="followup2" />&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn btn-success" value="Search" id="btnSearch" />
+            @*<button class="btn btn-warning" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>*@
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-3">
+        </div>
+
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
+            <table id="tblFollowUp" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>
+     </div>
+</div>
+
+<div id="divExpectedPayment">
+            <h4 id="reportname">List of Expected Payment Date </h4>
+    <div class="flexContainer form-inline" style="justify-content:center">
+        <div style="text-align:center;">
+            <label>Expected Date:&nbsp;</label>
+            <input type="date" class="form-control" id="expected1" />&nbsp;&nbsp;to
+            <input type="date" class="form-control" id="expected2" />&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" class="btn btn-success" value="Search" id="btnSearchexpected" />
+            @*<button class="btn btn-warning" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>*@
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
+            <table id="tblExpectedPayment" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>
+    </div>
+</div>
+
+<div id="modalResponse" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Add Response</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalResponse" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="CompanyId" />
+                            <label style="flex:1.5">StudentId:&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentId" style="flex:2" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="width:119px;">Batch:&nbsp;</label>
+                            <input type="text" class="form-control" name="Batch" style="width:184px;" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        
+                        <div class="flexContainer">
+                            <label style="flex:1.5">FollowUp Date :&nbsp;</label>
+                            <input type="date" name="FollowUpDate" style="flex:2" class="form-control" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Expected Date :&nbsp;</label>
+                            <input type="date" name="ExpectedDate" style="flex:2" class="form-control" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                              <div class="flexContainer">
+                                  <label style="width:117px;">Response:&nbsp;</label>
+                                  <input type="text" list="responsetext" style="flex:2" class="form-control" name="Response" />
+                                  <datalist id="responsetext">
+                                     
+                                  </datalist>
+                                  @*<select class="form-control" name="Response" style="flex:2" id="responsetext" required></select>*@
+                              </div><br />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnModalResponse">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDetails" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Due Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="" class="well well-sm">
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Student Id:&nbsp;</label>
+                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
+                            <label style="flex:1.2">Name:&nbsp;</label>
+                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
+
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="width:117px;">Session:&nbsp;</label>
+                            <span id="showsession" style="width:194px;"></span>&nbsp;&nbsp;
+                        </div><br />
+                        <h5>List of Due Details</h5>
+                        <div id="tblShowDetails" style="width:100%;overflow:auto;">
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        debugger;
+        hideAll();
+        getClassBatchFaculty();
+    })
+    var loadData = function (urlName) {
+        debugger;
+        $.ajax({
+            url: "/api/GetDueInformation",
+            method: "Get",
+            data: {
+                urlName: urlName.toLowerCase(),
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (urlName == "DueReport") {
+                    debugger;
+                    hideAll();
+                    $("#divDueReport").show();
+                    //var total = 0;
+                    //for (var r in result) {
+                    //    total += result[r]["Due"];
+                    //}
+                    //$("#totalDue").html("Total Due = " + total);
+                    showDueReport(result);
+                }
+                else if (urlName == "FollowUp") {
+                    debugger;
+                    hideAll();
+                    $("#divFollowUp").show();
+                    showFollowUp(result);
+                }
+                else if (urlName == "ExpectedPayment") {
+                    hideAll();
+                    $("#divExpectedPayment").show();
+                    showExpectedPayment(result);
+                }
+                
+            },
+
+            error: function (e) {
+                debugger;
+            }
+        })
+    }
+
+    $("#btnSearch").on('click', function () {
+        debugger;
+        var fromDate = $("#followup1").val();
+        var toDate = $("#followup2").val();
+        if (fromDate == '' && toDate == '') {
+            loadData("FollowUp");
+        }
+        if (fromDate == '' || toDate == '') return;
+        $.ajax({
+            url: "/api/GetSearchedFollowUp",
+            method: "GET",
+            data: {
+                FromDate: fromDate,
+                ToDate: toDate,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                showFollowUp(result);
+            },
+            error: function (e) {
+
+            }
+        })
+    })
+
+    $("#btnSearchexpected").on('click', function () {
+        debugger;
+        var fromDate = $("#expected1").val();
+        var toDate = $("#expected2").val();
+        if (fromDate == '' && toDate == '') {
+            loadData("ExpectedPayment");
+        }
+        if (fromDate == '' || toDate == '') return;
+        $.ajax({
+            url: "/api/GetSearchedExpectedDate",
+            method: "GET",
+            data: {
+                FromDate: fromDate,
+                ToDate: toDate,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                showExpectedPayment(result);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var showDueReport = function (data) {
+        debugger;
+        //for (var r in data) {
+        //    data[r].Month = convertMonth(data[r].Month);
+        //}
+        $("#divDue1").hide();
+        $("#divDue").show();
+        debugger;
+        $("#tblDueReport").dataTable({
+            data: data,
+            'destroy': true,
+           // "searching": false,
+           
+            columns: [
+               
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='Response(\"" + row.StudentId + "\",\"" + row.Batch + "\")'>Response</a></div>";
+                    }
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                
+                {
+                    'title': 'Due',
+                    'data': 'Due',
+                    'render': function (data, type, row) {
+                        return "<a href='#' onmouseover='Details(\"" + row.StudentId + "\",\"" + row.Batch + "\")'>"+row.Due+"</a></div>";
+                    }
+                },
+
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                }
+               
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Due Report");
+
+
+    }
+
+    var showDueReport1 = function (data) {
+        debugger;
+        $("#divDue").hide();
+        $("#divDue1").show();
+        for (var r in data) {
+            data[r].Month = convertMonth(data[r].Month);
+        }
+        debugger;
+        $("#tblDueReport1").dataTable({
+            data: data,
+            'destroy': true,
+           // "searching": false,
+         
+            columns: [
+
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='Response(\"" + row.StudentId + "\",\"" + row.Batch + "\")'>Response</a></div>";
+                    }
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+
+                {
+                    'title': 'Due',
+                    'data': 'Due'
+
+                },
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Month',
+                    'data': 'Month'
+                }
+
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Due Report");
+
+
+    }
+
+    var showFollowUp = function (data) {
+        debugger;
+        $("#tblFollowUp").dataTable({
+            data: data,
+            'destroy': true,
+            columns: [
+            
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'FollowUpDate',
+                    'data': 'FollowUpDate'
+                },
+                {
+                    'title': 'Response',
+                    'data': 'Response'
+                },
+               
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                }
+            ]
+        });
+        debugger;
+       
+    }
+
+    var showExpectedPayment = function (data) {
+        debugger;
+        //for (var r in data) {
+        //    data[r].Month = convertMonth(data[r].Month);
+        //}
+        $("#tblExpectedPayment").dataTable({
+            data: data,
+            'destroy': true,
+            
+            columns: [
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'Expected Date',
+                    'data': 'ExpectedDate'
+                },
+                {
+                    'title': 'Response',
+                    'data': 'Response'
+                },
+               
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+             
+
+            ]
+        });
+        debugger;
+
+    }
+
+    function Response(studentId,batch) {
+        debugger;
+        $("#modalResponse").modal('show');
+        $.ajax({
+            url: "/api/GetAllResponseText",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result != undefined) {
+                    debugger;
+                    var v = "";
+                    for (var i in result) {
+                        v += "<option value ='" + result[i]['ResponseText'] + "'>" + result[i]['ResponseText'] + "</option>";
+                    }
+                    $("#responsetext").html(v);
+                }
+
+                debugger;
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+       
+        $("#modalResponse [name='StudentId']").val(studentId);
+        $("#modalResponse [name='Batch']").val(batch);
+    }
+
+    $("#btnModalResponse").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalResponse").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.FollowUpDate == '' || fd.ExpectedDate == '' || fd.Respone == '') return;
+        debugger;
+        $.ajax({
+            url: "/api/PostFollowUpDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modalResponse").modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Saved successfully.");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    $("input[name ='Tab']").on('change', function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        var titlename = $("input[name='Tab']:checked").data('text');
+        debugger;
+        hideAll();
+        debugger;
+        if (listType == "DueReport") {
+            getClassBatchFaculty();
+        }
+        else {
+        loadData(listType);
+       }
+    })
+
+    var hideAll = function () {
+        $("#divDueReport").hide();
+        $("#divFollowUp").hide();
+        $("#divExpectedPayment").hide();
+    }
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#searchClass").html(v);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                   
+                    $("#searchBatch").html(v);
+                    $("#searchBatch").val(batchDetails[0]['FromYear'] + "-" + batchDetails[0]['ToYear']);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    
+                    $("#searchFaculty").html(v);
+                }
+                loadData("DueReport");
+               
+                debugger;
+
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#btnSearchDueReport").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var month = $("#searchMonth").val();
+        var studentid = $("#searchStudentid").val();
+        debugger;
+        //if (batch == '' && _class == '' && month == '') {
+        //    loadData("DueReport");
+        //    return;
+        //}
+
+
+        //else {
+            debugger;
+            $.ajax({
+                url: "/api/SearchDueReport",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Class: _class,
+                    Month: month,
+                    StudentId: studentid,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    if (studentid != "")
+                    {
+                        showDueReport(data);
+                    }
+                    else if (month =="") {
+                       
+                        showDueReport(data);
+                    }
+
+                    
+                    else {
+                      
+                        showDueReport1(data);
+                    }
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        
+    })
+
+    var Details = function (id, batch) {
+        debugger;
+        $("#modalDetails").modal('show');
+        $.ajax({
+            url: "/api/GetDueDetailsByStudentId1",
+            method: "GET",
+            data: {
+                StudentId: id,
+                Batch: batch,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#tblShowDetails").empty();
+                var details = result.details;
+                var due = result.lst;
+                var Name = details[0]["FirstName"] + " " + details[0]["LastName"];
+                $("#modalDetails").modal('show');
+                $("#showstudentid").html(details[0]["StudentId"]);
+                $("#showname").html(Name);
+                $("#showsession").html(details[0]["Batch"]);
+                for (var r in details) {
+                    details[r].Month = convertMonth(details[r].Month);
+                }
+
+               
+                    for (var c in due) {
+                        var html = `<h4>Month:${details[c]['Month']}</h4>`;
+                        html += `<table class="bordered-table table-striped">`;
+                        html += `<thead><th>SN</th><th>FeeName</th><th>Amount</th></thead>`;
+                        html += ` <tbody class='rowTable'>`;
+                        for (var k in due[c]) {
+                            html += `<tr>`;
+                            html += `<td>${parseInt(k) + 1}</td>`;
+                            html += `<td><span>${due[c][k]['FeeName']}</span></td>`;
+                            html += `<td><span>${due[c][k]['Amount']}</span></td>`;
+                            html += `</tr>`;
+                            
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        html += `<div class="pull-right"><label>Total Fee:&nbsp;&nbsp;</label><span>${details[c]['Total']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Discount:&nbsp;&nbsp;</label><span>${details[c]['Discount']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Fine:&nbsp;&nbsp;</label><span>${details[c]['Fine']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Total:&nbsp;&nbsp;</label><span>${parseInt(details[c]['Total']) + parseInt(details[c]['Fine']) - parseInt(details[c]['Discount'])}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Paid:&nbsp;&nbsp;</label><span>${details[c]['Paid']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Due:&nbsp;&nbsp;</label><span>${details[c]['Due']}</span></div><br/><br/>`;
+                        $("#tblShowDetails").append(html);
+                    }
+                
+     
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+
+    $("#generatePdf").on('click', function (e) {
+        e.preventDefault();
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentid = $("#searchStudentid").val();
+        window.open("/Home/PrintDueReport?Batch=" + batch + "&Class=" + _class + "&StudentId=" + studentid );
+    })
+
+    $("#generatePdfInline").on('click', function (e) {
+        e.preventDefault();
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentid = $("#searchStudentid").val();
+        window.open("/Home/PrintDueReport1?Batch=" + batch + "&Class=" + _class + "&StudentId=" + studentid);
+    })
+
+</script>

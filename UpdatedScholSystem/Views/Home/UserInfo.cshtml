@@ -1,0 +1,408 @@
+﻿
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="StudentDashboard">
+        <a href="#" id="userinfo" class="btn btn-success">Add User</a>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <h4 id="titlename">User Details</h4>
+        <div style="margin-left:-10px; width:100%">
+            <table id="tbluser" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>
+    </div>
+</div>
+
+<div id="modalAddUser" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Add User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formAddUser" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="UserID" />
+                            <label style="flex:1.5">Email :&nbsp;</label>
+                            <input type="text" class="form-control" name="Email" style="flex:2" id="email" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Role :&nbsp;</label>
+                            <input type="text" class="form-control" name="Role" style="flex:2" id="" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="flexContainer">
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label id="error_email" style="color: red;"></label>
+                            </span>
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label></label>
+                            </span>
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.5">Password:&nbsp;*</label>
+                            <input type="password" class="form-control" name="Password" style="flex:2" id="password" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Retype-Password.*:&nbsp;&nbsp;</label>
+                            <input type="password" class="form-control" name="ConfirmPassword" id="confirmpassword" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="flexContainer">
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label></label>
+                            </span>
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label id="error" style="color: red;"></label>
+                            </span>
+                        </div>
+                      
+                    </form>
+                   
+                </div>
+            </div>
+            <div class="modal-footer">
+                @*<button class="btn btn-warning modalclose" value="Save" id="btnSaveUser"></button>*@
+                <input type="submit" value="Save" class="btn btn-warning" id="btnSaveUser" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getUserList();
+    })
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    $("#userinfo").on('click', function () {
+        $("#modalAddUser").modal('show');
+        $('input[type="text"]').val('');
+        $('input[type="hidden"]').val('');
+        $('input[type="password"]').val('');
+        $("#username").attr('disabled', false);
+        $("#username").attr('readonly', false);
+        $("#btnSaveUser").val("Save");
+    })
+
+    $("#btnSaveUser").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#formAddUser").serializeJSON();
+        var btnsave = $("#btnSaveUser").val();
+        debugger;
+        if (fd.Email == '' || fd.Password == '') {
+            alert("Please Provide Required fields");
+            return;
+        }
+        if (fd.Password != fd.ConfirmPassword) {
+            alert("Password don't match");
+            return;
+        }
+        fd.CompanyId='@Session["CompanyId"]';
+        if (btnsave == "Update") {
+            $.ajax({
+                url: "/api/PostUserInfo",
+                method: "POST",
+                data: fd,
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#modalAddUser").modal('hide');
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                        getUserList();
+                    })
+                },
+                error: function (e) {
+                    debugger;
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $.ajax({
+                url: "/api/GetUserName",
+                method: "GET",
+                data: { Email:fd.Email },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    if (result.length != 0) {
+                        $("#username").val('');
+                        alert("Username alreadt exists,Please provide other username");
+
+                        return;
+                    }
+                    else {
+                        $.ajax({
+                            url: "/api/PostUserInfo",
+                            method: "POST",
+                            data: fd,
+                            dataType: "json",
+                            success: function (result) {
+                                debugger;
+                                $("#modalAddUser").modal('hide');
+                                $('#modalInfo').modal('show');
+                                $('#modalInfo .modal-title').html("Success");
+                                $('#modalInfo .modal-body').html(" Successful.");
+                                $(".redirect").on('click', function () {
+                                    debugger;
+                                    $('#modalInfo').modal('hide');
+                                    getUserList();
+                                })
+                            },
+                            error: function (e) {
+                                debugger;
+                                console.error(e);
+                                alert(e.statusText);
+                            }
+                        })
+                    }
+
+                },
+                error: function (e) {
+                    debugger;
+                }
+            })
+        }
+        debugger;
+    })
+
+    $("#email").keyup(function () {
+        debugger;
+        var email = $("#email").val();
+        var filter = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        debugger;
+        if (!filter.test(email)) {
+            //alert('Please provide a valid email address');
+            $("#error_email").html("Please enter valid email");
+
+            email.focus;
+            //return false;
+        } else {
+            $("#error_email").text("");
+
+        }
+
+    });
+
+    $("#number").on('keyup', function () {
+        var num = $("#number").val();
+        if (num.length != 10) {
+            $("#error_num").text("required 10 digits number");
+            num.focus;
+        }
+        else {
+            $("#error_num").text("");
+
+        }
+    })
+
+    var getUserList = function () {
+        $.ajax({
+            url: "/api/GetUserList",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                $("#tbluser").dataTable({
+                    data: data,
+                    'destroy': true,
+                    columns: [
+                        {
+                            'title': 'Action',
+                            'data': 'Action',
+                            'orderable': false,
+                            'searchable': false,
+                            'render': function (data, type, row) {
+                                if (row.UserName == "admin") {
+                                    return "<div style='display:flex'><a href='#' onclick='updateUserDetails(\"" + row.UserID + "\") ' title='edit'><img src='/Content/images/edit3.png' class='actionButton' /></a></div>";
+
+                                }
+                                else {
+                                    return "<div style='display:flex'><a href='#' onclick='updateUserDetails(\"" + row.UserID + "\") ' title='edit'><img src='/Content/images/edit3.png' class='actionButton' /></a>&nbsp;&nbsp;<a href='#' onclick='deleteUser(\"" + row.UserID + "\",\"" + row.Email + "\") ' title='delete'><img src='/Content/images/delete.png' class='actionButton' /></a></div>";
+
+                                }
+                            }
+
+                        },
+                        {
+                            'title': 'SN',
+                            'data': 'SN',
+                            'render': function (data, type, row, meta) {
+                                return "<span>" + (meta.row + 1) + "</span>";
+                            }
+                        },
+                        {
+                            'title': 'UserId',
+                            'data': 'UserID'
+                        },
+                        {
+                            'title': 'EmailId',
+                            'data': 'Email'
+                        },
+                      
+                        {
+                            'title': 'Role',
+                            'data': 'Role'
+                        },
+                       
+                    ],
+                   
+                });
+            },
+
+        })
+    }
+
+    var updateUserDetails = function (userid) {
+        $("#modalAddUser").modal('show');
+        $("#btnSaveUser").val("Update");
+        $.ajax({
+            url: "/api/GetuserDetails/" + userid,
+            method: "GET",
+            dataTable: "json",
+            success: function (result) {
+                debugger;
+                if (result != null) {
+                    var Details = result[0];
+                    result[0]["Password"] = atob(result[0]["Password"]);
+                    for (var d in Details) {
+                        $('[name="' + d + '"]').val(Details[d]);
+                    }
+                }
+                $('[name="UserName"]').attr('readonly', true);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var deleteUser = function (userid,username) {
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete login details of : <br/> UserName : <b> " + username + "</b>");
+
+        $('#btnDeleteModal').data('id', userid);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var id = $(this).data('id');
+        debugger;
+        $.ajax({
+            url: "/api/DeleteUserDetails/" + id,
+            method: "POST",
+            dataType: "json",
+            success: function (result) {
+
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    getUserList();
+                })
+
+
+            },
+
+            error: function (e) {
+
+            }
+        })
+
+    })
+
+    $("#email").keyup(function () {
+
+        var email = $("#email").val();
+        var filter = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (!filter.test(email)) {
+            //alert('Please provide a valid email address');
+            $("#error_email").text("Please enter valid email");
+
+            email.focus;
+            //return false;
+        } else {
+            $("#error_email").text("");
+
+        }
+
+    });
+
+    $("#confirmpassword").keyup(function () {
+        debugger;
+        var password = $("#password").val();
+        var conPassword = $("#confirmpassword").val();
+        if (conPassword == password) {
+            $("#error").text("password match");
+            $("#error").css("color", "green");
+        }
+        else {
+            $("#error").text("password donot match");
+            $("#error").css("color", "red");
+        }
+    })
+</script>

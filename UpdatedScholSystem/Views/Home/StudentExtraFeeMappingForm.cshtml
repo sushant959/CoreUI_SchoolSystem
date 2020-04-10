@@ -1,0 +1,473 @@
+﻿
+@{
+    ViewBag.Title = "StudentExtraFeeMappingForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .addcolor{
+        background-color:lightyellow;
+    }
+</style>
+<div class="row" id="divStudentExtraFeeInfo">
+    <div class="col-sm-12">
+        <div class="panel panel-default" style="background-color:floralwhite !important;">
+            <div class="panel-heading" id="titleStudentTransportForm" style="background-color:aqua">Student Extra Fee Form</div>
+            <div class="panel-body" style="background-color:transparent">
+                <form id="formStudentExtraFee">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" />
+                        <label style="flex:1.3">Batch :&nbsp;</label>
+                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Month :&nbsp;</label>
+                        <select name="Month" class="form-control" style="flex:2">
+                            <option value="01">Baisakh</option>
+                            <option value="02">Jesth</option>
+                            <option value="03">Asar</option>
+                            <option value="04">Sawan</option>
+                            <option value="05">Bhadau</option>
+                            <option value="06">Aaswin</option>
+                            <option value="07">Kartik</option>
+                            <option value="08">Mangsir</option>
+                            <option value="09">Push</option>
+                            <option value="10">Magh</option>
+                            <option value="11">Falgun</option>
+                            <option value="12">Chait</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1.3">Faculty :&nbsp;</label>
+                        <select id="faculty" name="Faculty" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Class:&nbsp;&nbsp;</label>
+                        <select id="class" name="Class" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1.3">Section :&nbsp;</label>
+                        <select id="section" name="Section" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">FirstName:&nbsp;&nbsp;</label>
+                        <input type="text" name="Name" id="firstname" class="form-control" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div id="tblStudentList" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                    </div><br />
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
+                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        getClassBatchFaculty();
+        $("#faculty").attr('disabled', true);
+        $("#class").attr('disabled', true);
+        $("#section").attr('disabled', true);
+        $.ajax({
+            url: "/api/GetAllExtraFeeDetails",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                $("#tblStudentList").html("");
+                showResult(result);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#class").html(v);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+
+                    $("#batch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#faculty").html(v);
+                }
+                if (sectionDetails != undefined) {
+                    var v = "<option value=''>--select--</option>";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $(".section").html(v);
+                    $("#section").html(v);
+                }
+            }
+        })
+    }
+
+    $("#faculty").on('change', function (e) {
+        e.preventDefault();
+        debugger;
+        var faculty = $("#faculty").val();
+        $("#class").attr('disabled', false);
+        $("#section").attr('disabled', true);
+        $("#class").val('');
+        $("#section").val('');
+        if (faculty == "") {
+            getClassBatchFaculty();
+        }
+        else {
+        getClass(faculty);
+
+        }
+    })
+
+    $("#batch").on('change', function (e) {
+        e.preventDefault();
+        debugger;
+        $("#faculty").attr('disabled', false);
+        $("#class").attr('disabled', true);
+        $("#section").attr('disabled', true);
+        $("#class").val('');
+        $("#section").val('');
+        $("#faculty").val('');
+    })
+
+  
+     
+    $("#class").on('change', function (e) {
+        e.preventDefault();
+        $("#section").attr('disabled', false);
+        $("#section").val('');
+          
+    })
+
+    var showResult = function (result) {
+        debugger;
+        var i = 0;
+        var html = `<table class="bordered-table">`;
+        html += `<thead><th>&nbsp;</th><th>FeeName</th><th>Amount</th></tr>`;
+
+        html += ` <tbody class='rowTable'>`;
+        for (var r in result) {
+            html += `<tr>`;
+            html += `<td><input type='checkbox' class='checkextrafee'   name='ExtraFeeDetails[0][StudentExtraDetails][${i}][IsChecked]' value='true' />&nbsp;</td>`;
+            html += `<td><input type="text" class='form-control'  name='ExtraFeeDetails[0][StudentExtraDetails][${i}][FeeName]' value="${result[r]['FeeName']}"  readonly/></td>`;
+            html += `<td><input type="text" class='form-control'  name='ExtraFeeDetails[0][StudentExtraDetails][${i}][Amount]' value="${result[r]['Amount']}"/></td>`;
+            html += `</tr>`;
+            i++;
+        }
+        html += `</tbody>`;
+        html += `</table>`;
+        html += `<br/>`;
+        $("#tblStudentList").append(html);
+    }
+
+    var showResultData = function (result) {
+        var studentdetails = result[0];
+        var extrafee = result[2];
+        debugger;
+        var i = 0;
+        var html = `<table class="bordered-table">`;
+        html += `<thead><th>&nbsp;</th><th style="width:110px;">Student Id</th><th style="width:180px;">Name</th><th style="width:100px;">Class</th><th>Extra Fee</th></tr>`;
+       
+        html += ` <tbody class='rowTable'>`;
+
+        for (var r in studentdetails) {
+            html += `<tr>`;
+            html += `<td><input type='checkbox' class='checktr' name='ExtraFeeDetails[${i}][IsChecked]' value='true' /></td>`;
+            html += `<td><input type="text" class='form-control'  name='ExtraFeeDetails[${i}][StudentId]' value="${studentdetails[r]['StudentId']}" readonly/></td>`;
+            html += `<td><input type="text" class='form-control'  name='' value="${studentdetails[r]['FirstName']} ${studentdetails[r]['LastName']} " readonly/></td>`;
+            html += `<td><input type='text' class='form-control Refundable' name='' value="${studentdetails[r]['Class']}" readonly/></td>`;
+
+            html += `<td><div class='showupdiv'><a href='#' class='btn btn-info'>click to select Extra Fee</a></div><div style='display:none;' id='showdowndiv${i}'>`;
+            
+                var j = 0;
+                var html1 = `<table class="bordered-table">`;
+                html1 += `<thead><th>&nbsp;</th><th>FeeName</th><th>Amount</th></tr>`;
+
+                html1 += ` <tbody class='rowTable'>`;
+                for (var m in extrafee) {
+                    html1 += `<tr>`;
+                    html1 += `<td><input type='checkbox' class='checkextra'   name='ExtraFeeDetails[${i}][StudentExtraDetails][${j}][IsChecked]' value='true' />&nbsp;</td>`;
+                    html1 += `<td><input type="text" class='form-control'  name='ExtraFeeDetails[${i}][StudentExtraDetails][${j}][FeeName]' value="${extrafee[m]['FeeName']}"  readonly/></td>`;
+                    html1 += `<td><input type="text" class='form-control'  name='ExtraFeeDetails[${i}][StudentExtraDetails][${j}][Amount]' value="${extrafee[m]['Amount']}"/></td>`;
+                    html1 += `</tr>`;
+                    j++;
+                }
+                html1 += `</tbody>`;
+            html1 += `</table>`;
+            html += html1;
+            html += `</div></td>`;
+            html += `</tr>`;
+           
+            i++;
+        }
+        html += `</tbody>`;
+        html += `</table>`;
+        html += `<br/>`;
+        $("#tblStudentList").append(html);
+    }
+
+
+    $("#tblStudentList").on('click', '.checktr', function (e) {
+        debugger;
+        var _this = $(this).closest('tr');
+        var id = _this.find('.checkextra');
+        var div = _this.find('.showupdiv');
+        debugger;
+        if ($(this).is(":checked")) {
+            debugger;
+            _this.addClass("addcolor");
+            div.hide();
+            div.next('div').show();
+        }
+        else {
+            _this.removeClass("addcolor");
+            id.prop("checked", false);
+            div.show();
+            div.next('div').hide();
+        }
+    })
+
+    $("#tblStudentList").on('click', '.checkextra', function (e) {
+        debugger;
+        var _this = $(this).closest('tr');
+        var id = "#checktr" + name;
+        debugger;
+        if ($(this).is(":checked")) {
+            debugger;
+            $(id).prop("checked", true);
+        }
+        else {
+
+        }
+    })
+
+    $("#btnsubmit").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formStudentExtraFee").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.Batch == '' || fd.Month == '') {
+            alert("Please select batch and month");
+            return;
+        }
+        if (fd.Name == '') {
+            debugger;
+            $.ajax({
+                url: "/api/PostStudentExtraFee",
+                method: "POST",
+                data: fd,
+                dataType: "json",
+                success: function (result) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                        $("form").find("input[type=text],select").val("");
+                        location.href = "/Home/StudentExtraFeeMapping";
+                    })
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $.ajax({
+                url: "/api/PostStudentExtraFeeByName",
+                method: "POST",
+                data: fd,
+                dataType: "json",
+                success: function (result) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                        $("form").find("input[type=text],select").val("");
+                        location.href = "/Home/StudentExtraFeeMapping";
+                    })
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+    })
+
+    $("#tblStudentList").on('click', '.showupdiv', function (e) {
+        debugger;
+        e.preventDefault();
+        var _this = $(this).closest('tr');
+        var id = _this.find('.checktr');
+        id.prop("checked", true);
+        _this.addClass("addcolor");
+        $(this).hide();
+        $(this).next('div').show();
+    })
+
+    var cancel = function () {
+        debugger;
+
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+
+    }
+
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        location.href = "/Home/StudentExtraFeeMapping";
+    });
+
+
+    var getClass = function (faculty) {
+        $.ajax({
+            url: "/api/GetClassByFaculty",
+            method: "GET",
+            data: {
+                Faculty: faculty,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var v = "<option value=''>--select--</option>";
+                for (var r in result) {
+                    v += "<option value=" + result[r]["ClassName"] + ">" + result[r]["ClassName"] + "</option>";
+
+                }
+                $("#class").html(v);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#firstname").on('input', function (e) {
+        debugger;
+        var batch = $("#batch").val();
+        var _class = $("#class").val();
+        var faculty = $("#faculty").val();
+        var section = $("#section").val();
+        var name = $("#firstname").val().trim();
+        debugger;
+        $("#tblStudentList").html("");
+        if (name == '') {
+            $.ajax({
+                url: "/api/GetAllExtraFeeDetails",
+                method: "GET",
+                data: {
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    showResult(result);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $.ajax({
+                url: "/api/GetAllStudentListByName",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Faculty: faculty,
+                    Class: _class,
+                    Section: section,
+                    Name: name,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    if (result.length != 0) {
+                        showResultData(result);
+                    }
+
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        
+    })
+</script>

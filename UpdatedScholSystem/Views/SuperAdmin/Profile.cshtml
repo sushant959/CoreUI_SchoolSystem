@@ -1,0 +1,198 @@
+﻿@model UpdatedScholSystem.Models.User
+@{
+    ViewBag.Title = "SuperAdminProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    [class^="error_"] {
+        font-size: small;
+        font-style: italic;
+        color: red;
+        flex: 2;
+    }
+</style>
+<br /><br />
+<div>
+    <div style="width:99%">
+        <div class="panel panel-default" style="background-color:floralwhite !important;">
+            <div class="panel-heading" id="titleVehicleForm" style="background-color:darkgray">Edit User Info</div>
+            <div class="panel-body" style="background-color:transparent">
+                <form id="formuser">
+                   
+                          <div class="flexContainer">
+                              <input type="hidden" name="UserID" value="@Model.UserID" />
+                              <label style="flex:1">Email:&nbsp;&nbsp;</label>
+                              <input type="text" class="form-control" name="Email" style="flex:2" value="@Model.Email" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                              <button style="flex:1" class="btn  btn-info " id="btnChangePW"> Change Password</button>
+                              <div style="flex:2; margin-right:10px;"></div>
+                          </div>
+                    <div class="flexContainer">
+                        <label style="flex:1"></label>
+                        <label class="error_mobile"></label>
+                        <label style="flex:1"></label>
+                        <label class="error_phone"></label>
+                    </div>
+                    <br />
+
+
+                    <div id="divChangePW" style="display:none">
+                        <hr style="margin-bottom:5px" />
+                        <h4 style="color:brown">Change Password</h4>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label style="flex:none">Current Password:&nbsp;</label>
+                                <input type="password" id="password" value="" class="form-control" name="Password" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="flex:none">New Password:&nbsp;&nbsp;</label>
+                                <input type="password" value="" id="newpass" class="form-control" name="NewPassword" placeholder="do not change" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div>
+                            <div class="col-sm-4">
+                                <label style="flex:none">Re-type Password:&nbsp;&nbsp;</label>
+                                <input type="password" value="" id="retypenewpass" class="form-control" name="NewPassword2" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                        <span class="error_email" id="pwError"></span>
+                    </div>
+
+
+                    <br />
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" value="Update" class="btn btn-success" id="btnsubmit" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="background-color:floralwhite !important;">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".mobile").on('keyup', function () {
+        //debugger;
+        var _this = $(this);
+        var number = _this.val();
+        var target = _this.parent().next('div').find('.error_mobile');
+        if (number.length > 0 && number.length != 10) {
+            target.text("required 10 digits number");
+            number.focus;
+        }
+        else {
+            target.text("");
+
+        }
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    var cancel = function () {
+
+            $('#modalCancel').modal('show');
+            $('#modal-title1').html("Confirm");
+            $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        }
+
+
+    $("#btnChangePW").on('click', function (e) {
+        e.preventDefault();
+        $('[name="Password"]').val('');
+        $('#divChangePW').show();
+    });
+
+    $("#btnsubmit").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#formuser").serializeJSON();
+        if (fd.Email == '') return;
+        else if (fd.Password != '') {
+            if ($("#newpass").val() == $("#retypenewpass").val()) {
+
+                $.ajax({
+                    url: "/api/GetSuperAdminPassword",
+                    method: "GET",
+                    data: {
+                        Email: fd.Email,
+                        Password: fd.Password
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        if (result == true) {
+                            fd.Password = $("#newpass").val();
+                            updateSuperAdmin(fd);
+                        }
+                        else {
+                            $("#password").val('');
+                            $("#pwError").text("Incorrect Password");
+                            return;
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
+            }
+            else {
+                $("#pwError").text("Password dont matched");
+                $("#pw").focus;
+                return;
+            }
+        }
+        else {
+            debugger;
+            updateSuperAdmin(fd);
+        }
+    })
+
+
+    var updateSuperAdmin = function (fd) {
+        debugger;
+        $.ajax({
+            url: "/api/UpdateSuperAdmin",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                          $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html("Updated Successfully");
+
+                $(".redirect").on('click', function () {
+                    $('#modalInfo').modal('hide');
+                    $("#formuser").find("input[type=text]").val("");
+                    location.href = "/SuperAdmin/Profile";
+                   
+                })
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+</script>
+

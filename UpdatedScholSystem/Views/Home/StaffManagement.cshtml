@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewBag.Title = "StaffManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="StaffDashboard">
+        <a href="/Home/StaffForm" class="btn btn-success">Add New Staff</a>
+</div><hr/>
+<br/>
+<div id="divteacherReport">
+    <div class="row">
+        <div class="col-sm-3">
+            <h4 id="reportname">List of Staff Details </h4>
+        </div>
+
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
+            <table id="tblTeacherReport" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>
+       
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalDeleteTeacher"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModalTeacher" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadData();
+    })
+
+
+    var loadData = function () {
+        debugger;
+        $.ajax({
+            url: "/api/GetTeacherDetails",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                if (data.length != 0) {
+                    debugger;
+                    showResultData(data);
+
+
+                }
+                else {
+                    $("#divteacherReport").hide();
+                    
+                }
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    }
+
+    var showResultData = function (data) {
+        debugger;
+
+        $("#tblTeacherReport").dataTable({
+            data: data,
+            //'searching': false,
+            'destroy': true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: false,
+                    alignment: 'center',
+                    title: 'List of Teacher details',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7]
+                    }
+                   
+                },
+                {
+                    extend: 'csv',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7]
+                    }
+                   
+                },
+                {
+                    extend: 'excel',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7]
+                    }
+                }
+            ],
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='/Home/EditStaffDetails/" + row.TeacherId + "' class='btn btn-info'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteTeacher(\"" + row.TeacherId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\")'>Delete</a>&nbsp;<a href='/Home/ViewStaffDetails/" + row.TeacherId + "' class='btn btn-info'>View</a></div>";
+                    },
+                    'sortable': false,
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                
+                {
+                    'title': 'JoiningDate',
+                    'data': 'JoiningDate'
+                },
+                {
+                    'title': 'Designation',
+                    'data': 'Designation'
+                },
+                {
+                    'title': 'Department',
+                    'data': 'Department'
+                },
+                {
+                    'title': 'Faculty',
+                    'data': 'Faculty'
+                },
+                {
+                    'title': 'Gender',
+                    'data': 'Gender'
+                },
+                {
+                    'title': 'Status',
+                    'data': 'Status'
+                }
+                
+            ]
+        });
+        debugger;
+
+        $("#titlename").html("List of Teacher Details");
+
+
+    }
+
+    var deleteTeacher = function (id,firstname,lastname) {
+        debugger;
+        $('#modalDeleteTeacher').modal('show');
+        $('#modalDeleteTeacher .modal-title').html("Confirm");
+        $('#modalDeleteTeacher .modal-body').html("You're about to delete the record of Staff :<b> " + firstname + " " + lastname +"</b ><br/> Are you sure ? ");
+
+        $('#btnDeleteModalTeacher').data('id', id);
+        debugger;
+    }
+
+    $("#btnDeleteModalTeacher").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+            url: "/api/DeleteTeacher",
+            method: "Post",
+            data: {
+                StaffId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalDeleteTeacher').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html("Deleted Successfully");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    debugger;
+                    loadData();
+                });
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+</script>
+

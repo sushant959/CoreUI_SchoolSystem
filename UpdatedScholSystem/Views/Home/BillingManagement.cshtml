@@ -1,0 +1,1772 @@
+﻿
+@{
+    ViewBag.Title = "BillingManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="divBillingDetails">
+    <div>
+        <button class="btn btn-success" id="addBilling">Add New Bill</button>
+    </div><hr/>
+    <br />
+    <div id="searchBilling">
+        <div>
+                <h4 id="titlename">List of Billing Details</h4>
+            <div class="flexContainer" style="justify-content:center">
+                <div style="text-align:center;">
+                    <div class="flexContainer" style="margin-left:30px;">
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Batch</label>
+                            <select id="searchBatch" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Class</label>
+                            <select id="searchClass" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Student Id</label>
+                            <input type="text" style="width:110px;" id="searchStudentId" class="form-control" />
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Month</label>
+                            <select id="searchMonth" class="form-control" style="width:auto">
+                                <option value="">--Select--</option>
+                                <option value="01">Baisakh</option>
+                                <option value="02">Jesth</option>
+                                <option value="03">Asar</option>
+                                <option value="04">Sawan</option>
+                                <option value="05">Bhadau</option>
+                                <option value="06">Aaswin</option>
+                                <option value="07">Kartik</option>
+                                <option value="08">Mangsir</option>
+                                <option value="09">Push</option>
+                                <option value="10">Magh</option>
+                                <option value="11">Falgun</option>
+                                <option value="12">Chait</option>
+                            </select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Status</label>
+                            <select id="searchStatus" class="form-control" style="width:auto">
+                                <option value="">---select--</option>
+                                <option value="UnPaid">UnPaid</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Partial Paid">Partial Paid</option>
+                            </select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none;">
+                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchBilling" type="submit" data-name="">Search</button>
+                        </div>
+                        
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-warning btn-block pull-right" style="margin-top:20px;width:150px;" id="btnDelete"  data-name="">Delete Selected Row</button><br/>
+                <form id="deleteMultipleBill">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblBillingDetails" class="table table-bordered table-striped"></table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divBillingForm">
+    <div class="col-md-9">
+        <div class="thumbnail well well-sm">
+            <h4 class="well-sm" id="titleFormBilling">Add Billing</h4>
+            <form id="formBilling">
+                <div class="flexContainer">
+                <input type="hidden" name="CreatedBy" value="" />
+                <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:none;width:110px;">Select Batch :&nbsp;</label>
+                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none">Select Class :&nbsp;</label>
+                    <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="max-width:110px;">Select Section:&nbsp;</label>
+                    <select multiple="multiple" class="form-control multiselect" name="Section[]" style="max-width:246px;" id="selectSection" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">StudentId:&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentId" style="flex:1;" id="studentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none">Select Month :&nbsp;</label>
+                    <select multiple="multiple" class="form-control multiselect" name="Month[]" style="flex:1" id="selectmonth" required>
+                        <option value="01">Baisakh</option>
+                        <option value="02">Jesth</option>
+                        <option value="03">Asar</option>
+                        <option value="04">Sawan</option>
+                        <option value="05">Bhadau</option>
+                        <option value="06">Aaswin</option>
+                        <option value="07">Kartik</option>
+                        <option value="08">Mangsir</option>
+                        <option value="09">Push</option>
+                        <option value="10">Magh</option>
+                        <option value="11">Falgun</option>
+                        <option value="12">Chait</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div id="feestructure">
+
+                </div>
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveBillingInfo" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="ReceiptForm">
+    <div class="col-md-9">
+        <div class="thumbnail well well-sm">
+            <h4 class="well-sm" id="titleFormReceipt">Add Recipt</h4><hr />
+            <form id="formReceipt">
+                <div class="flexContainer">
+                    <input type="hidden" name="ReceiptId" />
+                    <input type="hidden" id="billingId" name="BillingId" />
+                    <input type="hidden" name="CompanyId" />
+                    <input type="hidden" name="CreatedBy" />
+                    <label style="flex:none;width:110px;">Student Id :&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentId" style="flex:1" id="receiptStudentId" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Student Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptStudentName" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                      <div class="flexContainer">
+                          <label style="flex:none;width:110px;">Date :&nbsp;</label>
+                          <input type="text" id="receiptDate" style="flex:1" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                          @*<input type="date" class="form-control" name="Date" style="flex:1" id="receiptDate" />&nbsp;&nbsp;&nbsp;&nbsp;*@
+                          <label style="flex:none;width:130px;">Batch :&nbsp;</label>
+                          <input type="text" class="form-control" name="Batch" style="flex:1" id="receiptBatch" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Class :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptClass" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Faculty :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptFaculty" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Billing Month :&nbsp;</label>
+                    <input type="text" class="form-control" name="Month" style="flex:1" id="receiptMonth" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Total Fee :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptTotalFee" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                      <div class="flexContainer">
+                          <label id="previousdue" style="flex:none;width:110px;">Previous Due :&nbsp;</label>
+                          <input type="text" class="form-control" name="PreviousDue" style="flex:1" id="receiptDueAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type='checkbox' id="fine" value='true' style="margin-top:-5px;" />&nbsp;&nbsp;<label style="flex:none;width:130px;">Fine :&nbsp;</label>
+                          <input type="text" class="form-control" name="Fine" style="flex:1" id="receiptFine" onkeypress="return isNumberKey(event)" disabled="disabled" />&nbsp;&nbsp;&nbsp;&nbsp;
+                      </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:115px;">Advanced Paid:&nbsp;</label>
+                    <input type="text" class="form-control" name="AdvancedPaid" style="width:220px" id="receiptAdvancedPaid" readonly  />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Discount :&nbsp;</label>
+                    <input type="number" class="form-control" name="Discount" style="flex:1" id="receiptDiscount" onkeypress="return isNumberKey(event)" placeholder="0" max=""  />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Total Amount :&nbsp;</label>
+                    <input type="text" class="form-control" name="TotalAmount" style="flex:1" id="receiptTotalAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Amount Paid :&nbsp;</label>
+                    <input type="text" class="form-control" name="PaidAmount" style="flex:1" id="receiptAmountPaid" max="" placeholder="" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label id="amountremain" style="flex:none;width:130px;">Amount Remain :&nbsp;</label>
+                    <input type="text" class="form-control" name="DueAmount" style="flex:1" id="receiptAmountRemain" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label>Status:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="Status" id="receiptStatus" readonly />
+                    </div>
+                </div>
+                <h4>Payment Method</h4>
+                <input type="radio" id="paymentcash" name="PaymentMethod" value="cash" />&nbsp;&nbsp;&nbsp;&nbsp;Cash <br />
+                <div class="form-inline"><input type="radio" id="paymentcheque" name="PaymentMethod" value="cheque" />&nbsp;&nbsp;&nbsp;&nbsp;Cheque &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="bankname" name="BankName" style="width:200px;" placeholder="Bank Name" class="form-control" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="ChequeNo" id="chequeno" style="width:300px;" placeholder="Cheque Number" class="form-control" /></div>
+                <input type="radio" id="paymentcard" name="PaymentMethod" value="card" />&nbsp;&nbsp;&nbsp;&nbsp;Card <br /><br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label>Upload File:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="file" id="multiFiles" style="margin-left:-80px;" name="ReceiptFile[]" multiple />
+                    </div>
+                </div><br />
+                <div class="text-center">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveReceipt" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalConform"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Conformation</h4>
+            </div>
+            <div class="modal-body" id="modal-body2">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnConformation" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalMultipleDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteMultipleModal">Yes</button>
+                <button type="button" id="undodelete" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalBiliingDetails" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Billing Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="" class="well well-sm">
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Student Id:&nbsp;</label>
+                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
+                            <label style="flex:1.2">Name:&nbsp;</label>
+                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
+
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Session:&nbsp;</label>
+                            <span id="showsession" style="flex:2"></span>&nbsp;&nbsp;
+                            <label style="flex:1.2">Month:&nbsp;</label>
+                            <span id="showmonth" style="flex:2"></span>&nbsp;&nbsp;
+
+                        </div><br />
+                        <h5>List of Billing Details</h5>
+                        <div style="width:100%;overflow:auto;">
+                            <table id="tblShowBillingDetails" class="table table-bordered table-striped">
+                                @*<thead></thead>*@
+                            </table>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('.nepali-calendar').nepaliDatePicker();
+        hideAll();
+        $("#divBillingDetails").show();
+        getClassBatchFaculty();
+    })
+
+    $("#addBilling").on('click', function () {
+        hideAll();
+        $("#divBillingForm").show();
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                }
+              
+                if (sectionDetails != undefined) {
+                    var v = "";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $("#selectSection").html(v);
+                }
+                debugger;
+
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        $("#formBilling").find("input[type=text],input[type=hidden],textarea").val("");
+        $("#formBilling").find("select").val("");
+        $("#feestructure").empty();
+        getFeeStructureName();
+        $("#titleFormBilling").html("Add Billing Information ");
+        $("#btnSaveBillingInfo").val("Submit");
+    })
+
+    var getFeeStructureName = function () {
+        $.ajax({
+            url: "/api/GetFeeStructure",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                var html = ``;
+                for (var r in result) {
+                    if (result[r]["FeeStructureName"] != "Extra") {
+                        if (result[r]["FeeStructureName"] == "Monthly") {
+                            html += `<input type='checkbox' class='checktr' id='billing[${i}]' name='BillingFees[${i}][IsChecked]' value='true' checked/><input type='hidden' name='BillingFees[${i}][FeeStructureName]' value='${result[r]["FeeStructureName"]}'  />&nbsp;&nbsp;Include ${result[r]["FeeStructureName"]} Fee <br/>`;
+                        }
+                        else {
+                            html += `<input type='checkbox' class='checktr' id='billing[${i}]' name='BillingFees[${i}][IsChecked]' value='true'/><input type='hidden' name='BillingFees[${i}][FeeStructureName]' value='${result[r]["FeeStructureName"]}' />&nbsp;&nbsp;Include ${result[r]["FeeStructureName"]} Fee <br/>`;
+                        }
+                        i++
+                    }
+                }
+                debugger;
+                $("#feestructure").append(html);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var hideAll = function () {
+        $("#divBillingDetails").hide();
+        $("#divBillingForm").hide();
+        $("#ReceiptForm").hide();
+
+    }
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                    $("#searchClass").html(v);
+                    $("#searchClass").val(classDetails[0]['ClassName']);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                    $("#searchBatch").html(v);
+                    $("#searchBatch").val(batchDetails[0]['FromYear'] + "-" + batchDetails[0]['ToYear']);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    //$("#selectFaculty").html(v);
+                    $("#searchFaculty").html(v);
+                }
+
+                if (sectionDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $("#selectSection").html(v);
+                    $("#searchSection").html(v);
+                }
+                debugger;
+                $("#searchMonth").val("01");
+                debugger;
+                loadData();
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#btnSaveBillingInfo").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var ff = "";
+        var ff = $("#formBilling").serializeJSON();
+        ff.CreatedBy = '@Session["username"]';
+        ff.CompanyId=@Session["CompanyId"];
+        debugger;
+        if ($(".checktr").is(":checked")) {
+
+        }
+        else {
+            alert("Please select fee structure");
+            return;
+        }
+        debugger;
+        if (ff.StudentId == '') {
+            debugger;
+            if (ff.Batch == '' || ff.Month == undefined) {
+                alert("Please select Batch and Month");
+                return;
+            }
+            else {
+                debugger;
+            }
+        }
+        else if (ff.Month == undefined) {
+            alert("Please select month");
+            return;
+        }
+        else if (ff.Batch == '') {
+            alert("Please select batch");
+            return;
+        }
+        
+            if (ff.StudentId != '') {
+                debugger;
+                $.ajax({
+                    url: "/api/PostBillingDetails",
+                    method: "POST",
+                    data: ff,
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        if (result == true) {
+                            $('#modalInfo').modal('show');
+                            $('#modalInfo .modal-title').html("Success");
+                            $('#modalInfo .modal-body').html(" Successful.");
+                            $(".redirect").on('click', function () {
+                                debugger;
+                                $('#modalInfo').modal('hide');
+                                $("#formBilling").find("input[type=text],textarea,select").val("");
+                                hideAll();
+                                $("#divBillingDetails").show();
+                                var batch = $("#searchBatch").val();
+                                var _class = $("#searchClass").val();
+                                var studentid = $("#searchStudentId").val().trim();
+                                var month = $("#searchMonth").val();
+                                var status = $("#searchStatus").val();
+                                debugger;
+
+                                debugger;
+                                $.ajax({
+                                    url: "/api/SearchBillingDetails",
+                                    method: "GET",
+                                    data: {
+                                        Batch: batch,
+                                        Class: _class,
+                                        StudentId: studentid,
+                                        Month: month,
+                                        Status: status,
+                                        CompanyId:@Session["CompanyId"],
+                                    },
+                                    dataType: "json",
+                                    success: function (data) {
+                                        debugger;
+                                        showResultData(data);
+                                    },
+                                    error: function (e) {
+                                        console.error(e);
+                                        alert(e.statusText);
+                                    }
+                                })
+                                
+                            })
+                        }
+                        else if (result == false) {
+                            $('#modalInfo').modal('show');
+                            $('#modalInfo .modal-title').html("Error");
+                            $('#modalInfo .modal-body').html("Fee Details already exists");
+                            $(".redirect").on('click', function () {
+                                
+                                $('#modalInfo').modal('hide');
+                                $("#formBilling").find("input[type=text],textarea,select").val("");
+
+                            })
+                        }
+                    },
+                    error: function (e) {
+                        console.error(e);
+                        alert(e.statusText);
+                    }
+                })
+            }
+            else {
+                debugger;
+                $.ajax({
+                    url: "/api/PostClassBillingDetails",
+                    method: "POST",
+                    data: ff,
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+
+                        $('#modalInfo').modal('show');
+                        $('#modalInfo .modal-title').html("Success");
+                        $('#modalInfo .modal-body').html(" Successful.");
+                        $(".redirect").on('click', function () {
+                            debugger;
+                            $('#modalInfo').modal('hide');
+                            $("#formBilling").find("input[type=text],textarea,select").val("");
+                            hideAll();
+                            $("#divBillingDetails").show();
+                            var batch = $("#searchBatch").val();
+                            var _class = $("#searchClass").val();
+                            var studentid = $("#searchStudentId").val().trim();
+                            var month = $("#searchMonth").val();
+                            var status = $("#searchStatus").val();
+                            debugger;
+
+                            debugger;
+                            $.ajax({
+                                url: "/api/SearchBillingDetails",
+                                method: "GET",
+                                data: {
+                                    Batch: batch,
+                                    Class: _class,
+                                    StudentId: studentid,
+                                    Month: month,
+                                    Status: status,
+                                    CompanyId:@Session["CompanyId"],
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    debugger;
+                                    showResultData(data);
+                                },
+                                error: function (e) {
+                                    console.error(e);
+                                    alert(e.statusText);
+                                }
+                            })
+                        })
+                    },
+                    error: function (e) {
+                        console.error(e);
+                        alert(e.statusText);
+                    }
+                })
+            }
+        });
+    
+    
+   
+
+    var loadData = function () {
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var month = $("#searchMonth").val();
+        $.ajax({
+            url: "/api/GetAllDemoBillingDetails",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Class: _class,
+                Month: month,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                showResultData(data);
+                debugger;
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showResultData = function (data) {
+        debugger;
+        for (var r in data) {
+            data[r].Month = convertMonth(data[r].Month);
+        }
+
+        $("#tblBillingDetails").dataTable({
+            data: data,
+            'destroy': true,
+            dom: 'lBfrtip',
+            "columnDefs": [
+                { "orderable": false, "targets": 0 },
+                { "orderable": false, "targets": 1 },
+                { "orderable": false, "targets": 10 },
+            ],
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9]
+                    }
+
+                },
+                {
+                    extend: 'excel',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9]
+                    }
+                }
+            ],
+            columns: [
+                {
+                    'title': 'Select',
+                    'data': 'Select',
+                    'render': function (data, type, row) {
+                        if (row.IsCreated == false) {
+                            return "<div style='display:flex'><input type='checkbox' class='checkdelete' name='BillingId[]' value=" + row.BillingId + "></div>";
+                        }
+                        else {
+                            return "<div style='display:flex'><input type='checkbox' class='checkdelete' name='BillingId[]' value=" + row.BillingId + " disabled></div>";
+                        }
+                    }
+                },
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        debugger;
+                        if (row.IsCreated == false) {
+
+                            return "<div style='display:flex'><a href='#' onclick='deleteBillingDetails(\"" + row.BillingId + "\",\"" + row.Month + "\",\"" + row.StudentId + "\",\"" + row.Batch + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='createRecipt(\"" + row.BillingId + "\",\"" + row.StudentId + "\",\"" + row.Month + "\",\"" + row.Date + "\",\"" + row.Batch + "\")' title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='BillingDetails(\"" + row.BillingId + "\")' title='details'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' class='btn btn-info' onclick='PrintBilling(\"" + row.BillingId + "\",\"" + convertMonthInt(row.Month) + "\",\"" + row.Batch + "\")'>Print</a></div>";
+                        }
+                        else {
+                            return "<div style='display:flex;justify-content:flex-end;'><a href='#' onclick='createRecipt(\"" + row.BillingId + "\",\"" + row.StudentId + "\",\"" + row.Month + "\",\"" + row.Date + "\",\"" + row.Batch + "\")' title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' style='display:none;'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='BillingDetails(\"" + row.BillingId + "\")' title='details'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' class='btn btn-info' onclick='PrintBilling(\"" + row.BillingId + "\",\"" + convertMonthInt(row.Month) + "\",\"" + row.Batch + "\")'>Print</a></div>";
+                           
+
+                        }
+                    }
+                },
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'BillingId',
+                    'data': 'BillingId'
+                },
+                {
+                    'title': 'Session',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Studentid',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'TotalFee',
+                    'data': 'total'
+                },
+                {
+                    'title': 'Month',
+                    'data': 'Month'
+                },
+                {
+                    'title': 'Date',
+                    'data': 'Date'
+                },
+                {
+                   
+                    'title': 'Status',
+                    'data': 'Status'
+                },
+                {
+
+                    'title': 'CreatedBy',
+                    'data': 'CreatedBy'
+                }
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Billing Details");
+
+    }
+
+    $("#btnSearchBilling").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentid = $("#searchStudentId").val().trim();
+        var month = $("#searchMonth").val();
+        var status = $("#searchStatus").val();
+        debugger;
+      
+            debugger;
+            $.ajax({
+                url: "/api/SearchBillingDetails",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Class: _class,
+                    StudentId: studentid,
+                    Month: month,
+                    Status: status,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    showResultData(data);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        
+    })
+
+    var BillingDetails = function (id) {
+        $.ajax({
+            url: "/api/GetBillingDetailsById",
+            method: "GET",
+            data: {
+                BillingId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataTable: "json",
+            success: function (result) {
+                debugger;
+                var Name = result[0]["FirstName"] + " " + result[0]["LastName"];
+                $("#modalBiliingDetails").modal('show');
+                $("#showstudentid").html(result[0]["StudentId"]);
+                $("#showname").html(Name);
+                $("#showsession").html(result[0]["Batch"]);
+                var Month = convertMonth(result[0]["Month"]);
+                debugger;
+                $("#showmonth").html(Month);
+                $("#tblShowBillingDetails").dataTable({
+                    data: result,
+                    "destroy": true,
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "searching":false,
+                   
+                    columns: [
+                      
+                        {
+                            'title': 'SN',
+                            'data': 'SN',
+                            'render': function (data, type, row, meta) {
+                                return "<span>" + (meta.row + 1) + "</span>";
+                            }
+                        },
+
+                        {
+                            'title': 'FeeStructureName',
+                            'data': 'FeeStructureName'
+                        },
+                        {
+                            'title': 'FeeName',
+                            'data': 'FeeName'
+                        },
+                        {
+                            'title': 'Amount',
+                            'data': 'Amount'
+                        }
+                      
+                    ]
+                });
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var createRecipt = function (id, studentid, month,date,batch)
+    {
+        debugger;
+        month = convertMonthInt(month);
+        debugger;
+        $("#formReceipt").find("input[type=text],input[type=hidden],input[type=number]").val('');
+       
+        $("#btnSaveReceipt").val("Submit");
+        debugger;
+        $.ajax({
+            url: "/api/GetReceiptDetail",
+            method: "GET",
+            data: {
+                Id: id,
+                StudentId: studentid,
+                Month: month,
+                Batch: batch,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result === false) {
+                    debugger;
+                    $.ajax({
+                        url: "/api/GetPreviousMonthBilling",
+                        method: "GET",
+                        data: {
+                            Id: id,
+                            StudentId: studentid,
+                            Month: month,
+                            Batch: batch,
+                            CompanyId:@Session["CompanyId"],
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            debugger;
+                            var billingid = result[0]["BillingId"];
+                            var StudentId = result[0]["StudentId"];
+                            var Month = result[0]["Month"];
+                            var Batch = result[0]["Batch"];
+                            $.ajax({
+                                url: "/api/GetReceiptDetail",
+                                method: "GET",
+                                data: {
+                                    Id: billingid,
+                                    StudentId: StudentId,
+                                    Month: Month,
+                                    Batch: Batch,
+                                    CompanyId:@Session["CompanyId"],
+                                },
+                                dataType: "json",
+                                success: function (details) {
+                                    hideAll();
+                                    $("#ReceiptForm").show();
+                                    $("#btnSaveReceipt").val("Submit");
+                                    $("#ReceiptForm input[type=text]").val('');
+                                    $("#fine").prop('checked', false);
+                                    $("#previousdue").text("Previous Due");
+                                    $("#btnSaveReceipt").attr('disabled', true);
+                                    $("#bankname").attr('disabled', true);
+                                    $("#chequeno").attr('disabled', true);
+                                    var now = new Date();
+                                    var nowDate = now.toISOString().split('T')[0];
+                                    $("#receiptDate").val(nowDate);
+                                    $("#receiptStudentId").val(result[0]["StudentId"]);
+                                    $("#billingId").val(details[0]["BillingId"]);
+                                    var studentname = [details[0]["FirstName"], ' ', details[0]["LastName"]].join('');
+                                    $("#receiptStudentName").val(studentname);
+                                    $("#receiptBatch").val(details[0]["Batch"]);
+                                    $("#receiptClass").val(details[0]["Class"]);
+                                    $("#receiptFaculty").val(details[0]["Faculty"]);
+                                    $("#receiptMonth").val(convertMonth(details[0]["Month"]));
+                                    $("#receiptTotalFee").val(details[0]["Total"]);
+                                    var mn = details[0]["Month"];
+                                    debugger;
+                                   
+                                    getFine(date, details[0]["Total"]);
+                                    getDue(billingid, StudentId, details[0]["Month"], details[0]["Total"]);
+                                    debugger;
+                                },
+                                error: function (e) {
+
+                                }
+                            })
+                        },
+                        error: function (e) {
+
+                        }
+                    })
+                    //$('#modalInfo').modal('show');
+                    //$('#modalInfo .modal-title').html("Error");
+                    //$('#modalInfo .modal-body').html("Please Pay Previous Month fee First");
+                    //$(".redirect").on('click', function () {
+                    //    debugger;
+                    //    $('#modalInfo').modal('hide');
+
+                    //})
+                }
+                else if (result === true)
+                {
+                    $('#modalInfo').modal('show');
+
+                    $('#modalInfo .modal-title').html("Conform");
+                    $('#modalInfo .modal-body').html("Payment for this month already paid");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+
+                    })
+                }
+                else {
+                    debugger;
+                    hideAll();
+                    $("#ReceiptForm").show();
+                    $("#btnSaveReceipt").val("Submit");
+                    $("#ReceiptForm input[type=text]").val('');
+                    $("#fine").prop('checked', false);
+                    $("#previousdue").text("Previous Due");
+                    $("#btnSaveReceipt").attr('disabled', true);
+                    $("#bankname").attr('disabled', true);
+                    $("#chequeno").attr('disabled', true);
+                    var now = new Date();
+                    var nowDate = now.toISOString().split('T')[0];
+                    $("#receiptDate").val(nowDate);
+                    $("#receiptStudentId").val(result[0]["StudentId"]);
+                    $("#billingId").val(result[0]["BillingId"]);
+                    var studentname = [result[0]["FirstName"], ' ', result[0]["LastName"]].join('');
+                    $("#receiptStudentName").val(studentname);
+                    $("#receiptBatch").val(result[0]["Batch"]);
+                    $("#receiptClass").val(result[0]["Class"]);
+                    $("#receiptFaculty").val(result[0]["Faculty"]);
+                    $("#receiptMonth").val(convertMonth(result[0]["Month"]));
+                    $("#receiptTotalFee").val(result[0]["Total"]);
+                    var mn = result[0]["Month"];
+                    debugger;
+                    
+                    getFine(date, result[0]["Total"]);
+                    getDue(id, studentid, result[0]["Month"], result[0]["Total"]);
+                    debugger;
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+
+
+    }
+
+    var getAdvancedPaid = function (studentid,topay) {
+        $.ajax({
+            url: "/api/GetAdvancedPaid",
+            method: "GET",
+            data: {
+                StudentId: studentid,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result != 0) {
+                    $("#receiptAdvancedPaid").val(result[0]["Amount"]);
+                   
+                }
+                else {
+                    $("#receiptAdvancedPaid").val(0);
+                }
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+    var getFine = function (date,total) {
+        debugger;
+        $.ajax({
+            url: "/api/GetFine",
+            method: "GET",
+            data: {
+                Date: date,
+                Total: total,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != 0) {
+                    $("#receiptFine").val(result);
+                }
+                else {
+                    $("#receiptFine").val(0);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getDue = function (id, studentid, month, total) {
+        debugger;
+        $.ajax({
+            url: "/api/GetDueStatus",
+            method: "GET",
+            data: {
+                StudentId: studentid,
+                Month: month,
+                BillingId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var topay = 0;
+               
+                if (result[0]['paid'] != null) {
+                    var paid = parseFloat(result[0]["paid"]) + parseFloat(result[0]["dis"] - parseFloat(result[0]["fine"]));
+                   
+                    $("#previousdue").html("Paid Amount");
+                    $("#receiptDueAmount").val(paid);
+                    topay = total - paid;
+                }
+                else {
+                    var paid = 0;
+                    $("#previousdue").html("Previous Due");
+                    $("#receiptDueAmount").val(0);
+                    topay = total - 0;
+                }
+                $("#receiptTotalAmount").val(topay);
+                $("#receiptDiscount").attr('max', topay);
+                getAdvancedPaid(studentid, topay);
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#receiptDiscount").on('keyup', function (e) {
+        debugger;
+        $("#receiptAmountPaid").val('');
+        $("#receiptAmountRemain").val('');
+        $("#receiptStatus").val("");
+        $("#btnSaveReceipt").attr('disabled', true);
+        var discount = parseFloat( $("#receiptDiscount").val()) || 0;
+        var fine = 0;
+        if ($("#fine").is(":checked")) {
+            debugger;
+            fine = parseFloat($("#receiptFine").val());
+        }
+      
+        var Total = parseFloat($("#receiptTotalFee").val());
+        var due = parseFloat($("#receiptDueAmount").val());
+        if (parseFloat(due) == 0) {
+            var amount = Total + fine - discount;
+
+        }
+        else {
+            var amount = Total - due + fine - discount;
+        }
+        $("#receiptTotalAmount").val(amount);
+
+        if (discount > (Total - due + fine)) {
+            alert("Discount must be less then total amount");
+            $("#receiptDiscount").val(0);
+            var discount = parseFloat($("#receiptDiscount").val()) || 0;
+            var fine = 0;
+            if ($("#fine").is(":checked")) {
+                debugger;
+                fine = parseFloat($("#receiptFine").val());
+            }
+
+            var Total = parseFloat($("#receiptTotalFee").val());
+            var due = parseFloat($("#receiptDueAmount").val());
+            if (parseFloat(due) == 0) {
+                var amount = Total + fine - discount;
+
+            }
+            else {
+                var amount = Total - due + fine - discount;
+            }
+            $("#receiptTotalAmount").val(amount);
+
+            return;
+        }
+    })
+
+   
+   
+    $("#paymentcheque").on('click', function () {
+        $("#bankname").attr('disabled', false);
+        $("#chequeno").attr('disabled', false);
+    })
+    $("#paymentcash").on('click', function () {
+        $("#bankname").attr('disabled', true);
+        $("#chequeno").attr('disabled', true);
+    })
+    $("#paymentcard").on('click', function () {
+        $("#bankname").attr('disabled', true);
+        $("#chequeno").attr('disabled', true);
+    })
+
+    var totalAmount = function (due, totalAmount) {
+        debugger;
+        var remain = parseFloat(due);
+        var totalfee = parseFloat(totalAmount);
+        var totalAmount = remain + totalfee;
+        debugger;
+        $("#receiptTotalAmount").val(totalAmount);
+    }
+
+    var totalAmountRemain = function (due, totalAmount) {
+        debugger;
+        var remain = parseFloat(due);
+        var totalfee = parseFloat(totalAmount);
+        var totalAmount = totalfee - remain;
+        $("#receiptTotalAmount").val(totalAmount);
+    }
+
+    $("#receiptAmountPaid").on('keyup', function (e) {
+        e.preventDefault();
+        debugger;
+        var paidAmount = parseInt($("#receiptAmountPaid").val());
+        var advancedpaid = parseInt($("#receiptAdvancedPaid").val());
+        var totalAmount = parseInt($("#receiptTotalAmount").val());
+        var amount = advancedpaid + paidAmount - totalAmount;
+        if (amount > 0) {
+            $("#amountremain").text("Advanced Paid");
+            $("#receiptAmountRemain").val(amount);
+            $("#btnSaveReceipt").attr('disabled', false);
+            $("#receiptStatus").val("Paid");
+        }
+        else if (amount == 0)
+        {
+            $("#receiptAmountRemain").val(amount);
+            $("#btnSaveReceipt").attr('disabled', false);
+            $("#receiptStatus").val("Paid");
+        }
+        
+        else {
+            $("#amountremain").text("Amount Remain");
+            $("#receiptAmountRemain").val(Math.abs(amount));
+            $("#btnSaveReceipt").attr('disabled', false);
+            $("#receiptStatus").val("Partial Paid");
+        }
+
+        
+        var amountPaid = $("#receiptAmountPaid").val();
+        if (amountPaid == "") {
+            amountPaid = 0;
+            $("#btnSaveReceipt").attr('disabled', true);
+            $("#amountremain").text("Amount Remain");
+            $("#receiptAmountRemain").val("");
+            $("#receiptStatus").val("");
+        }
+        //debugger;
+        
+        //var topay = parseInt(amountPaid);
+       
+        //if (totalAmount >= 0) {
+        //    debugger;
+        //    if (topay > totalAmount) {
+        //        $("#amountremain").text("Advanced Paid");
+        //        $("#receiptAmountRemain").val(topay - totalAmount);
+        //        $("#receiptStatus").val("Paid");
+        //    }
+        //    else {
+                
+        //        var amountDue = parseInt(totalAmount) - parseInt(amountPaid);
+        //        $("#amountremain").text("Amount Remain");
+        //        $("#receiptAmountRemain").val(amountDue);
+        //        if (amountDue > 0) {
+        //            $("#receiptStatus").val("Partial Paid");
+        //        }
+        //        else if (amountDue == 0) {
+        //            $("#receiptStatus").val("Paid");
+        //        }
+        //        $("#btnSaveReceipt").attr('disabled', false);
+        //    }
+        //}
+        
+
+    })
+
+    $("#btnSaveReceipt").on('click', function (e) {
+        e.preventDefault();
+ 
+            debugger;
+        var fd = $("#formReceipt").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+            fd.Month = convertMonthInt(fd.Month);
+            var due = fd.DueAmount;
+            var text = $("#previousdue").html();
+            debugger;
+            if ($("#paymentcash").is(":checked") || $("#paymentcheque").is(":checked") || $("#paymentcard").is(":checked")) {
+
+            }
+            else {
+                alert("Please select payment type");
+                return;
+        }
+        if (fd.PaidAmount == '' || fd.PaidAmount < 0) {
+                debugger;
+                return;
+            }
+            $("#modalConform").modal('show');
+            $("#modalConform .modal-title").html("Conformation");
+            $("#modal-body2").html("Are you sure you want to pay: <b> " + fd.PaidAmount + "</b>?");
+
+    
+    })
+
+    $("#btnConformation").on('click', function () {
+        debugger;
+        var fd = $("#formReceipt").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if ($("#amountremain").text() == "Advanced Paid") {
+            fd.PaidAmount = parseInt(fd.TotalAmount);
+            fd.DueAmount = 0;
+        }
+        else {
+            fd.PaidAmount = parseInt(fd.AdvancedPaid) + parseInt(fd.PaidAmount);
+        }
+         fd.CreatedBy = '@Session["username"]';
+        if (fd.discount == undefined) {
+            fd.discount = 0;
+        }
+
+        fd.Month = convertMonthInt(fd.Month);
+        var due = fd.DueAmount;
+        var text = $("#previousdue").html();
+        debugger;
+        $('#modalConform').modal('hide');
+        $.ajax({
+            url: "/api/PostReceiptDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (($("#amountremain").text() == "Advanced Paid")) {
+                    SaveAdvancedPaid(fd.StudentId, $("#receiptAmountRemain").val(),result);
+                }
+                else {
+
+                }
+                SaveDocument(result);
+                debugger;
+                if (due == 0) {
+                    savePaidStatus(fd.BillingId, fd.StudentId, "Paid");
+                }
+                else if (due != 0) {
+                    savePaidStatus(fd.BillingId, fd.StudentId, "PartialPaid");
+                }
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html(" Successful.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    $("#formReceipt").find("input[type=text],input[type=hidden],textarea,select").val("");
+                    hideAll();
+                    $("#divBillingDetails").show();
+                    var batch = $("#searchBatch").val();
+                    var _class = $("#searchClass").val();
+                    var studentid = $("#searchStudentId").val().trim();
+                    var month = $("#searchMonth").val();
+                    var status = $("#searchStatus").val();
+                    debugger;
+                    if (batch == '' && _class == '' && studentid == '' && month == '' && status == '') {
+                        loadData();
+                        return;
+                    }
+
+                    else {
+                        debugger;
+                        $.ajax({
+                            url: "/api/SearchBillingDetails",
+                            method: "GET",
+                            data: {
+                                Batch: batch,
+                                Class: _class,
+                                StudentId: studentid,
+                                Month: month,
+                                Status: status,
+                                CompanyId:@Session["CompanyId"],
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                debugger;
+                                showResultData(data);
+                            },
+                            error: function (e) {
+                                console.error(e);
+                                alert(e.statusText);
+                            }
+                        })
+                    }
+                })
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    function SaveDocument(id) {
+        debugger;
+        var data = new FormData();
+        var ins = $('#multiFiles')[0].files.length;
+        debugger;
+        for (var x = 0; x < ins; x++) {
+            data.append("Document[]", $('#multiFiles')[0].files[x]);
+        }
+        debugger;
+        var studentId = $("#receiptStudentId").val();
+        data.append('ReceiptId', id);
+        data.append('StudentId', studentId);
+        data.append('Prefix', "receipt");
+        data.append('CompanyId',@Session["CompanyId"]);
+
+        $.ajax({
+            url: '/api/UploadReceiptDocuments',
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (response) {
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    }
+
+    var savePaidStatus = function (billingId,studentId,text) {
+        $.ajax({
+            url: "/api/SavePaidStatus",
+            method: "POST",
+            data: {
+                BillingId: billingId,
+                StudentId: studentId,
+                Text: text,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+
+            },
+            error:function(e){
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var SaveAdvancedPaid = function (studentid, amount,Receiptid) {
+        debugger;
+        $.ajax({
+            url: "/api/SaveAdvancedPaid",
+            method: "POST",
+            data: {
+                StudentId: studentid,
+                Amount: amount,
+                CompanyId:@Session["CompanyId"],
+                ReceiptId: Receiptid
+            },
+            dataType: "json",
+            success: function (result) {
+
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+
+    var deleteBillingDetails = function (id, month, studentid,batch) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Billing details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Month : <b> " + month + "</b><br/> Session: <b> " + batch +"</b>");
+
+        $('#btnDeleteModal').data('id', id);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var id = $(this).data('id');
+        debugger;
+        $.ajax({
+            url: "/api/DeleteBillingDetails",
+            method: "POST",
+            data: {
+                BillingId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    debugger;
+                    var batch = $("#searchBatch").val();
+                    var _class = $("#searchClass").val();
+                    var studentid = $("#searchStudentId").val().trim();
+                    var month = $("#searchMonth").val();
+                    var status = $("#searchStatus").val();
+                    debugger;
+                   
+                  
+                        debugger;
+                        $.ajax({
+                            url: "/api/SearchBillingDetails",
+                            method: "GET",
+                            data: {
+                                Batch: batch,
+                                Class: _class,
+                                StudentId: studentid,
+                                Month: month,
+                                Status: status,
+                                CompanyId:@Session["CompanyId"],
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                debugger;
+                                showResultData(data);
+                            },
+                            error: function (e) {
+                                console.error(e);
+                                alert(e.statusText);
+                            }
+                        })
+                    
+               
+                })
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+    var cancel = function () {
+        debugger;
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        $("#btnSaveReceipt").val("Submit");
+        hideAll();
+        $("#divBillingDetails").show();
+        debugger;
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    $("#fine").change(function () {
+
+        debugger;
+        if (this.checked) {
+            $("#receiptFine").attr('disabled', false);
+            $("#receiptFine").attr('readonly', true);
+            var fine = parseInt($("#receiptFine").val());
+            var total = parseInt($("#receiptTotalFee").val());
+            var paid = parseInt($("#receiptDueAmount").val());
+            var sum = total + fine - paid;
+            $("#receiptDiscount").val('');
+            $("#receiptDiscount").attr('placeholder', 0);
+            $("#receiptTotalAmount").val(sum);
+            $("#receiptAmountPaid").val('');
+            $("#receiptAmountRemain").val('');
+            $("#btnSaveReceipt").attr('disabled', true);
+            $("#receiptStatus").val("");
+        }
+        else {
+            $("#receiptFine").attr('disabled', true);
+            debugger;
+           
+            var total = parseInt($("#receiptTotalFee").val());
+            var paid = parseInt($("#receiptDueAmount").val());
+            var sum = total - paid;
+            $("#receiptDiscount").val('');
+            $("#receiptDiscount").attr('placeholder', 0);
+            $("#receiptTotalAmount").val(sum);
+            $("#receiptAmountPaid").val('');
+            $("#receiptAmountRemain").val('');
+            $("#btnSaveReceipt").attr('disabled', true);
+            $("#receiptStatus").val("");
+        }
+    });
+
+
+    $("#selectClass").on('change', function (e) {
+        var _class = $("#selectClass").val();
+        if (_class != '') {
+
+            $.ajax({
+                url: "/api/GetFacultyByClass",
+                method: "GET",
+                data: {
+                    Class: _class
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#selectFaculty").val(result[0]["FacultyName"]);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $("#selectFaculty").val('');
+        }
+    })
+
+    $('.multiselect').on('mousedown', 'option', function (e) {
+        e.preventDefault();
+        $(this).prop('selected', !$(this).prop('selected'));
+        return false;
+    });
+
+    var PrintBilling = function (billingid,month,batch) {
+        debugger;
+        var id = billingid;
+        window.open("/Home/PrintBilling?BillingId=" + id + "&Month=" + month + "&Batch=" + batch );
+    }
+
+    $("#btnDelete").on("click", function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#deleteMultipleBill").serializeJSON();
+        if (fd.BillingId == undefined) {
+            debugger;
+            $('#modalInfo').modal('show');
+            $('#modalInfo .modal-title').html("Error!");
+            $('#modalInfo .modal-body').html("Please Select row to delete billing");
+            $(".redirect").on('click', function () {
+                debugger;
+                $('#modalInfo').modal('hide');
+
+            })
+        
+        }
+        else {
+            var count = fd.BillingId.length;
+            $('#modalMultipleDelete').modal('show');
+            $('#modalMultipleDelete .modal-title').html("Conform");
+            $('#modalMultipleDelete .modal-body').html("Do you want to delete Billing details of:  " + count + " Student ?</b> ");
+            debugger;
+         
+        }
+       
+    })
+
+    $("#btnDeleteMultipleModal").on("click", function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#deleteMultipleBill").serializeJSON();
+        $.ajax({
+            url: "/api/MultipleBillingDetails",
+            method: "POST",
+            data: fd,
+            dataTable: "json",
+            success: function (result) {
+                debugger;
+                $('#modalMultipleDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    debugger;
+                    var batch = $("#searchBatch").val();
+                    var _class = $("#searchClass").val();
+                    var studentid = $("#searchStudentId").val().trim();
+                    var month = $("#searchMonth").val();
+                    var status = $("#searchStatus").val();
+                    debugger;
+                    if (batch == '' && _class == '' && studentid == '' && month == '' && status == '') {
+                        loadData();
+                        return;
+                    }
+
+                    else {
+                        debugger;
+                        $.ajax({
+                            url: "/api/SearchBillingDetails",
+                            method: "GET",
+                            data: {
+                                Batch: batch,
+                                Class: _class,
+                                StudentId: studentid,
+                                Month: month,
+                                Status: status,
+                                CompanyId:@Session["CompanyId"],
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                debugger;
+                                showResultData(data);
+                            },
+                            error: function (e) {
+                                console.error(e);
+                                alert(e.statusText);
+                            }
+                        })
+                    }
+
+                })
+            },
+            error: function (e) {
+
+            }
+        })
+    })
+
+    $("#undodelete").on('click', function (e) {
+        e.preventDefault();
+        $('.checkdelete').prop('checked', false);
+    })
+</script>
+
+
+

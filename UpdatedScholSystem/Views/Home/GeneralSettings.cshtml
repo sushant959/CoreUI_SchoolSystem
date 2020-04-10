@@ -1,0 +1,3398 @@
+﻿
+@{
+    ViewBag.Title = "GeneralSettings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.
+      min.css" />
+<script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="BatchDetails" data-text="Batch details" autocomplete="off" checked>Batch
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="FacultyDetails" data-text="Faculty details" autocomplete="off" />Faculty
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ClassDetails" data-text="Class details" autocomplete="off" />Class
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="SectionDetails" data-text="Section details" autocomplete="off" />Section
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="FeeStructureDetails" data-text="Fee Structure details" autocomplete="off" />Fee Structure
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ClassFeeDetails" data-text="Class Fee details" autocomplete="off" />Class Fee
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="CountryDetails" data-text="Country details" autocomplete="off" />Country
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StateDetails" data-text="State details" autocomplete="off" />State
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StudentType" data-text="Student Type" autocomplete="off" />Student Type
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ResponseText" data-text="Response Text" autocomplete="off" />Response Text
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="DayOff" data-text="Day Off" autocomplete="off" />Non-Working Day
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StartDate" data-text="Start Date" autocomplete="off" />Start Date
+    </label>
+</div>
+
+<br /><br />
+@*/////////////////////////////----------Batch Details (Start)-----------/////////////////////////////////////*@
+<div id="batchResult">
+    <div class="row">
+        <div class="col-sm-3">
+            <h4 id="batchname"></h4>
+        </div>
+    </div>
+    <div style="width:100%;overflow:auto; max-height:80vh">
+        <table id="tblBatch" class="bordered-table table-striped">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div id="divBatchDetails">
+    <br />
+    <div class="col-md-5 thumbnail">
+        <h4 class="well-sm">Add Batch</h4>
+        <form id="frmBatch" class="well well-sm">
+            <div class="flexContainer">
+                <input type="hidden" name="CompanyId" id="companyid" value="" />
+                <div style="flex:1.5;text-align:center;">
+                    <label></label>
+                    <input type="text" name="FromYear" class="form-control" style="flex:auto;" placeholder="From Year" id="fromYear" required onkeypress="return isNumberKey(event)" />
+                </div>
+                &nbsp;&nbsp;
+                <div style="flex:1.5;text-align:center;">
+                    <label></label>
+                    <input type="text" name="ToYear" class="form-control" placeholder="To Year" style="flex:auto;" id="toYear" required onkeypress="return isNumberKey(event)" />
+                </div>&nbsp;&nbsp;
+                <div style="flex:none;">
+                    <div> </div>
+                    <button class="btn btn-warning btn-block" id="btnSaveBatch" type="submit" data-name="">Add</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="divStartDate">
+    <br />
+    <div class="col-md-8">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Start Date</h4>
+            <form id="frmStartDate" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="StartDateId" />
+                    <label style="flex:1">Batch :&nbsp;</label>
+                    <select id="startDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
+                    <label style="flex:1"> Start Date:&nbsp;</label>
+                    <input type="text" id="startdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartDate">Add</button>
+                </div>
+            </form>
+        </div>
+        <hr/>
+        <div id="tblStartDate" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+   
+</div>
+@*////////////////////////////-----------Batch Details (End)-------------///////////////////////////////////////*@
+
+@*////////////////////////////-----------Class Details (Start)-----------///////////////////////////////////////*@
+<div id="divClassDetails">
+    <br />
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Class</h4>
+            <form id="formClassDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1.2">Class Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="ClassName" style="flex:2" required />&nbsp;&nbsp;
+                    <label style="flex:1.2">Class Code:&nbsp;&nbsp;</label>
+                    <input type="text" class="form-control" name="ClassCode" style="flex:2" required />
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:0.5">Class Type: &nbsp;&nbsp;</label>
+                    <label style="flex:1.3">
+                        <input type="radio" name="ClassType" value="Yearly" required />
+                        <label for="ClassType1" class="radio-label">Yearly</label>
+                        &nbsp; &nbsp; &nbsp;
+
+                        <input type="radio" name="ClassType" value="Semester" required />
+                        <label for="ClassType2" class="radio-label">Semester</label>
+                        &nbsp; &nbsp; &nbsp;
+
+                        <input type="radio" name="ClassType" value="Trimester" required />
+                        <label for="ClassType3" class="radio-label">Trimester</label>
+                    </label>&nbsp; &nbsp;
+                    <label style="flex:0.5">Student Limit:&nbsp;&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentLimit" style="width:80px;" onkeypress="return isNumberKey(event)" />
+                </div><br />
+                <div class="flexContainer">
+                    <label style="width:107px;">Faculty Name :&nbsp;</label>
+                    <select class="form-control" name="FacultyId" style="width:204px;" id="selectClassFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" type="submit" id="btnSaveClassDetails">Add</button>
+                </div>
+
+            </form>
+        </div>
+        <hr/>
+        <div id="tblClassDetails" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+@*///////////////////////////------------Class Details (End)-------------/////////////////////////////////////////*@
+
+@*///////////////////////////------------Faculty Details (start)-------------/////////////////////////////////////////*@
+<div id="divFacultyDetails">
+    <br />
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Faculty</h4>
+            <form id="formFacultyDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Faculty Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="FacultyName" style="flex:1.5" required />&nbsp;&nbsp;
+                    <label style="flex:1">Faculty Code:&nbsp;&nbsp;</label>
+                    <input type="text" class="form-control" name="FacultyCode" style="flex:1.5" required />&nbsp;&nbsp;
+
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveFacultyDetails">Add</button>
+                </div>
+            </form>
+        </div><hr/>
+        <div id="tblFacultyDetails" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@*///////////////////////////------------Faculty Details (End)-------------/////////////////////////////////////////*@
+
+@*///////////////////////////------------Section Details (start)-------------/////////////////////////////////////////*@
+
+<div id="divSectionDetails">
+    <br />
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Section</h4>
+            <form id="formSectionDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Section Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="SectionName" style="flex:1.5" required />&nbsp;&nbsp;
+                    <label style="flex:1">Student Limit:&nbsp;&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentLimit" style="flex:1.5" required />&nbsp;&nbsp;
+
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveSectionDetails">Add</button>
+                </div>
+            </form>
+        </div><hr/>
+        <div id="tblSectionDetails" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*///////////////////////////------------Section Details (End)-------------/////////////////////////////////////////*@
+
+
+<div id="divFeeStructureDetails">
+    <br /><br />
+    <div class="flexContainer">
+        <label style="flex:1.3">
+            <input type="radio" name="FeeManagement" value="" id="feeStructure" />
+            <label for="ClassType1" class="radio-label"><b>Fee Structure Management</b></label>
+            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+            <input type="radio" name="FeeManagement" value="" id="feeManagement" required />
+            <label for="ClassType2" class="radio-label"><b>Fee Management</b></label>
+            &nbsp; &nbsp; &nbsp;
+        </label>
+
+    </div>
+    <br /><br />
+    <div id="divfeestructure">
+        <div class="col-md-6">
+            <div class="thumbnail">
+                <h4 class="well-sm">Add Fee Structure</h4>
+                <form id="formfeestructure" class="well well-sm">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" value="" />
+                        <label style="flex:1">Fee Structure Name :&nbsp;</label>
+                        <input type="text" class="form-control" name="FeeStructureName" style="flex:0.8" required />&nbsp;&nbsp;
+                        <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveFeeStructureDetails">Add</button>
+                    </div><br />
+
+                </form>
+            </div><hr/>
+            <div id="tblFeeStructureDetails" style="width:100%;overflow:auto;">
+                <h4 class="titlename"></h4>
+                <table class="bordered-table table-striped">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divfeemanagement">
+    <br />
+    <div class="col-md-11">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Fee</h4>
+            <form id="formFeeDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1.5">Fee Structure :&nbsp;</label>
+                    <select class="form-control" name="FeeStructureName" style="flex:2" id="selectFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1.5">Student Type :&nbsp;</label>
+                    <select class="form-control" name="StudentType" style="flex:2" id="selectStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:1.5">Fee Name:&nbsp;</label>
+                    <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1.5">Amount: &nbsp;</label>
+                    <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:1.3">Refundable:&nbsp;</label>
+                    <select class="form-control" name="Refundable" style="flex:1.9" id="selectRefundable" required>
+                        <option value="">select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>&nbsp;&nbsp;
+                    <label style="flex:1.5"></label>
+                    <span style="flex:2"></span>
+                </div><br />
+
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" type="submit" id="btnSaveFeeDetails">Add</button>
+                </div>
+
+            </form>
+        </div><hr/>
+        <div id="feeDetails" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <div>
+                @*<div class="col-sm-3"></div>
+                <div class="col-sm-4" style="text-align:center;">*@
+
+                    <div class="flexContainer" style="margin-left:20px;justify-content:center">
+                        <div style="flex:none; text-align:center;">
+                            <label>FeeStructure</label>
+                            <select id="searchFeeStructureName" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center;">
+                            <label>StudentType</label>
+                            <select id="searchStudentType" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none;">
+                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchFee" type="submit" data-name="">Search</button>
+                        </div>
+                    @*</div>*@
+                </div>
+            </div>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+            <table id="tblFeeDetails" class="table table-bordered table-striped" style="width:100%"></table>
+        </div><br /><br />
+    </div>
+</div>
+@*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
+<div id="divClassFeeDetails">
+    <br />
+    <div style="margin-right:50px;"><button class="btn btn-success" id="addClassFee">Add Class Fee</button></div><hr/>
+    <div>
+        <h4 class="titlename"></h4>
+        <div class="flexContainer" style="justify-content:center">
+            <div style="text-align:center;">
+                <div class="flexContainer" style="margin-left:20px;">
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Batch</label>
+                        <select id="searchBatch" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Faculty</label>
+                        <select id="searchFaculty" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Class</label>
+                        <select id="searchClass" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none;">
+                        <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchClassFee" type="submit" data-name="">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+    <div class="col-md-12">
+        <div style="width:100%;overflow:auto">
+            <table id="tblClassFeeDetails" class="bordered-table table-striped"></table>
+        </div>
+    </div>
+</div>
+<div id="formClassFee">
+    <br />
+    <div class="col-md-12">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="titleFormClassFee">Add Class Fee</h4>
+            <form id="formFeeClassDetails">
+                <div class="flexContainer well well-sm">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <input type="hidden" id="classfeeid" name="BatchClassId" />
+                    <label style="flex:1">Select Batch :&nbsp;</label>
+                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">Select Class :&nbsp;</label>
+                    <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">Select Faculty :&nbsp;</label>
+                    <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty"  required readonly />
+                </div><br />
+                <div id="tblFee" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                </div>
+
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveClassFeeDetails" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="divDayOff">
+    <br/>
+    <div class="col-md-12">
+        <div><button class="btn btn-success" id="addDayOff">Add Non-Working Day</button></div><hr/>
+        <br/>
+        <h4 class="titlename"></h4>
+        <div class="flexContainer" style="justify-content:center">
+            <div style="flex:none; text-align:center">
+                <label>Batch</label>
+                <select id="searchDayoffBatch" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Department</label>
+                <select id="searchDayoffDepartment" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Faculty</label>
+                <select id="searchDayoffFaculty" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Class</label>
+                <select id="searchDayoffClass" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none;">
+                <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDayOff" type="submit" data-name="">Search</button>
+            </div>
+        </div>
+        <div style="width:100%;overflow:auto">
+            <table id="tblDayOff" class="bordered-table table-striped"></table>
+        </div>
+        <br />
+        <h4>Summary Info.</h4>
+        <hr style="margin-top:5px;margin-bottom:10px" />
+        <div id="divSummary" class="row">
+        </div>
+    </div>
+</div>
+<div id="formDayOff">
+    <br />
+    <div class="col-md-10">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="titleFormClassFee">Add Non-Working Day</h4>
+            <form id="formDayOffDetails">
+                <div class="well well-sm">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" value="" />
+                        <input type="hidden" id="dayoffid" name="DayOffId" />
+                        <label style="flex:1">Batch :&nbsp;</label>
+                        <select class="form-control" name="Batch" style="flex:1.5" id="dayoffBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Title:</label>
+                        <input type="text" class="form-control" style="flex:1.5" name="Title" />
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Date From :&nbsp;</label>
+                        <input type="text" id="datefrom" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateFrom" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Date To :&nbsp;</label>
+                        <input type="text" id="dateto" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateTo" />
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Department :</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Department[]" style="flex:1.5;margin-left:-10px;" id="dayoffDepartment" required></select>
+                        <label style="flex:1"></label>
+                        <label style="flex:1.5"></label>
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Faculty :&nbsp;</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Faculty[]" style="flex:1.5" id="dayoffFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Class :&nbsp;</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1.5" id="dayoffClass" required></select>
+                    </div><br />
+                </div>
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveDayOff" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelDay()" value="Cancel" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="divCountryDetails">
+    <br />
+    <div class="col-md-5">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Country</h4>
+            <form id="formCountryDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Country Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="CountryName" style="flex:1.5" required />&nbsp;&nbsp;
+
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveCountryDetails">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblCountryDetails" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="divStateDetails">
+    <br />
+    <div class="col-md-7">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add State</h4>
+            <form id="formStateDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Country:&nbsp;</label>
+                    <select class="form-control" name="CountryName" style="flex:1.5" id="selectCountry" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">State:&nbsp;</label>
+                    <input type="text" class="form-control" name="StateName" id="" style="flex:1" required />&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStateDetails">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblStateDetails" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div id="divStudentType">
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Student Type</h4>
+            <form id="formstudenttype" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Student Type :&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentTypeName" style="flex:0.8" required />&nbsp;&nbsp;
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStudentType">Add</button>
+                </div><br />
+
+            </form>
+        </div>
+        <div id="tblStudentType" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="divResponseText">
+    <br />
+    <div class="col-md-7">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Response Text</h4>
+            <form id="formResponseText" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
+                    <textarea class="form-control" name="Response"></textarea>
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveResponseText">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblResponseText" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
+
+
+@*//////////////////////////////-----------Scholarship Management(Start)--*@
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditClass" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Class</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalClassDetails" class="well well-sm">
+                        <div class="flexContainer">
+
+                            <input type="hidden" name="ClassId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">Class Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="ClassName" style="flex:2" required />&nbsp;&nbsp;
+                            <label style="flex:1.2">Class Code:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="ClassCode" style="flex:2" required />
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:0.5">Class Type: &nbsp;&nbsp;</label>
+                            <label style="flex:1.3">
+                                <input type="radio" name="ClassType" value="Yearly" required />
+                                <label for="ClassType1" class="radio-label">Yearly</label>
+                                &nbsp; &nbsp; &nbsp;
+
+                                <input type="radio" name="ClassType" value="Semester" required />
+                                <label for="ClassType2" class="radio-label">Semester</label>
+                                &nbsp; &nbsp; &nbsp;
+
+                                <input type="radio" name="ClassType" value="Trimester" required />
+                                <label for="ClassType3" class="radio-label">Trimester</label>
+                            </label>&nbsp; &nbsp;
+                            <label style="flex:0.5">Student Limit:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentLimit" style="width:80px;" onkeypress="return isNumberKey(event)" />
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="width:107px;">Faculty Name :&nbsp;</label>
+                            <select class="form-control" name="FacultyId" style="width:204px;" id="modalClassFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalClass">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditFaculty" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Faculty</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalFacultyDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="FacultyId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">Class Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="FacultyName" style="flex:2" required />&nbsp;&nbsp;
+                            <label style="flex:1.2">Class Code:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="FacultyCode" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalFaculty">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditBatch" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Batch</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalBatchDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="BatchId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">From Year :&nbsp;</label>
+                            <input type="text" class="form-control" name="FromYear" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;
+                            <label style="flex:1.2">To Year:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="ToYear" style="flex:2" required onkeypress="return isNumberKey(event)" />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalBatch">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditSection" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Section</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalSectionDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="SectionId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">Section Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="SectionName" style="flex:2" required />&nbsp;&nbsp;
+                            <label style="flex:1.2">Student Limit:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentLimit" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalSection">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditStartDate" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Section</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStartDate" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StartDateId" />
+                            <label style="flex:1">Batch :&nbsp;</label>
+                            <select id="modalStartDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
+                            <label style="flex:1"> Start Date:&nbsp;</label>
+                            <input type="text" id="modalstartdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
+                        </div><br /> 
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalStartDate">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditState" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit State</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStateDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StateId" />
+                            <input type="hidden" name=" CompanyId" value="" />
+                            <label style="flex:1.2">Country:&nbsp;</label>
+                            <select class="form-control" name="CountryName" id="modalcountryname" style="flex:2"></select>&nbsp;&nbsp;
+                            <label style="flex:1.2">State Name:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="StateName" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalState">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="modalEditFeeStructure" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Fee Structure</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalFeeStructureDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="FeeStructureId" />
+                            <input type="hidden" name="CompanyId" id="modalCompanyId" value="" />
+                            <label style="flex:1.2">Fee Structure Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="FeeStructureName" id="modalFeeName" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalFeeStructure">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditFee" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Fee Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalFee" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="FeeId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.5">Fee Structure :&nbsp;</label>
+                            <select class="form-control" name="FeeStructureName" style="flex:2" id="selectmodalFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Student Type :&nbsp;</label>
+                            <select class="form-control" name="StudentType" style="flex:2" id="selectmodalStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.5">Fee Name:&nbsp;</label>
+                            <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Amount: &nbsp;</label>
+                            <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="width:117px;">Refundable:&nbsp;</label>
+                            <select class="form-control" name="Refundable" style="width:182px;" id="selectmodalRefundable" required>
+                                <option value="">select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>&nbsp;&nbsp;
+                        </div><br />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalFee">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditCountry" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Country</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalCountryDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="CompanyId" value="" />
+                            <input type="hidden" name="CountryId" />
+                            <label style="flex:1.2">Country Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="CountryName" id="modalCountryName" style="flex:2" required />&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalCountry">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditResponsetext" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Country</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="ResponseTextId" />
+                            <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
+                            <textarea class="form-control" name="Response" id="modalresponsetext"></textarea>
+                        </div><br />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalResponse">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditStudentType" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Student Type</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStudentType" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StudentTypeId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">Student Type :&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentTypeName" id="modalStudentType" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalStudentType">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel1"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal1" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('.nepali-calendar').nepaliDatePicker();
+        var listType = $("input[name='Tab']:checked").data('value');
+        var batchname = $("input[name='Tab']:checked").data('text');
+        debugger;
+        $("#batchname").html("List of all " + batchname);
+        var companyid=@Session["CompanyId"];
+        hideAll();
+        loadData(listType, companyid);
+        $('.multiselect').on('mousedown','option', function (e) {
+            e.preventDefault();
+            $(this).prop('selected', !$(this).prop('selected'));
+            return false;
+        });
+    })
+
+    $("input[name ='Tab']").on('change', function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        var titlename = $("input[name='Tab']:checked").data('text');
+        debugger;
+        hideAll();
+        debugger;
+        if (listType == "FeeStructureDetails") {
+            $("#feeStructure").prop("checked", true);
+        }
+        else if (listType == "StateDetails") {
+            debugger;
+            getAllCountry();
+        }
+        else if (listType == "ClassFeeDetails") {
+            getClassBatchFaculty();
+        }
+        else if (listType == "ClassDetails") {
+            getFaculty('@Session["CompanyId"]');
+        }
+        else if(listType == "StartDate"){
+            getClassBatchFaculty();
+        }
+        else if (listType == "DayOff") {
+            $("#divSummary").empty();
+            getTotalHoliday();
+        }
+        debugger;
+        loadData(listType, '@Session["CompanyId"]');
+    })
+
+    var getTotalHoliday = function () {
+        $.ajax({
+            url: "/api/GetTotalHolidays",
+            method: "GET",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var classHoliday = result[0];
+                var deptHoliday = result[1];
+                $("#divSummary").empty();
+
+                for (var r in classHoliday) {
+                    $("#divSummary").append(
+                        `<div class="col-md-3"  style="margin-left:20px">
+                    <span>Class: ${classHoliday[r]["Class"]}</span>
+                </div >
+                <div class="col-md-3">
+                    <span>Total Holidays : ${classHoliday[r]["Total"]}</span>
+                </div ><br/>`);
+                }
+               
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var loadData = function (urlName, companyid) {
+        debugger;
+        $.ajax({
+            url: "/api/GetSettingDetails",
+            method: "Get",
+            data: { urlName: urlName.toLowerCase(), CompanyId: companyid },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == 0 && urlName == "BatchDetails") {
+                    debugger;
+                    $("#divBatchDetails").show();
+                    showResultData(result);
+                }
+               
+                else {
+                    debugger;
+                    if (urlName == "BatchDetails") {
+                        $("#batchResult").show();
+                        $("#div" + urlName).hide();
+                        showResultData(result);
+                    }
+                    else if (urlName == "FeeStructureDetails") {
+                        $("#div" + urlName).show();
+                        $("#divfeestructure").show();
+                        showResultData(result);
+                    }
+                    else if (urlName == "StartDate") {
+                        $("#div" + urlName).show();
+                        showResultData(result);
+                    }
+                    else if (urlName == "ClassFeeDetails") {
+
+                        $("#div" + urlName).show();
+                        showClassFeeData(result);
+                    }
+                    else if(urlName == "DayOff"){
+                        $("#div" + urlName).show();
+                        getClassBatchFaculty();
+                        $.ajax({
+                            url: "/api/GetAllDesignation",
+                            method: "GET",
+                            data: {
+                                 CompanyId:@Session["CompanyId"],
+                            },
+                            dataType: "json",
+                            success: function (result) {
+                                debugger;
+                                var department = result[0];
+                                var designation = result[1];
+                                if (department != undefined) {
+                                    debugger;
+                                    var v = "<option value=''>--select--</option>";
+                                    for (var i in department) {
+                                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                                    }
+                                    $("#searchDayoffDepartment").html(v);
+                                }
+
+                            }
+                        })
+                        
+                        showDayOffData(result);
+                    }
+                    else {
+                        $("#div" + urlName).show();
+                        showResultData(result);
+                    }
+
+
+                }
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showClassFeeData = function (result) {
+        var _type = $("input[name='Tab']:checked").data('value');
+
+        var view = "classfeedetails";
+        $("#tblClassFeeDetails").dataTable({
+            data: result,
+            'destroy': true,
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editClassFee(\"" + row.BatchClassId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteClassFee(\"" + row.BatchClassId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + _type + "\")'>Delete</a>&nbsp<a href='#' class='btn btn-info' onclick='editClassFee(\"" + row.BatchClassId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + view + "\")'>View</a></div>";
+                    },
+                    'sortable': false,
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+
+                {
+                    'title': 'Class',
+                    'data': 'Class'
+                },
+                {
+                    'title': 'Faculty',
+                    'data': 'Faculty'
+                },
+                {
+                    'title': 'FeeStructureName',
+                    'data': 'FeeStructureName'
+                },
+                {
+                    'title': 'StudentType',
+                    'data': 'StudentType'
+                },
+                {
+                    'title': 'FeeName',
+                    'data': 'FeeName'
+                },
+                {
+                    'title': 'Amount',
+                    'data': 'Amount'
+                },
+                {
+                    'title': 'Refundable',
+                    'data': 'Refundable'
+                },
+
+            ]
+        });
+        debugger;
+
+        $("#divClassFeeDetails .titlename").html("List of Class Fee Details");
+
+
+    }
+
+    var showDayOffData = function (result) {
+        debugger;
+            $("#tblDayOff").dataTable({
+                data: result,
+                'destroy': true,
+                columns: [
+                    {
+                        'title': 'Action',
+                        'data': 'Action',
+                        'render': function (data, type, row) {
+                            return "<div style='display:flex'><a href='#' onclick='editDayOff(\"" + row.DayOffId + "\",\"" + row.Batch + "\",\"" + row.Title + "\",\"" + row.DateFrom + "\",\"" + row.DateTo + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='deleteDayOff(\"" + row.DayOffId + "\",\"" + row.Batch + "\",\"" + row.Title + "\",\"" + row.DateFrom + "\",\"" + row.DateTo + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></div>";
+                        },
+                        'sortable': false,
+                    },
+                    {
+                        'title': 'SN',
+                        'data': 'SN',
+                        'render': function (data, type, row, meta) {
+                            return "<span>" + (meta.row + 1) + "</span>";
+                        }
+                    },
+
+                    {
+                        'title': 'Batch',
+                        'data': 'Batch'
+                    },
+
+                    {
+                        'title': 'Department',
+                        'data': 'Department'
+                    },
+                    {
+                        'title': 'Faculty',
+                        'data': 'Faculty'
+                    },
+                    {
+                        'title': 'Class',
+                        'data': 'Class'
+                    },
+                    {
+                        'title': 'Title',
+                        'data': 'Title'
+                    },
+                    {
+                        'title': 'DateFrom',
+                        'data': 'DateFrom'
+                    },
+                    {
+                        'title': 'DateTo',
+                        'data': 'DateTo'
+                    },
+                    {
+                        'title': 'TotalDays',
+                        'data': 'TotalDays'
+                    },
+
+                ]
+            });
+            debugger;
+
+            $("#divDayOff .titlename").html("List of Holidays ");
+        
+    }
+
+
+    var showResultData = function (result) {
+        debugger;
+
+        var _type = $("input[name='Tab']:checked").data('value');
+        var tblBody = "";
+        var tblHeader = "<th>SN</th>";
+        debugger
+        if (result != 0) {
+                for (var c in result[0]) {
+                    debugger;
+                    if (c != "BatchId" && c != "ClassId" && c != "FacultyId" && c != "SectionId" && c != "FeeStructureId" && c != "CountryId" && c != "StateId" && c != "StudentTypeId" && c != "ResponseTextId" && c !="StartDateId") {
+                        tblHeader += "<th>" + c + "</th>";
+                    }
+                }
+                tblHeader += "<th style='width:100px;'>Action</th>";
+                for (var r in result) {
+                    var SN = (parseInt(r) + 1);
+                    tblBody += "<tr style='text-align:center'><td>" + SN + "</td>";
+                    for (var c in result[r]) {
+                        if (c != "BatchId" && c != "ClassId" && c != "FacultyId" && c != "SectionId" && c != "FeeStructureId" && c != "CountryId" && c != "StateId" && c != "StudentTypeId" && c != "ResponseTextId" && c != "StartDateId") {
+                            tblBody += "<td>" + result[r][c] + "</td>";
+                        }
+                    }
+                    debugger;
+                    if (result.length == 1 && _type == "BatchDetails") {
+                        if (result[r]['Status'] == "Disable") {
+                            tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
+                        }
+                        else {
+                            tblBody += "<td><a href='#' onclick='editBatchDetails(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='upgradeBatch(\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
+                        }
+                        tblBody += "</tr>";
+                        $("#tblBatch thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblBatch tbody").html(tblBody);
+                    }
+                    else if (result.length > 1 && _type == "BatchDetails") {
+                        if (result[r]['Status'] == "Disable") {
+                            tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
+                        }
+                        else {
+                            tblBody += "<td><a href='#' onclick='upgradeBatch(\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
+                        }
+                        tblBody += "</tr>";
+                        $("#tblBatch thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblBatch tbody").html(tblBody);
+                    }
+
+                    else if (_type == "ClassDetails") {
+                        tblBody += "<td><a href='#' onclick='updateClassDetails(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassCode'] + "\",\"" + result[r]['ClassName'] +
+                            "\",\"" + result[r]['ClassType'] + "\",\"" + result[r]['StudentLimit'] + "\",\"" + result[r]["FacultyId"] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassName'] + "\",\"" + _type + "\") ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
+                        tblBody += "</tr>";
+                        $("#tblClassDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblClassDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Class details");
+                    }
+                    else if (_type == "FacultyDetails") {
+                        tblBody += "<td><a href='#' onclick='updateFacultyDetails(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyCode'] + "\",\"" + result[r]['FacultyName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyName'] + "\",\"" + _type + "\") ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
+                        tblBody += "</tr>";
+                        $("#tblFacultyDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblFacultyDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Faculty details");
+                    }
+                    else if (_type == "SectionDetails") {
+                        tblBody += "<td><a href='#' onclick='updateSectionDetails(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + result[r]['StudentLimit'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        tblBody += "</tr>";
+                        $("#tblSectionDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblSectionDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Section details");
+                    }
+                    else if (_type == "StartDate") {
+                        tblBody += "<td><a href='#' onclick='updateStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Date'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]["Date"] + "\",\"" + result[r]["Batch"] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        tblBody += "</tr>";
+                        $("#tblStartDate thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblStartDate tbody").html(tblBody);
+                    }
+                    else if (_type == "FeeStructureDetails") {
+                        if (result[r]['FeeStructureName'] == "Initial" || result[r]['FeeStructureName'] == "Yearly" || result[r]['FeeStructureName'] == "Extra") {
+                            tblBody += "<td></td>";
+
+                        }
+                        else {
+
+                            tblBody += "<td><a href='#' onclick='updateFeeStructureDetails(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        }
+                        tblBody += "</tr>";
+                        $("#tblFeeStructureDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblFeeStructureDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Fee Structure");
+                    }
+                    else if (_type == "CountryDetails") {
+                        tblBody += "<td><a href='#' onclick='UpdateCountryDetails(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        tblBody += "</tr>";
+                        $("#tblCountryDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblCountryDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Country");
+                    }
+                    else if (_type == "ResponseText") {
+                        tblBody += "<td><a href='#' onclick='UpdateResponseText(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        tblBody += "</tr>";
+                        $("#tblResponseText thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblResponseText tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Response Text");
+                    }
+                    else if (_type == "StateDetails") {
+                        tblBody += "<td><a href='#' onclick='UpdateStateDetails(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        tblBody += "</tr>";
+                        $("#tblStateDetails thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblStateDetails tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all State");
+                    }
+                    else if (_type == "StudentType") {
+                        if (result[r]['StudentTypeName'] == "General") {
+                            tblBody += "<td></td>";
+
+                        }
+                        else {
+                            tblBody += "<td><a href='#' onclick='UpdateStudentType(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                        }
+                        tblBody += "</tr>";
+                        $("#tblStudentType thead").html("<tr>" + tblHeader + "</tr>");
+                        $("#tblStudentType tbody").html(tblBody);
+                        $("#tbl" + _type + " .titlename").html("List of all Student Type");
+                    }
+
+                }
+            
+        }
+        else {
+
+            $("#tbl" + _type + " .titlename").html("");
+            $("#tbl" + _type + " thead").html("");
+            $("#tbl" + _type + " tbody").html("");
+        }
+    }
+
+
+
+
+    var editClassFee = function (id, batch, _class, faculty, view) {
+        debugger;
+        hideAll();
+        $("#formClassFee").show();
+        $("#formFeeClassDetails").find("input[type=text],input[type=hidden],textarea,select").val("");
+        $("#classfeeid").val("");
+        $('#tblFee').empty();
+        $('#formClassFee [name="BatchClassId"]').val(id);
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                    $("#selectClass").val(_class);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                    $("#selectBatch").val(batch);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#selectFaculty").html(v);
+                    $("#selectFaculty").val(faculty);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        $('#formClassFee [name="Batch"]').val(batch);
+        $('#formClassFee [name="Class"]').val(_class);
+        $('#formClassFee [name="Faculty"]').val(faculty);
+        debugger;
+        $.ajax({
+            url: "/api/GetClassAllFeeDetails/",
+            method: "GET",
+            data: {
+                BatchClassId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                for (var r in result) {
+                    var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
+                    html += `<table class="bordered-table table-striped">`;
+                    html += `<thead><th style='width:20px;text-align:center;'>&nbsp;</th><th>Student Type<th style='width:70px;'>FeeName</th><th style='width:100px;'>Amount</th><th style='width:100px;'>Refundable</th></thead>`;
+                    html += ` <tbody class='rowTable'>`;
+
+                    debugger;
+                    if (view != undefined) {
+                        for (var c in result[r]) {
+                            debugger;
+                            if (result[r][c]["IsChecked"] == "True") {
+                                html += `<tr>`;
+                                html += `<td  style='width:20px;'><input type='checkbox' class='checktr' name='ClassFeeManagement[${i}][IsChecked]' value='true'  checked disabled/><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /><input type='hidden' name='ClassFeeManagement[${i}][FeeId]' value='${result[r][c]["FeeId"]}' /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control StudentType'  name='ClassFeeManagement[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control FeeName'  name='ClassFeeManagement[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Amount' name='ClassFeeManagement[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Refundable' name='ClassFeeManagement[${i}][Refundable]' value=" ${result[r][c]['Refundable']}" readonly /></td>`;
+                                html += `</tr>`;
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td  style='width:20px;'><input type='checkbox' class='checktr' name='ClassFeeManagement[${i}][IsChecked]' value='true' disabled/><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /><input type='hidden' name='ClassFeeManagement[${i}][FeeId]' value='${result[r][c]["FeeId"]}' /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control StudentType'  name='ClassFeeManagement[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control FeeName'  name='ClassFeeManagement[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Amount' name='ClassFeeManagement[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Refundable' name='ClassFeeManagement[${i}][Refundable]' value=" ${result[r][c]['Refundable']}" readonly /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblFee").append(html);
+                        $('#formClassFee select').attr('disabled', true);
+                        $("#titleFormClassFee").html("Class " + _class + " Fee Details");
+                        $("#btnSaveClassFeeDetails").hide();
+                        $("#btnCancel").hide();
+                    }
+                    else {
+                        for (var c in result[r]) {
+                            debugger;
+                            if (result[r][c]["IsChecked"] == "True") {
+                                html += `<tr>`;
+                                html += `<td  style='width:20px;'><input type='checkbox' class='checktr' name='ClassFeeManagement[${i}][IsChecked]' value='true'  checked /><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /><input type='hidden' name='ClassFeeManagement[${i}][FeeId]' value='${result[r][c]["FeeId"]}' /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control StudentType'  name='ClassFeeManagement[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control FeeName'  name='ClassFeeManagement[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Amount' name='ClassFeeManagement[${i}][Amount]' value="${result[r][c]['Amount']}" /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Refundable' name='ClassFeeManagement[${i}][Refundable]' value=" ${result[r][c]['Refundable']}" readonly /></td>`;
+                                html += `</tr>`;
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td  style='width:20px;'><input type='checkbox' class='checktr' name='ClassFeeManagement[${i}][IsChecked]' value='true'/><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /><input type='hidden' name='ClassFeeManagement[${i}][FeeId]' value='${result[r][c]["FeeId"]}' /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control StudentType'  name='ClassFeeManagement[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td style='width:70px;'><input type="text" class='form-control FeeName'  name='ClassFeeManagement[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Amount' name='ClassFeeManagement[${i}][Amount]' value="${result[r][c]['Amount']}" /></td>`;
+                                html += `<td style='width:100px;'><input type='text' class='form-control Refundable' name='ClassFeeManagement[${i}][Refundable]' value=" ${result[r][c]['Refundable']}" readonly /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblFee").append(html);
+                        $("#btnSaveClassFeeDetails").show();
+                        $('#formClassFee select').attr('disabled', true);
+                        $("#btnCancel").show();
+                        $('#formClassFee select').attr('readonly', false);
+                        $("#titleFormClassFee").html("Edit Class " + _class + " Fee");
+                        $("#btnSaveClassFeeDetails").val("Update");
+                    }
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        
+    }
+
+
+    var upgradeBatch = function (fromyear, toyear, type) {
+        debugger;
+        var FromYear = parseInt(fromyear) + 1;
+        var ToYear = parseInt(toyear) + 1;
+        var companyid=@Session["CompanyId"];
+        saveBatch(FromYear, ToYear, companyid, type);
+
+    }
+    $("#btnSaveBatch").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var FromYear = $("#fromYear").val();
+        var ToYear = $("#toYear").val();
+        var companyid =@Session["CompanyId"];
+        saveBatch(FromYear, ToYear, companyid, "BatchDetails");
+    })
+    var saveBatch = function (FromYear, ToYear,companyid, type) {
+        debugger;
+        $.ajax({
+            url: "/api/PostBatchDetails",
+            method: "POST",
+            data: { FromYear: FromYear, ToYear: ToYear, CompanyId: companyid },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                loadData(type, companyid);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#btnSaveStartDate").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#frmStartDate").serializeJSON();
+         fd.CompanyId=@Session["CompanyId"];
+        if (fd.Batch == '' || fd.Date == '') return;
+        $.ajax({
+            url: "/api/PostStartDate",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("input[type=text],select").val("");
+                loadData("StartDate",'@Session["CompanyId"]');
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    function updateStartDate(id, batch, date) {
+        $("#modalEditStartDate").modal('show');
+        $("#modalEditStartDate [name='StartDateId']").val(id);
+        $("#modalEditStartDate [name='Date']").val(date);
+        $('.nepali-calendar').nepaliDatePicker();
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data:{
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var batchDetails = result[1];
+                if (batchDetails != undefined) {
+                    var v = "";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#modalStartDateBatch").html(v);
+                    $("#modalStartDateBatch").val(batch);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+               
+        })
+    }
+
+    function updateClassDetails(id, code, name, type, limit, facultyid) {
+        debugger;
+        $("#modalEditClass").modal('show');
+        $("#modalEditClass [name='ClassId']").val(id);
+        $("#modalEditClass [name='ClassName']").val(name);
+        $("#modalEditClass [name='ClassCode']").val(code);
+        $("#modalEditClass input[name='ClassType'][value=" + type + "]").prop('checked', true);
+        $("#modalEditClass [name='StudentLimit']").val(limit);
+        var id=@Session["CompanyId"];
+        $.ajax({
+            url: "/api/GetFaculty",
+            method: "GET",
+            data: {CompanyId:id},
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var id = result[0]["FacultyId"];
+                debugger;
+                if (result != undefined) {
+                    var v = "<option disabled>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value=" + result[i]['FacultyId'] + ">" + result[i]['FacultyName'] + "</option>";
+                    }
+                    $("#modalClassFaculty").html(v);
+                    $("#modalClassFaculty").val(facultyid);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    }
+    function UpdateCountryDetails(id, name) {
+        $("#modalEditCountry").modal('show');
+        $("#modalEditCountry [name='CountryId']").val(id);
+        $("#modalEditCountry [name='CountryName']").val(name);
+
+        $("#btnEditModalCountry").data('oldName', name);
+    }
+    function UpdateResponseText(id, text) {
+        $("#modalEditResponsetext").modal('show');
+        $("#modalEditResponsetext [name='ResonseTextId']").val(id);
+        $("#modalEditResponsetext [name='Response']").val(text);
+
+        $("#btnEditModalResponse").data('oldName', text);
+    }
+    function UpdateStudentType(id, name) {
+        $("#modalEditStudentType").modal('show');
+        $("#modalEditStudentType [name='StudentTypeId']").val(id);
+        $("#modalEditStudentType [name='StudentTypeName']").val(name);
+
+        $("#btnEditModalStudentType").data('oldName', name);
+    }
+    function updateFacultyDetails(id, code, name) {
+        debugger;
+        $("#modalEditFaculty").modal('show');
+        $("#modalEditFaculty [name='FacultyId']").val(id);
+        $("#modalEditFaculty [name='FacultyName']").val(name);
+        $("#modalEditFaculty [name='FacultyCode']").val(code);
+    }
+
+    function editBatchDetails(id, from, to) {
+        debugger;
+        $("#modalEditBatch").modal('show');
+        $("#modalEditBatch [name='BatchId']").val(id);
+        $("#modalEditBatch [name='FromYear']").val(from);
+        $("#modalEditBatch [name='ToYear']").val(to);
+    }
+
+    function updateSectionDetails(id, name, limit) {
+        $("#modalEditSection").modal('show');
+        $("#modalEditSection [name='SectionId']").val(id);
+        $("#modalEditSection [name='SectionName']").val(name);
+        $("#modalEditSection [name='StudentLimit']").val(limit);
+    }
+
+    function editDayOff(id, batch, title, datefrom, dateto) {
+        debugger;
+        hideAll();
+        $("#formDayOff").show();
+        $("#btnSaveDayOff").val("Update");
+        $("#formDayOffDetails").find("input[type=text],input[type=hidden],select").val("");
+
+        $("[name='Title']").val(title);
+        $("[name='DateFrom']").val(datefrom);
+        $("[name='DateTo']").val(dateto);
+        $("[name='DayOffId']").val(id);
+        $.ajax({
+            url: "/api/GetAllDesignation",
+            method: "GET",
+            data:{
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var departments = result[0];
+                if (departments != undefined) {
+                    debugger;
+                    var v = "";
+                    for (var i in departments) {
+                        v += "<option value=" + departments[i]['Department'] + ">" + departments[i]['Department'] + "</option>";
+                    }
+                    $("#dayoffDepartment").html(v);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data:{
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#dayoffBatch").html(v);
+                    $("#dayoffBatch").val(batch);
+
+                }
+                if (facultyDetails != undefined) {
+                    var v = "";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#dayoffFaculty").html(v);
+
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        $.ajax({
+            url: "/api/GetSelectedDeptFaculty",
+            method: "GET",
+            data: {
+                Id: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var department = result[0];
+                var faculty = result[1];
+                var _class = result[2];
+                debugger;
+                if (department.length != 0) {
+                    for (var m in department) {
+                        $("#dayoffDepartment option[value='" + department[m]['Department']+"']").prop('selected',true );
+                     }
+                }
+                if (faculty.length != 0) {
+                    for (var m in faculty) {
+                        $("#dayoffFaculty option[value='" + faculty[m]['Faculty'] + "']").prop('selected', true);
+                    }
+
+                }
+
+                var fd = $("#formDayOffDetails").serializeJSON();
+                $("#dayoffClass").attr('disabled', false);
+                
+                fd.CompanyId=@Session["CompanyId"];
+                debugger;
+                $.ajax({
+                    url: "/api/GetAllClass",
+                    method: "POST",
+                    data: fd,
+                    //cache: false,
+                    //contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        // var count = result.length;
+                        var v = "";
+                        for (var r in result) {
+                            for (var m in result[r]) {
+                                v += "<option value=" + result[r][m]["ClassName"] + ">" + result[r][m]["ClassName"] + "</option>";
+                            }
+                        }
+                        $("#dayoffClass").html(v);
+                        if (_class.length != 0) {
+                            debugger;
+                            for (var m in _class) {
+                                $("#dayoffClass option[value='" + _class[m]['Class'] + "']").prop('selected', true);
+                            }
+                        }
+                    },
+                    error: function (e) {
+                        console.error(e);
+                        alert(e.statusText);
+                    }
+                })
+               
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+  
+    }
+
+    function UpdateStateDetails(id, state, country) {
+        debugger;
+        $("#modalEditState").modal('show');
+        $.ajax({
+            url: "/api/GetAllCountryList",
+            method: "GET",
+            data:{
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value =" + result[i]['CountryName'] + ">" + result[i]['CountryName'] + "</option>";
+                    }
+                    $("#modalcountryname").html(v);
+                    $("#modalcountryname").val(country);
+                }
+
+                debugger;
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+        $('#modalEditState [name="CountryName"]').val(country);
+        $("#modalEditState [name='StateId']").val(id);
+        $("#modalEditState [name='StateName']").val(state);
+    }
+    function updateFeeStructureDetails(id, value) {
+        $("#modalEditFeeStructure").modal('show');
+        $("#modalEditFeeStructure [name='FeeStructureId']").val(id);
+        $("#modalEditFeeStructure [name='FeeStructureName']").val(value);
+
+        $("#btnEditModalFeeStructure").data('oldvalue', value);
+    }
+
+
+
+    function updateFeeDetails(id, structure, name, amount, refundable, StudentType) {
+        debugger;
+        $("#modalEditFee").modal('show');
+        $.ajax({
+            url: "/api/GetFeeStructure/",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var v = "";
+                for (var d in result) {
+                    v += "<option>" + result[d].FeeStructureName + "</option>";
+                }
+                $("#selectmodalFeeStructure").html(v);
+                $("#selectmodalFeeStructure").val(structure);
+                debugger;
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+        $('#modalEditFee [name="FeeStructureName"]').val(structure);
+        $.ajax({
+            url: "/api/GetScholarshipAndStudentType",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var studenttype = result[1];
+                debugger;
+                if (studenttype != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in studenttype) {
+                        v += "<option value=" + studenttype[i]['StudentTypeName'] + ">" + studenttype[i]['StudentTypeName'] + "</option>";
+                    }
+                    $("#selectmodalStudentType").html(v);
+                    $("#selectmodalStudentType").val(StudentType);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+        $('#modalEditFee [name="StudentType"]').val(StudentType);
+        debugger;
+        $('#modalEditFee [name = "FeeId"]').val(id);
+        $('#modalEditFee [name = "FeeName"]').val(name);
+        $('#modalEditFee [name = "Amount"]').val(amount);
+        $('#modalEditFee [name = "Refundable"]').val(refundable);
+
+    }
+
+    ////////////////----------code for deleting values of setting-------------////////////////////////////
+
+    var deleteBatch = function (id, from, to, type) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Confirm");
+        $('#modalDelete .modal-body').html("Do you want to delete  batch " + from + "-" + to + "?");
+
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+    }
+
+    var deleteDayOff = function (id, batch, title,datefrom, dateto) { 
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete holiday for:<br/>Batch:<b>" + batch + "</b><br/>Title:<b> " + title + "</b><br/>From:<b>" + datefrom + "</b><br/>To:<b>" + dateto + "</b> ?");
+
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', 'DayOffDetails');
+    }
+
+    var deleteSettings = function (id, name, type) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        if (type == "ResponseText") {
+            $('#modalDelete .modal-body').html("Do you want to delete " + type + " :<b> '" + name + " '</b>?");
+        }
+       
+        else {
+            $('#modalDelete .modal-body').html("Do you want to delete " + type + " of " + name + "?");
+
+        }
+
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+        $('#btnDeleteModal').data('name', name);
+
+
+    }
+
+    var deleteStartDate = function (id, date, batch, type) {
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Start date for:<br/>Batch:<b>" + batch + " </b><br/>Date:<b>" + date + "</b>  ?");
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+        $('#btnDeleteModal').data('name', date);
+    }
+
+    var deleteClassFee = function (id, batch, _class, faculty, type) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Fee details of : <br/> Batch: <b> " + batch + " </b> <br/> Class: <b> " + _class + " </b><br/> Faculty: <b> " + faculty + " </b>");
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+    }
+    var deleteFee = function (id, name, type, structure) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Fee " + name + " of type " + structure + "?");
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+        $('#btnDeleteModal').data('name', name);
+        $('#btnDeleteModal').data('structure', structure);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var urlName = $(this).data('url');
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        var companyId=@Session["CompanyId"];
+        var structure = $(this).data('structure');
+        debugger;
+        $.ajax({
+            url: "/api/DeleteGeneralSetting",
+            method: "POST",
+            data: { urlName: urlName.toLowerCase(), id: id, name: name, structure: structure, CompanyId: companyId },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                debugger;
+                if (urlName == "FeeDetails") {
+                    loadFeeData("FeeDetails", companyId);
+                }
+                else if (urlName == "CountryDetails") {
+                    getAllCountry();
+                    loadData(urlName, companyId);
+
+                }
+                else if (urlName == "DayOffDetails") {
+                    loadData("DayOff",'@Session["CompanyId"]');
+                    $("#divSummary").empty();
+                    getTotalHoliday();
+                }
+                else {
+                    loadData(urlName, companyId);
+                }
+                ;
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    $("#btnSaveDayOff").on('click', function (e) {
+        e.preventDefault();
+        $("#dayoffFaculty").attr("disabled", false);
+        $("#dayoffClass").attr("disabled", false);
+        var fd = $("#formDayOffDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.Batch == '' || fd.Title == '' || fd.DateFrom == '' || fd.DateTo == '') {
+            alert("Please provide Batch,Title,DateFrom,DateTo");
+            return;
+        }
+        $.ajax({
+            url: "/api/PostDayOff",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html(" Successful.");
+                $(".redirect").on('click', function () {
+                    hideAll();
+                    $("#divDayOff").show();
+                    loadData("DayOff",'@Session["CompanyId"]');
+                    $("#divSummary").empty();
+                    getTotalHoliday();
+                })
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    $("#btnSaveClassDetails").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formClassDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.ClassName == '' || fd.ClassCode == '' || fd.ClassType == '' || fd.Faculty == '') return;
+        debugger;
+        $.ajax({
+            url: "/api/PostClassDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("ClassDetails", '@Session["CompanyId"]');
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    $("#btnSaveFacultyDetails").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formFacultyDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.FacultyName == '' || fd.FacultyCode == '') return;
+        $.ajax({
+            url: "/api/PostFacultyDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("FacultyDetails", fd.CompanyId)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveSectionDetails").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formSectionDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.SectionName == '' || fd.StudentLimit == '') return;
+        $.ajax({
+            url: "/api/PostSectionDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("SectionDetails",fd.CompanyId)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveCountryDetails").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formCountryDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.CountryName == '') return;
+        $.ajax({
+            url: "/api/PostCountryDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("CountryDetails", fd.CompanyId);
+                getAllCountry();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveResponseText").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formResponseText").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.Response == '') return;
+        $.ajax({
+            url: "/api/PostResponseText",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("textarea").val("");
+                loadData("ResponseText", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveStateDetails").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formStateDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.CountryName == '' || fd.StateName == '') return;
+        $.ajax({
+            url: "/api/PostStateDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("StateDetails", fd.CompanyId)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    $("#btnSaveStudentType").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formstudenttype").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.StudentTypeName == '') return;
+        $.ajax({
+            url: "/api/PostStudentType",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("input[type=text]").val("");
+                loadData("Studenttype", fd.CompanyId)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    $("#btnSaveFeeStructureDetails").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formfeestructure").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.FeeStructureName == '') return;
+        $.ajax({
+            url: "/api/PostFeeStructure",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("input[type=text]").val("");
+                loadData("FeeStructureDetails", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveFeeDetails").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#formFeeDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.FeeStructureName == '' || fd.FeeName == '' || fd.Amount == '' || fd.Refundable == '' || fd.StudentType == '') return;
+        $.ajax({
+            url: "/api/PostFeeDetails",
+            method: "POST",
+            data: fd,
+            dataType: "JSON",
+            success: function (result) {
+                $("input[type=text],input[type=hidden]").val("");
+                $('#selectFeeStructure option:first').prop('selected', true);
+                $('#selectStudentType option:first').prop('selected', true);
+                $('#selectRefundable option:first').prop('selected', true);
+                loadFeeData("FeeDetails", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalFee").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formModalFee").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.FeeStructureName == '' || fd.FeeName == '' || fd.Amount == '' || fd.Refundable == '' || fd.StudentType == '') return;
+        $.ajax({
+            url: "/api/PostFeeDetails",
+            method: "POST",
+            data: fd,
+            dataType: "JSON",
+            success: function (result) {
+                debugger;
+                $('#modalEditFee').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadFeeData("FeeDetails", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalFeeStructure").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var oldName = $(this).data('oldvalue');
+        var newName = $("#modalFeeName").val();
+        var companyid = @Session["CompanyId"];
+        debugger;
+        $.ajax({
+            url: "/api/EditFeeStructure/",
+            method: "POST",
+            data: {
+                OldName: oldName,
+                NewName: newName,
+                CompanyId: companyid
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalEditFeeStructure').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("FeeStructureDetails",'@Session["CompanyId"]')
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalSection").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalSectionDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.SectionName == '' || fd.StudentLimit == '') return;
+        $.ajax({
+            url: "/api/PostSectionDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditSection').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("SectionDetails",fd.CompanyId)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+    
+    $("#btnEditModalStartDate").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formModalStartDate").serializeJSON();
+        if (fd.Batch == '' || fd.Date == '') return;
+        $.ajax({
+            url: "/api/PostStartDate",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalEditStartDate').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("StartDate",'@Session["CompanyId"]');
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalState").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalStateDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.StateName == '') return;
+        $.ajax({
+            url: "/api/PostStateDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditState').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("StateDetails", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalCountry").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var oldName = $(this).data('oldName');
+        var newName = $("#modalCountryName").val();
+        var companyid=@Session["CompanyId"];
+        debugger;
+        if (newName == '') return;
+        $.ajax({
+            url: "/api/EditCountryDetails/",
+            method: "POST",
+            data: {
+                OldName: oldName,
+                NewName: newName,
+                CompanyId: companyid
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditCountry').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("CountryDetails", companyid)
+               // getAllCountry();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalResponse").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var oldName = $(this).data('oldName');
+        var newName = $("#modalresponsetext").val();
+        var companyid=@Session["CompanyId"];
+        debugger;
+        if (newName == '') return;
+        $.ajax({
+            url: "/api/EditResponseText/",
+            method: "POST",
+            data: {
+                OldName: oldName,
+                NewName: newName,
+                CompanyId: companyid
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditResponsetext').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("ResponseText", companyid)
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    $("#btnEditModalStudentType").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var oldName = $(this).data('oldName');
+        var newName = $("#modalStudentType").val();
+        var id=@Session["CompanyId"];
+        debugger;
+        if (newName == '') return;
+        $.ajax({
+            url: "/api/EditStudentType/",
+            method: "POST",
+            data: {
+                OldName: oldName,
+                NewName: newName,
+                CompanyId:id
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditStudentType').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("StudentType",id);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalBatch").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalBatchDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.FromYear == '' || fd.ToYear == '') return;
+        $.ajax({
+            url: "/api/EditBatchDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditBatch').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("BatchDetails", fd.CompanyId);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    $("#btnEditModalFaculty").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalFacultyDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.FacultyName == '' || fd.FacultyCode == '') return;
+        $.ajax({
+            url: "/api/PostFacultyDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalEditFaculty').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("FacultyDetails", '@Session["CompanyId"]');
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnEditModalClass").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalClassDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.ClassName == '' || fd.ClassCode == '' || fd.ClassType == '' || fd.Faculty == '') return;
+        debugger;
+        $.ajax({
+            url: "/api/PostClassDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditClass').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("ClassDetails", '@Session["CompanyId"]');
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    $("#feeManagement").on('click', function () {
+        debugger;
+        getAllFeeStructure();
+        $("#divfeestructure").hide();
+
+        $("#divfeemanagement").show();
+        getScholarandStudentType();
+        loadFeeData("FeeDetails",@Session["CompanyId"]);
+    })
+
+    $("#feeStructure").on('click', function () {
+        debugger;
+        $("#divfeestructure").show();
+        $("#divfeemanagement").hide();
+    })
+
+    var getAllFeeStructure = function () {
+        debugger;
+        $.ajax({
+            url: "/api/GetFeeStructure",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var v = "<option value=''>--Select--</option>";
+                for (var d in result) {
+                    v += "<option>" + result[d]['FeeStructureName'] + "</option>";
+                }
+                $("#selectFeeStructure").html(v);
+                $("#searchFeeStructureName").html(v);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getScholarandStudentType = function () {
+        var id=@Session["CompanyId"];
+        $.ajax({
+            url: "/api/GetScholarshipAndStudentType",
+            method: "GET",
+            data: {
+                CompanyId:id
+            },
+            dataType: "json",
+            success: function (result) {
+                var studenttype = result[1];
+                debugger;
+                if (studenttype != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in studenttype) {
+                        v += "<option value=" + studenttype[i]['StudentTypeName'] + ">" + studenttype[i]['StudentTypeName'] + "</option>";
+                    }
+                    $("#selectStudentType").html(v);
+                    $("#searchStudentType").html(v);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getFeeDetails = function () {
+        $.ajax({
+            url: "/api/GetFeeDetails",
+            method: "Get",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+
+                for (var r in result) {
+                   
+                    if (result[r][0] != undefined) {
+                        var title = result[r][0]["FeeStructureName"];
+                        var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
+                        html += `<table class="bordered-table table-striped">`;
+                        html += `<thead><th style='width:20px;text-align:center;'>&nbsp;</th><th>Student Type</th><th style='width:70px;'>FeeName</th><th style='width:100px;'>Amount</th><th style='width:100px;'>Refundable</th></thead>`;
+                        html += ` <tbody class='rowTable'>`;
+
+                        debugger;
+
+                        for (var c in result[r]) {
+
+                            html += `<tr>`;
+                            html += `<td  style='width:20px;'><input type='checkbox' class='checktr' name='ClassFeeManagement[${i}][IsChecked]' value='true'/><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /><input type='hidden' class='StructureName' name='ClassFeeManagement[${i}][FeeId]' value='${result[r][c]["FeeId"]}' /></td>`;
+                            html += `<td style='width:70px;'><input type="text" class='form-control StudentType'  name='ClassFeeManagement[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly/></td>`;
+                            html += `<td style='width:70px;'><input type="text" class='form-control FeeName'  name='ClassFeeManagement[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly/></td>`;
+                            html += `<td style='width:100px;'><input type='text' class='form-control Amount' name='ClassFeeManagement[${i}][Amount]' value="${result[r][c]['Amount']}" /></td>`;
+                            html += `<td style='width:100px;'><input type='text' class='form-control Refundable' name='ClassFeeManagement[${i}][Refundable]' value=" ${result[r][c]['Refundable']}" readonly/></td>`;
+                            html += `</tr>`;
+                            i++;
+
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblFee").append(html);
+                    }
+                    else {
+
+                    }
+                }
+                debugger;
+
+
+            }
+        })
+    }
+
+
+    $("#btnSaveClassFeeDetails").on('click', function (e) {
+        e.preventDefault();
+        $('#formClassFee select').attr('disabled', false);
+        debugger;
+        var fd = $("#formFeeClassDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        var batch = $("#selectBatch").val();
+        var _class = $("#selectClass").val();
+        var faculty = $("#selectFaculty").val();
+        debugger;
+        if (fd.Batch == '' || fd.Class == '' || fd.Faculty == '') {
+            alert("Please select batch,class,faculty");
+            return;
+        }
+        debugger;
+        $.ajax({
+            url: "/api/PostClassFeeDetails",
+            type: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == true) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#tblFee').empty();
+                        debugger;
+                        $('#formClassFee').modal('hide');
+                        hideAll();
+                        $("#divClassFeeDetails").show();
+                        loadData("ClassFeeDetails", fd.CompanyId);
+                    })
+                }
+                else if (result == false) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Error");
+                    $('#modalInfo .modal-body').html(" Fee Details for this class already exists");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                    })
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var getAllCountry = function () {
+        
+        $.ajax({
+            url: "/api/GetAllCountryList",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value =" + result[i]['CountryName'] + ">" + result[i]['CountryName'] + "</option>";
+                    }
+                    $("#selectCountry").html(v);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getFaculty = function (id) {
+        $.ajax({
+            url: "/api/GetFaculty",
+            method: "GET",
+            data: {CompanyId:id},
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var id = result[0]["FacultyId"];
+                debugger;
+                if (result != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value=" + result[i]['FacultyId'] + ">" + result[i]['FacultyName'] + "</option>";
+                    }
+                    $("#selectClassFaculty").html(v);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var getClassBatchFaculty = function () {
+        
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                    $("#searchClass").html(v);
+                    $("#searchDayoffClass").html(v);
+                   // $("#dayoffClass").html(v);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                    $("#searchBatch").html(v);
+                    $("#dayoffBatch").html(v);
+                    $("#startDateBatch").html(v);
+                    $("#searchDayoffBatch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v =  "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                   //$("#selectFaculty").html(v);
+                    $("#searchFaculty").html(v);
+                    $("#dayoffFaculty").html(v);
+                    $("#selectClassFaculty").html(v);
+                    $("#searchDayoffFaculty").html(v);
+                }
+            }
+        })
+    }
+
+    var loadFeeData = function (urlName,id) {
+        debugger;
+        $.ajax({
+            url: "/api/GetSettingDetails",
+            method: "Get",
+            data: {
+                urlName: urlName.toLowerCase(),
+                CompanyId:id
+            },
+            dataType: "json",
+            success: function (data) {
+                showResult(data);
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+    var showResult = function (data) {
+        var _type = "FeeDetails";
+        $("#tblFeeDetails").dataTable({
+            data: data,
+            'destroy': true,
+            columns: [
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'FeeStructureName',
+                    'data': 'FeeStructureName'
+                },
+
+                {
+                    'title': 'FeeName',
+                    'data': 'FeeName'
+                },
+                {
+                    'title': 'Amount',
+                    'data': 'Amount'
+                },
+                {
+                    'title': 'Refundable',
+                    'data': 'Refundable'
+                },
+                {
+                    'title': 'StudentType',
+                    'data': 'StudentType'
+                },
+
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='updateFeeDetails(\"" + row.FeeId + "\",\"" + row.FeeStructureName + "\", \"" + row.FeeName + "\",\"" + row.Amount + "\",\"" + row.Refundable + "\",\"" + row.StudentType + "\") '>Edit</a>&nbsp<a href='#' class='btn btn-info' onclick='deleteFee(\"" + row.FeeId + "\",\"" + row.FeeName + "\",\"" + _type + "\",\"" + row.FeeStructureName + "\",\"" + row.StudentType + "\") '>Delete</a></div>";
+                    },
+                    'sortable': false,
+                }
+            ]
+        });
+        debugger;
+        $("#feeDetails .titlename").html("List of all Fee Details");
+
+    }
+    $("#addClassFee").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        hideAll();
+        $("#tblFee").html("");
+        getClassBatchFaculty();
+        getFeeDetails();
+        $('#formClassFee').trigger("reset");
+        $("#formClassFee").show();
+        $('#formClassFee select').attr('disabled', false);
+        $("#formFeeClassDetails").find("input[type=text],input[type=hidden],textarea,select").val("");
+        $("#classfeeid").val("");
+        $("#ClassFeeSubmit").hide();
+                })
+
+    $("#addDayOff").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        hideAll();
+        $("#formDayOff").show();
+        $("#btnSaveDayOff").val("Submit");
+        $("#formDayOffDetails").find("input[type=text],input[type=hidden],select").val("");
+        //$("#dayoffFaculty").attr("disabled", true);
+        $("#dayoffClass").attr("disabled", true);
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+               
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#dayoffBatch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                  
+                    $("#dayoffFaculty").html(v);
+                }
+            }
+        })
+        getDepartment();
+        $('.nepali-calendar').nepaliDatePicker();
+        debugger;
+      
+        
+    })
+    $("#dayoffFaculty").on('click','option', function () {
+        debugger;
+        var fd = $("#formDayOffDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        $("#dayoffClass").attr('disabled', false);
+        debugger;
+        $.ajax({
+            url: "/api/GetAllClass",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var v = "";
+                for (var r in result) {
+                    for (var m in result[r]) {
+                        v += "<option value=" + result[r][m]["ClassName"] + ">" + result[r][m]["ClassName"] + "</option>";
+                    }
+                }
+                $("#dayoffClass").html(v);
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    });
+
+
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+
+    var hideAll = function () {
+        $("#divBatchDetails").hide();
+        $("#batchResult").hide();
+        $("#divClassDetails").hide();
+        $("#divFacultyDetails").hide();
+        $("#divSectionDetails").hide();
+        $("#divFeeStructureDetails").hide();
+        $("#divfeemanagement").hide();
+        $("#divClassFeeDetails").hide();
+        $("#formClassFee").hide();
+        $("#divDayOff").hide();
+        $("#formDayOff").hide();
+        $("#divCountryDetails").hide();
+        $("#divStateDetails").hide();
+        $("#divStudentType").hide();
+        $("#divResponseText").hide();
+        $("#divStartDate").hide();
+        $("#StartDate").hide();
+    }
+
+    var cancel = function () {
+
+        debugger;
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        hideAll();
+        $("#divClassFeeDetails").show();
+        debugger;
+    });
+
+    var cancelDay = function () {
+
+        debugger;
+        $('#modalCancel1').modal('show');
+        $('#modal-title').html("Confirm");
+        $('#modal-body').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModal1").on('click', function () {
+        debugger;
+        $('#modalCancel1').modal('hide');
+        hideAll();
+        $("#divDayOff").show();
+        debugger;
+    });
+
+    var getDepartment = function () {
+        $.ajax({
+            url: "/api/GetAllDesignation",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            method: "GET",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var department = result[0];
+                var designation = result[1];
+                if (department != undefined) {
+                    debugger;
+                    var v = "";
+                    for (var i in department) {
+                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                    }
+                    $("#dayoffDepartment").html(v);
+                }
+                  
+            }
+        })
+    }
+
+    $("#btnSearchClassFee").on('click', function (e) {
+        e.preventDefault();
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var faculty = $("#searchFaculty").val();
+        debugger;
+        if (batch == '' && _class == '' && faculty == '') {
+            loadData("ClassFeeDetails",'@Session["CompanyId"]');
+            return;
+        }
+        else {
+            $.ajax({
+                url: "/api/SearchClassFee",
+                method: "GET",
+                data: { Batch: batch, Class: _class, Faculty: faculty, CompanyId:@Session["CompanyId"] },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    showClassFeeData(result);
+
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+    })
+
+    $("#btnSearchFee").on('click', function (e) {
+        e.preventDefault();
+        var feename = $("#searchFeeStructureName").val();
+        var type = $("#searchStudentType").val();
+        var id=@Session["CompanyId"];
+        if (feename == '' && type == '') {
+            loadFeeData("FeeDetails",@Session["CompanyId"]);
+            return;
+        }
+        $.ajax({
+            url: "/api/SearchFeeDetails",
+            method: "GET",
+            data: {
+                FeeName: feename,
+                Type: type,
+                CompanyId:id
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showResult(result);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSearchDayOff").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchDayoffBatch").val();
+        var department = $("#searchDayoffDepartment").val();
+        var faculty = $("#searchDayoffFaculty").val();
+        var _class = $("#searchDayoffClass").val();
+        $.ajax({
+            url: "/api/GetSearchedDayOff",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Department: department,
+                Faculty: faculty,
+                Class: _class,
+                CompanyId:@Session["CompanyId"]
+            },
+            dataType: "json",
+            success: function (result) {
+                showDayOffData(result);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    $("#searchFaculty").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        var faculty = $("#searchFaculty").val();
+        if (faculty != '') {
+            $.ajax({
+                url: "/api/GetClassByFaculty",
+                method: "GET",
+                data: {
+                    Faculty: faculty
+                },
+                dataType: "json",
+                success: function (result) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var r in result) {
+                        v += "<option value=" + result[r]["ClassName"] + ">" + result[r]["ClassName"] + "</option>";
+
+                    }
+                    $("#searchClass").html(v);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            getClassBatchFaculty();
+        }
+
+    })
+
+    $("#selectClass").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        var _class = $("#selectClass").val();
+        if (_class != '') {
+
+            $.ajax({
+                url: "/api/GetFacultyByClass",
+                method: "GET",
+                data: {
+                    Class: _class,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#selectFaculty").val(result[0]["FacultyName"]);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $("#selectFaculty").val('');
+        }
+    })
+
+    $("#searchDayoffFaculty").on('change', function (e) {
+        e.preventDefault()
+        var faculty = $("#searchDayoffFaculty").val();
+        if (faculty != '') {
+            $.ajax({
+                url: "/api/GetClassByFaculty",
+                method: "GET",
+                data: {
+                    Faculty: faculty
+                },
+                dataType: "json",
+                success: function (result) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var r in result) {
+                        v += "<option value=" + result[r]["ClassName"] + ">" + result[r]["ClassName"] + "</option>";
+
+                    }
+                    $("#searchDayoffClass").html(v);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            getClassBatchFaculty();
+        }
+    })
+</script>
+
+

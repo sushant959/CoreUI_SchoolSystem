@@ -1,0 +1,653 @@
+﻿
+@{
+    ViewBag.Title = "CompanyManagement";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    [class^="error_"] {
+        font-size: small;
+        font-style: italic;
+        color: red;
+        flex: 2;
+    }
+</style>
+<div id="newCompany">
+    <button class="btn btn-success" id="addCompany">Add New Company</button><hr /><br />
+    <h4 id="reportname">List of all Company </h4>
+    <div class="flexContainer" style="justify-content:center">
+        <div style="text-align:center;">
+
+            <div class="flexContainer" style="margin-left:25px;">
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Company Name</label>
+                    <select id="searchCompanyName" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Email</label>
+                    <select id="searchEmail" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Status</label>
+                    <select id="searchStatus" class="form-control" style="width:auto">
+                        <option value="">select</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Not-Approved">Not-Approved</option>
+                    </select>
+                </div>&nbsp;&nbsp;
+
+                <div style="flex:none;">
+                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+        </div>
+    </div><hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <div style="width:100%;overflow:auto;">
+                <table id="tblCompanyReport" class="table table-bordered table-striped"></table>
+            </div>
+        </div>
+        @*<a id="downloadReportLink" href="#" target="_blank" class="badge pull-right" style="margin-top:5px">Export to PDF</a>*@
+    </div>
+</div>
+    <div id="formCompany">
+        <div style="width:99%">
+            <div class="panel panel-default" style="background-color:floralwhite !important;">
+                <div class="panel-heading" id="" style="background-color:darkgray">Company Registration Form</div>
+                <div class="panel-body" style="background-color:transparent">
+                    <form id="formCompanyRegistration">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Company Details</h4>
+                            </div>
+                        </div>
+                        <div class="flexContainer">
+                            <input type="hidden" name="CompanyId" />
+
+                            <label style="flex:1.2">Company Name:&nbsp;*</label>
+                            <input type="text" class="form-control" name="Name" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.3">Phone No.*:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="PhoneNo" style="flex:2" onkeypress="return isNumberKey(event)" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Address:&nbsp;*</label>
+                            <input type="text" class="form-control" name="Address" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.2">PAN:&nbsp;*</label>
+                            <input type="text" class="form-control" name="PAN" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div><br />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Login Details</h4>
+                            </div>
+                        </div>
+                        <div class="flexContainer">
+                            <input type="hidden" name="Users[UserID]" />
+                            <label style="width:172px;">EmailId:&nbsp;*</label>
+                            <input type="text" class="form-control" name="Users[Email]" id="email" style="width:312px;" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                        <div class="flexContainer">
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label id="error_email" style="color: red;"></label>
+                            </span>
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label></label>
+                            </span>
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Create Password:&nbsp;*</label>
+                            <input type="password" class="form-control" name="Users[Password]" style="flex:2" id="password" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.3">Confirm Password.*:&nbsp;&nbsp;</label>
+                            <input type="password" class="form-control" name="ConfirmPassword" id="confirmpassword" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="flexContainer">
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label></label>
+                            </span>
+                            <label style="flex:1.2"></label>
+                            <span style="flex:2">
+                                <label id="error" style="color: red;"></label>
+                            </span>
+                        </div>
+                        <div class="flexContainer">
+                            <label style="flex:none;width:172px">Status:&nbsp;*</label>
+                            <select class="form-control" name="Status" style="width:312px">
+                                <option value="Approved">Approved</option>
+                                <option value="Not-Approved">Not-Approved</option>
+                            </select>
+                        </div><br />
+                        <div class="form-group">
+                            <div class="col-sm-12 text-center">
+                                <input type="submit" value="Submit" class="btn btn-success" id="btnsubmit" />
+                                <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" id="modalCancel"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content" style="background-color:floralwhite !important;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                    <h4 class="modal-title" id="modal-title1">Info</h4>
+                </div>
+                <div class="modal-body" id="modal-body1">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                    <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" id="modalInfo"
+         data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                    <h4 class="modal-title" id="modal-title">Info</h4>
+                </div>
+                <div class="modal-body" id="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalEditCompany" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content" style="width:700px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                    <h4 class="modal-title">Edit Company Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="thumbnail">
+                        <form id="formModalCompanyDetails" class="well well-sm">
+                            <div class="flexContainer">
+                                <input type="hidden" name="CompanyId" />
+                                <input type="hidden" name="Users[UserID]" />
+                                <label style="flex:1.2">Company:&nbsp;*</label>
+                                <input type="text" class="form-control" name="Name"  style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.3">Phone No.*:&nbsp;&nbsp;</label>
+                                <input type="text" class="form-control" name="PhoneNo" style="flex:2" onkeypress="return isNumberKey(event)" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1.2">Address:&nbsp;*</label>
+                                <input type="text" class="form-control" name="Address" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.2">PAN:&nbsp;*</label>
+                                <input type="text" class="form-control" name="PAN" style="flex:2" placeholder="Required" required />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div><br />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4 style="color:brown">Login Details</h4>
+                                </div>
+                            </div>
+                            <div class="flexContainer">
+
+                                <label style="flex:1.2">EmailId:&nbsp;*</label>
+                                <input type="text" class="form-control" name="Users[Email]" id="email" style="flex:2" placeholder="Required" required readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.2">Status:&nbsp;*</label>
+                                <select class="form-control" name="Status" style="flex:2">
+                                    <option value="Approved">Approved</option>
+                                    <option value="Not-Approved">Not-Approved</option>
+                                </select>
+                            </div>
+                            <div class="flexContainer">
+                                <label style="flex:1.2"></label>
+                                <span style="flex:2">
+                                    <label id="error_email" style="color: red;"></label>
+                                </span>
+                                <label style="flex:1.2"></label>
+                                <span style="flex:2">
+                                    <label></label>
+                                </span>
+                            </div>
+                            <button style="flex:1" class="btn  btn-info " id="btnChangePW"> Change Password</button>
+                            <div id="divChangePW" style="display:none">
+                                <hr style="margin-bottom:5px" />
+                                <h4 style="color:brown">Change Password</h4>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label style="flex:none">Current Password:&nbsp;</label>
+                                        <input type="password" id="password" value="" class="form-control" name="Users[Password]" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label style="flex:none">New Password:&nbsp;&nbsp;</label>
+                                        <input type="password" value="" id="newpass" class="form-control" name="NewPassword" placeholder="do not change" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label style="flex:none">Re-type Password:&nbsp;&nbsp;</label>
+                                        <input type="password" value="" id="retypenewpass" class="form-control" name="NewPassword2" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                                <span class="error_email" id="pwError"></span>
+                            </div><br />
+                            <div class="form-group">
+                                <div class="col-sm-12 text-center">
+                                    <input type="submit" value="Submit" class="btn btn-success" id="btnModalSubmit" />
+                                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    <script>
+        $(document).ready(function () {
+            hideAll();
+            $("#newCompany").show();
+            getCompanyName();
+            loadData();
+        })
+
+        var getCompanyName = function () {
+            $.ajax({
+                url: "/api/GetCompanyName",
+                method: "GET",
+                dataType: "json",
+                success: function (result) {
+                    var Name = result[0];
+                    var Email = result[1];
+
+                    if (Name != undefined) {
+                        debugger;
+                        var v = "<option value=''>--Select--</option>";
+                        for (var i in Name) {
+                            v += "<option value=" + Name[i]['Name'] + ">" + Name[i]['Name'] + "</option>";
+                        }
+                        $("#searchCompanyName").html(v);
+                    } 
+                    if (Email != undefined) {
+                        debugger;
+                        var v = "<option value=''>--Select--</option>";
+                        for (var i in Email) {
+                            v += "<option value=" + Email[i]['Email'] + ">" + Email[i]['Email'] + "</option>";
+                        }
+                        $("#searchEmail").html(v);
+                    } 
+                },
+                error: function () {
+
+                }
+            })
+        }
+
+        var loadData = function () {
+            debugger;
+            $.ajax({
+                url: "/api/GetListOfCompany",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    showResultData(data);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            });
+        }
+
+        var showResultData = function (data) {
+            $("#tblCompanyReport").dataTable({
+                data: data,
+                //'searching': false,
+                'destroy': true,
+                //dom: 'Bfrtip',
+                //buttons: [
+                //    {
+                //        extend: 'pdf',
+                //        footer: false,
+                //        exportOptions: {
+                //            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14]
+                //        }
+                //    },
+                //    {
+                //        extend: 'csv',
+                //        footer: false,
+                //        exportOptions: {
+                //            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                //        }
+
+                //    },
+                //    {
+                //        extend: 'excel',
+                //        footer: false,
+                //        exportOptions: {
+                //            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                //        }
+                //    }
+                //],
+                columns: [
+                    {
+                        'title': 'Action',
+                        'data': 'Action',
+                        'render': function (data, type, row) {
+                            return "<div style='display:flex'><a href='#' onclick='editCompanyDetails(\"" + row.CompanyId + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='deleteCompany(\"" + row.CompanyId + "\",\"" + row.Name + "\",\"" + row.Email + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></div>";
+                        },
+                        'sortable': false,
+                    },
+                    {
+                        'title': 'SN',
+                        'data': 'SN',
+                        'render': function (data, type, row, meta) {
+                            return "<span>" + (meta.row + 1) + "</span>";
+                        }
+                    },
+
+                    {
+                        'title': 'ID',
+                        'data': 'CompanyId'
+                    },
+                    {
+                        'title': 'Name',
+                        'data' :'Name'
+                    },
+
+                    {
+                        'title': 'Email',
+                        'data': 'Email'
+                    },
+                    {
+                        'title': 'PAN Number',
+                        'data': 'PAN'
+                    },
+                    {
+                        'title': 'PhoneNo',
+                        'data': 'PhoneNo'
+                    },
+                    {
+                        'title': 'Registration Date',
+                        'data': 'RegistrationDate'
+                    },
+                    {
+                        'title': 'Status',
+                        'data': 'Status'
+                    },
+                   
+                ]
+            })
+        }
+
+        var hideAll = function () {
+            $("#newCompany").hide();
+            $("#formCompany").hide();
+        }
+
+        $("#addCompany").on('click', function () {
+            hideAll();
+            $("#formCompany").show();
+        })
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+
+        $("#email").keyup(function () {
+
+            var email = $("#email").val();
+            var filter = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+            if (!filter.test(email)) {
+                //alert('Please provide a valid email address');
+                $("#error_email").text("Please enter valid email");
+
+                email.focus;
+                //return false;
+            } else {
+                $("#error_email").text("");
+
+            }
+
+        });
+
+        $("#confirmpassword").keyup(function () {
+            debugger;
+            var password = $("#password").val();
+            var conPassword = $("#confirmpassword").val();
+            if (conPassword == password) {
+                $("#error").text("password match");
+                $("#error").css("color", "green");
+            }
+            else {
+                $("#error").text("password donot match");
+                $("#error").css("color", "red");
+            }
+        })
+
+        var cancel = function () {
+            //debugger;
+            $('#modalCancel').modal('show');
+            $('#modal-title1').html("Confirm");
+            $('#modal-body1').html("Are you sure you want to Cancel ?");
+        }
+        $("#btnCancelModal").on('click', function () {
+            //debugger;
+            $('#modalCancel').modal('hide');
+            hideAll();
+            $("#newCompany").show();
+            //debugger;
+        });
+
+
+        $("#btnModalSubmit").on('click', function (e) {
+            e.preventDefault();
+            var fd = $("#formModalCompanyDetails").serializeJSON();
+            debugger;
+            if (fd.Users.Email == '' || fd.PAN == '') return;
+            else if (fd.Users.Password != '') {
+                if ($("#newpass").val() == $("#retypenewpass").val()) {
+
+                    $.ajax({
+                        url: "/api/GetSuperAdminPassword",
+                        method: "GET",
+                        data: {
+                            Email: fd.Users.Email,
+                            Password: fd.Users.Password
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            debugger;
+                            if (result == true) {
+                                fd.Users.Password = $("#newpass").val();
+                                updateAdminDetails(fd);
+                            }
+                            else {
+                                $("#password").val('');
+                                $("#pwError").text("Incorrect Password");
+                                return;
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    })
+                }
+                else {
+                    $("#pwError").text("Password dont matched");
+                    $("#pw").focus;
+                    return;
+                }
+            }
+            else {
+                debugger;
+                updateAdminDetails(fd);
+            }
+        })
+
+
+
+        var updateAdminDetails = function (fd) {
+            $.ajax({
+                url: "/api/PostCompanyDetails",
+                method: "POST",
+                data: fd,
+                dataType: "json",
+                success: function (result) {
+                    $("#modalEditCompany").modal('hide');
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html("Company Details Updated Successfully");
+                    $(".redirect").on('click', function () {
+                        $('#modalInfo').modal('hide');
+                        loadData();
+                    })
+                },
+                error: function (e) {
+
+                }
+            })
+        }
+
+        $("#btnsubmit").on('click', function (e) {
+            e.preventDefault();
+            debugger;
+            var fd = $("#formCompanyRegistration").serializeJSON();
+            if (fd.Name == '' || fd.PhoneNo == '' || fd.EmailId == '' || fd.Password == '' || fd.ConfirmPassword == '') {
+                alert("Please Provide Required Field");
+                return;
+            }
+
+            if (fd.Users.Password != fd.ConfirmPassword) {
+                alert("Password dont match");
+                return;
+            }
+
+            CheckEmailId(fd);
+        })
+
+
+        var CheckEmailId = function (fd) {
+            $.ajax({
+                url: "/api/CheckCompanyEmailId",
+                method: "POST",
+                data: {
+                    EmailId: fd.Users.Email
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    if (result == true) {
+                        $.ajax({
+                            url: "/api/PostCompanyDetails",
+                            method: "POST",
+                            data: fd,
+                            dataType: "json",
+                            success: function (result) {
+                                $('#modalInfo').modal('show');
+                                $('#modalInfo .modal-title').html("Success");
+                                $('#modalInfo .modal-body').html("Company Registered Successfully!<br/>Please Login with EmailId <b>" + fd.Users.Email + "</b>");
+                                $(".redirect").on('click', function () {
+
+                                    $('#modalInfo').modal('hide');
+                                    $("#formCompanyRegistration").find("input[type=text],input[type=password]").val("");
+                                    $("#error_email").text("");
+                                    $("#error").text("");
+                                    location.href = "/SuperAdmin/CompanyManagement";
+
+                                })
+                            },
+                            error: function (e) {
+
+                            }
+                        })
+                    }
+                    else if (result == false) {
+                        alert("This emailId already registered");
+                        $("#formCompanyRegistration").find("input[type=text],input[type=password]").val("");
+                        $("#error_email").text("");
+                        $("#error").text("");
+                        return;
+                    }
+                },
+                error: function (e) {
+
+                }
+            })
+        }
+
+        $("#btnSearch").on('click', function (e) {
+            e.preventDefault();
+            debugger;
+            var Name = $("#searchCompanyName").val();
+            var Email = $("#searchEmail").val();
+            var Status = $("#searchStatus").val();
+            if (Name == '' && Email == '' && Status == '') {
+                loadData();
+                return;
+            }
+            else {
+                $.ajax({
+                    url: "/api/SearchCompanyDetails",
+                    method: "GET",
+                    data: {
+                        Name: Name,
+                        Email: Email,
+                        Status:Status
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        showResultData(result);
+                    },
+                    error: function (e) {
+
+                    }
+                })
+            }
+        })
+
+        var editCompanyDetails = function (id) {
+            debugger;
+            $("#modalEditCompany").modal('show');
+            $("#modalEditCompany #password").val('');
+            $.ajax({
+                url:"/api/GetCompanyDetailsById/" + id,
+                method:"GET",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#modalEditCompany [name='CompanyId']").val(result[0]["CompanyId"]);
+                    $("#modalEditCompany [name='Name']").val(result[0]["Name"]);
+                    $("#modalEditCompany [name='PhoneNo']").val(result[0]["PhoneNo"]);
+                    $("#modalEditCompany [name='Address']").val(result[0]["Address"]);
+                    $("#modalEditCompany [name='PAN']").val(result[0]["PAN"]);
+                    $("#modalEditCompany [name='Users[Email]']").val(result[0]["Email"]);
+                    $("#modalEditCompany [name='Status']").val(result[0]["Status"]);
+                    $("#modalEditCompany [name='Users[UserID]']").val(result[0]["UserID"]);
+                },
+                error: function (e) {
+
+                }
+            })
+        }
+
+        $("#btnChangePW").on('click', function (e) {
+            e.preventDefault();
+            $('[name="Password"]').val('');
+            $('#divChangePW').show();
+        });
+    </script>

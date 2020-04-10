@@ -1,0 +1,267 @@
+﻿
+
+
+@{
+    ViewBag.Title = "PrintDuereport";
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+<style>
+    .title-header {
+        background-color: black;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 15px 5px 15px;
+        margin-left: auto;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .text-line {
+        background-color: transparent;
+        color: peru;
+        outline: none;
+        outline-style: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: dotted #808080 1px;
+        width: 150px;
+        font-size: medium;
+    }
+
+    .table span {
+        text-align: left;
+    }
+</style>
+<style media="print">
+    .main-header {
+        font-size: 16px !important;
+        font-display: block;
+        margin-left: auto;
+        text-align: center !important;
+    }
+
+    @@page {
+        size: A4;
+        margin-top: 0px;
+    }
+
+
+
+    @@media print {
+        body * {
+            visibility: hidden;
+            margin-left: 5px;
+            margin-right: 5px;
+            background-color: lightyellow;
+        }
+
+        #not-print * {
+            display: none;
+        }
+
+        #to-print, #to-print * {
+            visibility: visible;
+        }
+
+        .text-line {
+            min-width: 50px;
+            width: 100px;
+        }
+        /*#to-print {
+            display: block !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 99%;
+        }*/
+    }
+</style>
+<div id="to-print">
+    <div class='row'>
+        <div class='col-sm-12' style='background-color:lightyellow; padding-top:20px'>
+            <table class="bordered-table table-striped">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Class</th>
+                        <th rowspan="2">Name</th>
+                        <th colspan="2">Baisakh</th>
+                        <th colspan="2">Jesth</th>
+                        <th colspan="2">Asar</th>
+                        <th colspan="2">Sawan</th>
+                        <th colspan="2">Bhadau</th>
+                        <th colspan="2">Aaswin</th>
+                        <th colspan="2">Kartik</th>
+                        <th colspan="2">Mangsir</th>
+                        <th colspan="2">Push</th>
+                        <th colspan="2">Magh</th>
+                        <th colspan="2">Falgun</th>
+                        <th colspan="2">Chait</th>
+                    </tr>
+                    <tr>
+                        
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                        <th>Fee</th>
+                        <th>Paid</th>
+                    </tr>
+                </thead>
+                <tbody class='rowTable' id="to-append">
+
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button class=" btn btn-warning btn-md glyphicon glyphicon-print" id="print" onclick=" myFunction()"> Print</button>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+    $(document).ready(function () {
+        debugger;
+        @*var batch =@ViewBag.Batch;
+        var _class =@ViewBag.Class;
+        var month=@ViewBag.Month;*@
+        debugger;
+        getPrintDueDetails('@ViewBag.Batch','@ViewBag.Class','@ViewBag.StudentId');
+    })
+    function myFunction() {
+        $("#print").hide();
+        window.print();
+
+    }
+    var getPrintDueDetails = function (batch,_class,studentid) {
+        debugger;
+
+        $.ajax({
+            url: "/api/GetDueStudentList",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Class: _class,
+                StudentId: studentid,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showdueprint(result)
+
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+    var convertMonth = function (month) {
+        debugger;
+        switch (month) {
+            case "01": return "Baisakh";
+            case "02": return "Jesth";
+            case "03": return "Asar";
+            case "04": return "Sawan";
+            case "05": return "Bhadau";
+            case "06": return "Aaswin";
+            case "07": return "Kartik";
+            case "08": return "Mangsir";
+            case "09": return "Push";
+            case "10": return "Magh";
+            case "11": return "Falgun";
+            case "12": return "Chait";
+        };
+    }
+
+    var showdueprint = function (result) {
+        debugger;
+          
+        for (var r in result) {
+            var id = result[r]["StudentId"];
+            var batch = result[r]["Batch"];
+            var html = ``;
+            $.ajax({
+                url: "/api/GetDueDetailsByStudentId1",
+                method: "GET",
+                data: {
+                    StudentId: id,
+                    Batch: batch,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    var details = result.details;
+
+
+                    for (var r in details) {
+                        details[r].Month = convertMonth(details[r].Month);
+                    }
+                    var Name = details[0]["FirstName"] + " " + details[0]["LastName"];
+                    html = ``;
+                    html += `<tr>`
+                    html += `<td><span>${details[0]['Class']}</span></td>`;
+                    html += `<td><span>${Name}</span></td>`;
+                  
+                    for (var c in details) {
+                        if (c == 0) {
+                            html += `<td><span>${details[c]['Total']}</span></td>`;
+                            html += `<td><span>${details[c]['Paid']}</span></td>`;
+                        }
+                        
+                        else {
+                            var total = 0;
+                            var d = c;
+                            while (c != 0) {
+                                total += parseInt(details[c - 1]['Due']);
+                                c--;
+                            }
+                            c = d;
+                            html += `<td><span>${ total } +  ${details[c]['Total']}</span></td>`;
+                            html += `<td><span>${details[c]['Paid']}</span></td>`;
+                        }
+                        }
+                        html += `</tr>`;
+                        $("#to-append").append(html);
+                    
+
+
+                },
+                error: function () {
+
+                }
+            })
+        }
+         
+    }
+
+
+    </script>
+

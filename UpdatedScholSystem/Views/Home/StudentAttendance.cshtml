@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewBag.Title = "StudentAttendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="StudentDashboard">
+        <a href="/Home/StudentAttendanceForm" class="btn btn-success">Add Student Attendance</a>
+</div><hr/>
+<div id="divStudentAttendanceReport">
+            <h4 id="reportname" style="color:orangered"></h4>
+    <div class="flexContainer" style="justify-content:center">
+        <div style="text-align:center;">
+            <div class="flexContainer" style="margin-left:30px;">
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Batch</label>
+                    <select id="searchBatch" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Class</label>
+                    <select id="searchClass" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Section</label>
+                    <select id="searchSection" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center">
+                    <label>Date Range</label>
+                    <div class="flexContainer">
+                        <input type="text" id="datefrom" class="form-control nepali-calendar" placeholder="साल-महिना-गते" style="max-width:120px;" />↔
+                        <input type="text" id="dateto" class="form-control nepali-calendar" placeholder="साल-महिना-गते" style="max-width:120px;" />
+                    </div>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none;">
+                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-10">
+        </div>
+
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
+            <table id="tblStudentAttendanceReport" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>  
+    </div>
+</div>
+
+<div id="modalShowAttendance" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Attendance Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="" class="well well-sm">
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Student Id:&nbsp;</label>
+                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
+                            <label style="flex:1.2">Name:&nbsp;</label>
+                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Session:&nbsp;</label>
+                            <span id="showsession" style="flex:2"></span>&nbsp;&nbsp;
+                            <label style="flex:1.2">Date Range:&nbsp;</label>
+                            <span id="showdate" style="flex:2"></span>&nbsp;&nbsp;
+                        </div><br />
+                        <div style="width:100%;overflow:auto;">
+                            <table id="tblShowAttendanceDetails" class="table table-bordered table-striped">
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.nepali-calendar').nepaliDatePicker();
+        loadData();
+        getClassBatchFaculty();
+    })
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $(".class").html(v);
+                    $("#searchClass").html(v);
+                    //$("#searchClass").val(classDetails[0]['ClassName']);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $(".batch").html(v);
+                    $("#searchBatch").html(v);
+                    //$("#searchBatch").val(batchDetails[0]['FromYear'] + "-" + batchDetails[0]['ToYear']);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $(".faculty").html(v);
+                }
+                if (sectionDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $(".section").html(v);
+                    $("#searchSection").html(v);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#btnSearch").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var section = $("#searchSection").val();
+        var datefrom = $("#datefrom").val();
+        var dateto = $("#dateto").val();
+        if (batch == '' && _class == '' && section == '' && datefrom == '' && dateto == '') {
+
+
+            loadData();
+            return;
+        }
+        if (batch == '' && _class == '' && section == '') return;
+        if (datefrom == '' || dateto == '') {
+            alert("Please select Date");
+            return;
+        }
+        $.ajax({
+            url: "/api/SearchAttendanceDetails",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Class: _class,
+                Section: section,
+                DateFrom: datefrom,
+                DateTo: dateto,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                showResultData(data,datefrom,dateto);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+    var showResultData = function (data,datefrom,dateto) {
+       
+        $("#tblStudentAttendanceReport").dataTable({
+            data: data,
+            'destroy': true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    messageTop: "List of Attendance Details of student between " + datefrom + " and " + dateto + " ",
+                    footer: false,
+                },
+                {
+                    extend: 'csv',
+                    footer: false,
+                   
+                },
+                {
+                    extend: 'excel',
+                    footer: false,
+                  
+                }
+            ],
+            columns: [
+             
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Class',
+                    'data': 'Class'
+                },
+                {
+                    'title': 'Section',
+                    'data': 'Section'
+                },
+                {
+                    'title': 'TotalDays',
+                    'data': 'TotalWorking'
+                },
+                {
+                    'title': 'Present',
+                    "render": function (data, type, row, meta) {
+                        data = "<a href='#' onclick='showPresentDays(\"" + row.Batch + "\",\"" + row.StudentId + "\",\"" + datefrom + "\",\"" + dateto + "\")'>"+ row.Present +"</a>";
+                        return data;
+                    }
+                    
+                },
+                {
+                    'title': 'Absent',
+                    "render": function (data, type, row, meta) {
+                        data = "<a href='#' onclick='showPresentDays(\"" + row.Batch + "\",\"" + row.StudentId + "\",\"" + datefrom + "\",\"" + dateto + "\")'>" + row.Absent + "</a>";
+                        return data;
+                    }
+                },
+
+            ]
+        });
+        debugger;
+        $("#reportname").html("List of Attendance Details of student between " + datefrom + " and " + dateto + "");
+
+    }
+
+    var showPresentDays = function (batch, studentid,datefrom,dateto) {
+        debugger;
+        $.ajax({
+            url: "/api/GetAttendanceDetails",
+            method: "GET",
+            data: {
+                Batch: batch,
+                StudentId: studentid,
+                DateFrom: datefrom,
+                DateTo: dateto,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var Name = result[0]["FirstName"] + " " + result[0]["LastName"];
+                $("#modalShowAttendance").modal('show');
+                $("#showstudentid").html(studentid);
+                $("#showname").html(Name);
+                $("#showsession").html(batch);
+                debugger;
+                $("#showdate").html(datefrom + " to " + dateto);
+                $("#tblShowAttendanceDetails").dataTable({
+                    data: result,
+                    "destroy": true,
+                    "paging": false,
+                    "ordering": false,
+                    "info": false,
+                    "searching": false,
+
+                    columns: [
+
+                        {
+                            'title': 'SN',
+                            'data': 'SN',
+                            'render': function (data, type, row, meta) {
+                                return "<span>" + (meta.row + 1) + "</span>";
+                            }
+                        },
+
+                        {
+                            'title': 'Date',
+                            'data': 'Date'
+                        },
+                        {
+                            'title': 'Attendance',
+                            'data': 'Attendance'
+                        },
+                       
+                    ]
+                });
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+    var loadData = function () {
+        $.ajax({
+            url: "/api/GetAllAttendance",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                showResultData(data.presentAttendance,data.date,data.nepaliDate);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+</script>
+

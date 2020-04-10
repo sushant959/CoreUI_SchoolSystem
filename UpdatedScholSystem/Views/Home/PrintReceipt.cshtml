@@ -1,0 +1,288 @@
+﻿@{
+    ViewBag.Title = "PrintReceipt";
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+
+<style>
+    .title-header {
+        background-color: black;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 15px 5px 15px;
+        margin-left: auto;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .text-line {
+        background-color: transparent;
+        color: peru;
+        outline: none;
+        outline-style: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: dotted #808080 1px;
+        width: 150px;
+        font-size: medium;
+    }
+
+    .table span {
+        text-align: left;
+    }
+</style>
+<style media="print">
+    .main-header {
+        font-size: 16px !important;
+        font-display: block;
+        margin-left: auto;
+        text-align: center !important;
+    }
+
+    @@page {
+        size: A5;
+        margin-top: 0px;
+    }
+
+
+
+    @@media print {
+        body * {
+            visibility: hidden;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        #not-print * {
+            display: none;
+        }
+
+        #to-print, #to-print * {
+            visibility: visible;
+        }
+
+        .text-line {
+            min-width: 50px;
+            width: 100px;
+        }
+        /*#to-print {
+            display: block !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 99%;
+        }*/
+    }
+</style>
+<div id="to-print">
+    <div class="row">
+        <div class="col-sm-5" style="background-color:lightyellow; padding-top:20px">
+            <div style="text-align:center">
+                <span class="main-header" style="font-size:16px;">Dibya Jyoti English Secondary School</span><br />
+                <span class="sub-header" style="font-size:12px;">Mahalaxmi-1,Gwarko,Imadol,Latitpur,Nepal</span><br />
+                <span class="sub-header" style="font-size:10px;">Tel:01-5202490,Email:dibyajyotischool2046@gmail.com</span><br />
+                <br />
+                <span class="title-header">Receipt</span>
+            </div>
+
+            <div>
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label>Receipt No:</label> <span id="receiptno"></span>
+                            </td>
+                            <td style="text-align:end"><label>Date:</label><span id="date"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Student Name:</label><span id="name"></span>
+                            </td>
+                            <td style="text-align:end"><label>StudentId:</label><span id="studentid"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Class:</label> <span id="class"></span>
+                            </td>
+                            <td style="text-align:end"><label>Month:</label><span id="month"></span></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>Total Amount :</label><span id="totalamount"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Fine :</label><span id="fine"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Discount :</label><span id="discount"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Grand Total :</label><span id="total"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Amount Paid :</label><span id="paid"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Amount Due :</label><span id="due"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label>Advanced Paid :</label><span id="advanced"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
+            <br />
+            <div>
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:end">
+                                <label>Signature:</label> <input type="text" class="text-line" />
+                            </td>
+                            
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button class=" btn btn-warning btn-md glyphicon glyphicon-print" id="print" onclick=" myFunction()"> Print</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        var receiptid =@ViewBag.ReceiptId;
+        var billingid =@ViewBag.BillingId;
+        debugger;
+        getPrintReceiptDetails(receiptid, billingid);
+    })
+    function myFunction() {
+        $("#print").hide();
+        window.print();
+
+    }
+    var getPrintReceiptDetails = function (receiptid, billingid) {
+        $.ajax({
+            url: "/api/GetPrintReceiptDetails",
+            method: "GET",
+            data: {
+                ReceiptId: receiptid,
+                BillingId: billingid,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var info = result[0];
+                var details = result[1];
+                var advanced = result[2];
+                debugger;
+              
+                var now = new Date();
+                var nowDate = now.toISOString().split('T')[0];
+                var studentname = [info[0]["FirstName"], ' ', info[0]["LastName"]].join('');
+                $("#name").html(studentname);
+                $("#class").html(info[0]['Class']);
+                $("#studentid").html(info[0]['StudentId']);
+                $("#month").html(convertMonth(details[0]["Month"]));
+                $("#date").html(nowDate);
+                $("#receiptno").html(details[0]['ReceiptId']);
+                var total = details[0]["TotalAmount"] - details[0]["Fine"] + details[0]["Discount"];
+                $("#totalamount").html(total);
+                
+                $("#fine").html(details[0]["Fine"]);
+                $("#discount").html(details[0]["Discount"]);
+                $("#total").html(details[0]["TotalAmount"]);
+                if (advanced.length != 0) {
+                    var paid = parseInt(details[0]["PaidAmount"]) + parseInt(advanced[0]["Amount"]);
+                    $("#paid").html(paid);
+                    $("#advanced").html(advanced[0]["Amount"]);
+                }
+                else {
+                    var paid = parseInt(details[0]["PaidAmount"]);
+                    $("#paid").html(paid);
+                    $("#advanced").html(0);
+                }
+                $("#paid").html(details[0]["PaidAmount"]);
+                $("#due").html(details[0]["DueAmount"]);
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+    var convertMonth = function (month) {
+        debugger;
+        switch (month) {
+            case "01": return "Baisakh";
+            case "02": return "Jesth";
+            case "03": return "Asar";
+            case "04": return "Sawan";
+            case "05": return "Bhadau";
+            case "06": return "Aaswin";
+            case "07": return "Kartik";
+            case "08": return "Mangsir";
+            case "09": return "Push";
+            case "10": return "Magh";
+            case "11": return "Falgun";
+            case "12": return "Chait";
+        };
+    }
+
+    var displayBillingInfo = function (result) {
+        debugger;
+        $("#tblShowPrintBill").dataTable({
+            data: result,
+            "destroy": true,
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+
+            columns: [
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'Particulars',
+                    'data': 'FeeName'
+                },
+                {
+                    'title': 'Amount',
+                    'data': 'Amount'
+                },
+            ]
+        });
+    }
+</script>

@@ -1,0 +1,518 @@
+﻿
+@{
+    ViewBag.Title = "StudentTransportMapping";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="StudentDashboard">
+        <a href="/Home/StudentTransportMappingForm" class="btn btn-success">Add Student Transport </a>
+</div><hr/>
+<div id="divStudentTransportMapping">
+            <h4 id="reportname" style="color:orangered"></h4>
+    <div class="flexContainer" style="justify-content:center">
+        <div style="text-align:center;">
+            <div class="flexContainer" style="margin-left:30px;">
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Batch</label>
+                    <select id="searchBatch" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Faculty</label>
+                    <select id="searchFaculty" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Class</label>
+                    <select id="searchClass" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label class="fieldname">Section</label>
+                    <select id="searchSection" class="form-control" style="width:auto"></select>
+                </div>&nbsp;&nbsp;
+                <div style="flex:none; text-align:center; min-width:120px">
+                    <label>Student Id</label>
+                    <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
+                </div>&nbsp;&nbsp;
+                <div style="flex:none;">
+                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
+            <table id="tblStudentTransportReport" class="table table-bordered table-striped" style="width:100%"></table>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditStudentTransport" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit StudentTransport Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStudentTransport" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StudentTransportId" />
+                            <input type="hidden" name="CompanyId" />
+                            <label style="flex:1.5">Batch :&nbsp;</label>
+                            <select class="form-control" name="Batch" style="flex:2" id="selectmodalBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">StudentId :&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentId" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.5">FirstName:&nbsp;</label>
+                            <input type="text" class="form-control" name="FirstName" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">LastName:&nbsp;</label>
+                            <input type="text" class="form-control" name="LastName" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                              <div class="flexContainer">
+                                  <label style="flex:1.5">Class :&nbsp;</label>
+                                  <input type="text" class="form-control" name="Class" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <label style="flex:1.5">PlaceTo :&nbsp;</label>
+                                  <select class="form-control" name="PlaceTo" style="flex:2" id="selectmodalPlaceTo" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                              </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.5">Type :&nbsp;</label>
+                            <select class="form-control" name="Type" style="flex:2" id="selectmodalType" required>
+                                <option value="">--select--</option>
+                                <option value="OneWay">One Way</option>
+                                <option value="TwoWay">Two Way</option>
+                            </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Amount :&nbsp;</label>
+                            <input type="text" id="selectmodalAmount" class="form-control" name="Amount" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalStudentTransport">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        getClassBatchFaculty();
+        loadData();
+    })
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $(".class").html(v);
+                    $("#searchClass").html(v);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $(".batch").html(v);
+                    $("#searchBatch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#searchFaculty").html(v);
+                }
+                if (sectionDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $(".section").html(v);
+                    $("#searchSection").html(v);
+                }
+            }
+        })
+    }
+
+    var loadData = function () {
+        $.ajax({
+            url: "/api/GetAllStudentTransport",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                showResultData(data);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showResultData = function (data) {
+
+        $("#tblStudentTransportReport").dataTable({
+            data: data,
+            'destroy': true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: false,
+                },
+                {
+                    extend: 'csv',
+                    footer: false,
+
+                },
+                {
+                    extend: 'excel',
+                    footer: false,
+
+                }
+            ],
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#'  onclick='updateStudentTransport(\"" + row.StudentTransportId + "\",\"" + row.Batch + "\",\"" + row.PlaceTo + "\",\"" + row.Type + "\",\"" + row.Amount + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.Class + "\") '><img src='/Content/images/edit3.png' style='width:30px; height:30px; ' /></a>&nbsp<a href='#' onclick='deletStudentTransport(\"" + row.StudentTransportId + "\",\"" + row.Batch + "\",\"" + row.PlaceTo + "\",\"" + row.Type + "\",\"" + row.Amount + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\") '><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></div>";
+                    },
+                    'sortable': false,
+                },
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Class',
+                    'data': 'Class'
+                },
+               
+                {
+                    'title': 'Drop Point',
+                    'data': 'PlaceTo'
+                },
+                {
+                    'title': 'Type',
+                    'data': 'Type'
+                },
+                {
+                    'title': 'Amount',
+                    'data': 'Amount'
+                },
+            ]
+        });
+        debugger;
+        $("#reportname").html("List of Student Applicable for Transportation");
+
+    }
+
+    function deletStudentTransport(id, batch,to, type, amount, studentid, firstname, lastname) {
+        $("#modalDelete").modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete transport details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Name : <b> " + firstname + " " + lastname + " </b><br/> Session: <b> " + batch + "</b><br/>PlaceTo: <b> " + to + "</b><br/>Type : <b> " + type + "</b><br/>Amount: <b> " + amount + "</b> ?");
+
+        $('#btnDeleteModal').data('id', id);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var id = $(this).data('id');
+        debugger;
+        $.ajax({
+            url: "/api/DeleteStudentTransportDetails",
+            method: "POST",
+            data: {
+                Id:id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    loadData();
+                })
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    function updateStudentTransport(id, batch, to, type, amount, studentid, firstname, lastname,_class) {
+        debugger;
+        $("#modalEditStudentTransport").modal('show');
+        $("#modalEditStudentTransport [name='StudentTransportId']").val(id);
+        $("#modalEditStudentTransport [name='StudentId']").val(studentid);
+        $("#modalEditStudentTransport [name='FirstName']").val(firstname);
+        $("#modalEditStudentTransport [name='LastName']").val(lastname);
+        $("#modalEditStudentTransport [name='Amount']").val(amount);
+        $("#modalEditStudentTransport [name='Type']").val(type);
+        $("#modalEditStudentTransport [name='Class']").val(_class);
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var batchDetails = result[1];
+              
+                if (batchDetails != undefined) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+
+                    $("#selectmodalBatch").html(v);
+                    $("#selectmodalBatch").val(batch);
+                }
+              
+            }
+        })
+        $.ajax({
+            url: "/api/GetAllDestination",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var i in result) {
+                        v += "<option value=" + result[i]['PlaceTo'] + ">" + result[i]['PlaceTo'] + "</option>";
+                    }
+                    $("#selectmodalPlaceTo").html(v);
+                    $("#selectmodalPlaceTo").val(to);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        
+    }
+
+    $("#btnEditModalStudentTransport").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#formModalStudentTransport").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        $.ajax({
+            url: "/api/EditStudentTransportDetails",
+            method: "POST",
+            data: {
+                Id: fd.StudentTransportId,
+                Batch: fd.Batch,
+                PlaceTo: fd.PlaceTo,
+                Type: fd.Type,
+                Amount: fd.Amount,
+                CompanyId: fd.CompanyId,
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalEditStudentTransport').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSearch").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentid = $("#searchStudentId").val().trim();
+        var faculty = $("#searchFaculty").val();
+        var section = $("#searchSection").val();
+        debugger;
+        if (batch == '' && _class == '' && studentid == '' && faculty == '' && section == '') {
+            loadData();
+            return;
+        }
+
+        else {
+            debugger;
+            $.ajax({
+                url: "/api/SearchStudentTransportDetails",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Class: _class,
+                    StudentId: studentid,
+                    Faculty: faculty,
+                    Section: section,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    showResultData(data);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+    })
+
+
+    $("#selectmodalPlaceTo").on('change', function () {
+        debugger;
+        $("#selectmodalType").val('');
+        $("#selectmodalAmount").val('');
+    })
+
+    $("#selectmodalType").on('change',function () {
+        debugger;
+        var to = $("#selectmodalPlaceTo").val();
+        var way = $("#selectmodalType").val();
+        $.ajax({
+            url: "/api/GetTransportAmount",
+            method: "GET",
+            data: {
+                To: to,
+                Way: way,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#selectmodalAmount").val(result[0]["Amount"]);
+            },
+            error: function (e) {
+
+            }
+        })
+    })
+
+    $("#searchFaculty").on('change', function (e) {
+        e.preventDefault();
+        var faculty = $("#searchFaculty").val();
+        if (faculty != '') {
+            $.ajax({
+                url: "/api/GetClassByFaculty",
+                method: "GET",
+                data: {
+                    Faculty: faculty,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var r in result) {
+                        v += "<option value=" + result[r]["ClassName"] + ">" + result[r]["ClassName"] + "</option>";
+
+                    }
+                    $("#searchClass").html(v);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            getClassBatchFaculty();
+        }
+    })
+</script>
+

@@ -1,0 +1,224 @@
+﻿
+
+@{
+    ViewBag.Title = "PrintDuereport";
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@Scripts.Render("~/bundles/jquery")
+<style>
+    .title-header {
+        background-color: black;
+        font-size: 16px;
+        font-family: 'Times New Roman', Times, serif;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 15px 5px 15px;
+        margin-left: auto;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .text-line {
+        background-color: transparent;
+        color: peru;
+        outline: none;
+        outline-style: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: dotted #808080 1px;
+        width: 150px;
+        font-size: medium;
+    }
+
+    .table span {
+        text-align: left;
+    }
+</style>
+<style media="print">
+    .main-header {
+        font-size: 16px !important;
+        font-display: block;
+        margin-left: auto;
+        text-align: center !important;
+    }
+
+    @@page {
+        size: A5;
+        margin-top: 0px;
+    }
+
+
+
+    @@media print {
+        body * {
+            visibility: hidden;
+            margin-left: 5px;
+            margin-right: 5px;
+            background-color: lightyellow;
+        }
+
+        #not-print * {
+            display: none;
+        }
+
+        #to-print, #to-print * {
+            visibility: visible;
+        }
+
+        .text-line {
+            min-width: 50px;
+            width: 100px;
+        }
+        /*#to-print {
+            display: block !important;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 99%;
+        }*/
+    }
+</style>
+<div id="to-print">
+   
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button class=" btn btn-warning btn-md glyphicon glyphicon-print" id="print" onclick=" myFunction()"> Print</button>
+            </div>
+        </div>
+   
+
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        @*var batch =@ViewBag.Batch;
+        var _class =@ViewBag.Class;
+        var month=@ViewBag.Month;*@
+        debugger;
+        getPrintDueDetails('@ViewBag.Batch','@ViewBag.Class','@ViewBag.StudentId');
+    })
+    function myFunction() {
+        $("#print").hide();
+        window.print();
+
+    }
+    var getPrintDueDetails = function (batch,_class,studentid) {
+        debugger;
+        
+        $.ajax({
+            url: "/api/GetDueStudentList",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Class: _class,
+                StudentId: studentid,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showdueprint(result)
+             
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+    var convertMonth = function (month) {
+        debugger;
+        switch (month) {
+            case "01": return "Baisakh";
+            case "02": return "Jesth";
+            case "03": return "Asar";
+            case "04": return "Sawan";
+            case "05": return "Bhadau";
+            case "06": return "Aaswin";
+            case "07": return "Kartik";
+            case "08": return "Mangsir";
+            case "09": return "Push";
+            case "10": return "Magh";
+            case "11": return "Falgun";
+            case "12": return "Chait";
+        };
+    }
+     
+    var showdueprint = function (result) {
+        debugger;
+        for (var r in result) {
+            var id = result[r]["StudentId"];
+            var batch = result[r]["Batch"];
+            $.ajax({
+                url: "/api/GetDueDetailsByStudentId1",
+                method: "GET",
+                data: {
+                    StudentId: id,
+                    Batch: batch,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    var details = result.details;
+                    var due = result.lst;
+                    var Name = details[0]["FirstName"] + " " + details[0]["LastName"];
+                    var html = ``;
+                    html += `<div class='row'>`;
+                    html += `<div class='col-sm-6' style='background-color:lightyellow; padding-top:20px'>`;
+                    html += `<div>`;
+                    html += `<table style='width:100%'><tbody><tr><td><label>StudentId:</label> <span>${details[0]["StudentId"]}</span></td>`;
+                    html += `<td style='text-align:end'><label>Name:</label><span>${Name}</span></td></tr>`;
+                    html += `<tr><td><label>Batch:</label><span>${details[0]["Batch"]}</span></td>`;
+                    html += `<td style='text-align:end'><label>Class:</label><span>${details[0]["Class"]}</span></td></tr>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    html += `</div>`;
+                    $("#to-print").append(html);
+                   
+                    for (var r in details) {
+                        details[r].Month = convertMonth(details[r].Month);
+                    }
+
+
+                    for (var c in due) {
+                        var html = ``;
+                        html += `<div class='row'>`;
+                        html += `<div class='col-sm-6' style='background-color:lightyellow; padding-top:20px'>`;
+                      html += `<h4>Month:${details[c]['Month']}</h4>`;
+                        html += `<table class="bordered-table table-striped">`;
+                        html += `<thead><th>SN</th><th>FeeName</th><th>Amount</th></thead>`;
+                        html += ` <tbody class='rowTable'>`;
+                        for (var k in due[c]) {
+                            html += `<tr>`;
+                            html += `<td>${parseInt(k) + 1}</td>`;
+                            html += `<td><span>${due[c][k]['FeeName']}</span></td>`;
+                            html += `<td><span>${due[c][k]['Amount']}</span></td>`;
+                            html += `</tr>`;
+
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        html += `<div class="pull-right"><label>Total Fee:&nbsp;&nbsp;</label><span>${details[c]['Total']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Discount:&nbsp;&nbsp;</label><span>${details[c]['Discount']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Fine:&nbsp;&nbsp;</label><span>${details[c]['Fine']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Total:&nbsp;&nbsp;</label><span>${parseInt(details[c]['Total']) + parseInt(details[c]['Fine']) - parseInt(details[c]['Discount'])}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Paid:&nbsp;&nbsp;</label><span>${details[c]['Paid']}</span>&nbsp;&nbsp;&nbsp;&nbsp;`;
+                        html += `<label>Due:&nbsp;&nbsp;</label><span>${details[c]['Due']}</span></div><br/><br/>`;
+                        $("#to-print").append(html);
+                    }
+
+
+                },
+                error: function () {
+
+                }
+            })
+        }
+    }
+
+
+</script>

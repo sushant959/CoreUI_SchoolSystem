@@ -1,0 +1,334 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="~/Scripts/gstatic/loader.js"></script>*@
+
+@*<script type="text/javascript" src="Scripts/gstatic/loader.js"></script>*@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.3/lodash.js"></script>
+<br />
+
+<style>
+    .h4style, label {
+        color: darkcyan;
+        font-family: Times New Roman;
+        font-style: italic
+    }
+
+    .hr {
+        margin-top: 0.4em;
+        margin-bottom: 0.4em;
+    }
+</style>
+
+<div id="divSummaryContainer">
+    <h3>Student Info.</h3>
+    <hr style="margin-top:5px;margin-bottom:10px" />
+    <h4 id="totalStudent" class="h4style"></h4>
+    <br />
+    <h4 class="h4style">Total Student by:</h4>
+    <div id="divSummary" class="row" style="margin-left:-70px;">
+
+    </div><br />
+    <h4 class="h4style">Payment Details By Month:</h4>
+    <div id="divTotal" class="row">
+
+    </div>
+    <br />
+    <h4 class="h4style">Payment Details By Batch:</h4>
+    <div id="divTotalBatch" class="row">
+
+    </div>
+    <br />
+
+</div><br />
+
+<br />
+@if (ViewBag.Homepage != null)
+{
+    <script>
+    $(document).ready(function () {
+        localStorage.setItem("homepage", "@ViewBag.Homepage");
+    })
+    </script>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        google.charts.load('current', { 'packages': ['corechart', 'bar'], 'callback': showResultSummary });
+        google.charts.setOnLoadCallback(drawMultSeries);
+        google.charts.setOnLoadCallback(drawSeries);
+    })
+
+    function drawSeries() {
+        debugger;
+        $.ajax({
+            url: "/api/GetBatchBillingReceiptTotal",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                for (var r in result) {
+                    result[r].Total = result[r].Total + result[r].Fine - result[r].Discount;
+                    result[r].Due = result[r].Total - result[r].Paid;
+                }
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Batch');
+                data.addColumn('number', 'Total Billing');
+                data.addColumn('number', 'Paid Amount');
+                data.addColumn('number', 'Due Amount');
+                let rows = [];
+                for (var r in result) {
+                    rows.push([result[r].Batch, result[r].Total, result[r].Paid, result[r].Due]);
+                }
+                data.addRows(rows);
+                debugger;
+                var options = {
+                    title: 'Billing Details By Batch',
+                    hAxis: {
+                        title: 'Batch',
+                        viewWindow: {
+                            min: [7, 30, 0],
+                            max: [17, 30, 0]
+                        }
+                    },
+                    vAxis: {
+                        title: 'in NRs.'
+                    }
+                };
+
+                var chart = new google.visualization.ColumnChart(
+                    document.getElementById('divTotalBatch'));
+
+                chart.draw(data, options);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+
+    }
+    function drawMultSeries() {
+        debugger;
+        $.ajax({
+            url: "/api/GetBillingReceiptTotal",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                for (var r in result) {
+                    result[r].Month = convertMonth(result[r].Month);
+                    result[r].Total = result[r].Total + result[r].Fine - result[r].Discount;
+                    result[r].Paid = result[r].Paid;
+                    result[r].Due = result[r].Total - result[r].Paid;
+                }
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Month');
+                data.addColumn('number', 'Total Billing');
+                data.addColumn('number', 'Paid Amount');
+                data.addColumn('number', 'Due Amount');
+                let rows = [];
+                for (var r in result) {
+                    rows.push([result[r].Month, result[r].Total, result[r].Paid, result[r].Due]);
+                }
+                data.addRows(rows);
+                debugger;
+                var options = {
+                    title: 'Billing Details',
+                    hAxis: {
+                        title: 'Month',
+                        viewWindow: {
+                            min: [7, 30, 0],
+                            max: [17, 30, 0]
+                        }
+                    },
+                    vAxis: {
+                        title: 'in NRs.'
+                    }
+                };
+
+                var chart = new google.visualization.ColumnChart(
+                    document.getElementById('divTotal'));
+
+                chart.draw(data, options);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+
+    }
+
+
+    var showResultSummary = function () {
+        debugger;
+        $.ajax({
+            url: "/api/GetDashboardData",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (res) {
+                debugger;
+                if (res.total.length != 0) {
+                    var total = res.total[0]["total"];
+                }
+                else {
+                    var total = 0;
+                }
+                if (res.male.length != 0) {
+                    var male = res.male[0]["total"];
+                }
+                else {
+                    var male = 0;
+                }
+                if (res.female.length != 0) {
+                    var female = res.female[0]["total"];
+                }
+                else {
+                    var female = 0;
+                    ;
+                }
+                if (res != null) {
+
+                    debugger;
+                    $("#totalStudent").html(`
+                        Total Student: ${total}
+                        <br/>Total Male: ${male}
+                        <br/>Total Female: ${female}
+                    `);
+
+                    var result = res.aggTotal;
+                    $('#divSummaryContainer').show();
+                    $("#divSummary").html("");
+                    for (var r in res.aggTotal) {
+                        $("#divSummary").append(`<div class="col-md-4" id="divSummary${r}"></div >`);
+                        drawPieChart(result[r], Object.keys(result[r][0])[0], `divSummary${r}`);
+                    }
+
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    }
+
+
+
+    function drawChart(chartData, title, containerId) {
+        debugger;
+        //debugger;
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('number', 'Value');
+
+        let rows = [];
+        for (var r in chartData) {
+            rows.push([chartData[r][title] || "null", chartData[r].count]);
+        }
+        data.addRows(rows);
+
+        // Set chart options
+        var options = {
+            titleTextStyle: {
+                color: 'darkcyan',
+                fontName: 'Times New Roman',
+                fontSize: 16,
+                bold: true,
+                italic: true
+            },
+            'title': title,
+            'width': 370,
+            'height': 300,
+            //showAllTooltips: true
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById(containerId));
+        chart.draw(data, options);
+        //chart.options.tooltips.enabled = true;
+    }
+    function drawPieChart(chartData, title, containerId) {
+
+        if (!google.visualization) {
+            //debugger;
+            google.charts.setOnLoadCallback(function () {
+                drawChart(chartData, title, containerId);
+            });
+        } else {
+            drawChart(chartData, title, containerId);
+        }
+    }
+
+    function drawBarChart(chartData, title, containerId) {
+
+        if (!google.visualization) {
+            //debugger;
+            google.charts.setOnLoadCallback(function () {
+                drawBChart(chartData, title, containerId);
+            });
+        } else {
+            drawBChart(chartData, title, containerId);
+        }
+    }
+
+
+    function drawBChart(chartData, title, containerId) {
+        debugger;
+        //debugger;
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('number', 'Value');
+
+        let rows = [];
+        for (var r in chartData) {
+            rows.push([chartData[r][title] || "null", chartData[r].count]);
+        }
+        data.addRows(rows);
+
+        // Set chart options
+        var options = {
+            titleTextStyle: {
+                color: 'darkcyan',
+                fontName: 'Times New Roman',
+                fontSize: 16,
+                bold: true,
+                italic: true
+            },
+            legend: { position: 'none' },
+            'title': 'Billing',
+            'width': 500,
+            'height': 100,
+
+            vAxis: {
+                title: 'Month'
+            }
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.BarChart(document.getElementById(containerId));
+        chart.draw(data, options);
+    }
+
+
+
+</script>

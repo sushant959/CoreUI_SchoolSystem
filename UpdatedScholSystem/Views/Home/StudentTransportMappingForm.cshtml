@@ -1,0 +1,461 @@
+﻿
+@{
+    ViewBag.Title = "StudentTransportMappingForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" id="divStudentTransportInfo">
+    <div class="col-sm-12">
+        <div class="panel panel-default" style="background-color:floralwhite !important;">
+            <div class="panel-heading" id="titleStudentTransportForm" style="background-color:aqua">Student Transport Form</div>
+            <div class="panel-body" style="background-color:transparent">
+                <form id="formStudentTransport">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" />
+                        <label style="flex:1.3">Batch :&nbsp;</label>
+                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Faculty :&nbsp;</label>
+                        <select id="faculty" name="Faculty" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1.3">Class:&nbsp;&nbsp;</label>
+                        <select id="class" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1.3">Section :&nbsp;</label>
+                        <select id="section" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div><br />
+                          <div class="flexContainer">
+                              <label style="width:182px;">FirstName:&nbsp;&nbsp;</label>
+                              <input type="text" class="form-control" id="firstname" style="width:307px"  />&nbsp;&nbsp;&nbsp;&nbsp;
+                              
+                          </div><br />
+                    <div id="tblStudentList" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                    </div><br />
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
+                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        getClassBatchFaculty();
+        $("#faculty").attr('disabled', true);
+        $("#class").attr('disabled', true);
+        $("#section").attr('disabled', true);
+        $("#firstname").attr('disabled', true);
+    })
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                //if (classDetails != undefined) {
+                //    debugger;
+                //    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                //    for (var i in classDetails) {
+                //        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                //    }
+                //    $("#class").html(v);
+                //}
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+
+                    $("#batch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#faculty").html(v);
+                }
+                if (sectionDetails != undefined) {
+                    var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                    for (var i in sectionDetails) {
+                        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                    }
+                    $(".section").html(v);
+                    $("#section").html(v);
+                }
+            }
+        })
+    }
+
+    $("#batch").on('change', function (e) {
+        e.preventDefault();
+        debugger;
+        $("#faculty").attr('disabled', false);
+        $("#firstname").attr('disabled', false);
+        $("#class").attr('disabled', true);
+        $("#section").attr('disabled', true);
+        $("#class").val('');
+        $("#section").val('');
+        $("#faculty").val('');
+        $("#firstname").val('');
+        $("#tblStudentList").html("");
+        var batch = $("#batch").val();
+        if (batch == '') {
+            $("#tblStudentList").html("");
+            $("#firstname").attr('disabled', true);
+        }
+        else {
+            studentListByBatch();
+        }
+    })
+
+    $("#faculty").on('change', function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var faculty = _this.val();
+        $("#class").attr('disabled', false);
+        $("#section").attr('disabled', true);
+        $("#class").val('');
+        $("#section").val('');
+        $("#tblStudentList").html("");
+        $.ajax({
+            url: "/api/GetAllStudentListByFaculty",
+            method: "GET",
+            data: {
+                Faculty: faculty,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result.length != 0) {
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        getClass(faculty);
+    })
+
+    var getClass = function (faculty) {
+        $.ajax({
+            url: "/api/GetClassByFaculty",
+            method: "GET",
+            data: {
+                Faculty: faculty,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var v = "<option selected='true' disabled='disabled'>--select--</option>";
+                for (var r in result) {
+                        v += "<option value=" + result[r]["ClassName"] + ">" + result[r]["ClassName"] + "</option>";
+                   
+                }
+                $("#class").html(v);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#class").on('change', function (e) {
+        e.preventDefault();
+        var _this = $(this);
+        var _class = _this.val();
+        var faculty = $("#faculty").val();
+        $("#section").attr('disabled', false);
+        $("#section").val('');
+        $("#tblStudentList").html("");
+        $.ajax({
+            url: "/api/GetAllStudentListByClass",
+            method: "GET",
+            data: {
+                Faculty: faculty,
+                Class: _class,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result.length != 0) {
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    $("#section").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        var _this = $(this);
+        var section = _this.val();
+        var faculty = $("#faculty").val();
+        var _class = $("#class").val();
+        $("#tblStudentList").html("");
+        $.ajax({
+            url: "/api/GetAllStudentListBySection",
+            method: "GET",
+            data: {
+                Faculty: faculty,
+                Class: _class,
+                Section: section,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result.length != 0) {
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    var studentListByBatch = function () {
+        debugger;
+        $.ajax({
+            url: "/api/GetAllStudentList",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result.length != 0) {
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showResultData = function (result) {
+        var studentdetails = result[0];
+        var transportdetails = result[1];
+        var pickuppoint=result[3];
+        debugger;
+        var i = 0;
+        var html = `<table class="bordered-table table-striped">`;
+        html += `<thead><tr><th th rowspan="2">&nbsp;</th><th rowspan="2" style="width:110px;">Student Id</th><th rowspan="2" style="width:180px;">Name</th><th rowspan="2" style="width:100px;">Class</th><th colspan="4">List Of Route</th></tr>`;
+        html += `<tr><th>From</th><th>To</th><th>Type</th><th>Amount</th></tr></thead>`;
+        html += ` <tbody class='rowTable'>`;
+
+        for (var r in studentdetails) {
+            html += `<tr>`;
+            html += `<td><input type='checkbox' class='checktr' name='StudentTransportDetails[${i}][IsChecked]' value='true' /></td>`;
+            html += `<td><input type="text" class='form-control'  name='StudentTransportDetails[${i}][StudentId]' value="${studentdetails[r]['StudentId']}" readonly/></td>`;
+            html += `<td><input type="text" class='form-control'  name='' value="${studentdetails[r]['FirstName']} ${studentdetails[r]['LastName']} " readonly/></td>`;
+            html += `<td><input type='text' class='form-control Refundable' name='' value="${studentdetails[r]['Class']}" readonly/></td>`;
+            html += `<td><input type="text" class='form-control'  name='' value="${pickuppoint[0]['Place']}" readonly/></td>`;
+            html += `<td><select class='form-control PlaceTo' name='StudentTransportDetails[${i}][PlaceTo]'>`;
+            html += `<option selected='true' disabled='disabled'>--select--</option>`;
+            for (var m in transportdetails) {
+
+                html += `<option value="${transportdetails[m]['PlaceTo']}">${transportdetails[m]['PlaceTo']}</option>`;
+            }
+            html += `</select></td>`;
+            html += `<td><select class='form-control Way' name='StudentTransportDetails[${i}][Type]' disabled='disabled'>
+                                 <option selected='true' disabled='disabled'>--select--</option>
+                                <option value="OneWay">One Way</option>
+                                <option value="TwoWay">Two Way</option>
+                            </select></td>`;
+            html += `<td><input type=text name='StudentTransportDetails[${i}][Amount]' style='width:100px;' placeholder='amount' class='form-control Amount' disabled='disabled'/></td>`
+
+            html += `</tr>`;
+            i++;
+        }
+        html += `</tbody>`;
+        html += `</table>`;
+        html += `<br/>`;
+        $("#tblStudentList").append(html);
+    }
+
+   
+
+    $("#tblStudentList").on('change', '.PlaceTo', function () {
+        debugger;
+        var _this = $(this);
+        _this.closest('tr').find('.Way').attr('disabled', false);
+        _this.closest('tr').find('.Way').val('');
+        _this.closest('tr').find('.Amount').val('');
+    })
+    $("#tblStudentList").on('change', '.Way', function () {
+        debugger;
+        var _this = $(this);
+        _this.closest('tr').find('.Amount').attr('disabled', false);
+        _this.closest('tr').find('.Amount').val('');
+        var to = _this.closest('tr').find('.PlaceTo').val();
+        var way = _this.closest('tr').find('.Way').val();
+        $.ajax({
+            url: "/api/GetTransportAmount",
+            method: "GET",
+            data: {
+                To: to,
+                Way: way,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                _this.closest('tr').find('.Amount').val(result[0]["Amount"]);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnsubmit").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formStudentTransport").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.Batch == '') {
+            alert("Please select batch");
+            return;
+        }
+        $.ajax({
+            url: "/api/PostStudentTransportDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html(" Successful.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    $("form").find("input[type=text],select").val("");
+                    location.href = "/Home/StudentTransportMapping";
+                })
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var cancel = function () {
+        debugger;
+
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+
+    }
+
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        location.href = "/Home/StudentTransportMapping";
+    });
+
+
+    $("#firstname").on('input', function (e) {
+        debugger;
+        var batch = $("#batch").val();
+        var _class = $("#class").val();
+        var faculty = $("#faculty").val();
+        var section = $("#section").val();
+        var name = $("#firstname").val().trim();
+        debugger;
+        $("#tblStudentList").html("");
+        $.ajax({
+            url: "/api/GetAllStudentListByName",
+            method: "GET",
+            data: {
+                Batch:batch,
+                Faculty: faculty,
+                Class: _class,
+                Section: section,
+                Name: name,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result.length != 0) {
+                    showResultData(result);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+</script>
+

@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="@Url.Content("~/content/favicon.ico")" />
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/js.cookie.js"></script>
+    <script src="~/Content/DataTable/datatables.min.js"></script>
+    <link href="~/Content/DataTable/datatables.min.css" rel="stylesheet" />
+    <script src="~/Content/DataTable/dataTables.buttons.min.js"></script>
+    <script src="~/Content/DataTable/buttons.flash.min.js"></script>
+    <script src="~/Content/DataTable/jsZip.min.js"></script>
+    <script src="~/Content/DataTable/buttons.html5.min.js"></script>
+    <script src="~/Content/DataTable/pdfmake.min.js"></script>
+    <script src="~/Content/DataTable/vfs_fonts.js"></script>
+    <script src="~/Content/DataTable/buttons.print.min.js"></script>
+    <link href="~/Content/DataTable/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <style>
+
+        .sidenav {
+            height: 100%; /* Full-height: remove this if you want "auto" height */
+            /*width: 260px;*/ /* Set the width of the sidebar */
+            position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+            z-index: 1; /* Stay on top */
+            top: 0; /* Stay at the top */
+            left: 0;
+            font-size: 12px;
+            background-color:saddlebrown; /* Black */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            padding-top: 20px;
+            color: whitesmoke;
+           /*padding: 15px;*/
+        }
+
+            .sidenav a {
+                color: whitesmoke;
+                padding: 10px;
+                text-decoration: none;
+                font-size: 14px !important;
+                display: block;
+                transition: all 0.3s linear;
+                -webkit-transition: all 0.3s linear;
+                -moz-transition: all 0.3s linear;
+            }
+
+        i {
+            margin-right: 10px;
+            width: 20px;
+            font-size: 20px !important;
+        }
+
+        .sidenav a:hover {
+            background-color: rosybrown;
+        }
+
+        .sidenav a.active {
+            background-color:brown;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:brown; border-color:silver">
+
+        <div class="pull-right" style="margin-right:30px;">
+            @*<h4 style="color:white">Welcome @Session["username"]</h4>
+        <h4 style="color:white">Company Name:@Session["CompanyName"]</h4>*@
+            @*<a href="/Home/Logout" id="logoutMenu" style="color:white;font-size:18px;">
+                <i class="fa fa-fw fa-sign-out"></i> LogOut
+            </a>*@
+            <a href="/Home/Logout" title="Go Back to Homepage">
+            <i class="fa fa-home fa-2x"></i> Home
+
+            </a>
+        </div>
+        <a href="/Home/Index">
+            <div style="display:flex">
+                <div style="margin:10px;">
+                    @*<img src="~/Content/ambulance1.jpg" height="50" style="margin-left:15px" />*@
+                    <i class="fas fa-school" style="color:white; font-size:48px !important"></i>
+                </div>
+                <div style="color:whitesmoke;margin-left:20px;">
+                    <h4 style="margin-bottom:5px"></h4>
+                    <span></span>
+                </div>
+
+            </div>
+        </a>
+    </div><br/>
+
+    <div class="container" style="margin-right:10px;">
+        <div class="row">
+        <div class="col-sm-1">
+            <div class="sidenav" id="sideBar" style="padding-top:120px;">
+
+              @if (Session["Role"].ToString() == "Admin")
+              {
+                    <a href="/Home/UserInfo" id="UserMenu">
+                        @*<i class="fa fas fa-user-secret"></i>*@ User Management
+                    </a>
+
+              }
+                <a href="/Home/Index" id="homeMenu">
+                    @*<i class="fa fas fa-home"></i>*@ Home
+                </a>
+                <a href="/Home/GeneralSettings" id="settingsMenu">
+                    @*<i class="fa fas fa-cogs"></i>*@ General Settings
+                </a>
+
+                <a href="/Home/StudentManagement" id="studentMenu">
+                    @*<i class="fa fas fa-user"></i>*@ Student Management
+                </a>
+                <a href="/Home/ScholarshipManagement" id="scholarshipMenu">
+                    @*<i class="fas fa-user-tag"></i>*@ Scholarship Management
+                </a>
+                <a href="/Home/BillingManagement" id="billingMenu">
+                    @*<i class="fas fa-money-bill"></i>*@ Billing Management
+                </a>
+                <a href="/Home/ReceiptManagement" id="receiptMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Receipt Management
+                </a>
+                <a href="/Home/DueReport" id="dueMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Due report
+                </a>
+                <a href="/Home/StudentAttendance" id="attendanceMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Student Attendance
+                </a>
+                <a href="/Home/StaffManagement" id="teacherMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Staff Management
+                </a>
+                <a href="/Home/StaffAttendance" id="staffattnMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@Staff Attendance
+                </a>
+                <a href="/Home/FineManagement" id="fineMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@Fine Management
+                </a>
+                <a href="/Home/TransportationManagement" id="transportationMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@Transportation Management
+                </a>
+                <a href="/Home/StudentTransportMapping" id="stdtransmappingMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Student Transport Mapping
+                </a>
+                <a href="/Home/StudentExtraFeeMapping" id="stdextramappingMenu">
+                    @*<i class="fas fa-file-invoice"></i>*@ Student Extra Fee Mapping
+                </a>
+
+                <br />
+                
+            </div>
+        </div>
+        <div class="col-sm-11" style="margin-top:50px;margin-left:-30px;">
+            <div id="body-content">
+                @RenderBody()
+            </div>
+            
+        </div>
+       </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery.serializejson.min.js"></script>
+<script src="~/Scripts/nepali.datepicker.v2.2.min.js"></script>
+<link href="~/Content/nepali.datepicker.v2.2.min.css" rel="stylesheet" />
+<script type="text/javascript">
+    $(document).ready(function () {
+        //var id = Cookies.get('active_sidenav');
+        //debugger;
+
+        //if (id == "UserMenu" || id == "homeMenu" || id == "settingsMenu" || id == "studentMenu" || id == "scholarshipMenu"
+        //    || id == "billingMenu" || id == "receiptMenu" || id == "dueMenu" || id == "attendanceMenu"
+        //    || id == "teacherMenu" || id == "staffattnMenu" || id == "fineMenu" || id == "transportationMenu" || id == "stdtransmappingMenu" || id =="stdextramappingMenu") {
+        //    $('.sidenav').find('.active').removeClass('active');
+        //    $("#" + id).addClass('active');
+        //}
+        $('.sidenav').find('.active').removeClass('active');
+        var url = location.href.toLowerCase();
+        if (url.includes("userinfo")) {
+            $("#UserMenu").addClass('active');
+        } else if (url.includes("generalsettings")) {
+            $("#settingsMenu").addClass('active');
+        }
+        else if (url.includes("studentattendance")) {
+            $("#attendanceMenu").addClass('active');
+        }
+        else if (url.includes("transportationmanagement")) {
+            $("#transportationMenu").addClass('active');
+        }
+        else if (url.includes("studenttransportmapping")) {
+            $("#stdtransmappingMenu").addClass('active');
+        }
+        else if (url.includes("studentextrafeemapping")) {
+            $("#stdextramappingMenu").addClass('active');
+        }
+        else if (url.includes("studentextrafeemapping")) {
+            $("#stdextramappingMenu").addClass('active');
+        }
+        else if (url.includes("student")) {
+            $("#studentMenu").addClass('active');
+        }
+        else if (url.includes("scholarshipmanagement")) {
+            $("#scholarshipMenu").addClass('active');
+        }
+        else if (url.includes("billingmanagement")) {
+            $("#billingMenu").addClass('active');
+        }
+        
+        else if (url.includes("receiptmanagement")) {
+            $("#receiptMenu").addClass('active');
+        }
+        else if (url.includes("duereport")) {
+            $("#dueMenu").addClass('active');
+        }
+        else if (url.includes("staffattendance")) {
+            $("#staffattnMenu").addClass('active');
+        }
+        else if (url.includes("staff")) {
+            $("#teacherMenu").addClass('active');
+        }
+        else if (url.includes("finemanagement")) {
+            $("#fineMenu").addClass('active');
+        }
+        
+        else {
+            $("#homeMenu").addClass('active');
+        }
+
+    });
+    //$('.sidenav a').on('click', function () {
+    //    $('.sidenav').find('.active').removeClass('active');
+    //    $(this).addClass('active');
+    //    Cookies.set('active_sidenav', $(this).attr('id'));
+    //});
+
+    var convertMonth = function (month) {
+       
+        switch (month) {
+            case "01": return "Baisakh";
+            case "02": return "Jesth";
+            case "03": return "Asar";
+            case "04": return "Sawan";
+            case "05": return "Bhadau";
+            case "06": return "Aaswin";
+            case "07": return "Kartik";
+            case "08": return "Mangsir";
+            case "09": return "Push";
+            case "10": return "Magh";
+            case "11": return "Falgun";
+            case "12": return "Chait";
+        };
+    }
+
+    var convertMonthInt = function (month) {
+        switch (month) {
+            case "Baisakh": return "01";
+            case "Jesth": return "02";
+            case "Asar": return "03";
+            case "Sawan": return "04";
+            case "Bhadau": return "05";
+            case "Aaswin": return "06";
+            case "Kartik": return "07";
+            case "Mangsir": return "08";
+            case "Push": return "09";
+            case "Magh": return "10"; 
+            case "Falgun": return "11";
+            case "Chait": return "12";
+        };
+    }
+</script>

@@ -1,0 +1,298 @@
+﻿
+@{
+    ViewBag.Title = "FineManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="divfinemanagement">
+    <br />
+    <div class="col-md-8">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Fine</h4>
+            <form id="formFineDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <div style="flex:none; text-align:center">
+                        <label>Day Range</label>
+                        <input type="hidden" name="FineId" value="" />
+                        <input type="hidden" name="CompanyId" />
+                        <div class="flexContainer">
+                            <input type="text" name="DayFrom" class="form-control" placeholder="From" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                            <input type="text" name="DayTo" class="form-control" placeholder="To" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                        </div>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center">
+                        <label>Type</label>
+                        <div class="flexContainer">
+                            <input type="radio" name="FineType" value="flat" />Flat &nbsp;&nbsp;
+                            <input type="radio" name="FineType" value="percentage" />Percent
+                        </div>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center">
+                        <label>Fine</label>
+                        <div class="flexContainer">
+                            <input type='text' name='FineAmount' class="form-control" style="max-width:120px;" />
+                        </div>
+                    </div>&nbsp;&nbsp;
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block"  id="btnSaveFineDetails">Add</button>
+                </div>
+
+            </form>
+        </div><br />
+    </div>
+    <div class="col-md-10">
+        <div id="fineDetails" style="width:100%;overflow:auto;">
+            <h4 id="titlename" style="color:orangered"></h4>
+            <table id="tblFineDetails" class="table table-bordered table-striped" style="width:100%"></table>
+        </div><br /><br />
+    </div>
+</div>
+
+<div id="modalEditFine" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Fine</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalFineDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <div style="flex:none; text-align:center">
+                                <label>Day Range</label>
+                                <input type="hidden" name="FineId" value="" />
+                                <input type="hidden" name="CompanyId" />
+                                <div class="flexContainer">
+                                    <input type="text" name="DayFrom" class="form-control" placeholder="From" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
+                                    <input type="text" name="DayTo" class="form-control" placeholder="To" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                                </div>
+                            </div>&nbsp;&nbsp;
+                            <div style="flex:none; text-align:center">
+                                <label>Type</label>
+                                <div class="flexContainer">
+                                    <input type='radio' name='FineType' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='FineType' value='percentage' />Percent
+                                </div>
+                            </div>&nbsp;&nbsp;
+                            <div style="flex:none; text-align:center">
+                                <label>Fine</label>
+                                <div class="flexContainer">
+                                    <input type='text' name='FineAmount' class="form-control" style="max-width:120px;" />
+                                </div>
+                            </div>&nbsp;&nbsp;
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalFine">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        loadData();
+    })
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    $("#btnSaveFineDetails").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var fd = $("#formFineDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.DayFrom == '' || fd.DayTo == '' || fd.FineType == '' || fd.FineAmount =='') return;
+        debugger;
+        $.ajax({
+            url: "/api/PostFineDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#formFineDetails").find("input[type=text],input[type=hidden]").val("");
+                loadData();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var loadData = function () {
+        debugger;
+        $.ajax({
+            url: "/api/GetAllFineDetails",
+            method: "Get",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                    showResultData(result);
+               
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showResultData = function (result) {
+        debugger;
+       
+
+        $("#tblFineDetails").dataTable({
+            data: result,
+            'destroy': true,
+
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editFineDetails(\"" + row.FineId + "\",\"" + row.DayFrom + "\",\"" + row.DayTo + "\",\"" + row.FineType + "\",\"" + row.FineAmount + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteFineDetails(\"" + row.FineId + "\",\"" + row.DayFrom + "\",\"" + row.DayTo + "\",\"" + row.FineType + "\",\"" + row.FineAmount + "\")'>Delete</a></div>";
+                    }
+                },
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'DayFrom',
+                    'data': 'DayFrom'
+                },
+                {
+                    'title': 'DayTo',
+                    'data': 'DayTo'
+                },
+                {
+                    'title': 'FineType',
+                    'data': 'FineType'
+                },
+                {
+                    'title': 'Fine',
+                    'data': 'FineAmount'
+                },
+               
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Fine Details");
+    }
+
+    function editFineDetails(id, from, to, type, fine) {
+        debugger;
+        $("#modalEditFine").modal('show');
+        $("#modalEditFine [name='FineId']").val(id);
+        $("#modalEditFine [name='DayFrom']").val(from);
+        $("#modalEditFine [name='DayTo']").val(to);
+        $("#modalEditFine input[name='FineType'][value=" + type + "]").prop('checked', true);
+        $("#modalEditFine [name='FineAmount']").val(fine);
+    }
+
+    $("#btnEditModalFine").on('click', function (e) {
+        var fd = $("#formModalFineDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        $.ajax({
+            url: "/api/PostFineDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modalEditFine").modal('hide');
+                $("#formModalFineDetails").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+                loadData();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    var deleteFineDetails = function (id, from, to, type, fine) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Confirm");
+        $('#modalDelete .modal-body').html("Do You want to delete Fine details of:<br/>Day From:<b>"+ from +"</b><br/>Day To:<b> "+ to +"</b><br/>Type:<b> " + type +"</b><br/>Fine:<b>" + fine +" ?");
+
+        $('#btnDeleteModal').data('id', id);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "/api/DeleteFineDetails",
+            method: "POST",
+            data: {
+                FineId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                loadData();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+</script>
+

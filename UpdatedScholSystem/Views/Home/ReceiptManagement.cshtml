@@ -1,0 +1,555 @@
+﻿
+@{
+    ViewBag.Title = "ReceiptManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="divReceiptDetails">
+
+    <div id="searchReceipt">
+        <div>
+                <h4 id="titlename">List of Receipt Details</h4>
+            <div class="flexContainer" style="justify-content:center">
+                <div style="text-align:center;">
+                    <div class="flexContainer">
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Batch</label>
+                            <select id="searchBatch" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Class</label>
+                            <select id="searchClass" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Student Id</label>
+                            <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Month</label>
+                            <select id="searchMonth" class="form-control" style="width:auto">
+                                <option value="">---select--</option>
+                                <option value="01">Baisakh</option>
+                                <option value="02">Jesth</option>
+                                <option value="03">Asar</option>
+                                <option value="04">Sawan</option>
+                                <option value="05">Bhadau</option>
+                                <option value="06">Aaswin</option>
+                                <option value="07">Kartik</option>
+                                <option value="08">Mangsir</option>
+                                <option value="09">Push</option>
+                                <option value="10">Magh</option>
+                                <option value="11">Falgun</option>
+                                <option value="12">Chait</option>
+                            </select>
+                        </div>&nbsp;&nbsp;
+
+                        <div style="flex:none;">
+                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchReceipt" type="submit" data-name="">Search</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div style="width:100%;overflow:auto;">
+                    <table id="tblReceiptDetails" class="table table-bordered table-striped"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ReceiptForm">
+    <div class="col-md-9">
+        <div class="thumbnail well well-sm">
+            <h4 class="well-sm" id="titleFormReceipt">Add Recipt</h4>
+
+            <span class="pull-right" style="margin-top:-50px;">Receipt No: <span id="receiptno"></span></span><br />
+            <span class="pull-right" style="margin-top:-50px;">Billing No: <span id="billingno"></span></span>
+            <hr />
+
+            <form id="formReceipt">
+                <div class="flexContainer">
+                    <input type="hidden" name="ReceiptId" id="receiptId" />
+                    <input type="hidden" id="billingId" name="BillingId" />
+                    <label style="flex:none;width:110px;">Student Id :&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentId" style="flex:1" id="receiptStudentId" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Student Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptStudentName" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Date :&nbsp;</label>
+                    <input type="text" id="receiptDate" style="flex:1" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    @*<input type="date" class="form-control" name="Date" style="flex:1" id="receiptDate" />&nbsp;&nbsp;&nbsp;&nbsp;*@
+                    <label style="flex:none;width:130px;">Batch :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptBatch" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Class :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptClass" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Faculty :&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptFaculty" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Billing Month :&nbsp;</label>
+                    <input type="text" class="form-control" name="Month" style="flex:1" id="receiptMonth" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Total Amount:&nbsp;</label>
+                    <input type="text" class="form-control" name="" style="flex:1" id="receiptTotalFee" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Discount :&nbsp;</label>
+                    <input type="text" class="form-control" name="Discount" style="flex:1" id="receiptDiscount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Fine :&nbsp;</label>
+                    <input type="text" class="form-control" name="Fine" style="flex:1" id="receiptFine" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="flex:none;width:110px;">Grand Total:&nbsp;</label>
+                    <input type="text" class="form-control" name="GrandTotal" style="width:184px;" id="receiptGrandTotal" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                </div><br />
+                <div class="flexContainer">
+                    <label id="previousdue" style="flex:none;width:110px;">Paid Amount :&nbsp;</label>
+                    <input type="text" class="form-control" name="PaidAmount" style="flex:1" id="receiptPaidAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none;width:130px;">Due Amount :&nbsp;</label>
+                    <input type="text" class="form-control" name="TotalAmount" style="flex:1" id="receiptDueAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <h4>Payment Method</h4>
+                <input type="radio" id="paymentcash" name="PaymentMethod" value="cash" />&nbsp;&nbsp;&nbsp;&nbsp;Cash <br />
+                <div class="form-inline"><input type="radio" id="paymentcheque" name="PaymentMethod" value="cheque" />&nbsp;&nbsp;&nbsp;&nbsp;Cheque &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="bankname" name="BankName" style="width:200px;" placeholder="Bank Name" class="form-control" readonly />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="ChequeNo" id="chequeno" style="width:300px;" placeholder="Cheque Number" class="form-control" readonly /></div>
+                <input type="radio" id="paymentcard" name="PaymentMethod" value="card" />&nbsp;&nbsp;&nbsp;&nbsp;Card <br /><br />
+
+                <div class="text-center">
+                    <input type="submit" value="Print" class="btn btn-warning" id="printreceipt" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        hideAll();
+        $("#divReceiptDetails").show();
+        getClassBatchFaculty();
+    })
+
+    var hideAll = function () {
+        $("#divReceiptDetails").hide();
+        $("#ReceiptForm").hide();
+    }
+
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#searchClass").html(v);
+                    $("#searchClass").val(classDetails[0]['ClassName']);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#searchBatch").html(v);
+                    $("#searchBatch").val(batchDetails[0]['FromYear'] + "-" + batchDetails[0]['ToYear']);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#searchFaculty").html(v);
+                }
+                $("#searchMonth").val("01");
+                debugger;
+                loadData();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var loadData = function () {
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var month = $("#searchMonth").val();
+        $.ajax({
+            url: "/api/GetAllReceiptDetails",
+            method: "GET",
+            data: {
+                Batch: batch,
+                Class: _class,
+                Month: month,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showResultData(result);
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var showResultData = function (data) {
+        debugger;
+        for (var r in data) {
+            data[r].Month = convertMonth(data[r].Month);
+        }
+
+        $("#tblReceiptDetails").dataTable({
+            data: data,
+            'destroy': true,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9,10,11]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13]
+                    }
+
+                },
+                {
+                    extend: 'excel',
+                    footer: false,
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13]
+                    }
+                }
+            ],
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        //if (row.Status == "0") {
+                        //    return "<div style='display:flex;justify-content:flex-end;'><a href='#' class='btn btn-info' onclick='PrintReceipt(\"" + row.ReceiptId + "\",\"" + row.BillingId + "\")'>Print</a></div>";
+                        //}
+                        //else {
+                            return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='PrintReceipt(\"" + row.ReceiptId + "\",\"" + row.BillingId + "\")'>Print</a>&nbsp;&nbsp;<a href='#' class='btn btn-warning' onclick='deleteReceipt(\"" + row.ReceiptId + "\",\"" + row.StudentId + "\",\"" + row.PaidAmount + "\",\"" + row.Month + "\",\"" + row.Batch + "\")'>Cancel</a></div>";
+
+                        //}
+                    }
+                },
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'ReceiptId',
+                    'data': 'ReceiptId'
+                },
+                {
+                    'title': 'Studentid',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'Name',
+                    'render': function (data, type, row, meta) {
+                        return row.FirstName + ' ' + row.LastName;
+                    }
+                },
+                {
+                    'title': 'BillingId',
+                    'data': 'BillingId'
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Month',
+                    'data': 'Month'
+                },
+                {
+                    'title': 'Date',
+                    'data': 'Date'
+                },
+                {
+                    'title': 'Total',
+                    'data': 'TotalAmount'
+                },
+                {
+                    'title': 'Paid',
+                    'data': 'PaidAmount'
+                },
+                {
+                    'title': 'Due',
+                    'data': 'DueAmount'
+                },
+                {
+                    'title': 'Discount',
+                    'data': 'Discount'
+                },
+                {
+                    'title': 'Fine',
+                    'data': 'Fine'
+                },
+                {
+                    'title': 'PaymentMethod',
+                    'data': 'PaymentMethod'
+                },
+                {
+                    'title': 'BankName',
+                    'data': 'BankName'
+                },
+                {
+                    'title': 'ChequeNo',
+                    'data': 'ChequeNo'
+                },
+                {
+                    'title': 'CreatedBy',
+                    'data': 'CreatedBy'
+                }
+
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Receipt Details");
+    }
+
+    $("#btnSearchReceipt").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentid = $("#searchStudentId").val();
+        var month = $("#searchMonth").val();
+        debugger;
+     
+            debugger;
+            $.ajax({
+                url: "/api/SearchReceiptDetails",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Class: _class,
+                    StudentId: studentid,
+                    Month: month,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    showResultData(result);
+
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        
+    })
+   
+    var cancel = function () {
+
+        debugger;
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        hideAll();
+        $("#divReceiptDetails").show();
+        debugger;
+    });
+
+    var PrintReceipt = function (receiptid,billingid) {
+        debugger;
+        window.open("/Home/PrintReceipt?ReceiptId=" + receiptid + "&BillingId=" + billingid);
+    }
+
+    var deleteReceipt = function (receiptid, studentid,amount,month,batch) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Receipt details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Month : <b> " + month + "</b><br/> Amount: <b> " + amount + "</b>");
+
+        $('#btnDeleteModal').data('id', receiptid);
+        $('#btnDeleteModal').data('batch', batch);
+        $('#btnDeleteModal').data('studentid', studentid);
+        $('#btnDeleteModal').data('month', month);
+    }
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var id = $(this).data('id');
+        var batch = $(this).data('batch');
+        var studentid = $(this).data('studentid');
+        var month = $(this).data('month');
+        month = convertMonthInt(month);
+
+        debugger;
+        $.ajax({
+            url: "/api/DeleteReceiptDetails",
+            method: "POST",
+            data: {
+                ReceiptId: id,
+                Batch: batch,
+                StudentId: studentid,
+                Month: month,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    debugger;
+                    var batch = $("#searchBatch").val();
+                    var _class = $("#searchClass").val();
+                    var studentid = $("#searchStudentId").val();
+                    var month = $("#searchMonth").val();
+                    debugger;
+
+                    debugger;
+                    $.ajax({
+                        url: "/api/SearchReceiptDetails",
+                        method: "GET",
+                        data: {
+                            Batch: batch,
+                            Class: _class,
+                            StudentId: studentid,
+                            Month: month,
+                            CompanyId:@Session["CompanyId"],
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            debugger;
+                            showResultData(result);
+
+                        },
+                        error: function (e) {
+                            console.error(e);
+                            alert(e.statusText);
+                        }
+                    })
+
+                  
+                  
+
+                })
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+</script>
+
+

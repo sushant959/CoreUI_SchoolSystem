@@ -1,0 +1,987 @@
+﻿
+@{
+    ViewBag.Title = "TeacherForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" id="divTeacherInfo">
+    <div class="col-sm-10 col-sm-offset-1">
+        <div class="panel panel-default" style="background-color:floralwhite !important;">
+            <div class="panel-heading" id="titleTeacherForm" style="background-color:aqua">Staff Information Form</div>
+            <div class="panel-body" style="background-color:transparent">
+                <form id="formTeacherInfo">
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Personal Information</h4>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <div class="flexContainer">
+                                <input type="hidden" name="TeacherId" />
+                                <input type="hidden" name="CompanyId" />
+                                <label style="flex:1.3">First Name :&nbsp;</label>
+                                <input type="text" class="form-control" name="FirstName" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.3">Last Name:&nbsp;&nbsp;</label>
+                                <input type="text" class="form-control" name="LastName" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1.3">Designation :&nbsp;</label>
+                                <select class="form-control" id="designation" name="Designation" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.3">Department:&nbsp;&nbsp;</label>
+                                <select class="form-control" id="department" name="Department" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="width:141px;">Faculty :&nbsp;</label>
+                                <select class="form-control faculty" id="faculty" name="Faculty" style="width:243px"></select>&nbsp;&nbsp;&nbsp;&nbsp;                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1.3">Gender :&nbsp;</label>
+                                <select class="form-control" name="Gender" style="flex:2" id="selectGender">
+                                    <option value="" disabled>select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.3">Email Id:&nbsp;</label>
+                                <input type="text" class="form-control" name="Email" id="email" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div>
+                            <div class="flexContainer">
+                                <label style="flex:1.3"></label>
+                                <label style="flex:2"></label>
+                                <label style="flex:1.3"></label>
+                                <span style="flex:2">
+                                    <label id="error_email" style="color: red;"></label>
+                                </span>
+                            </div>
+                            <div class="flexContainer">
+                                <label style="width:141px;">Date of Birth(BS):&nbsp;</label>
+                                <input type="text" id="dateinbs" style="width:243px" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateOfBirth" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="width:141px;">Select Batch :&nbsp;</label>
+                                <select class="form-control batch" name="Batch" style="width:243px;" id="selectBatch"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1.3">Citizenship:&nbsp;</label>
+                                <select class="form-control country" name="Citizenship" style="flex:2" id="selectCountry"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1.3">Joining Date:&nbsp;</label>
+                                <input type="text" id="joiningDate" style="flex:2" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="JoiningDate" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Education</h4>
+                            </div>
+                        </div>
+                        <div id="education">
+                            <input type="hidden" name="Educations[0][EducationId]" />
+                            <div id="degreedetails" class="well well-sm">
+                                <div class="flexContainer">
+                                    <label style="flex:1.3">Degree :&nbsp;</label>
+                                    <input type="text" class="form-control" name="Educations[0][Degree]" style="flex:2" id="selectGender" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label style="flex:1.3">Institution.:&nbsp;&nbsp;</label>
+                                    <input type="text" class="form-control" name="Educations[0][Institution]" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div><br />
+                                <div class="flexContainer">
+                                    <label style="flex:1.3">Total Marks :&nbsp;</label>
+                                    <input type="text" class="form-control" name="Educations[0][TotalMarks]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label style="flex:1.3">Division.:&nbsp;&nbsp;</label>
+                                    <input type="text" class="form-control" name="Educations[0][Division]" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div><br />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" id="btnAddRow" data-rows="1" value="+ Add more" />
+                    <input type="button" id="btnRemoveRow" value="- Remove one" />
+
+                    <br /><br />
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Previous Experience</h4>
+                            </div>
+                        </div>
+                        <div id="experience">
+                            <input type="hidden" name="Experiences[0][ExperienceId]" />
+                            <div id="experiencedetails" class="well well-sm">
+                                <div class="flexContainer">
+                                    <label style="flex:1.3">Organisation :&nbsp;</label>
+                                    <input type="text" class="form-control" name="Experiences[0][Organisation]" style="flex:2" id="" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label style="flex:1.3">Post.:&nbsp;&nbsp;</label>
+                                    <input type="text" class="form-control" name="Experiences[0][Post]" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div><br />
+                                <div class="flexContainer">
+                                    <label style="flex:1.3">Date From :&nbsp;</label>
+                                    <input type="text" id="dateFrom" style="flex:2" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Experiences[0][DateFrom]" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label style="flex:1.3">Date To:&nbsp;&nbsp;</label>
+                                    <input type="text" id="dateTo" style="flex:2" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Experiences[0][DateTo]" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div><br />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" id="btnAddRowExp" data-rows="1" value="+ Add more" />
+                    <input type="button" id="btnRemoveRowExp" value="- Remove one" />
+                    <br /><br />
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Documents</h4>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <div id="docList">
+
+                            </div><br />
+                            <div class="flexContainer" id="divTeacherFiles">
+                                <span style="flex:1">Upload Documents:</span>&nbsp;
+                                <input type="file" name="Document[]" id="multiFiles" style="flex:4" multiple />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Current Address</h4>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <div class="flexContainer">
+                                <input type="hidden" name="CurrentAddress[AddressId]" />
+                                <label style="width:100px;">House No :&nbsp;</label>
+                                <input type="text" class="form-control" name="CurrentAddress[HouseNo]" style="width:140px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="width:70px;">Street :&nbsp;</label>
+                                <input type="text" class="form-control" name="CurrentAddress[Street]" style="width:160px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="width:100px;">Municipality:</label>
+                                <input type="text" class="form-control" name="CurrentAddress[Municipality]" style="width:180px;" />
+
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1">Country :&nbsp;</label>
+                                <select class="form-control country" name="CurrentAddress[Country]" style="flex:2" id="selectCountry"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1">State :&nbsp;</label>
+                                <select class="form-control state" name="CurrentAddress[State]" style="flex:2" id="selectCurrentState"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1">MobileNo.:&nbsp;</label>
+                                <input type="text" class="form-control number" name="CurrentAddress[MobileNo]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1">PhoneNo.:&nbsp;&nbsp;</label>
+                                <input type="text" class="form-control phone" name="CurrentAddress[PhoneNo]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="flexContainer">
+                                <label style="flex:1.3"></label>
+                                <span style="flex:2">
+                                    <label class="message" style="color: red;"></label>
+                                </span>
+                                <label style="flex:1.3"></label>
+                                <span style="flex:2">
+                                    <label class="error_phone" style="color: red;"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-inline" style="color:green;"><input type='checkbox' class='checkbox' id="sameAddress" value='true' />&nbsp;&nbsp;Permanent address same as Current address</div><br />
+
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Permanent Address</h4>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <div class="flexContainer">
+                                <input type="hidden" name="PermanentAddress[AddressId]" />
+                                <label style="width:100px;">House No :&nbsp;</label>
+                                <input type="text" class="form-control" name="PermanentAddress[HouseNo]" style="width:140px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="width:70px;">Street :&nbsp;</label>
+                                <input type="text" class="form-control" name="PermanentAddress[Street]" style="width:160px;" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="width:100px;">Municipality:</label>
+                                <input type="text" class="form-control" name="PermanentAddress[Municipality]" style="width:180px;" />
+
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1">Country :&nbsp;</label>
+                                <select class="form-control country" name="PermanentAddress[Country]" style="flex:2" id="selectCountry"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1">State :&nbsp;</label>
+                                <select class="form-control state" name="PermanentAddress[State]" style="flex:2" id="selectPermanentState"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div><br />
+                            <div class="flexContainer">
+                                <label style="flex:1">MobileNo.:&nbsp;</label>
+                                <input type="text" class="form-control number" name="PermanentAddress[MobileNo]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label style="flex:1">PhoneNo.:&nbsp;&nbsp;</label>
+                                <input type="text" class="form-control phone" id="phonenum" name="PermanentAddress[PhoneNo]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                            <div class="flexContainer">
+                                <label style="flex:1.3"></label>
+                                <span style="flex:2">
+                                    <label class="message" style="color: red;"></label>
+                                </span>
+                                <label style="flex:1.3"></label>
+                                <span style="flex:2">
+                                    <label class="error_phone" style="color: red;"></label>
+                                </span>
+                            </div>
+                        </div>
+                    </div><br />
+                    <div class="thumbnail">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h4 style="color:brown">Teacher Status</h4>
+                            </div>
+                        </div>
+                        <div class="well well-sm">
+                            <div class="flexContainer">
+                                <label style="width:107px;">Status :&nbsp;</label>
+                                <select class="form-control" name="Status" style="width:241px" id="">
+                                    <option value="">select</option>
+                                    <option value="Active">Active</option>
+                                    <option value="NotActive">Not-Active</option>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+                <div class="form-group">
+                    <div class="col-sm-12 text-center">
+                        <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
+                        <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalInfo"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalDelete"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.nepali-calendar').nepaliDatePicker();
+        getAllCountry();
+        getClassBatchFaculty();
+        getDepartment();
+         if (@ViewBag.TeacherId == true) {
+                $('#btnsubmit').val("Update");
+            }
+        if (@ViewBag.TeacherNo !=0) {
+            debugger;
+            $("#btnRemoveRow").hide();
+            $("#btnRemoveRowExp").hide();
+            loadTeacherDetails(@ViewBag.TeacherNo);
+        }
+    })
+   var loadTeacherDetails = function (id) {
+        debugger;
+         var edit= '@ViewBag.value';
+        $.ajax({
+            url: "/api/GetTeacherInfo",
+            method: "GET",
+            data: {
+                StaffId:id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != null) {
+                    var teacherInfo = result[0][0];
+                    var education = result[1];
+                    var experience = result[2];
+                    var currentAddress = result[3][0];
+                    var permanentAddres = result[4][0];
+                    var counteducation = education.length;
+                    var countexperience = experience.length;
+                    debugger;
+                    if (teacherInfo != undefined) {
+                        for (var d in teacherInfo) {
+                            if (d == "Faculty") {
+                                if (teacherInfo[d] != null) {
+                                    $.ajax({
+                                        url: "/api/GetClassBatchFaculty",
+                                        method: "GET",
+                                        data: {
+                                            CompanyId:@Session["CompanyId"],
+                                        },
+                                        dataType: "json",
+                                        success: function (result) {
+                                            debugger;
+                                            var facultyDetails = result[2];
+
+                                            if (facultyDetails != undefined) {
+                                                var v = "";
+                                                for (var i in facultyDetails) {
+                                                    v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                                                }
+                                                $(".faculty").html(v);
+                                            }
+
+                                        }
+                                    })
+                                    $('[name="' + d + '"]').val(teacherInfo[d]);
+                                }
+                                else {
+
+                                }
+                            }
+                            else {
+
+                                $('[name="' + d + '"]').val(teacherInfo[d]);
+                            }
+                        }
+                    }
+                    while (counteducation > 1) {
+                        $("#btnRemoveRow").show();
+                        addRow();
+                        counteducation--;
+                    }
+                    if (education != undefined) {
+                        for (var i in education) {
+                            for (var d in education[i]) {
+
+                                $("[name='Educations[" + i + "][" + d + "]']").val(education[i][d]);
+                            }
+                        }
+                    }
+
+                    while (countexperience > 1) {
+                        $("#btnRemoveRowExp").show();
+                        addRowExp();
+                        countexperience--;
+                    }
+                    if (experience != undefined) {
+                        for (var i in experience) {
+                            for (var d in experience[i]) {
+                                $("[name='Experiences[" + i + "][" + d + "]']").val(experience[i][d]);
+                            }
+                        }
+                    }
+                    if (currentAddress != undefined) {
+                        debugger;
+                        for (var d in currentAddress) {
+                            if (d == "State") {
+                                $('[name="CurrentAddress[' + d + ']"]').html("<option>" + currentAddress[d] + "</option>");
+                                $('[name="CurrentAddress[' + d + ']"]').val(currentAddress[d]);
+                            }
+                            else {
+                                $('[name="CurrentAddress[' + d + ']"]').val(currentAddress[d]);
+                            }
+
+
+                        }
+                    }
+                    if (permanentAddres != undefined) {
+                        for (var d in permanentAddres) {
+                            if (d == "State") {
+                                $('[name="PermanentAddress[' + d + ']"]').html("<option>" + permanentAddres[d] + "</option>");
+                                $('[name="PermanentAddress[' + d + ']"]').val(permanentAddres[d]);
+                            }
+                            else {
+                                $('[name="PermanentAddress[' + d + ']"]').val(permanentAddres[d]);
+                            }
+
+
+                        }
+                    }
+
+                    debugger;
+                    if (edit == "edit") {
+                        $("#titleTeacherForm").html("Edit Information of <b>" + teacherInfo['FirstName'] + " " + teacherInfo['LastName'] + "</b>");
+                    }
+                    else{
+                        $("#titleTeacherForm").html("Information of <b>" + teacherInfo['FirstName'] + " " + teacherInfo['LastName'] + "</b>");
+                        $('#formTeacherInfo input').attr('disabled', true);
+                        $('#formTeacherInfo textarea').attr('disabled', true);
+                        $('#formTeacherInfo select').attr('disabled', true);
+                        $('#btnCancel').val("Back");
+                        $("#btnsubmit").hide();
+                        $("#btnAddRow").hide();
+                        $("#btnRemoveRow").hide();
+                        $("#btnAddRowExp").hide();
+                        $("#btnRemoveRowExp").hide();
+                        $("#divTeacherFiles").hide();
+                    }
+                    loadTeacherDocument(@ViewBag.TeacherNo);
+                }
+                debugger;
+               
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+
+        })
+    }
+
+  var loadTeacherDocument = function (id) {
+        debugger;
+        var edit= '@ViewBag.value';
+        $.ajax({
+            url: "/api/GetTeacherDocument/" + id,
+            method: "GET",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var id = result[0];
+                debugger;
+                if (result != null) {
+                    if (edit == "edit") {
+                        var html = "";
+                        for (var d in result) {
+                            html += `<div class="well well-sm docItem" style="margin-bottom:0px">
+                             <span style="color:darkgoldenrod">${result[d]}</span>
+                             <button class="close" data-filename="${result[d]}" title="delete">&times;</button>
+                             </div>`;
+
+                        }
+                        $("#docList").append(html);
+                    }
+                    else {
+
+                        var html = "";
+                        for (var d in result) {
+                            html += `<div class="well well-sm docItem" style="margin-bottom:0px">
+                             <span style="color:darkgoldenrod">${result[d]}</span>
+                             <button class="close" data-filename="${result[d]}" title="delete" disabled>&times;</button>
+                             </div>`;
+
+                        }
+                        $("#docList").append(html);
+                    }
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+
+    $('#docList').on('click', '.close', function (e) {
+        debugger;
+        e.preventDefault();
+        var _this = $(this);
+        var filename = _this.data("filename");
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Confirm");
+        $('#modalDelete .modal-body').html("Are You Sure You want to delete document: <br /><b>" + filename + "</b>");
+        $('#btnDeleteModal').data('filename', filename);
+        $('#btnDeleteModal').data('_this', _this);
+    })
+
+    $("#btnDeleteModal").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var _this = $(this).data("_this");
+        var filename = $(this).data("filename");
+        debugger;
+        $.ajax({
+            url: '/api/DeleteTeacherDocument',
+            method: 'POST',
+            dataType: "json",
+            data: { "filename": filename },
+            success: function (response) {
+                debugger;
+                $('#modalDelete').modal('hide');
+                _this.parent(".docItem").remove();
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    });
+
+    var getDepartment = function () {
+        $.ajax({
+            url: "/api/GetAllDesignation",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var department = result[0];
+                var designation = result[1];
+                if (department != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in department) {
+                        if (department[i]['Department'] != "Student") {
+                            v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                        }
+                    }
+                    $("#department").html(v);
+                }
+                if (designation != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in designation) {
+                        v += "<option value=" + designation[i]['Designation'] + ">" + designation[i]['Designation'] + "</option>";
+                    }
+                    $("#designation").html(v);
+                }
+            }
+        })
+    }
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                var sectionDetails = result[3];
+                //if (classDetails != undefined) {
+                //    debugger;
+                //    var v = "<option value=''>--Select--</option>";
+                //    for (var i in classDetails) {
+                //        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                //    }
+                //    $(".class").html(v);
+                //    $("#searchClass").html(v);
+                //}
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $(".batch").html(v);
+                    $("#searchBatch").html(v);
+                }
+                //if (facultyDetails != undefined) {
+                //    var v = "<option value=''>--Select--</option>";
+                //    for (var i in facultyDetails) {
+                //        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                //    }
+                //    $(".faculty").html(v);
+                //}
+                //if (sectionDetails != undefined) {
+                //    var v = "<option value=''>--Select--</option>";
+                //    for (var i in sectionDetails) {
+                //        v += "<option value=" + sectionDetails[i]['SectionName'] + ">" + sectionDetails[i]['SectionName'] + "</option>";
+                //    }
+                //    $(".section").html(v);
+                //    $("#searchSection").html(v);
+                //}
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#department").on('change', function (e) {
+        debugger;
+        e.preventDefault();
+        var dept = $("#department").val();
+        if (dept == "Teacher") {
+            $.ajax({
+                url: "/api/GetClassBatchFaculty",
+                method: "GET",
+                data: {
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    var facultyDetails = result[2];
+
+                    if (facultyDetails != undefined) {
+                        var v = "";
+                        for (var i in facultyDetails) {
+                            v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                        }
+                        $(".faculty").html(v);
+                    }
+
+                }
+            })
+        }
+        else {
+            $("#faculty").html("");
+        }
+    })
+
+    var getAllCountry = function () {
+        $.ajax({
+            url: "/api/GetAllCountryList",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value =" + result[i]['CountryName'] + ">" + result[i]['CountryName'] + "</option>";
+                    }
+                    $(".country").html(v);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+    $("#btnRemoveRow").on('click', function () {
+        debugger;
+        var row = $("#btnAddRow").data("rows");
+        if (row == 1) return;
+        if (row == 2) {
+            $("#btnRemoveRow").hide();
+        }
+        $("#education").children("div[id=degreedetails]:last").remove();
+        $("#btnAddRow").data("rows", row - 1);
+    })
+
+    $("#btnAddRow").on('click', function () {
+        debugger;
+        $("#btnRemoveRow").show();
+        addRow();
+    });
+
+    $("#btnRemoveRowExp").on('click', function () {
+        debugger;
+        var row = $("#btnAddRowExp").data("rows");
+        if (row == 1) return;
+        if (row == 2) {
+            $("#btnRemoveRowExp").hide();
+        }
+        $("#experience").children("div[id=experiencedetails]:last").remove();
+        $("#btnAddRowExp").data("rows", row - 1);
+    })
+
+    $("#btnAddRowExp").on('click', function () {
+        debugger;
+        $("#btnRemoveRowExp").show();
+        addRowExp();
+    });
+
+    function addRow() {
+        var row = $("#btnAddRow").data("rows");
+        $("#btnAddRow").data("rows", row + 1);
+        var html = `<div id="degreedetails" class="well well-sm"><div class="flexContainer">
+                             <input type="hidden" name="Educations[${row}][EducationId]" />
+                            <label style="flex:1.2">Degree :&nbsp;</label>
+                            <input type="text" class="form-control" name="Educations[${row}][Degree]" style="flex:2" id="" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.2">Institution.:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="Educations[${row}][Institution]" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.2">Total Marks :&nbsp;</label>
+                            <input type="text" class="form-control" name="Educations[${row}][TotalMarks]" style="flex:2" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.2">Division.:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="Educations[${row}][Division]" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br /></div>`;
+                                                                                                            
+        $("#education").append(html);
+
+    };
+
+    function addRowExp() {
+        var row = $("#btnAddRowExp").data("rows");
+        $("#btnAddRowExp").data("rows", row + 1);
+        var html = `<div id="experiencedetails" class="well well-sm"><div class="flexContainer">
+                             <input type="hidden" name="Experiences[${row}][ExperienceId]" />
+                            <label style="flex:1.2">Organisation :&nbsp;</label>
+                            <input type="text" class="form-control" name="Experiences[${row}][Organisation]" style="flex:2" id="" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.2">Post.:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="Experiences[${row}][Post]" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.3">Date From :&nbsp;</label>
+                                      <input type="text" id="dateFrom${row}" style="flex:2" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Experiences[${row}][DateFrom]" />&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <label style="flex:1.3">Date To:&nbsp;&nbsp;</label>
+                                      <input type="text" id="dateTo${row}" style="flex:2" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Experiences[${row}][DateTo]" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br /></div>`;
+
+        $("#experience").append(html);
+        $('.nepali-calendar').nepaliDatePicker();
+    };
+
+    $(".country").on('change', function () {
+        debugger;
+        var _this = $(this);
+        var id = _this.val();
+        var target = _this.siblings(".state");
+        $.ajax({
+            url: "/api/GetStates/",
+            method: "GET",
+            dataType: "json",
+            data: {
+                CountryName: _this.val(),
+                 CompanyId:@Session["CompanyId"],
+            },
+            success: function (result) {
+                debugger;
+                var v = "<option disabled>--Select--</option>";
+                for (var d in result) {
+                    v += "<option value=" + result[d]['StateName'] + ">" + result[d]['StateName'] + "</option>";
+                }
+                target.html(v);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    var cancel = function () {
+        debugger;
+        var cancel = $("#btnCancel").val();
+        if (cancel == "Back") {
+            location.href = "/Home/StaffManagement";
+        }
+        else {
+            $('#modalCancel').modal('show');
+            $('#modal-title1').html("Confirm");
+            $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        }
+    }
+
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        location.href = "/Home/StaffManagement";
+    });
+
+    $("#email").keyup(function () {
+
+        var email = $("#email").val();
+        var filter = /^([a-zA-Z0-9_\.\-])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (!filter.test(email)) {
+            //alert('Please provide a valid email address');
+            $("#error_email").text("Please enter valid email");
+
+            email.focus;
+            //return false;
+        } else {
+            $("#error_email").text("");
+
+        }
+
+    });
+
+    $(".number").on('keyup', function () {
+        debugger;
+        var _this = $(this);
+        var number = _this.val();
+        var target = _this.parent().next('div').find('.message');
+        if (number.length != 10) {
+            target.text("required 10 digits number");
+            number.focus;
+        }
+        else {
+            target.text("");
+
+        }
+    });
+
+    $(".phone").on('keyup', function () {
+        debugger;
+        var _this = $(this);
+        var number = _this.val();
+        var target = _this.parent().next('div').find('.error_phone');
+        if (number.length != 10) {
+            target.text("required 10 digits number");
+            number.focus;
+        }
+        else {
+            target.text("");
+
+        }
+    });
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+            && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+    $("#btnsubmit").on('click', function (e) {
+        e.preventDefault();
+        SaveData();
+    })
+
+    function SaveData() {
+        debugger;
+        var fd = $("form").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.Designation == '') {
+            alert("Please provide Designation");
+            return;
+        }
+        debugger;
+        if (fd.FirstName == '') {
+            alert("Please provide First Name");
+            return;
+        }
+        if (fd.Gender == '') {
+            alert("Please select your gender");
+            return;
+        }
+        debugger;
+        $.ajax({
+            url: '/api/PostTeacherDetails',
+            type: 'POST',
+            dataType: "json",
+            data: fd,
+            success: function (data) {
+                debugger;
+                SaveDocument(data);
+
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success");
+                $('#modalInfo .modal-body').html(" Successful.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                    $("form").find("input[type=text],input[type=file],textarea,select").val("");
+                    $("#education").empty();
+                    $("#experience").empty();
+                    $("#docList").empty();
+                    location.href = "/Home/StaffManagement";
+                    loadData();
+
+                })
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    function SaveDocument(id) {
+        debugger;
+        var data = new FormData();
+        var ins = $('#multiFiles')[0].files.length;
+        debugger;
+        for (var x = 0; x < ins; x++) {
+            data.append("Document[]", $('#multiFiles')[0].files[x]);
+        }
+        debugger;
+        if (!id) id = $('input[name="TeacherId"]').val();
+        data.append('TeacherId', id);
+        data.append('Prefix', "doc");
+        data.append('CompanyId',@Session["CompanyId"]);
+
+        $.ajax({
+            url: '/api/UploadTeacherDocuments',
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (response) {
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    }
+
+    $(".checkbox").change(function () {
+        debugger;
+        if (this.checked) {
+            $('[name="PermanentAddress[HouseNo]"]').val($('[name ="CurrentAddress[HouseNo]"]').val());
+            $('[name="PermanentAddress[Street]"]').val($('[name ="CurrentAddress[Street]"]').val());
+            $('[name="PermanentAddress[Municipality]"]').val($('[name ="CurrentAddress[Municipality]"]').val());
+            $('[name="PermanentAddress[Country]"]').val($('[name ="CurrentAddress[Country]"]').val());
+            $('[name="PermanentAddress[State]"]').html("<option value=" + $('[name ="CurrentAddress[State]"]').val() + ">" + $('[name ="CurrentAddress[State]"]').val() + "</option>").val();
+            $('[name="PermanentAddress[MobileNo]"]').val($('[name ="CurrentAddress[MobileNo]"]').val());
+            $('[name="PermanentAddress[PhoneNo]"]').val($('[name ="CurrentAddress[PhoneNo]"]').val());
+        }
+        else {
+            $('[name="PermanentAddress[HouseNo]"]').val('');
+            $('[name="PermanentAddress[Street]"]').val('');
+            $('[name="PermanentAddress[Municipality]"]').val('');
+            $('[name="PermanentAddress[Country]"]').val('');
+            $('[name="PermanentAddress[State]"]').val('');
+            $('[name="PermanentAddress[MobileNo]"]').val('');
+            $('[name="PermanentAddress[PhoneNo]"]').val('');
+            debugger;
+        }
+    });
+</script>
+

@@ -1,0 +1,1742 @@
+﻿
+@{
+    ViewBag.Title = "ScholarshipManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="ScholarshipName" data-text="Scholarship details" autocomplete="off" checked>Scholarship Name
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ScholarshipDetails" data-text="Scholarship details" autocomplete="off" />Scholarship Details
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="SpecialScholarship" data-text="Special Scholarship details" autocomplete="off" />Special Scholarship
+    </label>
+</div><br /><br />
+
+<div id="divScholarshipName">
+    <br />
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Scholarship</h4>
+            <form id="formScholarshipName" class="well well-sm">
+                <div class="flexContainer">
+                    <label style="flex:1">Scholarship Name :&nbsp;</label>
+                    <input type="hidden" name="CompanyId" value=""/>
+                    <input type="text" class="form-control" name="ScholarshipName" style="flex:1.5" required />&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveScholarshipName">Add</button>
+                </div>
+            </form>
+        </div>
+        <h4 class="titlename"></h4>
+        <div id="tblScholarshipName" style="width:100%;overflow:auto; max-height:80vh">
+
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="divScholarshipDetails">
+    <br />
+    <div><button class="btn btn-success" id="addScholarshipDetails">Add Scholarship</button></div><hr/>
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="titlename">List of Scholarship Details</h4>
+            <div style="width:100%;overflow:auto;">
+                <table id="tblScholarshipDetails" class="table table-bordered table-striped">
+                    @*<thead></thead>*@
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divScholarshipForm">
+    <div class="col-md-10">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="scholarshipFormTitle">Add Scholarship details</h4>
+
+            <form id="formScholarshipDetails">
+                <div class="flexContainer well well-sm">
+
+                    <input type="hidden" name="Id" />
+                    <input type="hidden" name="CompanyId" />
+                    <label style="width:98px">Scholarship:&nbsp;</label>
+                    <select class="form-control" name="ScholarshipName" style="flex:1;" id="selectScholarship" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="width:110px">Select Batch:&nbsp;</label>
+                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="flexContainer well well-sm">
+                    <label style="flex:none">Select Class:&nbsp;</label>
+                    <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none">Select Faculty:&nbsp;</label>
+                    <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty" required readonly />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div id="tblScholarship" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                </div>
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveScholarshipDetails" />
+                    <input type="button" class="btn btn-danger" id="btnCancel1" onclick="cancel()" data-target="CancelScholarshipForm" value="Cancel" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="divSpecialScholarship">
+    <div>
+        <div>
+            <button class="btn btn-success" id="addSpecialScholarship">Add Special Scholarship</button>
+        </div><hr/>
+    </div>
+    <div id="searchSpecialScholarship">
+                <h4 class="titlename">List of Special Scholarship</h4>
+        <div>
+            <div class="flexContainer" style="justify-content:center">
+                <div style="text-align:center;">
+                    <div class="flexContainer">
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Batch</label>
+                            <select id="searchBatch" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Class</label>
+                            <select id="searchClass" class="form-control" style="width:auto"></select>
+                        </div>&nbsp;&nbsp;
+                        <div style="flex:none; text-align:center; min-width:120px">
+                            <label>Student Id</label>
+                            <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
+                        </div>&nbsp;&nbsp;
+
+                        <div style="flex:none;">
+                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchScholarship" type="submit" data-name="">Search</button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div style="width:100%;overflow:auto;">
+                    <table id="tblSpecialScholarship" class="table table-bordered table-striped">
+                       
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divSpecialScholarshipForm">
+    <div class="col-md-10">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="titleFormSpecialSchoarship">Add Special Scholarship</h4>
+            <form id="formSpecialScholarship" class="well well-sm">
+                <div class="flexContainer">
+                    <label style="width:110px;">StudentId:&nbsp;</label>
+                    <input type="hidden" name="CompanyId" />
+                    <input type="text" class="form-control" name="StudentId" style="flex:1;" id="studentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none">Select Batch :&nbsp;</label>
+                    <select id="selectSpecialBatch" class="form-control" name="Batch" style="flex:1"></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="flexContainer">
+                    <label style="width:110px;">Select Class :&nbsp;</label>
+                    <input type="text" class="form-control" name="Class" style="flex:1" id="selectSpecialClass" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:none">Select Faculty :&nbsp;</label>
+                    <input type="text" class="form-control" name="Faculty" style="flex:1;" id="selectSpecialFaculty" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                </div><br />
+
+                <input type="hidden" name="SpecialScholarshipId" />
+                <input type="hidden" name="BatchClassId" />
+                <input type="hidden" name="StudentType" id="studenttype" />
+                <div id="tblSpecialScholarshipDetails" class="add well well-sm" style="width:100%;overflow:auto;">
+
+                </div>
+
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveSpecialScholarship" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelsch()" value="Cancel" />
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="modalEditScholarshipName" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Scholarship</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalScholarshipName" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="ScholarshipId" />
+                            <input type="hidden" name="CompanyId" />
+                            <label style="flex:1.2">Scholarship Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="ScholarshipName" id="modalScholarshipName" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalScholarshipName">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDeleteScholarship" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModalScholarship">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancelScholarship"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModalScholarship" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        var scholarshipname = $("input[name='Tab']:checked").data('text');
+        debugger;
+        $("#divScholarshipName .titlename").html("List of all " + scholarshipname);
+        hideAll();
+        loadData(listType,@Session["CompanyId"]);
+
+    })
+
+    $("input[name ='Tab']").on('change', function () {
+        debugger;
+        var listType = $("input[name='Tab']:checked").data('value');
+        var titlename = $("input[name='Tab']:checked").data('text');
+        debugger;
+        hideAll();
+        debugger;
+        if (listType == "SpecialScholarship") {
+            hideAll();
+            $("#divSpecialScholarship").show();
+            $('#formSpecialScholarship select').attr('readonly', false);
+            $('#formSpecialScholarship select').attr('disabled', false);
+            $('#formSpecialScholarship input[type=text]').attr('readonly', false);
+            $('#formSpecialScholarship input[type=text]').attr('disabled', false);
+            getClassBatchFaculty();
+            loadSpecialScholarship();
+        }
+        else {
+            loadData(listType,@Session["CompanyId"]);
+        }
+    })
+
+
+    var loadData = function (urlName,id) {
+        debugger;
+        $.ajax({
+            url: "/api/GetScholarshipInformation",
+            method: "Get",
+            data: {
+                urlName: urlName.toLowerCase(),
+                CompanyId:id
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (urlName == "ScholarshipName") {
+                    debugger;
+                    hideAll();
+                    $("#divScholarshipName").show();
+                    showResultData(result);
+                }
+                else if (urlName == "ScholarshipDetails") {
+                    hideAll();
+                    $("#divScholarshipDetails").show();
+                    showResultData1(result);
+
+                }
+
+               
+
+            },
+
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+
+
+    var showResultData = function (result) {
+        debugger;
+
+        var _type = $("input[name='Tab']:checked").data('value');
+        var tblBody = "";
+        var tblHeader = "<th>SN</th>";
+        debugger
+        if (result.length != 0) {
+            if (_type == "ScholarshipName") {
+                for (var c in result[0]) {
+                    if (c != "ScholarshipId") {
+                        tblHeader += "<th>" + c + "</th>";
+                    }
+                }
+                tblHeader += "<th style='width:100px;'>Action</th>";
+                for (var r in result) {
+                    var SN = (parseInt(r) + 1);
+                    tblBody += "<tr style='text-align:center'><td>" + SN + "</td>";
+                    for (var c in result[r]) {
+                        if (c != "ScholarshipId") {
+                            tblBody += "<td>" + result[r][c] + "</td>";
+                        }
+                    }
+                    tblBody += "<td><a href='#' onclick='updateScholarshipName(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\",\"" + _type + "\" ) ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
+                }
+                tblBody += "</tr>";
+                $("#tblScholarshipName thead").html("<tr>" + tblHeader + "</tr>");
+                $("#tblScholarshipName tbody").html(tblBody);
+            }
+            else if (_type == "ScholarshipDetails") {
+                var tblHeader = "<th style='width:100px;'>Action</th><th>S.N.</th>";
+                var tblBody = "";
+                for (var c in result[0]) {
+                    if (c != "Id") {
+                        tblHeader += "<th>" + c + "</th>";
+                    }
+                }
+                for (var r in result) {
+                    var view = "scholarshipdetails";
+                    var SN = (parseInt(r) + 1);
+                    tblBody += "<tr><td><a href='#' onclick='editScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='editScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\",\"" + view + "\")' title='view'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a></td><td>" + SN + "</td>";
+
+                    for (var c in result[r]) {
+                        if (c != "Id") {
+                            tblBody += "<td>" + result[r][c] + "</td>";
+                        }
+                    }
+                    tblBody += "</tr>";
+                }
+                $("#divScholarshipDetails .titlename").html("List of Scholarship Details");
+                $("#tblScholarshipDetails thead").html("<tr>" + tblHeader + "</tr>");
+                $("#tblScholarshipDetails tbody").html(tblBody);
+            }
+        }
+        else {
+            $("#div" + _type + " .titlename").html("");
+            $("#tbl" + _type + " thead").html("");
+            $("#tbl" + _type + " tbody").html("");
+
+        }
+
+
+    }
+
+    var editSpecialScholarship = function (id, batch, _class, faculty, view) {
+        debugger;
+        hideAll();
+        $("#divSpecialScholarshipForm").show();
+        $("#formSpecialScholarship").find("input[type=text],select").val("");
+        $("#tblSpecialScholarshipDetails").empty();
+
+        $('#formSpecialScholarship [name="Batch"]').val(batch);
+        $('#formSpecialScholarship [name="Class"]').val(_class);
+        $('#formSpecialScholarship [name="StudentId"]').val(id);
+        $('#formSpecialScholarship [name="Faculty"]').val(faculty);
+
+        $('#formSpecialScholarship [name="Batch"]').attr('disabled', true);
+        $('#formSpecialScholarship [name="Class"]').attr('disabled', true);
+        $('#formSpecialScholarship [name="Faculty"]').attr('disabled', true);
+        $('#formSpecialScholarship [name="StudentId"]').attr('disabled', true);
+        debugger
+        $.ajax({
+            url: "/api/GetSpecialScholarshipId",
+            method: "GET",
+            data:{
+                StudentId: id,
+                Batch: batch,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("[name='SpecialScholarshipId']").val(result[0]['SpecialScholarshipId']);
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+        $.ajax({
+            url: "/api/GetSpecialScholarshipDetails",
+            method: "GET",
+            data: {
+                Class: _class,
+                Batch: batch,
+                Faculty: faculty,
+                Id: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                for (var r in result) {
+                    debugger;
+                    var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
+                    html += `<table class="bordered-table table-striped">`;
+                    html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
+                    html += ` <tbody class='rowTable'>`;
+
+                    debugger;
+                    if (view != undefined) {
+                        for (var c in result[r]) {
+                            if (result[r][c]["IsChecked"] == "True") {
+                                var discount = result[r][c]['DiscountType'];
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' checked disabled /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" disabled /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' disabled />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' disabled />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' value=" ${result[r][c]['Discount']}" disabled/></td>`;
+                                html += `</tr>`;
+
+                                //$("input[name='Child[Gender]'][value=" + childDetails[d] + "]").prop('checked', true);
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' disabled /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" disabled /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' disabled />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' disabled />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' disabled /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblSpecialScholarshipDetails").append(html);
+                        var j = 0;
+                        for (var r in result) {
+                            for (var c in result[r]) {
+                                if (result[r][c]["IsChecked"] == "True") {
+                                    $("input[name='ScholarshipDiscount[" + j + "][DiscountType]'][value=" + result[r][c]['DiscountType'] + "]").prop('checked', true);
+                                }
+                                else {
+
+                                }
+                                j++;
+                            }
+
+                        }
+                        $('#formSpecialScholarship select').attr('readonly', 'readonly');
+                        $("#formSpecialScholarship").find("input[type=text]").attr('readonly', 'readonly');
+                        $("#titleFormSpecialSchoarship").html("Scholarship Details of  StudentId " + id);
+                        $("#btnSaveSpecialScholarship").hide();
+                        $("#formSpecialScholarship #btnCancel").hide();
+                    }
+                    else {
+                        for (var c in result[r]) {
+                            if (result[r][c]["IsChecked"] == "True") {
+                                var discount = result[r][c]['DiscountType'];
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' checked /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' value=" ${result[r][c]['Discount']}" /></td>`;
+                                html += `</tr>`;
+
+                                //$("input[name='Child[Gender]'][value=" + childDetails[d] + "]").prop('checked', true);
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblSpecialScholarshipDetails").append(html);
+                        var j = 0;
+                        for (var r in result) {
+                            for (var c in result[r]) {
+                                if (result[r][c]["IsChecked"] == "True") {
+                                    $("input[name='ScholarshipDiscount[" + j + "][DiscountType]'][value=" + result[r][c]['DiscountType'] + "]").prop('checked', true);
+                                }
+                                else {
+
+                                }
+                                j++;
+                            }
+
+                        }
+                        $("#titleFormSpecialSchoarship").html("Edit Scholarship Details");
+                        $("#btnSaveSpecialScholarship").show();
+                        $("#btnSaveSpecialScholarship").val("Update");
+                        $("#formSpecialScholarship #btnCancel").show();
+                        $("#btnSaveSpecialScholarship").attr("disabled", false);
+                    }
+
+
+                }
+
+
+                debugger;
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    }
+
+    var editScholarshipDetails = function (name, batch, _class, faculty, view) {
+        debugger;
+        hideAll();
+        $("#divScholarshipForm").show();
+        $("#btnSaveScholarshipDetails").show();
+        $("#btnCancel1").show();
+        $("#btnSaveScholarshipDetails").val("Update");
+        $("#formScholarshipDetails").find("input[type=text],input[type=checkbox],select").val("");
+        $("#tblScholarship").empty();
+        $.ajax({
+            url: "/api/GetAllScholarshipName",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value =" + result[i]['ScholarshipName'] + ">" + result[i]['ScholarshipName'] + "</option>";
+                    }
+                    $("#selectScholarship").html(v);
+                    $("#selectScholarship").val(name);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        $('#formScholarshipDetails [name="ScholarshipName"]').val(name);
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                    $("#selectClass").val(_class);
+                }
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                    $("#selectBatch").val(batch);
+                }
+
+                if (facultyDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                    $("#selectFaculty").html(v);
+                    $("#selectFaculty").val(faculty);
+                }
+            }
+        })
+        $('#formScholarshipDetails [name="Batch"]').val(batch);
+        $('#formScholarshipDetails [name="Class"]').val(_class);
+        $('#formScholarshipDetails [name="Faculty"]').val(faculty);
+
+        $('#formScholarshipDetails [name="Batch"]').attr('disabled', true);
+        $('#formScholarshipDetails [name="Class"]').attr('disabled', true);
+        $('#formScholarshipDetails [name="Faculty"]').attr('disabled', true);
+        $('#formScholarshipDetails [name="ScholarshipName"]').attr('disabled', true);
+        debugger;
+        $.ajax({
+            url: "/api/GetAllScholarshipId",
+            method: "GET",
+            data:{
+                Name: name,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("[name='Id']").val(result[0]['Id']);
+            }
+        })
+        $.ajax({
+            url: "/api/GetAllScholarshipDetails",
+            method: "GET",
+            data: {
+                Class: _class,
+                Batch: batch,
+                Faculty: faculty,
+                Name: name,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                for (var r in result) {
+                    var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
+                    html += `<table class="bordered-table table-striped">`;
+                    html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
+                    html += ` <tbody class='rowTable'>`;
+
+                    debugger;
+                    if (view != undefined) {
+                        for (var c in result[r]) {
+                            if (result[r][c]["IsChecked"] == "True") {
+                                var discount = result[r][c]['DiscountType'];
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' checked disabled /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" disabled /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' disabled />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' disabled />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' value=" ${result[r][c]['Discount']}" disabled/></td>`;
+                                html += `</tr>`;
+
+                                //$("input[name='Child[Gender]'][value=" + childDetails[d] + "]").prop('checked', true);
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' disabled /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" disabled /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' disabled />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' disabled />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' disabled /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+                        }
+
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblScholarship").append(html);
+                        var j = 0;
+                        for (var r in result) {
+                            for (var c in result[r]) {
+                                if (result[r][c]["IsChecked"] == "True") {
+                                    $("input[name='ScholarshipDiscount[" + j + "][DiscountType]'][value=" + result[r][c]['DiscountType'] + "]").prop('checked', true);
+                                }
+                                else {
+
+                                }
+                                j++;
+                            }
+
+                        }
+                        $('#formScholarshipDetails select').attr('readonly', 'readonly');
+                        $("#scholarshipFormTitle").html("Scholarship Details of " + name);
+                        $("#btnSaveScholarshipDetails").hide();
+                        $("#btnCancel1").hide();
+                    }
+                    else {
+                        for (var c in result[r]) {
+                            if (result[r][c]["IsChecked"] == "True") {
+                                var discount = result[r][c]['DiscountType'];
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' checked /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' value=" ${result[r][c]['Discount']}" /></td>`;
+                                html += `</tr>`;
+
+                                //$("input[name='Child[Gender]'][value=" + childDetails[d] + "]").prop('checked', true);
+                            }
+                            else {
+                                html += `<tr>`;
+                                html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true' /><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                                html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                                html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                                html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                                html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                                html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' /></td>`;
+                                html += `</tr>`;
+                            }
+                            i++;
+                        }
+
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblScholarship").append(html);
+                        var j = 0;
+                        for (var r in result) {
+                            for (var c in result[r]) {
+                                if (result[r][c]["IsChecked"] == "True") {
+                                    $("input[name='ScholarshipDiscount[" + j + "][DiscountType]'][value=" + result[r][c]['DiscountType'] + "]").prop('checked', true);
+                                }
+                                else {
+
+                                }
+                                j++;
+                            }
+
+                        }
+                        $("#scholarshipFormTitle").html("Edit Scholarship Details");
+                        $("#btnSaveScholarshipDetails").val("Update");
+                    }
+
+
+                }
+
+
+                debugger;
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+
+    }
+
+
+    $("#btnSaveScholarshipName").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formScholarshipName").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.ScholarshipName == '') return;
+        $.ajax({
+            url: "/api/PostScholarshipDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $("input[type=text]").val("");
+                loadData("ScholarshipName",@Session["CompanyId"]);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnSaveSpecialScholarship").on('click', function (e) {
+        e.preventDefault();
+        $('#formSpecialScholarship [name="Batch"]').attr('disabled', false);
+        $('#formSpecialScholarship [name="Class"]').attr('disabled', false);
+        $('#formSpecialScholarship [name="Faculty"]').attr('disabled', false);
+        $('#formSpecialScholarship [name="StudentId"]').attr('disabled', false);
+        //$('#formSpecialScholarship [name="Month"]').attr('disabled', false);
+        debugger;
+        var fd = $("#formSpecialScholarship").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        if (fd.StudentId == '' || fd.Batch == '') {
+            alert("Please provide batch and StudentId");
+            return;
+        }
+        $.ajax({
+            url: "/api/PostSpecialScholarship",
+            type: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == true) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                        $('#tblSpecialScholarshipDetails').empty();
+                        debugger;
+                        hideAll();
+                        $("#divSpecialScholarship").show();
+                        loadSpecialScholarship();
+                    })
+                }
+                else if(result == false){
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Error");
+                    $('#modalInfo .modal-body').html("Scholarship for student already exists");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                        $("#formSpecialScholarship select").val('');
+                        $("#studentid").val('');
+                        $('#tblSpecialScholarshipDetails').empty();
+
+                    })
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+
+    var loadSpecialScholarship = function () {
+       
+        debugger;
+        $.ajax({
+            url: "/api/GetAllSpecialScholarshipDetails",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                    $("#divSpecialScholarship").show();
+                    $("#searchSpecialScholarship").show();
+                    showScholarshipData(result);
+               
+            },
+            error: function (e) {
+                debugger;
+                console.error(e);
+                alert(e.statusText);
+            }
+        });
+    }
+   
+    var showScholarshipData = function (result) {
+        debugger;
+        var _type = "SpecialScholarship";
+        var view = "specialScholarship";
+       
+        $("#tblSpecialScholarship").dataTable({
+            data: result,
+            'destroy': true,
+
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' onclick='editSpecialScholarship(\"" + row.StudentId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#'  onclick='deleteSpecialScholarship(\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + _type + "\",\"" + row.Batch + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#'  onclick='editSpecialScholarship(\"" + row.StudentId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + view + "\")' title='view'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a></div>";
+                    }
+                },
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'StudentId',
+                    'data': 'StudentId'
+                },
+                {
+                    'title': 'FirstName',
+                    'data': 'FirstName'
+                },
+                {
+                    'title': 'LastName',
+                    'data': 'LastName'
+                },
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Class',
+                    'data': 'Class'
+                },
+                {
+                    'title': 'Faculty',
+                    'data': 'Faculty'
+                }
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Scholarship Details");
+
+
+    }
+
+    $("#btnSaveScholarshipDetails").on('click', function (e) {
+        e.preventDefault();
+        $('#formScholarshipDetails [name="Batch"]').attr('disabled', false);
+        $('#formScholarshipDetails [name="Class"]').attr('disabled', false);
+        $('#formScholarshipDetails [name="Faculty"]').attr('disabled', false);
+        $('#formScholarshipDetails [name="ScholarshipName"]').attr('disabled', false);
+        debugger
+        var fd = $("#formScholarshipDetails").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        $.ajax({
+            url: "/api/PostDiscountDetails",
+            type: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == true) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Success");
+                    $('#modalInfo .modal-body').html(" Successful.");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#tblScholarship').empty();
+                        debugger;
+                        hideAll();
+                        $("#divScholarshipDetails").show();
+                        loadData("ScholarshipDetails",@Session["CompanyId"]);
+                    })
+                }
+                else if (result == false) {
+                    debugger;
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Error");
+                    $('#modalInfo .modal-body').html(" Scholarship Details for this class exists");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                    })
+                     $('#formScholarshipDetails select').val('');
+                    $('#tblScholarship').empty();
+
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    function updateScholarshipName(id, name) {
+        $("#modalEditScholarshipName").modal('show');
+        $("#modalEditScholarshipName [name='ScholarshipId']").val(id);
+        $("#modalEditScholarshipName [name='ScholarshipName']").val(name);
+
+    }
+
+    var deleteSettings = function (id, name, type) {
+        debugger;
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete " + type + " of " + name + "?");
+
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('url', type);
+        $('#btnDeleteModal').data('name', name);
+
+
+    }
+    var deleteScholarshipDetails = function (name, batch, _class, faculty) {
+        $('#modalDeleteScholarship').modal('show');
+        $('#modalDeleteScholarship .modal-title').html("Conform");
+        $('#modalDeleteScholarship .modal-body').html("Do you want to delete Scholarship details of:<br/>Scholarship Name:<b> " + name + " </b><br/>Batch:<b> " + batch + " </b><br/>Class:<b> " + _class + " </b><br/>Faculty:<b> " + faculty + " </b>");
+
+        $('#btnDeleteModalScholarship').data('name', name);
+        $('#btnDeleteModalScholarship').data('batch', batch);
+        $('#btnDeleteModalScholarship').data('class',_class);
+        $('#btnDeleteModalScholarship').data('faculty',faculty);
+    }
+
+    var deleteSpecialScholarship = function (id,firstname,lastname,type,batch) {
+        $('#modalDelete').modal('show');
+        $('#modalDelete .modal-title').html("Conform");
+        $('#modalDelete .modal-body').html("Do you want to delete Scholarship details of <br/> StudentId :<b> " + id + " </b><br/>Name:<b> " + firstname + " " + lastname + "</b><br/> Batch : <b> " + batch + " </b>");
+
+        $('#btnDeleteModal').data('id', id);
+        $('#btnDeleteModal').data('name', batch);
+        $('#btnDeleteModal').data('url', type);
+    }
+
+
+
+    $("#btnEditModalScholarshipName").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#formModalScholarshipName").serializeJSON();
+        fd.CompanyId=@Session["CompanyId"];
+        debugger;
+        if (fd.ScholarshipName == '') return;
+        debugger;
+        $.ajax({
+            url: "/api/PostScholarshipDetails",
+            method: "POST",
+            data: fd,
+            dataType: "json",
+            success: function (result) {
+                $('#modalEditScholarshipName').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Updated successfully.");
+                loadData("ScholarshipName",@Session["CompanyId"])
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+        debugger;
+    })
+
+    $("#btnDeleteModalScholarship").on('click', function (e) {
+        e.preventDefault();
+        var name = $(this).data('name');
+        var batch = $(this).data('batch');
+        var _class=$(this).data('class');
+        var faculty = $(this).data('faculty');
+        $.ajax({
+            url: "/api/DeleteScholarshipDetails",
+            method: "POST",
+            data: {
+                Name: name,
+                Class: _class,
+                Batch: batch,
+                Faculty: faculty,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                $('#modalDeleteScholarship').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                })
+                loadData("ScholarshipDetails",@Session["CompanyId"]);
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#btnDeleteModal").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        var urlName = $(this).data('url');
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        debugger;
+        $.ajax({
+            url: "/api/DeleteGeneralSetting",
+            method: "POST",
+            data: {
+                urlName: urlName.toLowerCase(),
+                id: id,
+                name: name,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+
+                debugger;
+                $('#modalDelete').modal('hide');
+                $('#modalInfo').modal('show');
+                $('#modalInfo .modal-title').html("Success!");
+                $('#modalInfo .modal-body').html("Deleted successfully.");
+                $(".redirect").on('click', function () {
+                    debugger;
+                    $('#modalInfo').modal('hide');
+                })
+                debugger;
+                if (urlName == "ScholarshipName") {
+                    loadData("ScholarshipName",@Session["CompanyId"]);
+
+                }
+
+                else if (urlName == "SpecialScholarship") {
+                    loadSpecialScholarship();
+                }
+
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    
+
+    var getSpecialScholarshipFeeDetails = function () {
+        $.ajax({
+            url: "/api/GetFeeDetails",
+            method: "Get",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var i = 0;
+                for (var r in result) {
+                    var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
+                    html += `<table class="bordered-table table-striped">`;
+                    html += `<thead><th style='text-align:center;'>&nbsp;</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount</th></thead>`;
+                    html += ` <tbody class='rowTable'>`;
+
+                    debugger;
+
+                    for (var c in result[r]) {
+
+                        html += `<tr>`;
+                        html += `<td><input type='checkbox' class='checktr' name='SpecialDiscount[${i}][IsChecked]' value='true'/><input type='hidden' class='StructureName' name='' value='${result[r][c]["FeeId"]}'/></td>`;
+                        html += `<td><input type="text" class='form-control FeeName'  name='SpecialDiscount[${i}][FeeName]' value="${result[r][c]['FeeName']}" readonly /><input type='hidden' name='SpecialDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                        html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                        html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+
+                        html += `<td style='width:150px;'><input type='text' class='form-control' name='SpecialDiscount[${i}][Discount]' /></td>`;
+                        html += `</tr>`;
+                        i++;
+
+                    }
+                    html += `</tbody>`;
+                    html += `</table>`;
+                    html += `<br/>`;
+                    $("#tblSpecialScholarshipDetails").append(html);
+                }
+                debugger;
+
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    $("#addScholarshipDetails").on('click', function (e) {
+        e.preventDefault();
+        hideAll();
+        $("#divScholarshipForm").show();
+        $("#divScholarshipForm").find("select").val("");
+        $('#divScholarshipForm select').attr('readonly', false);
+        $('#divScholarshipForm select').attr('disabled', false);
+        $("#btnSaveScholarshipDetails").show();
+        $("#btnCancel1").show();
+        $("#btnSaveScholarshipDetails").attr('disabled', true);
+        $("#tblScholarship").empty();
+        $("#btnSaveScholarshipDetails").val("Submit");
+        debugger;
+        getClassBatchFaculty();
+
+        getScholarshipName();
+
+    })
+   
+    $("#addSpecialScholarship").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        hideAll();
+        $("#divSpecialScholarshipForm").show();
+        $("#formSpecialScholarship input[type=text],input[type=hidden]").val('');
+        $("#tblSpecialScholarshipDetails").empty();
+        $("#studentid").attr('disabled', false);
+        $("#selectSpecialBatch").attr('disabled', false);
+        $("#btnSaveSpecialScholarship").val("Submit");
+        $("#btnSaveSpecialScholarship").attr('disabled', true);
+        $("#selectSpecialMonth").attr('disabled', false);
+        $("#selectSpecialBatch").attr("disabled", true);
+        getClassBatchFaculty();
+
+
+    })
+
+
+    var getScholarshipName = function () {
+        $.ajax({
+            url: "/api/GetAllScholarshipName",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in result) {
+                        v += "<option value =" + result[i]['ScholarshipName'] + ">" + result[i]['ScholarshipName'] + "</option>";
+                    }
+                    $("#selectScholarship").html(v);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    }
+
+    var hideAll = function () {
+        $("#divScholarshipName").hide();
+        $("#divScholarshipDetails").hide();
+        $("#divScholarshipForm").hide();
+        $("#divSpecialScholarship").hide();
+        $("#divSpecialScholarshipForm").hide();
+    }
+
+    var cancel = function () {
+        $('#modalCancel').modal('show');
+        $('#modal-title1').html("Confirm");
+        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModal").on('click', function () {
+        debugger;
+        $('#modalCancel').modal('hide');
+        hideAll();
+        $("#divScholarshipDetails").show();
+
+        debugger;
+    });
+
+    var cancelsch = function () {
+        debugger;
+        $('#modalCancelScholarship').modal('show');
+        $('#modalCancelScholarship .modal-title').html("Confirm");
+        $('#modalCancelScholarship .modal-body').html("Are You Sure You Want to Cancel ?");
+    }
+    $("#btnCancelModalScholarship").on('click', function () {
+        debugger;
+        $('#modalCancelScholarship').modal('hide');
+        hideAll();
+        $("#tblSpecialScholarshipDetails").val('');
+        $("#divSpecialScholarship").show();
+
+        debugger;
+    });
+
+    var getClassBatchFaculty = function () {
+        $.ajax({
+            url: "/api/GetClassBatchFaculty",
+            method: "GET",
+            data: {
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                var classDetails = result[0];
+                var batchDetails = result[1];
+                var facultyDetails = result[2];
+                if (classDetails != undefined) {
+                    debugger;
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in classDetails) {
+                        v += "<option value=" + classDetails[i]['ClassName'] + ">" + classDetails[i]['ClassName'] + "</option>";
+                    }
+                    $("#selectClass").html(v);
+                    $("#searchClass").html(v);
+                    $("#selectSpecialClass").html(v);
+                }
+                debugger;
+                if (batchDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in batchDetails) {
+                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                    }
+                    $("#selectBatch").html(v);
+                    $("#searchBatch").html(v);
+                    $("#selectSpecialBatch").html(v);
+                }
+                if (facultyDetails != undefined) {
+                    var v = "<option value=''>--Select--</option>";
+                    for (var i in facultyDetails) {
+                        v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
+                    }
+                   // $("#selectFaculty").html(v);
+                    $("#searchFaculty").html(v);
+                    $("#selectSpecialFaculty").html(v);
+                }
+                debugger;
+                $("#selectFaculty").attr('disabled', true);
+                $("#selectSpecialFaculty").attr('disabled', true);
+                $("#selectClass").attr('disabled', true);
+                $("#selectSpecialClass").attr('disabled', true);
+                //$("#selectSpecialBatch").attr('disabled', true);
+
+            }
+        })
+    }
+
+    $("#selectClass").on('change', function (e) {
+        e.preventDefault();
+        $("#selectFaculty").attr('disabled', false);
+        if ($("#selectClass").val() == "") {
+            $("#btnSaveScholarshipDetails").attr('disabled', true);
+        }
+        else {
+            $("#btnSaveScholarshipDetails").attr('disabled', false);
+        }
+        $("#selectFaculty").val('');
+        $("#tblScholarship").empty();
+        var _class = $("#selectClass").val();
+        if (_class != '') {
+
+            $.ajax({
+                url: "/api/GetFacultyByClass",
+                method: "GET",
+                data: {
+                    Class: _class,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#selectFaculty").val(result[0]["FacultyName"]);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+        else {
+            $("#selectFaculty").val('');
+        }
+        var _class = $("#selectClass").val();
+        var batch = $("#selectBatch").val();
+        if (_class == "" || batch == "") return;
+        $.ajax({
+            url: "/api/GetSelectedFee",
+            method: "GET",
+            data: {
+                Class: _class,
+                Batch: batch,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                if (result == false) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Error");
+                    $('#modalInfo .modal-body').html(" Fee Details for this class is not added");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                    })
+                    $('#formScholarshipDetails select').val('');
+                    $("#tblScholarship").empty();
+                }
+                else {
+                    debugger;
+                    var i = 0;
+                    for (var r in result) {
+                        var html = `<h4>Fee Structure :${result[r][0]['FeeStructureName']}</h4>`;
+
+                        html += `<table class="bordered-table table-striped">`;
+                        html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
+                        html += ` <tbody class='rowTable'>`;
+
+                        debugger;
+
+                        for (var c in result[r]) {
+
+                            html += `<tr>`;
+                            html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true'/><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                            html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                            html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                            html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                            html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                            html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                            html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' /></td>`;
+                            html += `</tr>`;
+                            i++;
+
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblScholarship").append(html);
+                    }
+                    debugger;
+                    $("#btnSaveScholarshipDetails").attr('disabled', false);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+
+    $("#selectBatch").on('change', function (e) {
+        e.preventDefault();
+        $("#selectClass").attr('disabled', false);
+        $("#btnSaveScholarshipDetails").attr('disabled', true);
+        $("#selectFaculty").val('');
+        $("#tblScholarship").empty();
+    })
+
+    $("#selectScholarship").on('change', function (e) {
+        e.preventDefault();
+        $("#selectFaculty").val('');
+        $("#selectBatch").val('');
+        $("#selectClass").val('');
+        $("#tblScholarship").empty();
+    })
+
+    $("#studentid").on('change', function (e) {
+        e.preventDefault();
+        var id = $("#studentid").val().trim();
+      
+        $("#selectSpecialBatch").val('');
+        debugger;
+        $.ajax({
+            url: "/api/GetStudentClass",
+            method: "GET",
+            data: {
+                StudentId: id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: 'json',
+            success: function (result) {
+                debugger;
+                if (result.length != 0) {
+                    $("#selectSpecialClass").val(result[0]['Class']);
+                    $("#selectSpecialFaculty").val(result[0]['Faculty']);
+                    //$("#selectSpecialBatch").val(result[0]['Batch']);
+                    $("#studenttype").val(result[0]['StudentType']);
+                    $("#selectSpecialBatch").attr("disabled", false);
+                    $("#btnSaveSpecialScholarship").attr("disabled", false);
+                }
+                else {
+                    alert("Student not registered");
+                    $("#tblSpecialScholarshipDetails").empty();
+                    $("#studentid").val('');
+                    $("#selectSpecialBatch").val('');
+                    $("#selectSpecialClass").val('');
+                    $("#selectSpecialFaculty").val('');
+                    $("#studenttype").val('');
+                    $("#btnSaveSpecialScholarship").attr("disabled", true);
+                }
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+    })
+
+    $("#selectSpecialBatch").on('change', function (e) {
+        debugger;
+        var _class = $("#selectSpecialClass").val();
+        var batch = $("#selectSpecialBatch").val();
+        if (batch == '') {
+            $("#btnSaveSpecialScholarship").attr('disabled', true);
+        }
+        else {
+            $("#btnSaveSpecialScholarship").attr('disabled', false);
+        }
+        var faculty = $("#selectSpecialFaculty").val();
+        var studentType = $("#studenttype").val();
+        $("#tblSpecialScholarshipDetails").empty();
+        if (_class == "" || batch == "" || faculty == "") return;
+
+        $.ajax({
+            url: "/api/GetSpecialSelectedFee",
+            method: "GET",
+            data: {
+                Class: _class,
+                Batch: batch,
+                Faculty: faculty,
+                StudentType: studentType,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                if (result == false) {
+                    $('#modalInfo').modal('show');
+                    $('#modalInfo .modal-title').html("Error");
+                    $('#modalInfo .modal-body').html(" Fee Details for this class is not added");
+                    $(".redirect").on('click', function () {
+                        debugger;
+                        $('#modalInfo').modal('hide');
+                    })
+                    $('#formSpecialScholarship select').val('');
+                    $("#tblSpecialScholarshipDetails").empty();
+                }
+                else {
+                    $("[name='BatchClassId']").val(result[0][0]['BatchClassId']);
+                    debugger;
+                    var i = 0;
+                    for (var r in result) {
+                        var html = `<h4>Fee Structure :${result[r][0]['FeeStructureName']}</h4>`;
+
+                        html += `<table class="bordered-table table-striped">`;
+                        html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
+                        html += ` <tbody class='rowTable'>`;
+
+                        debugger;
+
+                        for (var c in result[r]) {
+
+                            html += `<tr>`;
+                            html += `<td><input type='checkbox' class='checktr' name='ScholarshipDiscount[${i}][IsChecked]' value='true'/><input type='hidden' class='StructureName' name='ScholarshipDiscount[${i}][FeeId]' value='${result[r][c]["FeeId"]}'/></td>`;
+                            html += `<td style='width:160px;'><input type='text' class='form-control StudentType' name='ScholarshipDiscount[${i}][StudentType]' value="${result[r][c]['StudentType']}" readonly /></td>`;
+                            html += `<td><input type="text" class='form-control FeeName'  name='' value="${result[r][c]['FeeName']}" disabled /><input type='hidden' name='ScholarshipDiscount[${i}][FeeStructureName]' value='${result[r][c]["FeeStructureName"]}' /></td>`;
+                            html += `<td style='width:150px;'><input type='text' class='form-control Amount' name='ScholarshipDiscount[${i}][Amount]' value="${result[r][c]['Amount']}" readonly /></td>`;
+                            html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r][c]['Refundable']}" disabled/></td>`;
+                            html += `<td style='width:200px;'><input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='flat' />Flat &nbsp;&nbsp;<input type='radio' name='ScholarshipDiscount[${i}][DiscountType]' value='percentage' />Percent</td>`;
+                            html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' /></td>`;
+                            html += `</tr>`;
+                            i++;
+                            
+                        }
+                        html += `</tbody>`;
+                        html += `</table>`;
+                        html += `<br/>`;
+                        $("#tblSpecialScholarshipDetails").append(html);
+                    }
+                    debugger;
+                    $("#btnSaveSpecialScholarship").attr('disabled', false);
+                }
+
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+    })
+ 
+
+    $("#btnSearchScholarship").on('click', function (e) {
+        e.preventDefault();
+        var batch = $("#searchBatch").val();
+        var _class = $("#searchClass").val();
+        var studentId = $("#searchStudentId").val().trim();
+        //var month = $("#searchMonth").val();
+        debugger;
+        if (batch == '' && _class == '' && studentId == '') {
+            loadSpecialScholarship();
+            return;
+        }
+        else {
+            $.ajax({
+                url: "/api/SearchSpecialScholarship",
+                method: "GET",
+                data: {
+                    Batch: batch,
+                    Class: _class,
+                    StudentId: studentId,
+                    CompanyId:@Session["CompanyId"],
+                },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    showScholarshipData(result);
+                },
+                error: function (e) {
+                    console.error(e);
+                    alert(e.statusText);
+                }
+            })
+        }
+    })
+    var showResultData1 = function (data) {
+        debugger;
+        var view = "scholarshipdetails";
+        $("#tblScholarshipDetails").dataTable({
+            data: data,
+            'destroy': true,
+            "columnDefs": [
+                { "width": "200px", "targets": 0 }
+            ],
+            columns: [
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+
+                    'render': function (data, type, row) {
+                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")'>Delete</a>&nbsp;<a href='#' class='btn btn-info' onclick='editScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + view + "\")'>View</a></div>";
+                    }
+                },
+
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+
+                {
+                    'title': 'ScholarshipName',
+                    'data': 'ScholarshipName'
+                },
+             
+                {
+                    'title': 'Batch',
+                    'data': 'Batch'
+                },
+                {
+                    'title': 'Class',
+                    'data': 'Class'
+                },
+                {
+                    'title': 'Faculty',
+                    'data': 'Faculty'
+                },
+              
+            ]
+        });
+        debugger;
+        $("#titlename").html("List of Scholarship Details");
+    }
+</script>
+
+
