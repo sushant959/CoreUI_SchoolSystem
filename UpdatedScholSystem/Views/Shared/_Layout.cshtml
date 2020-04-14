@@ -24,6 +24,9 @@
     <script src="~/Content/DataTable/buttons.print.min.js"></script>
     @*<link href="~/Content/DataTable/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet" />*@
     @*<link href="~/Content/DataTable/dataTables.bootstrap.min.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <style>
         .sidebar .nav-link.active {
             color: #fff;
@@ -70,88 +73,88 @@
                         </a>
                     </li>
 
-                   
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/GeneralSettings">
-                                <i class="nav-icon fa fa-users"></i> General Settings
-                            </a>
-                        </li>
-                   
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/StudentManagement">
-                                <i class="nav-icon fa fa-money"></i> Student Management
-                                @*<i class="fa fa-circle text-warning pull-right"></i>*@
-                            </a>
-                        </li>
-                  
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/GeneralSettings">
+                            <i class="nav-icon fa fa-users"></i> General Settings
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/StudentManagement">
+                            <i class="nav-icon fa fa-money"></i> Student Management
+                            @*<i class="fa fa-circle text-warning pull-right"></i>*@
+                        </a>
+                    </li>
+
                     <li class="nav-item nav-dropdown open">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon fa fa-calendar-times-o"></i> Leave Management
                         </a>
                         <ul class="nav-dropdown-items">
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Home/Leave">
-                                        <i class="nav-icon fa fa-calendar-times-o"></i> Leave Entry
-                                    </a>
-                                </li>
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Home/LeaveReport">
-                                        <i class="nav-icon fa fa-calendar-times-o"></i> Balance Report
-                                    </a>
-                                </li>
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Home/LeaveForward">
-                                        <i class="nav-icon fa fa-calendar-times-o"></i> Leave Forward
-                                        <span class="badge badge-info">New-@Session["forwardcount"]</span>
-                                    </a>
-                                </li>
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Home/LeaveApproval">
-                                        <i class="nav-icon fa fa-calendar-times-o"></i> Leave Approval
-                                        <span class="badge badge-primary">New-@Session["approvalcount"]</span>
-                                    </a>
-                                </li>
-                            
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/Leave">
+                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Entry
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/LeaveReport">
+                                    <i class="nav-icon fa fa-calendar-times-o"></i> Balance Report
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/LeaveForward">
+                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Forward
+                                    <span class="badge badge-info">New-@Session["forwardcount"]</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Home/LeaveApproval">
+                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Approval
+                                    <span class="badge badge-primary">New-@Session["approvalcount"]</span>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
-                  
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/OverTime">
-                                <i class="nav-icon fa fa-plus"></i> Overtime
-                                @*<i class="fa fa-circle text-warning pull-right"></i>*@
-                            </a>
-                        </li>
-                   
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Home/Holiday">
-                                <i class="nav-icon fa fa-flag"></i> Holiday
-                            </a>
-                        </li>
-                    
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/OverTime">
+                            <i class="nav-icon fa fa-plus"></i> Overtime
+                            @*<i class="fa fa-circle text-warning pull-right"></i>*@
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Holiday">
+                            <i class="nav-icon fa fa-flag"></i> Holiday
+                        </a>
+                    </li>
+
 
                     <li class="nav-item nav-dropdown open">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon fa fa-money"></i> Payroll
                         </a>
                         <ul class="nav-dropdown-items">
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="nav-icon fa fa-list-alt"></i> Salary sheet
-                                    </a>
-                                </li>
-                           
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="nav-icon fa fa-money"></i> Payroll
-                                    </a>
-                                </li>
-                            
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="nav-icon fa fa-list-alt"></i> Salary sheet
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="nav-icon fa fa-money"></i> Payroll
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     @*@if (features.Contains("Settings"))
@@ -186,7 +189,11 @@
     <script src="~/Scripts/coreui.min.js"></script>
 
     <script src="~/Scripts/jquery.serializejson.min.js"></script>
-
+    <script src="~/Scripts/nepali.datepicker.v2.2.min.js"></script>
+    <link href="~/Content/nepali.datepicker.v2.2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @*<!-- Optional JavaScript -->
         <!-- add jQuery first (at <head> section), then Popper.js, Bootstrap, then CoreUI  -->
         <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
