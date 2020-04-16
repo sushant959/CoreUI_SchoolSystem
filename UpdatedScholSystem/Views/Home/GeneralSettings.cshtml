@@ -53,1091 +53,1172 @@
     </div>
 </div>
 
-    <br /><br />
-    @*/////////////////////////////----------Batch Details (Start)-----------/////////////////////////////////////*@
-          <div id="batchResult">
-              <div class="row">
-                  <div class="col-sm-3">
-                      <h4 id="batchname"></h4>
-                  </div>
-              </div>
-              <div class="card p-3">
-                  <div style="width:100%;overflow:auto; max-height:80vh">
-                      <table id="tblBatch" class="table table-bordered">
-                          <thead></thead>
-                          <tbody></tbody>
-                      </table>
-                  </div>
-                  </div>
-              </div>
-              <div class="row" id="divBatchDetails">
-                  <div class="col-md-3"></div>
-                  <div class="col-md-6">
-                      <div class="card p-3">
-                          <div class="class-body">
-                      <h4 class="card-title">Add Batch</h4><hr/>
-                      <form id="frmBatch" class="form-row">
-                         
-                              <input type="hidden" name="CompanyId" id="companyid" value="" />
-                              <div class="col-md-6">
+<br /><br />
+@*/////////////////////////////----------Batch Details (Start)-----------/////////////////////////////////////*@
+<div id="batchResult">
+    <div class="row">
+        <div class="col-sm-3">
+            <h4 id="batchname"></h4>
+        </div>
+    </div>
+    <div class="card p-3">
+        <div style="width:100%;overflow:auto; max-height:80vh">
+            <table id="tblBatch" class="table table-bordered">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row" id="divBatchDetails">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <div class="class-body">
+                <h4 class="card-title">Add Batch</h4><hr />
+                <form id="frmBatch" class="form-row">
+
+                    <input type="hidden" name="CompanyId" id="companyid" value="" />
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">From Year</label>
+                            </div>
+                            <input type="text" name="FromYear" class="form-control" placeholder="From Year" id="fromYear" required onkeypress="return isNumberKey(event)" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">To Year</label>
+                            </div>
+                            <input type="text" name="ToYear" class="form-control" placeholder="To Year" id="toYear" required onkeypress="return isNumberKey(event)" />
+                            <button class="btn btn-primary" id="btnSaveBatch" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divStartDate">
+    <br />
+    <div class="col-md-8">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Start Date</h4>
+            <form id="frmStartDate" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="StartDateId" />
+                    <label style="flex:1">Batch :&nbsp;</label>
+                    <select id="startDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
+                    <label style="flex:1"> Start Date:&nbsp;</label>
+                    <input type="text" id="startdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartDate">Add</button>
+                </div>
+            </form>
+        </div>
+        <hr />
+        <div id="tblStartDate" style="width:100%;overflow:auto;">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+@*////////////////////////////-----------Batch Details (End)-------------///////////////////////////////////////*@
+
+@*////////////////////////////-----------Class Details (Start)-----------///////////////////////////////////////*@
+<div id="divClassDetails">
+    <br />
+    <div class="col-md-8 offset-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Class</h4><hr />
+                <form id="formClassDetails">
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Class Name</label>
+                                </div>
+                                <input type="text" name="ClassName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Class Code</label>
+                                </div>
+                                <input type="text" name="ClassCode" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Class Type</label>
+                                </div>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary active">
+                                        <input type="radio" name="ClassType" value="Yearly" id="option1" autocomplete="off" checked> Yearly
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="ClassType" value="Semester" id="option2" autocomplete="off"> Semester
+                                    </label>
+                                    <label class="btn btn-secondary">
+                                        <input type="radio" name="ClassType" value="Trimester" id="option3" autocomplete="off"> Trimester
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Limit</label>
+                                </div>
+                                <input type="text" name="StudentLimit" class="form-control" onkeypress="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Faculty Name</label>
+                                </div>
+                                <select name="FacultyId" class="form-control" id="selectClassFaculty"></select>
+                                <button class="btn btn-primary" id="btnSaveClassDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+
+                <h5 class="titlename">List of all Class</h5>
+                <table id="tblClassDetails" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*///////////////////////////------------Class Details (End)-------------/////////////////////////////////////////*@
+
+@*///////////////////////////------------Faculty Details (start)-------------/////////////////////////////////////////*@
+<div id="divFacultyDetails">
+    <br />
+    <div class="col-md-8 offset-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Faculty</h4>
+                <hr />
+                <form id="formFacultyDetails" class="form-row">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Faculty Name</label>
+                            </div>
+                            <input type="text" name="FacultyName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Faculty Code</label>
+                            </div>
+                            <input type="text" name="FacultyCode" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveFacultyDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+
+                </form>
+                <hr />
+                <h5>List of all Faculty</h5>
+                <table id="tblFacultyDetails" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@*///////////////////////////------------Faculty Details (End)-------------/////////////////////////////////////////*@
+
+@*///////////////////////////------------Section Details (start)-------------/////////////////////////////////////////*@
+
+<div id="divSectionDetails">
+    <br />
+    <div class="col-md-8 offset-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Section</h4>
+                <hr />
+                <form id="formSectionDetails" class="form-row">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Section Name</label>
+                            </div>
+                            <input type="text" name="SectionName" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Student Limit</label>
+                            </div>
+                            <input type="text" name="StudentLimit" class="form-control" onkeypress="return isNumberKey(event)" />
+                            <button class="btn btn-primary" id="btnSaveSectionDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+
+                </form>
+                <hr />
+                <h5>List of all Section</h5>
+                <table id="tblSectionDetails" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+@*///////////////////////////------------Section Details (End)-------------/////////////////////////////////////////*@
+
+
+<div id="divFeeStructureDetails">
+    <div class="form-row">
+        <label style="flex:1.3">
+            <input type="radio" name="FeeManagement" value="" id="feeStructure" />
+            <label for="ClassType1" class="radio-label">Fee Structure Management</label>
+           &nbsp; &nbsp; &nbsp;
+
+            <input type="radio" name="FeeManagement" value="" id="feeManagement" required />
+            <label for="ClassType2" class="radio-label">Fee Management</label>
+            &nbsp; &nbsp; &nbsp;
+        </label>
+
+    </div>
+          <div id="divfeestructure">
+              <div class="col-md-6 offset-3">
+                  <div class="card">
+                      <div class="card-body">
+                          <h4 class="card-title">Manage Fee Structure</h4>
+                          <hr />
+                          <form id="formfeestructure" class="form-row">
+                              <input type="hidden" name="CompanyId" value="" />
+                              <div class="col-md-12">
                                   <div class="input-group">
                                       <div class="input-group-prepend">
-                                          <label class="input-group-text">From Year</label>
+                                          <label class="input-group-text">Fee Structure Name</label>
                                       </div>
-                                      <input type="text" name="FromYear" class="form-control" placeholder="From Year" id="fromYear" required onkeypress="return isNumberKey(event)" />
+                                      <input type="text" name="FeeStructureName" class="form-control" />
+                                      <button class="btn btn-primary" id="btnSaveFeeStructureDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
                                   </div>
                               </div>
-                              <div class="col-md-6">
-                                  <div class="input-group">
-                                      <div class="input-group-prepend">
-                                          <label class="input-group-text">To Year</label>
-                                      </div>
-                                      <input type="text" name="ToYear" class="form-control" placeholder="To Year" id="toYear" required onkeypress="return isNumberKey(event)" />
-                                      <button class="btn btn-primary" id="btnSaveBatch" type="submit" style="margin-left:10px;" data-name="">Add</button>
-                                  </div>
-                              </div>
-                          
-                      </form>
-                      </div>
-                      </div>
-                  </div>
-              </div>
-              <div id="divStartDate">
-                  <br />
-                  <div class="col-md-8">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Start Date</h4>
-                          <form id="frmStartDate" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="StartDateId" />
-                                  <label style="flex:1">Batch :&nbsp;</label>
-                                  <select id="startDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
-                                  <label style="flex:1"> Start Date:&nbsp;</label>
-                                  <input type="text" id="startdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
-                              </div><br />
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartDate">Add</button>
-                              </div>
-                          </form>
-                      </div>
-                      <hr />
-                      <div id="tblStartDate" style="width:100%;overflow:auto;">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-
-              </div>
-              @*////////////////////////////-----------Batch Details (End)-------------///////////////////////////////////////*@
-
-              @*////////////////////////////-----------Class Details (Start)-----------///////////////////////////////////////*@
-              <div id="divClassDetails">
-                  <br />
-                  <div class="col-md-8 offset-2">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">Manage Class</h4><hr/>
-                              <form id="formClassDetails">
-                                  <div class="form-row mb-2">
-                                      <div class="col-md-6">
-                                          <div class="input-group">
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Class Name</label>
-                                              </div>
-                                              <input type="text" name="ClassName" class="form-control" />
-                                          </div>
-                                      </div>
-                                      <div class="col-md-6">
-                                          <div class="input-group">
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Class Code</label>
-                                              </div>
-                                              <input type="text" name="ClassCode" class="form-control" />
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-row mb-2">
-                                      <div class="col-md-12">
-                                          <div class="input-group">
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Class Type</label>
-                                              </div>
-                                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                                  <label class="btn btn-secondary active">
-                                                      <input type="radio" name="ClassType" value="Yearly" id="option1" autocomplete="off" checked> Yearly
-                                                  </label>
-                                                  <label class="btn btn-secondary">
-                                                      <input type="radio" name="ClassType" value="Semester" id="option2" autocomplete="off"> Semester
-                                                  </label>
-                                                  <label class="btn btn-secondary">
-                                                      <input type="radio" name="ClassType" value="Trimester" id="option3" autocomplete="off"> Trimester
-                                                  </label>
-                                              </div>
-                                            
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-row mb-2">
-                                      <div class="col-md-6">
-                                          <div class="input-group">
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Student Limit</label>
-                                              </div>
-                                              <input type="text" name="StudentLimit" class="form-control" onkeypress="return isNumberKey(event)" />
-                                          </div>
-                                      </div>
-                                      <div class="col-md-6">
-                                          <div class="input-group">
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Faculty Name</label>
-                                              </div>
-                                              <select name="FacultyId" class="form-control" id="selectClassFaculty" ></select>
-                                              <button class="btn btn-primary" id="btnSaveClassDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
-                                          </div>
-                                      </div>
-                                      </div>
-                                </form>
-                              <hr />
-                            
-                                  <h5 class="titlename">List of all Class</h5>
-                                  <table id="tblClassDetails" class="table table-bordered">
-                                      <thead></thead>
-                                      <tbody></tbody>
-                                  </table>
-                              
-                          </div>
-                          </div>
-                      </div>
-                      </div>
-
-
-              @*///////////////////////////------------Class Details (End)-------------/////////////////////////////////////////*@
-
-              @*///////////////////////////------------Faculty Details (start)-------------/////////////////////////////////////////*@
-              <div id="divFacultyDetails">
-                  <br />
-                  <div class="col-md-8 offset-2">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">Manage Faculty</h4>
-                              <hr />
-                              <form id="formFacultyDetails" class="form-row">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <div class="col-md-6">
-                                      <div class="input-group">
-                                          <div class="input-group-prepend">
-                                              <label class="input-group-text">Faculty Name</label>
-                                          </div>
-                                          <input type="text" name="FacultyName" class="form-control"  />
-                                      </div>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <div class="input-group">
-                                          <div class="input-group-prepend">
-                                              <label class="input-group-text">Faculty Code</label>
-                                          </div>
-                                          <input type="text" name="FacultyCode" class="form-control"  />
-                                          <button class="btn btn-primary" id="btnSaveFacultyDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
-                                      </div>
-                                  </div>
-
-                              </form>
-                              <hr />
-                              <h5>List of all Faculty</h5>
-                              <table id="tblFacultyDetails" class="table table-bordered">
-                                  <thead></thead>
-                                  <tbody></tbody>
-                              </table>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-
-              @*///////////////////////////------------Faculty Details (End)-------------/////////////////////////////////////////*@
-
-              @*///////////////////////////------------Section Details (start)-------------/////////////////////////////////////////*@
-
-              <div id="divSectionDetails">
-                  <br />
-                  <div class="col-md-9">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Section</h4>
-                          <form id="formSectionDetails" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1">Section Name :&nbsp;</label>
-                                  <input type="text" class="form-control" name="SectionName" style="flex:1.5" required />&nbsp;&nbsp;
-                                  <label style="flex:1">Student Limit:&nbsp;&nbsp;</label>
-                                  <input type="text" class="form-control" name="StudentLimit" style="flex:1.5" required />&nbsp;&nbsp;
-
-                              </div><br />
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveSectionDetails">Add</button>
-                              </div>
-                          </form>
-                      </div><hr />
-                      <div id="tblSectionDetails" style="width:100%;overflow:auto;">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-
-
-
-
-              @*///////////////////////////------------Section Details (End)-------------/////////////////////////////////////////*@
-
-
-              <div id="divFeeStructureDetails">
-                  <br /><br />
-                  <div class="flexContainer">
-                      <label style="flex:1.3">
-                          <input type="radio" name="FeeManagement" value="" id="feeStructure" />
-                          <label for="ClassType1" class="radio-label"><b>Fee Structure Management</b></label>
-                          &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-
-                          <input type="radio" name="FeeManagement" value="" id="feeManagement" required />
-                          <label for="ClassType2" class="radio-label"><b>Fee Management</b></label>
-                          &nbsp; &nbsp; &nbsp;
-                      </label>
-
-                  </div>
-                  <br /><br />
-                  <div id="divfeestructure">
-                      <div class="col-md-6">
-                          <div class="thumbnail">
-                              <h4 class="well-sm">Add Fee Structure</h4>
-                              <form id="formfeestructure" class="well well-sm">
-                                  <div class="flexContainer">
-                                      <input type="hidden" name="CompanyId" value="" />
-                                      <label style="flex:1">Fee Structure Name :&nbsp;</label>
-                                      <input type="text" class="form-control" name="FeeStructureName" style="flex:0.8" required />&nbsp;&nbsp;
-                                      <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveFeeStructureDetails">Add</button>
-                                  </div><br />
-
-                              </form>
-                          </div><hr />
-                          <div id="tblFeeStructureDetails" style="width:100%;overflow:auto;">
-                              <h4 class="titlename"></h4>
-                              <table class="bordered-table table-striped">
-                                  <thead></thead>
-                                  <tbody></tbody>
-                              </table>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div id="divfeemanagement">
-                  <br />
-                  <div class="col-md-11">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Fee</h4>
-                          <form id="formFeeDetails" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1.5">Fee Structure :&nbsp;</label>
-                                  <select class="form-control" name="FeeStructureName" style="flex:2" id="selectFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1.5">Student Type :&nbsp;</label>
-                                  <select class="form-control" name="StudentType" style="flex:2" id="selectStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div><br />
-                              <div class="flexContainer">
-                                  <label style="flex:1.5">Fee Name:&nbsp;</label>
-                                  <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1.5">Amount: &nbsp;</label>
-                                  <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div><br />
-                              <div class="flexContainer">
-                                  <label style="flex:1.3">Refundable:&nbsp;</label>
-                                  <select class="form-control" name="Refundable" style="flex:1.9" id="selectRefundable" required>
-                                      <option value="">select</option>
-                                      <option value="Yes">Yes</option>
-                                      <option value="No">No</option>
-                                  </select>&nbsp;&nbsp;
-                                  <label style="flex:1.5"></label>
-                                  <span style="flex:2"></span>
-                              </div><br />
-
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" type="submit" id="btnSaveFeeDetails">Add</button>
-                              </div>
-
-                          </form>
-                      </div><hr />
-                      <div id="feeDetails" style="width:100%;overflow:auto;">
-                          <h4 class="titlename"></h4>
-                          <div>
-                              @*<div class="col-sm-3"></div>
-                        <div class="col-sm-4" style="text-align:center;">*@
-
-                              <div class="flexContainer" style="margin-left:20px;justify-content:center">
-                                  <div style="flex:none; text-align:center;">
-                                      <label>FeeStructure</label>
-                                      <select id="searchFeeStructureName" class="form-control" style="width:auto"></select>
-                                  </div>&nbsp;&nbsp;
-                                  <div style="flex:none; text-align:center;">
-                                      <label>StudentType</label>
-                                      <select id="searchStudentType" class="form-control" style="width:auto"></select>
-                                  </div>&nbsp;&nbsp;
-                                  <div style="flex:none;">
-                                      <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchFee" type="submit" data-name="">Search</button>
-                                  </div>
-                                  @*</div>*@
-                              </div>
-                          </div>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                          <table id="tblFeeDetails" class="table table-bordered table-striped" style="width:100%"></table>
-                      </div><br /><br />
-                  </div>
-              </div>
-              @*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
-              <div id="divClassFeeDetails">
-                  <br />
-                  <div style="margin-right:50px;"><button class="btn btn-success" id="addClassFee">Add Class Fee</button></div><hr />
-                  <div>
-                      <h4 class="titlename"></h4>
-                      <div class="flexContainer" style="justify-content:center">
-                          <div style="text-align:center;">
-                              <div class="flexContainer" style="margin-left:20px;">
-                                  <div style="flex:none; text-align:center; min-width:120px">
-                                      <label>Batch</label>
-                                      <select id="searchBatch" class="form-control" style="width:auto"></select>
-                                  </div>&nbsp;&nbsp;
-                                  <div style="flex:none; text-align:center; min-width:120px">
-                                      <label>Faculty</label>
-                                      <select id="searchFaculty" class="form-control" style="width:auto"></select>
-                                  </div>&nbsp;&nbsp;
-                                  <div style="flex:none; text-align:center; min-width:120px">
-                                      <label>Class</label>
-                                      <select id="searchClass" class="form-control" style="width:auto"></select>
-                                  </div>&nbsp;&nbsp;
-                                  <div style="flex:none;">
-                                      <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchClassFee" type="submit" data-name="">Search</button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-12">
-                      <div style="width:100%;overflow:auto">
-                          <table id="tblClassFeeDetails" class="bordered-table table-striped"></table>
-                      </div>
-                  </div>
-              </div>
-              <div id="formClassFee">
-                  <br />
-                  <div class="col-md-12">
-                      <div class="thumbnail">
-                          <h4 class="well-sm" id="titleFormClassFee">Add Class Fee</h4>
-                          <form id="formFeeClassDetails">
-                              <div class="flexContainer well well-sm">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <input type="hidden" id="classfeeid" name="BatchClassId" />
-                                  <label style="flex:1">Select Batch :&nbsp;</label>
-                                  <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1">Select Class :&nbsp;</label>
-                                  <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1">Select Faculty :&nbsp;</label>
-                                  <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty" required readonly />
-                              </div><br />
-                              <div id="tblFee" class="add well well-sm" style="width:100%;overflow:auto;">
-
-                              </div>
-
-                              <div class="text-center" id="ClassFeeSubmit">
-                                  <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveClassFeeDetails" />
-                                  <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
-                              </div>
-
-                          </form>
-                      </div>
-
-                  </div>
-              </div>
-
-
-              <div id="divDayOff">
-                  <br />
-                  <div class="col-md-12">
-                      <div><button class="btn btn-success" id="addDayOff">Add Non-Working Day</button></div><hr />
-                      <br />
-                      <h4 class="titlename"></h4>
-                      <div class="flexContainer" style="justify-content:center">
-                          <div style="flex:none; text-align:center">
-                              <label>Batch</label>
-                              <select id="searchDayoffBatch" class="form-control" style="width:auto"></select>
-                          </div>&nbsp;&nbsp;
-                          <div style="flex:none; text-align:center;">
-                              <label>Department</label>
-                              <select id="searchDayoffDepartment" class="form-control" style="width:auto"></select>
-                          </div>&nbsp;&nbsp;
-                          <div style="flex:none; text-align:center;">
-                              <label>Faculty</label>
-                              <select id="searchDayoffFaculty" class="form-control" style="width:auto"></select>
-                          </div>&nbsp;&nbsp;
-                          <div style="flex:none; text-align:center;">
-                              <label>Class</label>
-                              <select id="searchDayoffClass" class="form-control" style="width:auto"></select>
-                          </div>&nbsp;&nbsp;
-                          <div style="flex:none;">
-                              <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDayOff" type="submit" data-name="">Search</button>
-                          </div>
-                      </div>
-                      <div style="width:100%;overflow:auto">
-                          <table id="tblDayOff" class="bordered-table table-striped"></table>
-                      </div>
-                      <br />
-                      <h4>Summary Info.</h4>
-                      <hr style="margin-top:5px;margin-bottom:10px" />
-                      <div id="divSummary" class="row">
-                      </div>
-                  </div>
-              </div>
-              <div id="formDayOff">
-                  <br />
-                  <div class="col-md-10">
-                      <div class="thumbnail">
-                          <h4 class="well-sm" id="titleFormClassFee">Add Non-Working Day</h4>
-                          <form id="formDayOffDetails">
-                              <div class="well well-sm">
-                                  <div class="flexContainer">
-                                      <input type="hidden" name="CompanyId" value="" />
-                                      <input type="hidden" id="dayoffid" name="DayOffId" />
-                                      <label style="flex:1">Batch :&nbsp;</label>
-                                      <select class="form-control" name="Batch" style="flex:1.5" id="dayoffBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <label style="flex:1">Title:</label>
-                                      <input type="text" class="form-control" style="flex:1.5" name="Title" />
-                                  </div><br />
-                                  <div class="flexContainer">
-                                      <label style="flex:1">Date From :&nbsp;</label>
-                                      <input type="text" id="datefrom" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateFrom" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <label style="flex:1">Date To :&nbsp;</label>
-                                      <input type="text" id="dateto" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateTo" />
-                                  </div><br />
-                                  <div class="flexContainer">
-                                      <label style="flex:1">Department :</label>
-                                      <select multiple="multiple" class="form-control multiselect" name="Department[]" style="flex:1.5;margin-left:-10px;" id="dayoffDepartment" required></select>
-                                      <label style="flex:1"></label>
-                                      <label style="flex:1.5"></label>
-                                  </div><br />
-                                  <div class="flexContainer">
-                                      <label style="flex:1">Faculty :&nbsp;</label>
-                                      <select multiple="multiple" class="form-control multiselect" name="Faculty[]" style="flex:1.5" id="dayoffFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                      <label style="flex:1">Class :&nbsp;</label>
-                                      <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1.5" id="dayoffClass" required></select>
-                                  </div><br />
-                              </div>
-                              <div class="text-center" id="ClassFeeSubmit">
-                                  <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveDayOff" />
-                                  <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelDay()" value="Cancel" />
-                              </div>
-
-                          </form>
-                      </div>
-
-                  </div>
-              </div>
-
-              <div id="divCountryDetails">
-                  <br />
-                  <div class="col-md-5">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Country</h4>
-                          <form id="formCountryDetails" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1">Country Name :&nbsp;</label>
-                                  <input type="text" class="form-control" name="CountryName" style="flex:1.5" required />&nbsp;&nbsp;
-
-                              </div><br />
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveCountryDetails">Add</button>
-                              </div>
-                          </form>
-                      </div>
-                      <div id="tblCountryDetails" style="width:100%;overflow:auto; max-height:80vh">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-              <div id="divStateDetails">
-                  <br />
-                  <div class="col-md-7">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add State</h4>
-                          <form id="formStateDetails" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1">Country:&nbsp;</label>
-                                  <select class="form-control" name="CountryName" style="flex:1.5" id="selectCountry" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1">State:&nbsp;</label>
-                                  <input type="text" class="form-control" name="StateName" id="" style="flex:1" required />&nbsp;&nbsp;
-                              </div><br />
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStateDetails">Add</button>
-                              </div>
-                          </form>
-                      </div>
-                      <div id="tblStateDetails" style="width:100%;overflow:auto; max-height:80vh">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-
-              </div>
-
-              <div id="divStudentType">
-                  <div class="col-md-6">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Student Type</h4>
-                          <form id="formstudenttype" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1">Student Type :&nbsp;</label>
-                                  <input type="text" class="form-control" name="StudentTypeName" style="flex:0.8" required />&nbsp;&nbsp;
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStudentType">Add</button>
-                              </div><br />
-
-                          </form>
-                      </div>
-                      <div id="tblStudentType" style="width:100%;overflow:auto; max-height:80vh">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-
-              <div id="divResponseText">
-                  <br />
-                  <div class="col-md-7">
-                      <div class="thumbnail">
-                          <h4 class="well-sm">Add Response Text</h4>
-                          <form id="formResponseText" class="well well-sm">
-                              <div class="flexContainer">
-                                  <input type="hidden" name="CompanyId" value="" />
-                                  <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
-                                  <textarea class="form-control" name="Response"></textarea>
-                              </div><br />
-                              <div class="pull-right">
-                                  <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveResponseText">Add</button>
-                              </div>
-                          </form>
-                      </div>
-                      <div id="tblResponseText" style="width:100%;overflow:auto; max-height:80vh">
-                          <h4 class="titlename"></h4>
-                          <table class="bordered-table table-striped">
-                              <thead></thead>
-                              <tbody></tbody>
-                          </table>
-                      </div>
-                  </div>
-              </div>
-
-
-              @*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
-
-
-              @*//////////////////////////////-----------Scholarship Management(Start)--*@
-              <div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Info</h4>
-                          </div>
-                          <div class="modal-body">
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-
-              <div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Info</h4>
-                          </div>
-                          <div class="modal-body">
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div id="modalEditClass" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">>
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h4 class="modal-title">Edit Class</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
                              
-                              <form id="formModalClassDetails" style="text-align:left">
-                                  <div class="row" style="margin-left:10px;">
-                                      <div class="col-md-12">
-                                          <input type="hidden" name="ClassId" />
-                                          <input type="hidden" name="CompanyId" value="" />
-                                          <div class="input-group mt-2">
-
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Class Name</label>
-                                              </div>
-                                              <input type="text" class="form-control" name="ClassName" />
-                                          </div>
-                                          <div class="input-group mt-2">
-
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Class Code</label>
-                                              </div>
-                                              <input type="text" class="form-control" name="ClassCode" />
-                                          </div>
-                                          <div class="input-group mt-2">
-
-                                              <div class="input-group-prepend mr-5">
-                                                  <label class="input-group-text" style="width:110px;">Class Type</label>
-                                              </div>
-                                              <label style="margin-top:10px;">
-                                                  <input type="radio" name="ClassType" value="Yearly" required />
-                                                  <label for="ClassType1" class="radio-label">Yearly</label>
-                                                  &nbsp; &nbsp; &nbsp;
-
-                                                  <input type="radio" name="ClassType" value="Semester" required />
-                                                  <label for="ClassType2" class="radio-label">Semester</label>
-                                                  &nbsp; &nbsp; &nbsp;
-
-                                                  <input type="radio" name="ClassType" value="Trimester" required />
-                                                  <label for="ClassType3" class="radio-label">Trimester</label>
-                                              </label>&nbsp; &nbsp;
-                                          </div>
-                                          <div class="input-group mt-2">
-
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Student Limit</label>
-                                              </div>
-                                              <input type="text" class="form-control" name="StudentLimit" onkeypress="return isNumberKey(event)" />
-                                          </div>
-                                          <div class="input-group mt-2">
-
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Faculty Name</label>
-                                              </div>
-                                              <select class="form-control" name="FacultyId" id="modalClassFaculty" ></select>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-flex mt-3" style="justify-content:center">
-                                      <input type="submit" class="btn btn-default w-25" id="btnEditModalClass" value="Update" />
-                                  </div>
-
-                              </form>
-                         </div>
+                          </form>
+                          <hr />
+                          <h5>List of all Fee Structure</h5>
+                          <table id="tblFeeStructureDetails" class="table table-bordered">
+                              <thead></thead>
+                              <tbody></tbody>
+                          </table>
                       </div>
                   </div>
+
               </div>
+          </div>
+</div>
+<div id="divfeemanagement">
+    <br />
+    <div class="col-md-10 offset-1">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Fee</h4><hr />
+                <form id="formFeeDetails">
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                            <input type="hidden" name="CompanyId" />
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Fee Structure</label>
+                                </div>
+                                <select type="text" name="FeeStructureName" id="selectFeeStructure" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Type</label>
+                                </div>
+                                <select type="text" name="StudentType" id="selectStudentType" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
 
-              <div id="modalEditFaculty" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h4 class="modal-title">Edit Faculty</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Fee Name</label>
+                                </div>
+                                <input type="text" name="FeeName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Amount</label>
+                                </div>
+                                <input type="text" name="Amount" class="form-control" onkeypress="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Refundable</label>
+                                </div>
+                                <select class="form-control" name="Refundable" id="selectRefundable">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary pull-right" id="btnSaveFeeDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
 
-                              <form id="formModalFacultyDetails" style="text-align:left">
-                                  <div class="row" style="margin-left:10px;">
-                                      <div class="col-md-12">
-                                          <div class="input-group mt-2">
-                                              <input type="hidden" name="FacultyId" />
-                                              <input type="hidden" name="CompanyId" value="" />
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Faculty Name</label>
-                                              </div>
-                                              <input type="text" class="form-control" name="FacultyName" />
-                                          </div>
-                                          <div class="input-group mt-2">
+                        </div>
+                    </div>
 
-                                              <div class="input-group-prepend">
-                                                  <label class="input-group-text" style="width:110px;">Faculty Code</label>
-                                              </div>
-                                              <input type="text" class="form-control" name="FacultyCode" />
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="d-flex mt-3" style="justify-content:center">
-                                      <input type="submit" class="btn btn-default w-25" id="btnEditModalFaculty" value="Update" />
-                                  </div>
+                </form>
+                <hr />
 
+                <h5 class="titlename">List of all Fee Details</h5>
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:100px">FeeStructure</label>
+                            </div>
+                            <select id="searchFeeStructureName" class="form-control"></select>
 
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:100px">StudentType</label>
+                            </div>
+                            <select id="searchStudentType" class="form-control"></select>
 
-                              </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchFee" type="submit" data-name="">Search</button>
+                    </div>
+                </div>
+                    <table id="tblFeeDetails" class="table table-bordered">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
 
-                          </div>
-                        
-                         
-                      </div>
-                  </div>
-              </div>
-              <div id="modalEditBatch" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title">Edit Batch</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                             
-                                  <form id="formModalBatchDetails" style="text-align:left">
-                                      <div class="row" style="margin-left:10px;">
-                                          <div class="col-md-12">
-                                              <div class="input-group mt-2">
-                                                  <input type="hidden" name="BatchId" />
-                                                  <input type="hidden" name="CompanyId" value="" />
-                                                  <div class="input-group-prepend">
-                                                      <label class="input-group-text" style="width:110px;">From Year</label>
-                                                  </div>
-                                                  <input type="text" class="form-control" name="FromYear" required onkeypress="return isNumberKey(event)" />
-                                              </div>
-                                              <div class="input-group mt-2">
-                                                  
-                                                  <div class="input-group-prepend">
-                                                      <label class="input-group-text" style="width:110px;">To Year</label>
-                                                  </div>
-                                                  <input type="text" class="form-control" name="ToYear" required onkeypress="return isNumberKey(event)" />
-                                              </div>
-                                          </div>
-                                      </div>
-                                      <div class="d-flex mt-3" style="justify-content:center">
-                                          <input type="submit" class="btn btn-default w-25" id="btnEditModalBatch" value="Update" />
-                                      </div>
-                                          
-                                          
-                                        
-                                  </form>
-                             
-                          </div>
-                         
-                      </div>
-                  </div>
-              </div>
-              <div id="modalEditSection" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Section</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalSectionDetails" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="SectionId" />
-                                          <input type="hidden" name="CompanyId" value="" />
-                                          <label style="flex:1.2">Section Name :&nbsp;</label>
-                                          <input type="text" class="form-control" name="SectionName" style="flex:2" required />&nbsp;&nbsp;
-                                          <label style="flex:1.2">Student Limit:&nbsp;&nbsp;</label>
-                                          <input type="text" class="form-control" name="StudentLimit" style="flex:2" required />
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalSection">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+    </div>
+</div>
+@*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
+<div id="divClassFeeDetails">
+    <br />
+    <div style="margin-right:50px;"><button class="btn btn-success" id="addClassFee">Add Class Fee</button></div><hr />
+    <div>
+        <h4 class="titlename"></h4>
+        <div class="flexContainer" style="justify-content:center">
+            <div style="text-align:center;">
+                <div class="flexContainer" style="margin-left:20px;">
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Batch</label>
+                        <select id="searchBatch" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Faculty</label>
+                        <select id="searchFaculty" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none; text-align:center; min-width:120px">
+                        <label>Class</label>
+                        <select id="searchClass" class="form-control" style="width:auto"></select>
+                    </div>&nbsp;&nbsp;
+                    <div style="flex:none;">
+                        <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchClassFee" type="submit" data-name="">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div style="width:100%;overflow:auto">
+            <table id="tblClassFeeDetails" class="bordered-table table-striped"></table>
+        </div>
+    </div>
+</div>
+<div id="formClassFee">
+    <br />
+    <div class="col-md-12">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="titleFormClassFee">Add Class Fee</h4>
+            <form id="formFeeClassDetails">
+                <div class="flexContainer well well-sm">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <input type="hidden" id="classfeeid" name="BatchClassId" />
+                    <label style="flex:1">Select Batch :&nbsp;</label>
+                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">Select Class :&nbsp;</label>
+                    <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">Select Faculty :&nbsp;</label>
+                    <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty" required readonly />
+                </div><br />
+                <div id="tblFee" class="add well well-sm" style="width:100%;overflow:auto;">
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                </div>
 
-              <div id="modalEditStartDate" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Section</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalStartDate" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="StartDateId" />
-                                          <label style="flex:1">Batch :&nbsp;</label>
-                                          <select id="modalStartDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
-                                          <label style="flex:1"> Start Date:&nbsp;</label>
-                                          <input type="text" id="modalstartdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalStartDate">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveClassFeeDetails" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
 
-              <div id="modalEditState" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit State</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalStateDetails" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="StateId" />
-                                          <input type="hidden" name=" CompanyId" value="" />
-                                          <label style="flex:1.2">Country:&nbsp;</label>
-                                          <select class="form-control" name="CountryName" id="modalcountryname" style="flex:2"></select>&nbsp;&nbsp;
-                                          <label style="flex:1.2">State Name:&nbsp;&nbsp;</label>
-                                          <input type="text" class="form-control" name="StateName" style="flex:2" required />
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalState">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </form>
+        </div>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+    </div>
+</div>
 
 
+<div id="divDayOff">
+    <br />
+    <div class="col-md-12">
+        <div><button class="btn btn-success" id="addDayOff">Add Non-Working Day</button></div><hr />
+        <br />
+        <h4 class="titlename"></h4>
+        <div class="flexContainer" style="justify-content:center">
+            <div style="flex:none; text-align:center">
+                <label>Batch</label>
+                <select id="searchDayoffBatch" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Department</label>
+                <select id="searchDayoffDepartment" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Faculty</label>
+                <select id="searchDayoffFaculty" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none; text-align:center;">
+                <label>Class</label>
+                <select id="searchDayoffClass" class="form-control" style="width:auto"></select>
+            </div>&nbsp;&nbsp;
+            <div style="flex:none;">
+                <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDayOff" type="submit" data-name="">Search</button>
+            </div>
+        </div>
+        <div style="width:100%;overflow:auto">
+            <table id="tblDayOff" class="bordered-table table-striped"></table>
+        </div>
+        <br />
+        <h4>Summary Info.</h4>
+        <hr style="margin-top:5px;margin-bottom:10px" />
+        <div id="divSummary" class="row">
+        </div>
+    </div>
+</div>
+<div id="formDayOff">
+    <br />
+    <div class="col-md-10">
+        <div class="thumbnail">
+            <h4 class="well-sm" id="titleFormClassFee">Add Non-Working Day</h4>
+            <form id="formDayOffDetails">
+                <div class="well well-sm">
+                    <div class="flexContainer">
+                        <input type="hidden" name="CompanyId" value="" />
+                        <input type="hidden" id="dayoffid" name="DayOffId" />
+                        <label style="flex:1">Batch :&nbsp;</label>
+                        <select class="form-control" name="Batch" style="flex:1.5" id="dayoffBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Title:</label>
+                        <input type="text" class="form-control" style="flex:1.5" name="Title" />
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Date From :&nbsp;</label>
+                        <input type="text" id="datefrom" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateFrom" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Date To :&nbsp;</label>
+                        <input type="text" id="dateto" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateTo" />
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Department :</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Department[]" style="flex:1.5;margin-left:-10px;" id="dayoffDepartment" required></select>
+                        <label style="flex:1"></label>
+                        <label style="flex:1.5"></label>
+                    </div><br />
+                    <div class="flexContainer">
+                        <label style="flex:1">Faculty :&nbsp;</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Faculty[]" style="flex:1.5" id="dayoffFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label style="flex:1">Class :&nbsp;</label>
+                        <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1.5" id="dayoffClass" required></select>
+                    </div><br />
+                </div>
+                <div class="text-center" id="ClassFeeSubmit">
+                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveDayOff" />
+                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelDay()" value="Cancel" />
+                </div>
 
-              <div id="modalEditFeeStructure" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Fee Structure</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalFeeStructureDetails" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="FeeStructureId" />
-                                          <input type="hidden" name="CompanyId" id="modalCompanyId" value="" />
-                                          <label style="flex:1.2">Fee Structure Name :&nbsp;</label>
-                                          <input type="text" class="form-control" name="FeeStructureName" id="modalFeeName" style="flex:2" required />
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalFeeStructure">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </form>
+        </div>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+    </div>
+</div>
 
-              <div id="modalEditFee" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Fee Details</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalFee" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="FeeId" />
-                                          <input type="hidden" name="CompanyId" value="" />
-                                          <label style="flex:1.5">Fee Structure :&nbsp;</label>
-                                          <select class="form-control" name="FeeStructureName" style="flex:2" id="selectmodalFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                          <label style="flex:1.5">Student Type :&nbsp;</label>
-                                          <select class="form-control" name="StudentType" style="flex:2" id="selectmodalStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                      </div><br />
-                                      <div class="flexContainer">
-                                          <label style="flex:1.5">Fee Name:&nbsp;</label>
-                                          <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                                          <label style="flex:1.5">Amount: &nbsp;</label>
-                                          <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-                                      </div><br />
-                                      <div class="flexContainer">
-                                          <label style="width:117px;">Refundable:&nbsp;</label>
-                                          <select class="form-control" name="Refundable" style="width:182px;" id="selectmodalRefundable" required>
-                                              <option value="">select</option>
-                                              <option value="Yes">Yes</option>
-                                              <option value="No">No</option>
-                                          </select>&nbsp;&nbsp;
-                                      </div><br />
+<div id="divCountryDetails">
+    <br />
+    <div class="col-md-5">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Country</h4>
+            <form id="formCountryDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Country Name :&nbsp;</label>
+                    <input type="text" class="form-control" name="CountryName" style="flex:1.5" required />&nbsp;&nbsp;
 
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalFee">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveCountryDetails">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblCountryDetails" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="divStateDetails">
+    <br />
+    <div class="col-md-7">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add State</h4>
+            <form id="formStateDetails" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Country:&nbsp;</label>
+                    <select class="form-control" name="CountryName" style="flex:1.5" id="selectCountry" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label style="flex:1">State:&nbsp;</label>
+                    <input type="text" class="form-control" name="StateName" id="" style="flex:1" required />&nbsp;&nbsp;
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStateDetails">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblStateDetails" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+</div>
 
-              <div id="modalEditCountry" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Country</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalCountryDetails" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="CompanyId" value="" />
-                                          <input type="hidden" name="CountryId" />
-                                          <label style="flex:1.2">Country Name :&nbsp;</label>
-                                          <input type="text" class="form-control" name="CountryName" id="modalCountryName" style="flex:2" required />&nbsp;&nbsp;
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalCountry">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+<div id="divStudentType">
+    <div class="col-md-6">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Student Type</h4>
+            <form id="formstudenttype" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Student Type :&nbsp;</label>
+                    <input type="text" class="form-control" name="StudentTypeName" style="flex:0.8" required />&nbsp;&nbsp;
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStudentType">Add</button>
+                </div><br />
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+            </form>
+        </div>
+        <div id="tblStudentType" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-              <div id="modalEditResponsetext" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Country</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="ResponseTextId" />
-                                          <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
-                                          <textarea class="form-control" name="Response" id="modalresponsetext"></textarea>
-                                      </div><br />
+<div id="divResponseText">
+    <br />
+    <div class="col-md-7">
+        <div class="thumbnail">
+            <h4 class="well-sm">Add Response Text</h4>
+            <form id="formResponseText" class="well well-sm">
+                <div class="flexContainer">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
+                    <textarea class="form-control" name="Response"></textarea>
+                </div><br />
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveResponseText">Add</button>
+                </div>
+            </form>
+        </div>
+        <div id="tblResponseText" style="width:100%;overflow:auto; max-height:80vh">
+            <h4 class="titlename"></h4>
+            <table class="bordered-table table-striped">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalResponse">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+@*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
 
-              <div id="modalEditStudentType" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title">Edit Student Type</h4>
-                          </div>
-                          <div class="modal-body">
-                              <div class="thumbnail">
-                                  <form id="formModalStudentType" class="well well-sm">
-                                      <div class="flexContainer">
-                                          <input type="hidden" name="StudentTypeId" />
-                                          <input type="hidden" name="CompanyId" value="" />
-                                          <label style="flex:1.2">Student Type :&nbsp;</label>
-                                          <input type="text" class="form-control" name="StudentTypeName" id="modalStudentType" style="flex:2" required />
-                                      </div><br />
-                                  </form>
-                              </div>
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnEditModalStudentType">Save</button>
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
+@*//////////////////////////////-----------Scholarship Management(Start)--*@
+<div id="modalDelete" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModal">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-              <div class="modal fade" tabindex="-1" id="modalCancel"
-                   data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title" id="modal-title1">Info</h4>
-                          </div>
-                          <div class="modal-body" id="modal-body1">
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
-                              <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal fade" tabindex="-1" id="modalCancel1"
-                   data-keyboard="false" data-backdrop="static">
-                  <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                              <h4 class="modal-title" id="modal-title">Info</h4>
-                          </div>
-                          <div class="modal-body" id="modal-body">
-                          </div>
-                          <div class="modal-footer">
-                              <button class="btn btn-warning modalclose" id="btnCancelModal1" style="width:100px">Yes</button>
-                              <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+<div id="modalInfo" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Info</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose redirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditClass" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Class</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <script>
+                <form id="formModalClassDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <input type="hidden" name="ClassId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Class Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="ClassName" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Class Code</label>
+                                </div>
+                                <input type="text" class="form-control" name="ClassCode" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend mr-5">
+                                    <label class="input-group-text" style="width:110px;">Class Type</label>
+                                </div>
+                                <label style="margin-top:10px;">
+                                    <input type="radio" name="ClassType" value="Yearly" required />
+                                    <label for="ClassType1" class="radio-label">Yearly</label>
+                                    &nbsp; &nbsp; &nbsp;
+
+                                    <input type="radio" name="ClassType" value="Semester" required />
+                                    <label for="ClassType2" class="radio-label">Semester</label>
+                                    &nbsp; &nbsp; &nbsp;
+
+                                    <input type="radio" name="ClassType" value="Trimester" required />
+                                    <label for="ClassType3" class="radio-label">Trimester</label>
+                                </label>&nbsp; &nbsp;
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Limit</label>
+                                </div>
+                                <input type="text" class="form-control" name="StudentLimit" onkeypress="return isNumberKey(event)" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Faculty Name</label>
+                                </div>
+                                <select class="form-control" name="FacultyId" id="modalClassFaculty"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalClass" value="Update" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditFaculty" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Faculty</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formModalFacultyDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="FacultyId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Faculty Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="FacultyName" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Faculty Code</label>
+                                </div>
+                                <input type="text" class="form-control" name="FacultyCode" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalFaculty" value="Update" />
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div id="modalEditBatch" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Batch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formModalBatchDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="BatchId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">From Year</label>
+                                </div>
+                                <input type="text" class="form-control" name="FromYear" required onkeypress="return isNumberKey(event)" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">To Year</label>
+                                </div>
+                                <input type="text" class="form-control" name="ToYear" required onkeypress="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalBatch" value="Update" />
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div id="modalEditSection" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Section</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formModalSectionDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="SectionId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Section Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="SectionName" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Limit</label>
+                                </div>
+                                <input type="text" class="form-control" name="StudentLimit" onkeypress="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalSection" value="Update" />
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div id="modalEditStartDate" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Section</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStartDate" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StartDateId" />
+                            <label style="flex:1">Batch :&nbsp;</label>
+                            <select id="modalStartDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
+                            <label style="flex:1"> Start Date:&nbsp;</label>
+                            <input type="text" id="modalstartdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalStartDate">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditState" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit State</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStateDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StateId" />
+                            <input type="hidden" name=" CompanyId" value="" />
+                            <label style="flex:1.2">Country:&nbsp;</label>
+                            <select class="form-control" name="CountryName" id="modalcountryname" style="flex:2"></select>&nbsp;&nbsp;
+                            <label style="flex:1.2">State Name:&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control" name="StateName" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalState">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="modalEditFeeStructure" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Fee Structure</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formModalFeeStructureDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="FeeStructureId" />
+                                <input type="hidden" name="CompanyId" id="modalCompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Fee Structure</label>
+                                </div>
+                                <input type="text" class="form-control" name="FeeStructureName" id="modalFeeName" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalFeeStructure" value="Update" />
+                    </div>
+
+
+
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div id="modalEditFee" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Fee Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalFee" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="FeeId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.5">Fee Structure :&nbsp;</label>
+                            <select class="form-control" name="FeeStructureName" style="flex:2" id="selectmodalFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Student Type :&nbsp;</label>
+                            <select class="form-control" name="StudentType" style="flex:2" id="selectmodalStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="flex:1.5">Fee Name:&nbsp;</label>
+                            <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label style="flex:1.5">Amount: &nbsp;</label>
+                            <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div><br />
+                        <div class="flexContainer">
+                            <label style="width:117px;">Refundable:&nbsp;</label>
+                            <select class="form-control" name="Refundable" style="width:182px;" id="selectmodalRefundable" required>
+                                <option value="">select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>&nbsp;&nbsp;
+                        </div><br />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalFee">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditCountry" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Country</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalCountryDetails" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="CompanyId" value="" />
+                            <input type="hidden" name="CountryId" />
+                            <label style="flex:1.2">Country Name :&nbsp;</label>
+                            <input type="text" class="form-control" name="CountryName" id="modalCountryName" style="flex:2" required />&nbsp;&nbsp;
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalCountry">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditResponsetext" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Country</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="ResponseTextId" />
+                            <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
+                            <textarea class="form-control" name="Response" id="modalresponsetext"></textarea>
+                        </div><br />
+
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalResponse">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditStudentType" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title">Edit Student Type</h4>
+            </div>
+            <div class="modal-body">
+                <div class="thumbnail">
+                    <form id="formModalStudentType" class="well well-sm">
+                        <div class="flexContainer">
+                            <input type="hidden" name="StudentTypeId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <label style="flex:1.2">Student Type :&nbsp;</label>
+                            <input type="text" class="form-control" name="StudentTypeName" id="modalStudentType" style="flex:2" required />
+                        </div><br />
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnEditModalStudentType">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" id="modalCancel"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title1">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body1">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" id="modalCancel1"
+     data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"> &times; </button>
+                <h4 class="modal-title" id="modal-title">Info</h4>
+            </div>
+            <div class="modal-body" id="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnCancelModal1" style="width:100px">Yes</button>
+                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
     $(document).ready(function () {
         debugger;
         $('.nepali-calendar').nepaliDatePicker();
@@ -2130,7 +2211,7 @@
 
     var deleteBatch = function (id, from, to, type) {
         debugger;
-      
+
        var companyId=@Session["CompanyId"];
            swal({
             title: "Do you want to delete  batch " + from + "-" + to + "?",
@@ -2142,7 +2223,7 @@
             if (willDelete) {
                 debugger;
                 deleteGeneral(type, id, undefined, undefined, companyId);
-    
+
 
             }
         })
@@ -2177,7 +2258,7 @@
                 }
             })
         }
-       
+
 
         else {
             swal({
@@ -2233,8 +2314,8 @@
     }
 
  var deleteGeneral = function (urlName,id,name,structure,companyId) {
-                      
-      
+
+
         debugger;
         $.ajax({
             url: "/api/DeleteGeneralSetting",
@@ -2243,7 +2324,7 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-              
+
             toastr.success("Deleted successfully.");
                 debugger;
                 if (urlName == "FeeDetails") {
@@ -2262,7 +2343,7 @@
                 else {
                     loadData(urlName, companyId);
                 }
-                
+
             },
 
             error: function (e) {
@@ -2607,10 +2688,9 @@
             success: function (result) {
                 debugger;
                 $('#modalEditFeeStructure').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("FeeStructureDetails",'@Session["CompanyId"]')
+               
+                loadData("FeeStructureDetails", '@Session["CompanyId"]');
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 debugger;
@@ -2634,10 +2714,10 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditSection').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("SectionDetails",fd.CompanyId)
+               
+                loadData("SectionDetails", fd.CompanyId);
+                toastr.success("Updated Successfully");
+
             },
             error: function (e) {
                 console.error(e);
@@ -2804,7 +2884,7 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditBatch').modal('hide');
-               
+
                 loadData("BatchDetails", fd.CompanyId);
                 toastr.success("Updated Successfully");
             },
@@ -2856,7 +2936,7 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditClass').modal('hide');
-               
+
                 loadData("ClassDetails", '@Session["CompanyId"]');
                 toastr.success("Updated Successfully");
             },
@@ -3573,6 +3653,6 @@
             getClassBatchFaculty();
         }
     })
-              </script>
+</script>
 
 
