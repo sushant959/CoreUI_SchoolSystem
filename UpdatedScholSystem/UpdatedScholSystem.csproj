@@ -407,7 +407,6 @@
     <Content Include="Views\SuperAdmin\CompanyManagement.cshtml" />
     <Content Include="Views\Home\PrintDueReport1.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
-    <Content Include="Views\Sweet\Alert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
