@@ -104,32 +104,42 @@
 </div>
 <div id="divStartDate">
     <br />
-    <div class="col-md-8">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Start Date</h4>
-            <form id="frmStartDate" class="well well-sm">
-                <div class="flexContainer">
-                    <input type="hidden" name="StartDateId" />
-                    <label style="flex:1">Batch :&nbsp;</label>
-                    <select id="startDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
-                    <label style="flex:1"> Start Date:&nbsp;</label>
-                    <input type="text" id="startdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartDate">Add</button>
-                </div>
-            </form>
-        </div>
-        <hr />
-        <div id="tblStartDate" style="width:100%;overflow:auto;">
-            <h4 class="titlename"></h4>
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
+    <div class="col-md-8 offset-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Start Date</h4>
+                <hr />
+                <form id="frmStartDate" class="form-row">
+                    <input type="hidden" name="StartDateId" value="" />
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Batch</label>
+                            </div>
+                            <select id="startDateBatch" name="Batch" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Start Date</label>
+                            </div>
+                            <input type="text" id="startdate" name="Date" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                            <button class="btn btn-primary" id="btnSaveStartDate" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
 
+                </form>
+                <hr />
+                <h5>List of Start Date</h5>
+                <table id="tblStartDate" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
 @*////////////////////////////-----------Batch Details (End)-------------///////////////////////////////////////*@
 
@@ -454,67 +464,105 @@
 </div>
 @*///////////////////////////------------Fee Management (End)-------------/////////////////////////////////////////*@
 <div id="divClassFeeDetails">
-    <br />
-    <div style="margin-right:50px;"><button class="btn btn-success" id="addClassFee">Add Class Fee</button></div><hr />
+   
+  <button class="btn btn-default pull-right" id="addClassFee">Add Class Fee</button>
     <div>
-        <h4 class="titlename"></h4>
-        <div class="flexContainer" style="justify-content:center">
-            <div style="text-align:center;">
-                <div class="flexContainer" style="margin-left:20px;">
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label>Batch</label>
-                        <select id="searchBatch" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label>Faculty</label>
-                        <select id="searchFaculty" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center; min-width:120px">
-                        <label>Class</label>
-                        <select id="searchClass" class="form-control" style="width:auto"></select>
-                    </div>&nbsp;&nbsp;
-                    <div style="flex:none;">
-                        <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchClassFee" type="submit" data-name="">Search</button>
+        <h4 class="clearfix">List of all Class Fee</h4>
+        <div class="card p-2">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Batch</label>
+                        </div>
+                        <select id="searchBatch" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Faculty</label>
+                        </div>
+                        <select id="searchFaculty" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Class</label>
+                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchClassFee" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblClassFeeDetails" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+      
+    </div>
+   
+</div>
+
+
+<div class="row"  id="formClassFee">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-title" id="titleFormClassFee">Add Class Fee</h4>
+        <hr />
+        <form id="formFeeClassDetails">
+            <div class="form-row">
+                <input type="hidden" name="CompanyId" value="" />
+                <input type="hidden" id="classfeeid" name="BatchClassId" />
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="selectBatch"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Class</label>
+                        </div>
+                        <select class="form-control" name="Class" id="selectClass"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Faculty</label>
+                        </div>
+                        <select class="form-control" name="Faculty" id="selectFaculty"></select>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div style="width:100%;overflow:auto">
-            <table id="tblClassFeeDetails" class="bordered-table table-striped"></table>
-        </div>
-    </div>
-</div>
-<div id="formClassFee">
-    <br />
-    <div class="col-md-12">
-        <div class="thumbnail">
-            <h4 class="well-sm" id="titleFormClassFee">Add Class Fee</h4>
-            <form id="formFeeClassDetails">
-                <div class="flexContainer well well-sm">
-                    <input type="hidden" name="CompanyId" value="" />
-                    <input type="hidden" id="classfeeid" name="BatchClassId" />
-                    <label style="flex:1">Select Batch :&nbsp;</label>
-                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:1">Select Class :&nbsp;</label>
-                    <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:1">Select Faculty :&nbsp;</label>
-                    <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty" required readonly />
-                </div><br />
-                <div id="tblFee" class="add well well-sm" style="width:100%;overflow:auto;">
+            <div class="form-row" id="tblFee">
 
+            </div>
+            <div class="form-group" id="classfeefooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveClassFeeDetails" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
                 </div>
-
-                <div class="text-center" id="ClassFeeSubmit">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveClassFeeDetails" />
-                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
-                </div>
-
-            </form>
-        </div>
-
+            </div>
+        </form>
     </div>
+   
 </div>
 
 
@@ -602,106 +650,133 @@
 
 <div id="divCountryDetails">
     <br />
-    <div class="col-md-5">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Country</h4>
-            <form id="formCountryDetails" class="well well-sm">
-                <div class="flexContainer">
+    <div class="col-md-6 offset-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Country</h4>
+                <hr />
+                <form id="formCountryDetails" class="form-row">
                     <input type="hidden" name="CompanyId" value="" />
-                    <label style="flex:1">Country Name :&nbsp;</label>
-                    <input type="text" class="form-control" name="CountryName" style="flex:1.5" required />&nbsp;&nbsp;
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Country Name</label>
+                            </div>
+                            <input type="text" name="CountryName" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveCountryDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <h5>List of all Country</h5>
+                <table id="tblCountryDetails" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
 
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveCountryDetails">Add</button>
-                </div>
-            </form>
-        </div>
-        <div id="tblCountryDetails" style="width:100%;overflow:auto; max-height:80vh">
-            <h4 class="titlename"></h4>
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
     </div>
 </div>
 <div id="divStateDetails">
     <br />
-    <div class="col-md-7">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add State</h4>
-            <form id="formStateDetails" class="well well-sm">
-                <div class="flexContainer">
+    <div class="col-md-8 offset-2">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage State</h4>
+                <hr />
+                <form id="formStateDetails" class="form-row">
                     <input type="hidden" name="CompanyId" value="" />
-                    <label style="flex:1">Country:&nbsp;</label>
-                    <select class="form-control" name="CountryName" style="flex:1.5" id="selectCountry" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:1">State:&nbsp;</label>
-                    <input type="text" class="form-control" name="StateName" id="" style="flex:1" required />&nbsp;&nbsp;
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStateDetails">Add</button>
-                </div>
-            </form>
-        </div>
-        <div id="tblStateDetails" style="width:100%;overflow:auto; max-height:80vh">
-            <h4 class="titlename"></h4>
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Country</label>
+                            </div>
+                            <select class="form-control" name="CountryName" id="selectCountry"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">State</label>
+                            </div>
+                            <input type="text" name="StateName" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveStateDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
 
+                </form>
+                <hr />
+                <h5>List of all Faculty</h5>
+                <table id="tblStateDetails" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <div id="divStudentType">
-    <div class="col-md-6">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Student Type</h4>
-            <form id="formstudenttype" class="well well-sm">
-                <div class="flexContainer">
+    <br />
+    <div class="col-md-6 offset-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Student Type</h4>
+                <hr />
+                <form id="formstudenttype" class="form-row">
                     <input type="hidden" name="CompanyId" value="" />
-                    <label style="flex:1">Student Type :&nbsp;</label>
-                    <input type="text" class="form-control" name="StudentTypeName" style="flex:0.8" required />&nbsp;&nbsp;
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStudentType">Add</button>
-                </div><br />
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Student Type</label>
+                            </div>
+                            <input type="text" name="StudentTypeName" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveStudentType" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <h5>List of all Student Type</h5>
+                <table id="tblStudentType" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
 
-            </form>
-        </div>
-        <div id="tblStudentType" style="width:100%;overflow:auto; max-height:80vh">
-            <h4 class="titlename"></h4>
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
     </div>
 </div>
 
 <div id="divResponseText">
     <br />
-    <div class="col-md-7">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Response Text</h4>
-            <form id="formResponseText" class="well well-sm">
-                <div class="flexContainer">
+    <div class="col-md-6 offset-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Response Text</h4>
+                <hr />
+                <form id="formResponseText" class="form-row">
                     <input type="hidden" name="CompanyId" value="" />
-                    <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
-                    <textarea class="form-control" name="Response"></textarea>
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveResponseText">Add</button>
-                </div>
-            </form>
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Response</label>
+                            </div>
+                            <textarea class="form-control" name="Response"></textarea>
+                            <button class="btn btn-primary" id="btnSaveResponseText" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <h5>List of all Response Text</h5>
+                <table id="tblResponseText" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
-        <div id="tblResponseText" style="width:100%;overflow:auto; max-height:80vh">
-            <h4 class="titlename"></h4>
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
+
     </div>
 </div>
 
@@ -981,32 +1056,48 @@
     </div>
 </div>
 
-<div id="modalEditState" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditState" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit State</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalStateDetails" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="StateId" />
-                            <input type="hidden" name=" CompanyId" value="" />
-                            <label style="flex:1.2">Country:&nbsp;</label>
-                            <select class="form-control" name="CountryName" id="modalcountryname" style="flex:2"></select>&nbsp;&nbsp;
-                            <label style="flex:1.2">State Name:&nbsp;&nbsp;</label>
-                            <input type="text" class="form-control" name="StateName" style="flex:2" required />
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalState">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                <form id="formModalStateDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="StateId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Country</label>
+                                </div>
+                                <select class="form-control" name="CountryName" id="modalcountryname"></select>
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">State</label>
+                                </div>
+                                <input type="text" class="form-control" name="StateName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalState" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
@@ -1053,153 +1144,196 @@
     </div>
 </div>
 
-<div id="modalEditFee" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditFee" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    >
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit Fee Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalFee" class="well well-sm">
-                        <div class="flexContainer">
+
+                <form id="formModalFee" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
                             <input type="hidden" name="FeeId" />
                             <input type="hidden" name="CompanyId" value="" />
-                            <label style="flex:1.5">Fee Structure :&nbsp;</label>
-                            <select class="form-control" name="FeeStructureName" style="flex:2" id="selectmodalFeeStructure" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="flex:1.5">Student Type :&nbsp;</label>
-                            <select class="form-control" name="StudentType" style="flex:2" id="selectmodalStudentType" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.5">Fee Name:&nbsp;</label>
-                            <input type="text" class="form-control" name="FeeName" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="flex:1.5">Amount: &nbsp;</label>
-                            <input type="text" class="form-control" name="Amount" style="flex:2" required onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="width:117px;">Refundable:&nbsp;</label>
-                            <select class="form-control" name="Refundable" style="width:182px;" id="selectmodalRefundable" required>
-                                <option value="">select</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>&nbsp;&nbsp;
-                        </div><br />
+                            <div class="input-group mt-2">
 
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalFee">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Fee Structure</label>
+                                </div>
+                                <select class="form-control" name="FeeStructureName" id="selectmodalFeeStructure"></select>
+                            </div>
+                            <div class="input-group mt-2">
 
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Type</label>
+                                </div>
+                                <select class="form-control" name="StudentType" id="selectmodalStudentType"></select>
+                            </div>
+
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Fee Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="FeeName" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Amount</label>
+                                </div>
+                                <input type="text" class="form-control" name="Amount" onkeypress="return isNumberKey(event)" />
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Refundable</label>
+                                </div>
+                                <select class="form-control" name="Refundable" id="selectmodalRefundable">
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalFee" value="Update" />
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<div id="modalEditCountry" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditCountry" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit Country</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalCountryDetails" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="CompanyId" value="" />
-                            <input type="hidden" name="CountryId" />
-                            <label style="flex:1.2">Country Name :&nbsp;</label>
-                            <input type="text" class="form-control" name="CountryName" id="modalCountryName" style="flex:2" required />&nbsp;&nbsp;
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalCountry">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                <form id="formModalCountryDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="CountryId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Country Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="CountryName" id="modalCountryName" />
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalCountry" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
 
-<div id="modalEditResponsetext" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditResponsetext" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Edit Country</h4>
+                <h4 class="modal-title">Edit Response Text</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="ResponseTextId" />
-                            <label style="flex:1">Response:</label>&nbsp;&nbsp;&nbsp;
-                            <textarea class="form-control" name="Response" id="modalresponsetext"></textarea>
-                        </div><br />
 
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalResponse">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <form id="" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="ResponseTextId" />
+                              
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Response</label>
+                                </div>
+                                <textarea class="form-control" name="Response" id="modalresponsetext"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalResponse" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
 
-<div id="modalEditStudentType" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditStudentType" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit Student Type</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalStudentType" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="StudentTypeId" />
-                            <input type="hidden" name="CompanyId" value="" />
-                            <label style="flex:1.2">Student Type :&nbsp;</label>
-                            <input type="text" class="form-control" name="StudentTypeName" id="modalStudentType" style="flex:2" required />
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalStudentType">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                <form id="formModalStudentType" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="StudentTypeId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Student Type</label>
+                                </div>
+                                <input type="text" class="form-control" name="StudentTypeName" id="modalStudentType" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalStudentType" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="modalCancel"
-     data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title" id="modal-title1">Info</h4>
-            </div>
-            <div class="modal-body" id="modal-body1">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnCancelModal" style="width:100px">Yes</button>
-                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
 
-            </div>
-        </div>
-    </div>
-</div>
 <div class="modal fade" tabindex="-1" id="modalCancel1"
      data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog modal-sm">
@@ -1713,7 +1847,7 @@
                 var i = 0;
                 for (var r in result) {
                     var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
-                    html += `<table class="bordered-table table-striped">`;
+                    html += `<table class="table table-bordered">`;
                     html += `<thead><th style='width:20px;text-align:center;'>&nbsp;</th><th>Student Type<th style='width:70px;'>FeeName</th><th style='width:100px;'>Amount</th><th style='width:100px;'>Refundable</th></thead>`;
                     html += ` <tbody class='rowTable'>`;
 
@@ -1748,8 +1882,8 @@
                         $("#tblFee").append(html);
                         $('#formClassFee select').attr('disabled', true);
                         $("#titleFormClassFee").html("Class " + _class + " Fee Details");
-                        $("#btnSaveClassFeeDetails").hide();
-                        $("#btnCancel").hide();
+                        $("#classfeefooter").hide();
+                       
                     }
                     else {
                         for (var c in result[r]) {
@@ -1779,9 +1913,9 @@
                         html += `</table>`;
                         html += `<br/>`;
                         $("#tblFee").append(html);
-                        $("#btnSaveClassFeeDetails").show();
+                        $("#classfeefooter").show();
                         $('#formClassFee select').attr('disabled', true);
-                        $("#btnCancel").show();
+                        
                         $('#formClassFee select').attr('readonly', false);
                         $("#titleFormClassFee").html("Edit Class " + _class + " Fee");
                         $("#btnSaveClassFeeDetails").val("Update");
@@ -2258,7 +2392,7 @@
                 }
             })
         }
-
+       
 
         else {
             swal({
@@ -2278,9 +2412,7 @@
 
         }
 
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', type);
-        $('#btnDeleteModal').data('name', name);
+      
 
 
     }
@@ -2296,21 +2428,42 @@
 
     var deleteClassFee = function (id, batch, _class, faculty, type) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Fee details of : <br/> Batch: <b> " + batch + " </b> <br/> Class: <b> " + _class + " </b><br/> Faculty: <b> " + faculty + " </b>");
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', type);
+        var companyId =@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete Fee details of  Batch: " + batch + " Class: " + _class + "  Faculty: " + faculty + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                deleteGeneral(type, id, undefined, undefined, companyId);
+
+
+            }
+        })
+       
     }
     var deleteFee = function (id, name, type, structure) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Fee " + name + " of type " + structure + "?");
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', type);
-        $('#btnDeleteModal').data('name', name);
-        $('#btnDeleteModal').data('structure', structure);
+         var companyId=@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete Fee " + name + " of type " + structure + "?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                deleteGeneral(type, id, name, structure, companyId);
+
+
+            }
+        })
+    
+       
     }
 
  var deleteGeneral = function (urlName,id,name,structure,companyId) {
@@ -2520,6 +2673,7 @@
                 $("input[type=text]").val("");
                 loadData("CountryDetails", fd.CompanyId);
                 getAllCountry();
+                toastr.success("Successfull");
             },
             error: function (e) {
                 console.error(e);
@@ -2541,6 +2695,7 @@
             success: function (result) {
                 $("textarea").val("");
                 loadData("ResponseText", fd.CompanyId);
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2561,7 +2716,8 @@
             dataType: "json",
             success: function (result) {
                 $("input[type=text]").val("");
-                loadData("StateDetails", fd.CompanyId)
+                loadData("StateDetails", fd.CompanyId);
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2585,7 +2741,8 @@
             success: function (result) {
                 debugger;
                 $("input[type=text]").val("");
-                loadData("Studenttype", fd.CompanyId)
+                loadData("Studenttype", fd.CompanyId);
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2657,10 +2814,9 @@
             success: function (result) {
                 debugger;
                 $('#modalEditFee').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
+               
                 loadFeeData("FeeDetails", fd.CompanyId);
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2764,10 +2920,9 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditState').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
+               
                 loadData("StateDetails", fd.CompanyId);
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2795,10 +2950,10 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditCountry').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("CountryDetails", companyid)
+               
+                loadData("CountryDetails", companyid);
+                toastr.success("Updated Successfull");
+
                // getAllCountry();
             },
             error: function (e) {
@@ -2827,10 +2982,9 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditResponsetext').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("ResponseText", companyid)
+               
+                loadData("ResponseText", companyid);
+                toastr.success("Updted Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2859,10 +3013,9 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditStudentType').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("StudentType",id);
+                
+                loadData("StudentType", id);
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -3034,7 +3187,7 @@
                     if (result[r][0] != undefined) {
                         var title = result[r][0]["FeeStructureName"];
                         var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
-                        html += `<table class="bordered-table table-striped">`;
+                        html += `<table class="table table-bordered">`;
                         html += `<thead><th style='width:20px;text-align:center;'>&nbsp;</th><th>Student Type</th><th style='width:70px;'>FeeName</th><th style='width:100px;'>Amount</th><th style='width:100px;'>Refundable</th></thead>`;
                         html += ` <tbody class='rowTable'>`;
 
@@ -3093,27 +3246,19 @@
             success: function (result) {
                 debugger;
                 if (result == true) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html(" Successful.");
-                    $(".redirect").on('click', function () {
+                   
                         debugger;
                         $('#tblFee').empty();
                         debugger;
                         $('#formClassFee').modal('hide');
                         hideAll();
                         $("#divClassFeeDetails").show();
-                        loadData("ClassFeeDetails", fd.CompanyId);
-                    })
+                    loadData("ClassFeeDetails", fd.CompanyId);
+                    toastr.success("Operation Successfull");
                 }
                 else if (result == false) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Error");
-                    $('#modalInfo .modal-body').html(" Fee Details for this class already exists");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
-                    })
+                    toastr.error("Fee Details for this class already exists");
+                  
                 }
             },
             error: function (e) {
@@ -3217,7 +3362,7 @@
                     for (var i in facultyDetails) {
                         v += "<option value=" + facultyDetails[i]['FacultyName'] + ">" + facultyDetails[i]['FacultyName'] + "</option>";
                     }
-                   //$("#selectFaculty").html(v);
+                   $("#selectFaculty").html(v);
                     $("#searchFaculty").html(v);
                     $("#dayoffFaculty").html(v);
                     $("#selectClassFaculty").html(v);
@@ -3309,7 +3454,8 @@
         $('#formClassFee select').attr('disabled', false);
         $("#formFeeClassDetails").find("input[type=text],input[type=hidden],textarea,select").val("");
         $("#classfeeid").val("");
-        $("#ClassFeeSubmit").hide();
+        $("#classfeefooter").show();
+        $("#btnSaveClassFeeDetails").val("Submit");
                 })
 
     $("#addDayOff").on('click', function (e) {
@@ -3424,9 +3570,20 @@
     var cancel = function () {
 
         debugger;
-        $('#modalCancel').modal('show');
-        $('#modal-title1').html("Confirm");
-        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willCancel) => {
+            if (willCancel) {
+                hideAll();
+                $("#divClassFeeDetails").show();
+                
+
+
+            }
+        })
     }
     $("#btnCancelModal").on('click', function () {
         debugger;

@@ -104,40 +104,8 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" id="modalInfo"
-     data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close redirect" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title" id="modal-title">Info</h4>
-            </div>
-            <div class="modal-body" id="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger redirect" id="close" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" tabindex="-1" id="modalDeleteStudent"
-     data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title" id="modal-title">Info</h4>
-            </div>
-            <div class="modal-body" id="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnDeleteModalStudent" style="width:100px">Yes</button>
-                <button type="button" class="btn btn-danger" id="close" data-dismiss="modal" style="width:100px">No</button>
 
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
     $(document).ready(function () {
         debugger;
@@ -423,69 +391,7 @@
         debugger;
     }
 
-    $("#btnDeleteModalStudent").on('click', function (e) {
-        debugger;
-        e.preventDefault();
-        var id = $(this).data('id');
-        $.ajax({
-            url: "/api/DeleteStudent",
-            method: "Post",
-            data: {
-                StudentId: id,
-                CompanyId:@Session["CompanyId"],
-            },
-            dataType: "json",
-            success: function (result) {
-                debugger;
-                 $('#modalDeleteStudent').modal('hide');
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html("Deleted Successfully");
-                $(".redirect").on('click', function () {
-                    debugger;
-                        $('#modalInfo').modal('hide');
-                        debugger;
-                    var batch = $("#searchBatch").val();
-                    var _class = $("#searchClass").val();
-                    var section = $("#searchSection").val();
-                    var name = $("#txtnamefield").val();
-                    var status = $("#searchStatus").val();
-                    var type = $("#searchType").val();
-                    $.ajax({
-                        url: "/api/SearchStudent",
-                        method: "GET",
-                        data: { Batch: batch, Class: _class, Section: section, Name: name, Status: status, Type: type },
-                        dataType: "json",
-                        success: function (data) {
-                            debugger;
-                            var result = data.searchResult;
-                            // reportPath = data.reportPath;
-                            debugger;
-                            //if (reportPath) {
-                            //    $("#downloadReportLink").attr('href', reportPath);
-                            //    $("#downloadReportLink").show();
-                            //}
 
-                            debugger;
-                            showResultData(result);
-                            $("#reportname").show();
-
-
-                        },
-                        error: function (e) {
-                            console.error(e);
-                            alert(e.statusText);
-                        }
-                    })
-                    });
-
-            },
-            error: function (e) {
-                console.error(e);
-                alert(e.statusText);
-            }
-        })
-    })
 
 
     var cancel = function () {
