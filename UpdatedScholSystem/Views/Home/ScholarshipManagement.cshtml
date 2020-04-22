@@ -16,186 +16,266 @@
 </div><br /><br />
 
 <div id="divScholarshipName">
-    <br />
-    <div class="col-md-6">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Scholarship</h4>
-            <form id="formScholarshipName" class="well well-sm">
-                <div class="flexContainer">
-                    <label style="flex:1">Scholarship Name :&nbsp;</label>
-                    <input type="hidden" name="CompanyId" value=""/>
-                    <input type="text" class="form-control" name="ScholarshipName" style="flex:1.5" required />&nbsp;&nbsp;
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveScholarshipName">Add</button>
-                </div>
-            </form>
-        </div>
-        <h4 class="titlename"></h4>
-        <div id="tblScholarshipName" style="width:100%;overflow:auto; max-height:80vh">
+    <div class="col-md-6 offset-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Scholarship</h4>
+                <hr />
+                <form id="formScholarshipName" class="form-row">
+                    <input type="hidden" name="CompanyId" value="" />
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Scholarship Name</label>
+                            </div>
+                            <input type="text" name="ScholarshipName" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveScholarshipName" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
 
-            <table class="bordered-table table-striped">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
-    </div>
-</div>
-<div id="divScholarshipDetails">
-    <br />
-    <div><button class="btn btn-success" id="addScholarshipDetails">Add Scholarship</button></div><hr/>
-    <div class="row">
-        <div class="col-md-12">
-            <h4 class="titlename">List of Scholarship Details</h4>
-            <div style="width:100%;overflow:auto;">
-                <table id="tblScholarshipDetails" class="table table-bordered table-striped">
-                    @*<thead></thead>*@
+                </form>
+                <hr />
+                <h5>List of all Scholarship</h5>
+                <table id="tblScholarshipName" class="table table-bordered">
+                    <thead></thead>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
-<div id="divScholarshipForm">
-    <div class="col-md-10">
-        <div class="thumbnail">
-            <h4 class="well-sm" id="scholarshipFormTitle">Add Scholarship details</h4>
+<div id="divScholarshipDetails">
 
-            <form id="formScholarshipDetails">
-                <div class="flexContainer well well-sm">
+    <button class="btn btn-default pull-right" id="addScholarshipDetails">Add Scholarship</button>
+    <div>
+        <h4 class="clearfix">List of all Scholarship</h4>
+        <div class="card p-2">
 
-                    <input type="hidden" name="Id" />
-                    <input type="hidden" name="CompanyId" />
-                    <label style="width:98px">Scholarship:&nbsp;</label>
-                    <select class="form-control" name="ScholarshipName" style="flex:1;" id="selectScholarship" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="width:110px">Select Batch:&nbsp;</label>
-                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="flexContainer well well-sm">
-                    <label style="flex:none">Select Class:&nbsp;</label>
-                    <select class="form-control" name="Class" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none">Select Faculty:&nbsp;</label>
-                    <input type="text" class="form-control" name="Faculty" style="flex:1" id="selectFaculty" required readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div id="tblScholarship" class="add well well-sm" style="width:100%;overflow:auto;">
-
-                </div>
-                <div class="col-sm-12 text-center">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveScholarshipDetails" />
-                    <input type="button" class="btn btn-danger" id="btnCancel1" onclick="cancel()" data-target="CancelScholarshipForm" value="Cancel" />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblScholarshipDetails" class="table table-bordered table-striped"></table>
+                    </div>
                 </div>
 
-            </form>
+            </div>
         </div>
 
     </div>
+
+</div>
+<div class="row" id="divScholarshipForm">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-titel">Add Scholarship details</h4>
+        <hr />
+        <form id="formScholarshipDetails">
+            <div class="form-row">
+                <input type="hidden" name="CompanyId" value="" />
+                <input type="hidden" name="Id" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Scholarship</label>
+                        </div>
+                        <select class="form-control" name="ScholarshipName" id="selectScholarship"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="selectBatch"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Class</label>
+                        </div>
+                        <select class="form-control" name="Class" id="selectClass"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Faculty</label>
+                        </div>
+                        <input type="text" class="form-control" name="Faculty" id="selectFaculty" />
+                    </div>
+                </div>
+            </div><br />
+            <div class="form-row" id="tblScholarship">
+
+            </div>
+            <br />
+            <div class="form-group" id="scholarshipFooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveScholarshipDetails" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel1" onclick="cancel()" value="Cancel" />
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
 
 <div id="divSpecialScholarship">
-    <div>
-        <div>
-            <button class="btn btn-success" id="addSpecialScholarship">Add Special Scholarship</button>
-        </div><hr/>
-    </div>
-    <div id="searchSpecialScholarship">
-                <h4 class="titlename">List of Special Scholarship</h4>
-        <div>
-            <div class="flexContainer" style="justify-content:center">
-                <div style="text-align:center;">
-                    <div class="flexContainer">
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Batch</label>
-                            <select id="searchBatch" class="form-control" style="width:auto"></select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Class</label>
-                            <select id="searchClass" class="form-control" style="width:auto"></select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Student Id</label>
-                            <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
-                        </div>&nbsp;&nbsp;
 
-                        <div style="flex:none;">
-                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchScholarship" type="submit" data-name="">Search</button>
+    <button class="btn btn-default pull-right" id="addSpecialScholarship">Add Special Scholarship</button>
+    <div>
+        <h4 class="clearfix">List of all Special Scholarship</h4>
+        <div class="card p-2">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Batch</label>
                         </div>
+                        <select id="searchBatch" class="form-control"></select>
+
                     </div>
                 </div>
-             </div>
-            </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div style="width:100%;overflow:auto;">
-                    <table id="tblSpecialScholarship" class="table table-bordered table-striped">
-                       
-                    </table>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Class</label>
+                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px">Student Id</label>
+                        </div>
+                        <input type="text" id="searchStudentId" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchScholarship" type="submit" data-name="">Search</button>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div id="divSpecialScholarshipForm">
-    <div class="col-md-10">
-        <div class="thumbnail">
-            <h4 class="well-sm" id="titleFormSpecialSchoarship">Add Special Scholarship</h4>
-            <form id="formSpecialScholarship" class="well well-sm">
-                <div class="flexContainer">
-                    <label style="width:110px;">StudentId:&nbsp;</label>
-                    <input type="hidden" name="CompanyId" />
-                    <input type="text" class="form-control" name="StudentId" style="flex:1;" id="studentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none">Select Batch :&nbsp;</label>
-                    <select id="selectSpecialBatch" class="form-control" name="Batch" style="flex:1"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="width:110px;">Select Class :&nbsp;</label>
-                    <input type="text" class="form-control" name="Class" style="flex:1" id="selectSpecialClass" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none">Select Faculty :&nbsp;</label>
-                    <input type="text" class="form-control" name="Faculty" style="flex:1;" id="selectSpecialFaculty" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblSpecialScholarship" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
 
-                <input type="hidden" name="SpecialScholarshipId" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="row" id="divSpecialScholarshipForm">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-title" id="titleFormSpecialScholarship">Add Special Scholarship</h4>
+        <hr />
+        <form id="formSpecialScholarship">
+            <div class="form-row">
+                <input type="hidden" name="SpecialScholarshipId" value="" />
                 <input type="hidden" name="BatchClassId" />
-                <input type="hidden" name="StudentType" id="studenttype" />
-                <div id="tblSpecialScholarshipDetails" class="add well well-sm" style="width:100%;overflow:auto;">
-
+                <input type="hidden" id="studenttype" name="StudentType" />
+                <input type="hidden" name="CompanyId" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">StudentId</label>
+                        </div>
+                        <input type="text" class="form-control" name="StudentId" id="studentid" />
+                    </div>
                 </div>
-
-                <div class="text-center" id="ClassFeeSubmit">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveSpecialScholarship" />
-                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelsch()" value="Cancel" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="selectSpecialBatch"></select>
+                    </div>
                 </div>
+            </div>
+            <div class="form-row">
 
-            </form>
-        </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Class</label>
+                        </div>
+                        <select class="form-control" name="Class" id="selectSpecialClass"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">Faculty</label>
+                        </div>
+                        <select class="form-control" name="Faculty" id="selectSpecialFaculty"></select>
+                    </div>
+                </div>
+            </div><br/>
+            <div class="form-row" id="tblSpecialScholarshipDetails">
 
+            </div><br/>
+            <div class="form-group" id="specialfooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveSpecialScholarship" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancelsch()" value="Cancel" />
+                </div>
+            </div>
+        </form>
     </div>
+
 </div>
 
 
 
-<div id="modalEditScholarshipName" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditScholarshipName" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit Scholarship</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalScholarshipName" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="ScholarshipId" />
-                            <input type="hidden" name="CompanyId" />
-                            <label style="flex:1.2">Scholarship Name :&nbsp;</label>
-                            <input type="text" class="form-control" name="ScholarshipName" id="modalScholarshipName" style="flex:2" required />
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalScholarshipName">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                <form id="formModalScholarshipName" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="ScholarshipId" />
+                                <input type="hidden" name="CompanyId" id="modalCompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Scholarship Name</label>
+                                </div>
+                                <input type="text" class="form-control" name="ScholarshipName" id="modalScholarshipName" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalScholarshipName" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
+
         </div>
     </div>
 </div>
@@ -346,7 +426,7 @@
 
                 }
 
-               
+
 
             },
 
@@ -715,7 +795,7 @@
                 var i = 0;
                 for (var r in result) {
                     var html = `<h4>Fee Structure :${result[r][0]["FeeStructureName"]}</h4>`;
-                    html += `<table class="bordered-table table-striped">`;
+                    html += `<table class="table table-bordered">`;
                     html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
                     html += ` <tbody class='rowTable'>`;
 
@@ -853,6 +933,7 @@
             success: function (result) {
                 $("input[type=text]").val("");
                 loadData("ScholarshipName",@Session["CompanyId"]);
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -883,31 +964,22 @@
             success: function (result) {
                 debugger;
                 if (result == true) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html(" Successful.");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
+                   
                         $('#tblSpecialScholarshipDetails').empty();
                         debugger;
                         hideAll();
                         $("#divSpecialScholarship").show();
-                        loadSpecialScholarship();
-                    })
+                    loadSpecialScholarship();
+                    toastr.success("Added Successfully");
                 }
                 else if(result == false){
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Error");
-                    $('#modalInfo .modal-body').html("Scholarship for student already exists");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
+                   
                         $("#formSpecialScholarship select").val('');
                         $("#studentid").val('');
-                        $('#tblSpecialScholarshipDetails').empty();
+                    $('#tblSpecialScholarshipDetails').empty();
+                    toastr.error("Scholarship for Student already added");
 
-                    })
+                    
                 }
             },
             error: function (e) {
@@ -919,7 +991,7 @@
 
 
     var loadSpecialScholarship = function () {
-       
+
         debugger;
         $.ajax({
             url: "/api/GetAllSpecialScholarshipDetails",
@@ -933,7 +1005,7 @@
                     $("#divSpecialScholarship").show();
                     $("#searchSpecialScholarship").show();
                     showScholarshipData(result);
-               
+
             },
             error: function (e) {
                 debugger;
@@ -942,12 +1014,12 @@
             }
         });
     }
-   
+
     var showScholarshipData = function (result) {
         debugger;
         var _type = "SpecialScholarship";
         var view = "specialScholarship";
-       
+
         $("#tblSpecialScholarship").dataTable({
             data: result,
             'destroy': true,
@@ -1020,27 +1092,15 @@
             success: function (result) {
                 debugger;
                 if (result == true) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html(" Successful.");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#tblScholarship').empty();
-                        debugger;
+
                         hideAll();
                         $("#divScholarshipDetails").show();
-                        loadData("ScholarshipDetails",@Session["CompanyId"]);
-                    })
+                    loadData("ScholarshipDetails",@Session["CompanyId"]);
+                    toastr.success("Added Successfully");
                 }
                 else if (result == false) {
                     debugger;
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Error");
-                    $('#modalInfo .modal-body').html(" Scholarship Details for this class exists");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
-                    })
+                    toastr.error("Scholarship Details for this class exists")
                      $('#formScholarshipDetails select').val('');
                     $('#tblScholarship').empty();
 
@@ -1063,35 +1123,82 @@
 
     var deleteSettings = function (id, name, type) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete " + type + " of " + name + "?");
+       var companyId=@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete " + type + " of " + name + "?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                deleteGeneral(type,id, name,companyId);
 
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', type);
-        $('#btnDeleteModal').data('name', name);
+
+            }
+        })
 
 
     }
     var deleteScholarshipDetails = function (name, batch, _class, faculty) {
-        $('#modalDeleteScholarship').modal('show');
-        $('#modalDeleteScholarship .modal-title').html("Conform");
-        $('#modalDeleteScholarship .modal-body').html("Do you want to delete Scholarship details of:<br/>Scholarship Name:<b> " + name + " </b><br/>Batch:<b> " + batch + " </b><br/>Class:<b> " + _class + " </b><br/>Faculty:<b> " + faculty + " </b>");
+          var companyId=@Session["CompanyId"];
+           swal({
+               title: "Do you want to delete Scholarship details of: Scholarship Name: " + name + " Batch: " + batch + " Class: " + _class + " Faculty: " + faculty + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                      $.ajax({
+            url: "/api/DeleteScholarshipDetails",
+            method: "POST",
+            data: {
+                Name: name,
+                Class: _class,
+                Batch: batch,
+                Faculty: faculty,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
 
-        $('#btnDeleteModalScholarship').data('name', name);
-        $('#btnDeleteModalScholarship').data('batch', batch);
-        $('#btnDeleteModalScholarship').data('class',_class);
-        $('#btnDeleteModalScholarship').data('faculty',faculty);
+                loadData("ScholarshipDetails",@Session["CompanyId"]);
+                toastr.success("Deleted Successfully");
+            },
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+
+
+            }
+        })
+
     }
 
     var deleteSpecialScholarship = function (id,firstname,lastname,type,batch) {
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Scholarship details of <br/> StudentId :<b> " + id + " </b><br/>Name:<b> " + firstname + " " + lastname + "</b><br/> Batch : <b> " + batch + " </b>");
+      
+        var companyId=@Session["CompanyId"];
+          swal({
+              title: "Do you want to delete Scholarship details of  StudentId : " + id + "  Name:  " + firstname + " " + lastname + " Batch :  " + batch + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
 
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('name', batch);
-        $('#btnDeleteModal').data('url', type);
+                deleteGeneral(type, id, batch, companyId);
+
+            }
+        })
+       
+    
+
     }
 
 
@@ -1111,10 +1218,9 @@
             dataType: "json",
             success: function (result) {
                 $('#modalEditScholarshipName').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("ScholarshipName",@Session["CompanyId"])
+
+                loadData("ScholarshipName",@Session["CompanyId"]);
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -1124,40 +1230,38 @@
         debugger;
     })
 
-    $("#btnDeleteModalScholarship").on('click', function (e) {
-        e.preventDefault();
-        var name = $(this).data('name');
-        var batch = $(this).data('batch');
-        var _class=$(this).data('class');
-        var faculty = $(this).data('faculty');
+
+
+     var deleteGeneral = function (urlName,id,name,companyId) {
+
+
+        debugger;
         $.ajax({
-            url: "/api/DeleteScholarshipDetails",
+            url: "/api/DeleteGeneralSetting",
             method: "POST",
-            data: {
-                Name: name,
-                Class: _class,
-                Batch: batch,
-                Faculty: faculty,
-                CompanyId:@Session["CompanyId"],
-            },
+            data: { urlName: urlName.toLowerCase(), id: id, name: name, CompanyId: companyId },
             dataType: "json",
             success: function (result) {
-                $('#modalDeleteScholarship').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Deleted successfully.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
-                })
-                loadData("ScholarshipDetails",@Session["CompanyId"]);
+                debugger;
+
+            toastr.success("Deleted successfully.");
+                if (urlName == "ScholarshipName") {
+                    loadData("ScholarshipName",@Session["CompanyId"]);
+
+                }
+
+                else if (urlName == "SpecialScholarship") {
+                    loadSpecialScholarship();
+                }
+
             },
+
             error: function (e) {
                 console.error(e);
                 alert(e.statusText);
             }
         })
-    })
+    }
 
     $("#btnDeleteModal").on('click', function (e) {
         e.preventDefault();
@@ -1207,7 +1311,7 @@
 
     })
 
-    
+
 
     var getSpecialScholarshipFeeDetails = function () {
         $.ajax({
@@ -1272,7 +1376,7 @@
         getScholarshipName();
 
     })
-   
+
     $("#addSpecialScholarship").on('click', function (e) {
         debugger;
         e.preventDefault();
@@ -1328,34 +1432,46 @@
     }
 
     var cancel = function () {
-        $('#modalCancel').modal('show');
-        $('#modal-title1').html("Confirm");
-        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
-    }
-    $("#btnCancelModal").on('click', function () {
-        debugger;
-        $('#modalCancel').modal('hide');
-        hideAll();
-        $("#divScholarshipDetails").show();
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                hideAll();
+                $("#divScholarshipDetails").show();
+
+
+            }
+        });
+
 
         debugger;
-    });
+    };
 
     var cancelsch = function () {
         debugger;
-        $('#modalCancelScholarship').modal('show');
-        $('#modalCancelScholarship .modal-title').html("Confirm");
-        $('#modalCancelScholarship .modal-body').html("Are You Sure You Want to Cancel ?");
-    }
-    $("#btnCancelModalScholarship").on('click', function () {
-        debugger;
-        $('#modalCancelScholarship').modal('hide');
-        hideAll();
-        $("#tblSpecialScholarshipDetails").val('');
-        $("#divSpecialScholarship").show();
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                hideAll();
+                $("#tblSpecialScholarshipDetails").val('');
+                $("#divSpecialScholarship").show();
+
+
+            }
+        })
+       
 
         debugger;
-    });
+    };
 
     var getClassBatchFaculty = function () {
         $.ajax({
@@ -1458,15 +1574,10 @@
             dataType: "json",
             success: function (result) {
                 if (result == false) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Error");
-                    $('#modalInfo .modal-body').html(" Fee Details for this class is not added");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
-                    })
+
                     $('#formScholarshipDetails select').val('');
                     $("#tblScholarship").empty();
+                    toastr.error("Fee Details for this class is not added");
                 }
                 else {
                     debugger;
@@ -1474,7 +1585,7 @@
                     for (var r in result) {
                         var html = `<h4>Fee Structure :${result[r][0]['FeeStructureName']}</h4>`;
 
-                        html += `<table class="bordered-table table-striped">`;
+                        html += `<table class="table table-bordered">`;
                         html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
                         html += ` <tbody class='rowTable'>`;
 
@@ -1530,7 +1641,7 @@
     $("#studentid").on('change', function (e) {
         e.preventDefault();
         var id = $("#studentid").val().trim();
-      
+
         $("#selectSpecialBatch").val('');
         debugger;
         $.ajax({
@@ -1616,7 +1727,7 @@
                     for (var r in result) {
                         var html = `<h4>Fee Structure :${result[r][0]['FeeStructureName']}</h4>`;
 
-                        html += `<table class="bordered-table table-striped">`;
+                        html += `<table class="table table-bordered">`;
                         html += `<thead><th style='text-align:center;'>&nbsp;</th><th style='width:160px;'>Student Type</th><th>FeeName</th><th style='width:200px;'>Amount</th><th>Refundable</th><th style='width:150px;'>Discount Type</th><th style='width:150px;'>Discount</th></thead>`;
                         html += ` <tbody class='rowTable'>`;
 
@@ -1634,7 +1745,7 @@
                             html += `<td style='width:150px;'><input type='text' class='form-control' name='ScholarshipDiscount[${i}][Discount]' /></td>`;
                             html += `</tr>`;
                             i++;
-                            
+
                         }
                         html += `</tbody>`;
                         html += `</table>`;
@@ -1652,7 +1763,7 @@
             }
         })
     })
- 
+
 
     $("#btnSearchScholarship").on('click', function (e) {
         e.preventDefault();
@@ -1718,7 +1829,7 @@
                     'title': 'ScholarshipName',
                     'data': 'ScholarshipName'
                 },
-             
+
                 {
                     'title': 'Batch',
                     'data': 'Batch'
@@ -1731,7 +1842,7 @@
                     'title': 'Faculty',
                     'data': 'Faculty'
                 },
-              
+
             ]
         });
         debugger;

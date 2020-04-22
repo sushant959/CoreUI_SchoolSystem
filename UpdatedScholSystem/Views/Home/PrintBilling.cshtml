@@ -3,9 +3,10 @@
     ViewBag.Title = "PrintBilling";
     Layout = null;
 }
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/jquery")
+<link href="~/Content1/bootstrap.css" rel="stylesheet" />
+<link href="~/Content1/Site.css" rel="stylesheet" />
+<script src="~/Scripts1/modernizr-2.8.3.js"></script>
+<script src="~/Scripts1/jquery-3.3.1.js"></script>
 <style>
     .title-header {
         background-color: black;
@@ -31,10 +32,10 @@
         width: 150px;
         font-size: medium;
     }
-    .table span{
-        text-align:left;
+
+    .table span {
+        text-align: left;
     }
-    
 </style>
 <style media="print">
     .main-header {
@@ -66,10 +67,11 @@
         #to-print, #to-print * {
             visibility: visible;
         }
-    .text-line{
-        min-width:50px;
-        width:100px;
-    }
+
+        .text-line {
+            min-width: 50px;
+            width: 100px;
+        }
         /*#to-print {
             display: block !important;
             position: absolute;
@@ -221,7 +223,7 @@
                 var due = result[2];
                 var total = result[3];
                 var currentDue = result[4];
-                
+
                 debugger;
                 var now = new Date();
                 var nowDate = now.toISOString().split('T')[0];
@@ -261,13 +263,13 @@
                 }
                 $("#tblShowPrintBill thead").html("<tr>" + tblHeader + "</tr>");
                 $("#tblShowPrintBill tbody").html(tblBody);
-               
+
                 var total = 0;
                 for (var r in details) {
                     total += parseInt(details[r]["Amount"]);
                 }
 
-                
+
                 $("#total").html(total);
                 var due = total - parseInt(currentDue[0]["dis"]) + parseInt(currentDue[0]["fine"]) - parseInt(currentDue[0]["paid"])
                 var grandtotal =preDue + due;
@@ -297,5 +299,5 @@
         };
     }
 
-   
+
 </script>

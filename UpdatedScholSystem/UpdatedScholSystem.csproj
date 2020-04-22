@@ -269,6 +269,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content1\bootstrap-theme.css" />
+    <Content Include="Content1\bootstrap.css" />
+    <Content Include="Content1\Site.css" />
     <Content Include="Content\DataTable\buttons.flash.min.js" />
     <Content Include="Content\DataTable\buttons.html5.min.js" />
     <Content Include="Content\DataTable\buttons.print.min.js" />
@@ -350,6 +353,7 @@
     <Content Include="Content\bootstrap\variables.less" />
     <Content Include="Content\bootstrap\mixins.less" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts1\jquery-3.3.1.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\coreui.min.css" />
     <Content Include="Scripts\coreui.min.js" />

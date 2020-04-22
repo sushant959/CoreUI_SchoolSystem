@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - EB Payroll Management System</title>
+    <title>@ViewBag.Title - EB School Management System</title>
     @Styles.Render("~/Content/css")
     @*<link rel="stylesheet" href=@("https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css")>*@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -88,51 +88,18 @@
                         </a>
                     </li>
 
-                    <li class="nav-item nav-dropdown open">
-                        <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="nav-icon fa fa-calendar-times-o"></i> Leave Management
-                        </a>
-                        <ul class="nav-dropdown-items">
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/Leave">
-                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Entry
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/LeaveReport">
-                                    <i class="nav-icon fa fa-calendar-times-o"></i> Balance Report
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/LeaveForward">
-                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Forward
-                                    <span class="badge badge-info">New-@Session["forwardcount"]</span>
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/LeaveApproval">
-                                    <i class="nav-icon fa fa-calendar-times-o"></i> Leave Approval
-                                    <span class="badge badge-primary">New-@Session["approvalcount"]</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
+                    
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/OverTime">
-                            <i class="nav-icon fa fa-plus"></i> Overtime
+                        <a class="nav-link" href="/Home/ScholarshipManagement">
+                            <i class="nav-icon fa fa-plus"></i> Scholarship
                             @*<i class="fa fa-circle text-warning pull-right"></i>*@
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/Holiday">
-                            <i class="nav-icon fa fa-flag"></i> Holiday
+                        <a class="nav-link" href="/Home/BillingManagement">
+                            <i class="nav-icon fa fa-flag"></i> Billing
                         </a>
                     </li>
 

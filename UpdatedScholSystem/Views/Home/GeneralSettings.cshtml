@@ -567,85 +567,148 @@
 
 
 <div id="divDayOff">
-    <br />
-    <div class="col-md-12">
-        <div><button class="btn btn-success" id="addDayOff">Add Non-Working Day</button></div><hr />
-        <br />
-        <h4 class="titlename"></h4>
-        <div class="flexContainer" style="justify-content:center">
-            <div style="flex:none; text-align:center">
-                <label>Batch</label>
-                <select id="searchDayoffBatch" class="form-control" style="width:auto"></select>
-            </div>&nbsp;&nbsp;
-            <div style="flex:none; text-align:center;">
-                <label>Department</label>
-                <select id="searchDayoffDepartment" class="form-control" style="width:auto"></select>
-            </div>&nbsp;&nbsp;
-            <div style="flex:none; text-align:center;">
-                <label>Faculty</label>
-                <select id="searchDayoffFaculty" class="form-control" style="width:auto"></select>
-            </div>&nbsp;&nbsp;
-            <div style="flex:none; text-align:center;">
-                <label>Class</label>
-                <select id="searchDayoffClass" class="form-control" style="width:auto"></select>
-            </div>&nbsp;&nbsp;
-            <div style="flex:none;">
-                <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDayOff" type="submit" data-name="">Search</button>
+
+    <button class="btn btn-default pull-right" id="addDayOff">Add Non-Working Day</button>
+    <div>
+        <h4 class="clearfix">List of all Non-Working Day</h4>
+        <div class="card p-2">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Batch</label>
+                        </div>
+                        <select id="searchDayoffBatch" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px">Department</label>
+                        </div>
+                        <select id="searchDayoffDepartment" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Faculty</label>
+                        </div>
+                        <select id="searchDayoffFaculty" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Class</label>
+                        </div>
+                        <select id="searchDayoffClass" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchDayOff" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblDayOff" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div style="width:100%;overflow:auto">
-            <table id="tblDayOff" class="bordered-table table-striped"></table>
-        </div>
-        <br />
-        <h4>Summary Info.</h4>
-        <hr style="margin-top:5px;margin-bottom:10px" />
-        <div id="divSummary" class="row">
-        </div>
+
     </div>
+
 </div>
-<div id="formDayOff">
-    <br />
-    <div class="col-md-10">
-        <div class="thumbnail">
-            <h4 class="well-sm" id="titleFormClassFee">Add Non-Working Day</h4>
-            <form id="formDayOffDetails">
-                <div class="well well-sm">
-                    <div class="flexContainer">
-                        <input type="hidden" name="CompanyId" value="" />
-                        <input type="hidden" id="dayoffid" name="DayOffId" />
-                        <label style="flex:1">Batch :&nbsp;</label>
-                        <select class="form-control" name="Batch" style="flex:1.5" id="dayoffBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1">Title:</label>
-                        <input type="text" class="form-control" style="flex:1.5" name="Title" />
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1">Date From :&nbsp;</label>
-                        <input type="text" id="datefrom" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateFrom" />&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1">Date To :&nbsp;</label>
-                        <input type="text" id="dateto" style="flex:1.5" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateTo" />
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1">Department :</label>
-                        <select multiple="multiple" class="form-control multiselect" name="Department[]" style="flex:1.5;margin-left:-10px;" id="dayoffDepartment" required></select>
-                        <label style="flex:1"></label>
-                        <label style="flex:1.5"></label>
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1">Faculty :&nbsp;</label>
-                        <select multiple="multiple" class="form-control multiselect" name="Faculty[]" style="flex:1.5" id="dayoffFaculty" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1">Class :&nbsp;</label>
-                        <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1.5" id="dayoffClass" required></select>
-                    </div><br />
+<div class="row" id="formDayOff">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-titel">Add Non-Working Day</h4>
+        <hr />
+        <form id="formDayOffDetails">
+            <div class="form-row">
+                <input type="hidden" name="CompanyId" value="" />
+                <input type="hidden" id="dayoffid" name="DayOffId" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="dayoffBatch"></select>
+                    </div>
                 </div>
-                <div class="text-center" id="ClassFeeSubmit">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveDayOff" />
-                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancelDay()" value="Cancel" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Title</label>
+                        </div>
+                        <input type="text" class="form-control" name="Title" />
+                    </div>
                 </div>
-
-            </form>
-        </div>
-
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Date From</label>
+                        </div>
+                        <input type="text" id="datefrom" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateFrom" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Date To</label>
+                        </div>
+                        <input type="text" id="dateto" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="DateTo" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Department</label>
+                        </div>
+                        <select multiple="multiple" id="dayoffDepartment" class="form-control multiselect" name="Department[]"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Faculty</label>
+                        </div>
+                        <select multiple="multiple" id="dayoffFaculty" class="form-control multiselect" name="Faculty[]"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Class</label>
+                        </div>
+                        <select multiple="multiple" id="dayoffClass" class="form-control multiselect" name="Class[]"></select>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="form-group" id="dayOfffooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveDayOff" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancelDay()" value="Cancel" />
+                </div>
+            </div>
+        </form>
     </div>
+
 </div>
 
 <div id="divCountryDetails">
@@ -1028,30 +1091,47 @@
     </div>
 </div>
 
-<div id="modalEditStartDate" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditStartDate" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Edit Section</h4>
+                <h4 class="modal-title">Edit Start Date</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalStartDate" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="StartDateId" />
-                            <label style="flex:1">Batch :&nbsp;</label>
-                            <select id="modalStartDateBatch" name="Batch" class="form-control" style="flex:1.5"></select>&nbsp;&nbsp;
-                            <label style="flex:1"> Start Date:&nbsp;</label>
-                            <input type="text" id="modalstartdate" style="flex:1.5;" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                    </form>
-                </div>
+
+                <form id="formModalStartDate" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="StartDateId" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Batch</label>
+                                </div>
+                                <select id="modalStartDateBatch" name="Batch" class="form-control"></select>
+                            </div>
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Start Date</label>
+                                </div>
+                                <input type="text" id="modalstartdate" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalStartDate" value="Update" />
+                    </div>
+
+
+
+                </form>
+
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalStartDate">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
+
+
         </div>
     </div>
 </div>
@@ -1980,7 +2060,8 @@
             success: function (result) {
                 debugger;
                 $("input[type=text],select").val("");
-                loadData("StartDate",'@Session["CompanyId"]');
+                loadData("StartDate", '@Session["CompanyId"]');
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2365,12 +2446,24 @@
 
     var deleteDayOff = function (id, batch, title,datefrom, dateto) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete holiday for:<br/>Batch:<b>" + batch + "</b><br/>Title:<b> " + title + "</b><br/>From:<b>" + datefrom + "</b><br/>To:<b>" + dateto + "</b> ?");
+       
 
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', 'DayOffDetails');
+         var companyId=@Session["CompanyId"];
+           swal({
+               title: "Do you want to delete holiday for Batch: " + batch + ", Title:  " + title + ", From: " + datefrom + ", To:  " + dateto + "  ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                deleteGeneral('DayOffDetails', id, undefined, undefined, companyId);
+
+
+            }
+        })
+
     }
 
     var deleteSettings = function (id, name, type) {
@@ -2418,12 +2511,22 @@
     }
 
     var deleteStartDate = function (id, date, batch, type) {
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Start date for:<br/>Batch:<b>" + batch + " </b><br/>Date:<b>" + date + "</b>  ?");
-        $('#btnDeleteModal').data('id', id);
-        $('#btnDeleteModal').data('url', type);
-        $('#btnDeleteModal').data('name', date);
+          var companyId =@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete  StartDate: " + date + " of Batch : " + batch + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                deleteGeneral(type, id, undefined, undefined, companyId);
+
+
+            }
+        })
+      
     }
 
     var deleteClassFee = function (id, batch, _class, faculty, type) {
@@ -2571,16 +2674,13 @@
             data: fd,
             dataType: "json",
             success: function (result) {
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html(" Successful.");
-                $(".redirect").on('click', function () {
+               
                     hideAll();
                     $("#divDayOff").show();
                     loadData("DayOff",'@Session["CompanyId"]');
                     $("#divSummary").empty();
-                    getTotalHoliday();
-                })
+                getTotalHoliday();
+                toastr.success("Added Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -2894,10 +2994,9 @@
             success: function (result) {
                 debugger;
                 $('#modalEditStartDate').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
-                loadData("StartDate",'@Session["CompanyId"]');
+               
+                loadData("StartDate", '@Session["CompanyId"]');
+                toastr.success("Updated Successfully");
             },
             error: function (e) {
                 console.error(e);
@@ -3596,17 +3695,23 @@
     var cancelDay = function () {
 
         debugger;
-        $('#modalCancel1').modal('show');
-        $('#modal-title').html("Confirm");
-        $('#modal-body').html("Are You Sure You Want to Cancel ?");
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willCancel) => {
+            if (willCancel) {
+                hideAll();
+                $("#divDayOff").show();
+
+
+
+            }
+        })
+ 
+        debugger;
     }
-    $("#btnCancelModal1").on('click', function () {
-        debugger;
-        $('#modalCancel1').modal('hide');
-        hideAll();
-        $("#divDayOff").show();
-        debugger;
-    });
 
     var getDepartment = function () {
         $.ajax({

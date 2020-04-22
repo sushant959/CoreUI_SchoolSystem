@@ -1187,7 +1187,7 @@ namespace UpdatedScholSystem.Controllers
                         ScholarshipName.Rows[i]["Batch"].ToString() == obj.Batch &&
                         ScholarshipName.Rows[i]["Class"].ToString() == obj.Class &&
                         ScholarshipName.Rows[i]["Faculty"].ToString() == obj.Faculty &&
-                       Convert.ToInt32(ScholarshipName.Rows[i]["Faculty"]) == obj.CompanyId)
+                       Convert.ToInt32(ScholarshipName.Rows[i]["CompanyId"]) == obj.CompanyId)
                     {
                         return Ok(false);
 

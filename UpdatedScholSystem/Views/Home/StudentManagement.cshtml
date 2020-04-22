@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="StudentDashboard" @*style="border: 1px solid silver; padding:20px"*@>
+<div id="StudentDashboard">
          <a href="/Home/StudentForm" class="btn pull-right btn-default"> + Add New Student</a>
    
          <div id="divStudentReport">
@@ -61,33 +61,7 @@
                      <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearch" type="submit" data-name="">Search</button>
                  </div>
                 
-                 @*<div style="flex:none; text-align:center; min-width:120px">
-            <label class="fieldname">Class</label>
-            <select id="searchClass" class="form-control" style="width:auto"></select>
-        </div>&nbsp;&nbsp;
-        <div style="flex:none; text-align:center; min-width:120px">
-            <label class="fieldname">Section</label>
-            <select id="searchSection" class="form-control" style="width:auto"></select>
-        </div>&nbsp;&nbsp;
-        <div style="flex:none; text-align:center; min-width:120px">
-            <label class="fieldname">FirstName</label>
-            <input type="text" class="form-control" id="txtnamefield" placeholder="" />
-        </div>&nbsp;&nbsp;
-        <div style="flex:none; text-align:center; min-width:120px">
-            <label class="fieldname">Status</label>
-            <select id="searchStatus" class="form-control" style="width:auto">
-                <option value="">select</option>
-                <option value="Active">Active</option>
-                <option value="NotActive">Not-Active</option>
-            </select>
-        </div>&nbsp;&nbsp;
-        <div style="flex:none; text-align:center; min-width:120px">
-            <label class="fieldname">Type</label>
-            <select id="searchType" class="form-control" style="width:auto"></select>
-        </div>&nbsp;&nbsp;
-        <div style="flex:none;">
-            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
-        </div>*@
+              
 
 
              </div><br/>
@@ -98,7 +72,7 @@
                     <table id="tblStudentReport" class="table table-bordered table-striped"></table>
                 </div>
             </div>
-            @*<a id="downloadReportLink" href="#" target="_blank" class="badge pull-right" style="margin-top:5px">Export to PDF</a>*@
+            
         </div>
              </div>
     </div>

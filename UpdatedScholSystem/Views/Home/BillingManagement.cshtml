@@ -5,209 +5,366 @@
 }
 
 <div id="divBillingDetails">
-    <div>
-        <button class="btn btn-success" id="addBilling">Add New Bill</button>
-    </div><hr/>
-    <br />
+     
+    <button class="btn btn-default pull-right" id="addBilling">+ Add New Bill</button>
     <div id="searchBilling">
-        <div>
-                <h4 id="titlename">List of Billing Details</h4>
-            <div class="flexContainer" style="justify-content:center">
-                <div style="text-align:center;">
-                    <div class="flexContainer" style="margin-left:30px;">
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Batch</label>
-                            <select id="searchBatch" class="form-control" style="width:auto"></select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Class</label>
-                            <select id="searchClass" class="form-control" style="width:auto"></select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Student Id</label>
-                            <input type="text" style="width:110px;" id="searchStudentId" class="form-control" />
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Month</label>
-                            <select id="searchMonth" class="form-control" style="width:auto">
-                                <option value="">--Select--</option>
-                                <option value="01">Baisakh</option>
-                                <option value="02">Jesth</option>
-                                <option value="03">Asar</option>
-                                <option value="04">Sawan</option>
-                                <option value="05">Bhadau</option>
-                                <option value="06">Aaswin</option>
-                                <option value="07">Kartik</option>
-                                <option value="08">Mangsir</option>
-                                <option value="09">Push</option>
-                                <option value="10">Magh</option>
-                                <option value="11">Falgun</option>
-                                <option value="12">Chait</option>
-                            </select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none; text-align:center; min-width:120px">
-                            <label>Status</label>
-                            <select id="searchStatus" class="form-control" style="width:auto">
-                                <option value="">---select--</option>
-                                <option value="UnPaid">UnPaid</option>
-                                <option value="Paid">Paid</option>
-                                <option value="Partial Paid">Partial Paid</option>
-                            </select>
-                        </div>&nbsp;&nbsp;
-                        <div style="flex:none;">
-                            <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchBilling" type="submit" data-name="">Search</button>
+        <h4 class="clearfix" id="reportname">List of all Billing </h4>
+        <div class="card p-3">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Batch</label>
                         </div>
-                        
-                    </div>
+                        <select id="searchBatch" class="form-control"></select>
+
                     </div>
                 </div>
-            </div>
-        <div class="row">
-            <div class="col-md-12">
-                <button class="btn btn-warning btn-block pull-right" style="margin-top:20px;width:150px;" id="btnDelete"  data-name="">Delete Selected Row</button><br/>
-                <form id="deleteMultipleBill">
-                    <div style="width:100%;overflow:auto;">
-                        <table id="tblBillingDetails" class="table table-bordered table-striped"></table>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Class</label>
+                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
                     </div>
-                </form>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">StdID</label>
+                        </div>
+                        <input type="text" class="form-control" id="searchStudentId" placeholder="" />
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:60px">Month</label>
+                        </div>
+                        <select id="searchMonth" class="form-control">
+                            <option value="">--Select---</option>
+                            <option value="01">Baisakh</option>
+                            <option value="02">Jesth</option>
+                            <option value="03">Asar</option>
+                            <option value="04">Sawan</option>
+                            <option value="05">Bhadau</option>
+                            <option value="06">Aaswin</option>
+                            <option value="07">Kartik</option>
+                            <option value="08">Mangsir</option>
+                            <option value="09">Push</option>
+                            <option value="10">Magh</option>
+                            <option value="11">Falgun</option>
+                            <option value="12">Chait</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:60px">Status</label>
+                        </div>
+                        <select id="searchStatus" class="form-control">
+                            <option value="">--select--</option>
+                            <option value="UnPaid">UnPaid</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Partial Paid">Partial Paid</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchBilling" type="submit" data-name="">Search</button>
+                </div>
+
+
+
+
+            </div><br />
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <button class="btn btn-warning btn-block pull-right" style="margin-top:20px;width:150px;" id="btnDelete" >Delete Selected Row</button>
+                    <form id="deleteMultipleBill">
+                        <div style="width:100%;overflow:auto;">
+                            <table id="tblBillingDetails" class="table table-bordered"></table>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
-<div id="divBillingForm">
-    <div class="col-md-9">
-        <div class="thumbnail well well-sm">
-            <h4 class="well-sm" id="titleFormBilling">Add Billing</h4>
-            <form id="formBilling">
-                <div class="flexContainer">
-                <input type="hidden" name="CreatedBy" value="" />
+<div class="row" id="divBillingForm">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-titel">Add Billing</h4>
+        <hr />
+        <form id="formBilling">
+            <div class="form-row">
                 <input type="hidden" name="CompanyId" value="" />
-                    <label style="flex:none;width:110px;">Select Batch :&nbsp;</label>
-                    <select class="form-control" name="Batch" style="flex:1" id="selectBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none">Select Class :&nbsp;</label>
-                    <select multiple="multiple" class="form-control multiselect" name="Class[]" style="flex:1" id="selectClass" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="max-width:110px;">Select Section:&nbsp;</label>
-                    <select multiple="multiple" class="form-control multiselect" name="Section[]" style="max-width:246px;" id="selectSection" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:110px;">StudentId:&nbsp;</label>
-                    <input type="text" class="form-control" name="StudentId" style="flex:1;" id="studentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none">Select Month :&nbsp;</label>
-                    <select multiple="multiple" class="form-control multiselect" name="Month[]" style="flex:1" id="selectmonth" required>
-                        <option value="01">Baisakh</option>
-                        <option value="02">Jesth</option>
-                        <option value="03">Asar</option>
-                        <option value="04">Sawan</option>
-                        <option value="05">Bhadau</option>
-                        <option value="06">Aaswin</option>
-                        <option value="07">Kartik</option>
-                        <option value="08">Mangsir</option>
-                        <option value="09">Push</option>
-                        <option value="10">Magh</option>
-                        <option value="11">Falgun</option>
-                        <option value="12">Chait</option>
-                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div id="feestructure">
-
+                <input type="hidden" id="CreatedBy" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="selectBatch"></select>
+                    </div>
                 </div>
-                <div class="text-center" id="ClassFeeSubmit">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveBillingInfo" />
-                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Class</label>
+                        </div>
+                        <select multiple="multiple" class="form-control multiselect" name="Class[]" id="selectClass"></select>
+                    </div>
                 </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Section</label>
+                        </div>
+                        <select multiple="multiple" class="form-control multiselect" name="Section[]" id="selectSection"></select>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">StudentId</label>
+                        </div>
+                       <input type="text" class="form-control" name="StudentId" id="studentid" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Month</label>
+                        </div>
+                        <select multiple="multiple" id="selectmonth" class="form-control multiselect" name="Month[]">
+                            
+                            <option value="01">Baisakh</option>
+                            <option value="02">Jesth</option>
+                            <option value="03">Asar</option>
+                            <option value="04">Sawan</option>
+                            <option value="05">Bhadau</option>
+                            <option value="06">Aaswin</option>
+                            <option value="07">Kartik</option>
+                            <option value="08">Mangsir</option>
+                            <option value="09">Push</option>
+                            <option value="10">Magh</option>
+                            <option value="11">Falgun</option>
+                            <option value="12">Chait</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+          <div id="feestructure">
 
-            </form>
-        </div>
-
+          </div>
+            <div class="form-group" id="billingfooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveBillingInfo" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+            </div>
+        </form>
     </div>
+
 </div>
 
-<div id="ReceiptForm">
-    <div class="col-md-9">
-        <div class="thumbnail well well-sm">
-            <h4 class="well-sm" id="titleFormReceipt">Add Recipt</h4><hr />
-            <form id="formReceipt">
-                <div class="flexContainer">
-                    <input type="hidden" name="ReceiptId" />
-                    <input type="hidden" id="billingId" name="BillingId" />
-                    <input type="hidden" name="CompanyId" />
-                    <input type="hidden" name="CreatedBy" />
-                    <label style="flex:none;width:110px;">Student Id :&nbsp;</label>
-                    <input type="text" class="form-control" name="StudentId" style="flex:1" id="receiptStudentId" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none;width:130px;">Student Name :&nbsp;</label>
-                    <input type="text" class="form-control" name="" style="flex:1" id="receiptStudentName" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                      <div class="flexContainer">
-                          <label style="flex:none;width:110px;">Date :&nbsp;</label>
-                          <input type="text" id="receiptDate" style="flex:1" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />&nbsp;&nbsp;&nbsp;&nbsp;
-
-                          @*<input type="date" class="form-control" name="Date" style="flex:1" id="receiptDate" />&nbsp;&nbsp;&nbsp;&nbsp;*@
-                          <label style="flex:none;width:130px;">Batch :&nbsp;</label>
-                          <input type="text" class="form-control" name="Batch" style="flex:1" id="receiptBatch" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                      </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:110px;">Class :&nbsp;</label>
-                    <input type="text" class="form-control" name="" style="flex:1" id="receiptClass" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none;width:130px;">Faculty :&nbsp;</label>
-                    <input type="text" class="form-control" name="" style="flex:1" id="receiptFaculty" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:110px;">Billing Month :&nbsp;</label>
-                    <input type="text" class="form-control" name="Month" style="flex:1" id="receiptMonth" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none;width:130px;">Total Fee :&nbsp;</label>
-                    <input type="text" class="form-control" name="" style="flex:1" id="receiptTotalFee" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                      <div class="flexContainer">
-                          <label id="previousdue" style="flex:none;width:110px;">Previous Due :&nbsp;</label>
-                          <input type="text" class="form-control" name="PreviousDue" style="flex:1" id="receiptDueAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                          <input type='checkbox' id="fine" value='true' style="margin-top:-5px;" />&nbsp;&nbsp;<label style="flex:none;width:130px;">Fine :&nbsp;</label>
-                          <input type="text" class="form-control" name="Fine" style="flex:1" id="receiptFine" onkeypress="return isNumberKey(event)" disabled="disabled" />&nbsp;&nbsp;&nbsp;&nbsp;
-                      </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:115px;">Advanced Paid:&nbsp;</label>
-                    <input type="text" class="form-control" name="AdvancedPaid" style="width:220px" id="receiptAdvancedPaid" readonly  />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:110px;">Discount :&nbsp;</label>
-                    <input type="number" class="form-control" name="Discount" style="flex:1" id="receiptDiscount" onkeypress="return isNumberKey(event)" placeholder="0" max=""  />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label style="flex:none;width:130px;">Total Amount :&nbsp;</label>
-                    <input type="text" class="form-control" name="TotalAmount" style="flex:1" id="receiptTotalAmount" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="flexContainer">
-                    <label style="flex:none;width:110px;">Amount Paid :&nbsp;</label>
-                    <input type="text" class="form-control" name="PaidAmount" style="flex:1" id="receiptAmountPaid" max="" placeholder="" onkeypress="return isNumberKey(event)" />&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label id="amountremain" style="flex:none;width:130px;">Amount Remain :&nbsp;</label>
-                    <input type="text" class="form-control" name="DueAmount" style="flex:1" id="receiptAmountRemain" readonly />&nbsp;&nbsp;&nbsp;&nbsp;
-                </div><br />
-                <div class="row">
-                    <div class="col-sm-1">
-                        <label>Status:</label>
+<div class="row" id="ReceiptForm">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-titel">Add Receipt</h4>
+        <hr />
+        <form id="formReceipt">
+            <div class="form-row">
+                <input type="hidden" name="ReceiptId" />
+                <input type="hidden" name="CompanyId" value="" />
+                <input type="hidden" id="billingId" name="BillingId" />
+                <input type="hidden" name="CreatedBy" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Student Id</label>
+                        </div>
+                        <input type="text" class="form-control" name="StudentId" id="receiptStudentId" readonly />
                     </div>
-                    <div class="col-sm-3">
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Student Name</label>
+                        </div>
+                        <input type="text" class="form-control" id="receiptStudentName" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Date</label>
+                        </div>
+                        <input type="text" id="receiptDate" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Date" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Batch</label>
+                        </div>
+                        <input type="text" class="form-control" name="Batch" id="receiptBatch" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Class</label>
+                        </div>
+                        <input type="text" class="form-control" id="receiptClass" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Faculty</label>
+                        </div>
+                        <input type="text" class="form-control" id="receiptFaculty" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Billing Month</label>
+                        </div>
+                        <input type="text" class="form-control" name="Month" id="receiptMonth" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Total Fee</label>
+                        </div>
+                        <input type="text" class="form-control" id="receiptTotalFee" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Previous Due</label>
+                        </div>
+                        <input type="text" class="form-control" name="PreviousDue" id="receiptDueAmount" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <input type="checkbox" id="fine" value="true" /><label style="margin-top:8px;margin-right:10px;">Fine</label>
+                        <input type="text" class="form-control" id="receiptFine" name="Fine" onkeypress="return isNumberKey(event)" disabled="disabled" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Advanced Paid</label>
+                        </div>
+                        <input type="text" class="form-control" name="AdvancedPaid" id="receiptAdvancedPaid" readonly />
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Discount</label>
+                        </div>
+                        <input type="text" class="form-control" name="Discount" id="receiptDiscount" onkeypress="return isNumberKey(event)" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Total Amount</label>
+                        </div>
+                        <input type="text" class="form-control" name="TotalAmount" id="receiptTotalAmount" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Amount Paid</label>
+                        </div>
+                        <input type="text" class="form-control" name="PaidAmount" id="receiptAmountPaid" onkeypress="return isNumberKey(event)" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Amount Remain</label>
+                        </div>
+                        <input type="text" class="form-control" name="DueAmount" id="receiptAmountRemain" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:120px;">Status</label>
+                        </div>
                         <input type="text" class="form-control" name="Status" id="receiptStatus" readonly />
                     </div>
                 </div>
-                <h4>Payment Method</h4>
-                <input type="radio" id="paymentcash" name="PaymentMethod" value="cash" />&nbsp;&nbsp;&nbsp;&nbsp;Cash <br />
-                <div class="form-inline"><input type="radio" id="paymentcheque" name="PaymentMethod" value="cheque" />&nbsp;&nbsp;&nbsp;&nbsp;Cheque &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="bankname" name="BankName" style="width:200px;" placeholder="Bank Name" class="form-control" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="ChequeNo" id="chequeno" style="width:300px;" placeholder="Cheque Number" class="form-control" /></div>
-                <input type="radio" id="paymentcard" name="PaymentMethod" value="card" />&nbsp;&nbsp;&nbsp;&nbsp;Card <br /><br />
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label>Upload File:</label>
+            </div><br/>
+            <h5>Payment Method</h5>
+            <input type="radio" id="paymentcash" name="PaymentMethod" value="cash" />&nbsp;&nbsp;&nbsp;&nbsp;Cash <br />
+            <div class="form-inline"><input type="radio" id="paymentcheque" name="PaymentMethod" value="cheque" />&nbsp;&nbsp;&nbsp;&nbsp;Cheque &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="bankname" name="BankName" style="width:200px;" placeholder="Bank Name" class="form-control" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="ChequeNo" id="chequeno" style="width:300px;" placeholder="Cheque Number" class="form-control" /></div>
+            <input type="radio" id="paymentcard" name="PaymentMethod" value="card" />&nbsp;&nbsp;&nbsp;&nbsp;Card <br /><br />
+            <div class="form-row">
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:150px;">Upload Files</label>
+                        </div>
+                        <input type="file" class="form-control" name="ReceiptFile[]" id="multiFiles" multiple />
                     </div>
-                    <div class="col-sm-3">
-                        <input type="file" id="multiFiles" style="margin-left:-80px;" name="ReceiptFile[]" multiple />
-                    </div>
-                </div><br />
-                <div class="text-center">
-                    <input type="submit" value="Submit" class="btn btn-warning" id="btnSaveReceipt" />
-                    <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
                 </div>
-            </form>
-        </div>
+            </div><br/.
+            <div class="form-group" id="receiptfooter">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnSaveReceipt" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel" value="Cancel" />
+                </div>
+            </div>
+        </form>
     </div>
+
 </div>
 
 <div class="modal fade" tabindex="-1" id="modalCancel"
@@ -514,14 +671,14 @@
 
         }
         else {
-            alert("Please select fee structure");
+            toastr.error("Please select fee structure");
             return;
         }
         debugger;
         if (ff.StudentId == '') {
             debugger;
             if (ff.Batch == '' || ff.Month == undefined) {
-                alert("Please select Batch and Month");
+                toastr.error("Please select Batch and Month");
                 return;
             }
             else {
@@ -529,11 +686,11 @@
             }
         }
         else if (ff.Month == undefined) {
-            alert("Please select month");
+            toastr.error("Please select month");
             return;
         }
         else if (ff.Batch == '') {
-            alert("Please select batch");
+            toastr.error("Please select batch");
             return;
         }
         
@@ -547,12 +704,7 @@
                     success: function (result) {
                         debugger;
                         if (result == true) {
-                            $('#modalInfo').modal('show');
-                            $('#modalInfo .modal-title').html("Success");
-                            $('#modalInfo .modal-body').html(" Successful.");
-                            $(".redirect").on('click', function () {
-                                debugger;
-                                $('#modalInfo').modal('hide');
+                           
                                 $("#formBilling").find("input[type=text],textarea,select").val("");
                                 hideAll();
                                 $("#divBillingDetails").show();
@@ -560,7 +712,8 @@
                                 var _class = $("#searchClass").val();
                                 var studentid = $("#searchStudentId").val().trim();
                                 var month = $("#searchMonth").val();
-                                var status = $("#searchStatus").val();
+                            var status = $("#searchStatus").val();
+                            toastr.success("Added Successfully");
                                 debugger;
 
                                 debugger;
@@ -586,18 +739,15 @@
                                     }
                                 })
                                 
-                            })
+                            
                         }
                         else if (result == false) {
-                            $('#modalInfo').modal('show');
-                            $('#modalInfo .modal-title').html("Error");
-                            $('#modalInfo .modal-body').html("Fee Details already exists");
-                            $(".redirect").on('click', function () {
-                                
+                           
+                           
                                 $('#modalInfo').modal('hide');
-                                $("#formBilling").find("input[type=text],textarea,select").val("");
-
-                            })
+                            $("#formBilling").find("input[type=text],textarea,select").val("");
+                            toastr.error("Fee Details already exists");
+                           
                         }
                     },
                     error: function (e) {
@@ -616,11 +766,7 @@
                     success: function (result) {
                         debugger;
 
-                        $('#modalInfo').modal('show');
-                        $('#modalInfo .modal-title').html("Success");
-                        $('#modalInfo .modal-body').html(" Successful.");
-                        $(".redirect").on('click', function () {
-                            debugger;
+                       
                             $('#modalInfo').modal('hide');
                             $("#formBilling").find("input[type=text],textarea,select").val("");
                             hideAll();
@@ -631,7 +777,7 @@
                             var month = $("#searchMonth").val();
                             var status = $("#searchStatus").val();
                             debugger;
-
+                        toastr.success("Added Successfully");
                             debugger;
                             $.ajax({
                                 url: "/api/SearchBillingDetails",
@@ -654,7 +800,7 @@
                                     alert(e.statusText);
                                 }
                             })
-                        })
+                       
                     },
                     error: function (e) {
                         console.error(e);
@@ -1317,23 +1463,22 @@
 
             }
             else {
-                alert("Please select payment type");
+                toastr.error("Please select payment type");
                 return;
         }
         if (fd.PaidAmount == '' || fd.PaidAmount < 0) {
                 debugger;
                 return;
-            }
-            $("#modalConform").modal('show');
-            $("#modalConform .modal-title").html("Conformation");
-            $("#modal-body2").html("Are you sure you want to pay: <b> " + fd.PaidAmount + "</b>?");
-
-    
-    })
-
-    $("#btnConformation").on('click', function () {
-        debugger;
-        var fd = $("#formReceipt").serializeJSON();
+        }
+         swal({
+             title: "Are you sure you want to pay:  " + fd.PaidAmount + " ?",
+            text: "You will not be able to restore the action",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willConform) => {
+            if (willConform) {
+                       var fd = $("#formReceipt").serializeJSON();
         fd.CompanyId=@Session["CompanyId"];
         if ($("#amountremain").text() == "Advanced Paid") {
             fd.PaidAmount = parseInt(fd.TotalAmount);
@@ -1373,12 +1518,9 @@
                 else if (due != 0) {
                     savePaidStatus(fd.BillingId, fd.StudentId, "PartialPaid");
                 }
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html(" Successful.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
+                
+                debugger;
+                toastr.success("Created Successfully");
                     $("#formReceipt").find("input[type=text],input[type=hidden],textarea,select").val("");
                     hideAll();
                     $("#divBillingDetails").show();
@@ -1417,7 +1559,7 @@
                             }
                         })
                     }
-                })
+               
             },
             error: function (e) {
                 debugger;
@@ -1425,7 +1567,14 @@
                 alert(e.statusText);
             }
         })
+
+            }
+        })
+            
+
+    
     })
+
 
 
     function SaveDocument(id) {
@@ -1577,18 +1726,23 @@
     })
     var cancel = function () {
         debugger;
-        $('#modalCancel').modal('show');
-        $('#modal-title1').html("Confirm");
-        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
-    }
-    $("#btnCancelModal").on('click', function () {
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                hideAll();
+                $("#divBillingDetails").show();
+
+
+            }
+        })
+
         debugger;
-        $('#modalCancel').modal('hide');
-        $("#btnSaveReceipt").val("Submit");
-        hideAll();
-        $("#divBillingDetails").show();
-        debugger;
-    });
+    };
 
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;
