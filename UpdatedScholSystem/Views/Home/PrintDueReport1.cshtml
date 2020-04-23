@@ -5,9 +5,10 @@
     ViewBag.Title = "PrintDuereport";
     Layout = null;
 }
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/jquery")
+<link href="~/Content1/bootstrap.css" rel="stylesheet" />
+<link href="~/Content1/Site.css" rel="stylesheet" />
+<script src="~/Scripts1/modernizr-2.8.3.js"></script>
+<script src="~/Scripts1/jquery-3.3.1.js"></script>
 <style>
     .title-header {
         background-color: black;
@@ -104,7 +105,7 @@
                         <th colspan="2">Chait</th>
                     </tr>
                     <tr>
-                        
+
                         <th>Fee</th>
                         <th>Paid</th>
                         <th>Fee</th>
@@ -131,21 +132,19 @@
                         <th>Paid</th>
                     </tr>
                 </thead>
-                <tbody class='rowTable' id="to-append">
-
-                </tbody>
+                <tbody class='rowTable' id="to-append"></tbody>
             </table>
         </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-12 text-center">
-                <button class=" btn btn-warning btn-md glyphicon glyphicon-print" id="print" onclick=" myFunction()"> Print</button>
-            </div>
-        </div>
-
-
     </div>
-    <script>
+    <div class="form-group">
+        <div class="col-sm-12 text-center">
+            <button class=" btn btn-warning btn-md glyphicon glyphicon-print" id="print" onclick=" myFunction()"> Print</button>
+        </div>
+    </div>
+
+
+</div>
+<script>
     $(document).ready(function () {
         debugger;
         @*var batch =@ViewBag.Batch;
@@ -202,7 +201,7 @@
 
     var showdueprint = function (result) {
         debugger;
-          
+
         for (var r in result) {
             var id = result[r]["StudentId"];
             var batch = result[r]["Batch"];
@@ -229,13 +228,13 @@
                     html += `<tr>`
                     html += `<td><span>${details[0]['Class']}</span></td>`;
                     html += `<td><span>${Name}</span></td>`;
-                  
+
                     for (var c in details) {
                         if (c == 0) {
                             html += `<td><span>${details[c]['Total']}</span></td>`;
                             html += `<td><span>${details[c]['Paid']}</span></td>`;
                         }
-                        
+
                         else {
                             var total = 0;
                             var d = c;
@@ -250,7 +249,7 @@
                         }
                         html += `</tr>`;
                         $("#to-append").append(html);
-                    
+
 
 
                 },
@@ -259,9 +258,9 @@
                 }
             })
         }
-         
+
     }
 
 
-    </script>
+</script>
 

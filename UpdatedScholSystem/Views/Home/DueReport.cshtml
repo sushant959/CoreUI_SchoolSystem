@@ -14,69 +14,88 @@
         <input type="radio" name="Tab" data-value="ExpectedPayment" data-text="Expected Payment Date" autocomplete="off" />Expected Payment Date
     </label>
 </div><br /><br />
-            <div id="divDueReport">
-                        <h4 class="titlename">List of Due Report</h4>
-                <div class="flexContainer" style="justify-content:center">
-                    <div style="text-align:center;">
-                        <div class="flexContainer" style="margin-left:10px;">
-                            <div style="flex:none; text-align:center; min-width:120px">
-                                <label>Batch</label>
-                                <select id="searchBatch" class="form-control" style="width:auto"></select>
-                            </div>&nbsp;&nbsp;
-                            <div style="flex:none; text-align:center; min-width:120px">
-                                <label>Class</label>
-                                <select id="searchClass" class="form-control" style="width:auto"></select>
-                            </div>&nbsp;&nbsp;
+ <div id="divDueReport">
 
-                            <div style="flex:none; text-align:center; min-width:120px">
-                                <label>Month</label>
-                                <select id="searchMonth" class="form-control" style="width:auto">
-                                    <option value="">---select--</option>
-                                    <option value="01">Baisakh</option>
-                                    <option value="02">Jesth</option>
-                                    <option value="03">Asar</option>
-                                    <option value="04">Sawan</option>
-                                    <option value="05">Bhadau</option>
-                                    <option value="06">Aaswin</option>
-                                    <option value="07">Kartik</option>
-                                    <option value="08">Mangsir</option>
-                                    <option value="09">Push</option>
-                                    <option value="10">Magh</option>
-                                    <option value="11">Falgun</option>
-                                    <option value="12">Chait</option>
-                                </select>
-                            </div>&nbsp;&nbsp;
-                            <div style="flex:none; text-align:center; min-width:120px;margin-top:20px">
-                                <label>StudentId&nbsp;</label>
-                                <input type="text" class="form-control" name="StudentId" style="flex:auto;" id="searchStudentid" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                            </div>&nbsp;&nbsp;
-                            <div style="flex:none;">
-                                <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearchDueReport" type="submit" data-name="">Search</button>
-                            </div>
+   
+    <div>
+        <h4 class="clearfix">List of Due Report</h4>
+        <div class="card p-2">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Batch</label>
                         </div>
-                        </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <button class="btn btn-success pull-right" id="generatePdf">Generate PDF</button>
-                        <button class="btn btn-success pull-right" id="generatePdfInline" style="margin-right:20px;">Generate PDF1</button>
+                        <select id="searchBatch" class="form-control"></select>
 
                     </div>
-                </div><br/>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div style="width:100%;overflow:auto;" id="divDue">
-                            <table id="tblDueReport" class="table table-bordered table-striped">
-                                @*<thead></thead>*@
-                            </table>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Class</label>
                         </div>
-                        <div style="width:100%;overflow:auto;" id="divDue1">
-                            <table id="tblDueReport1" class="table table-bordered table-striped">
-                                @*<thead></thead>*@
-                            </table>
-                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
                     </div>
                 </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:70px">Month</label>
+                        </div>
+                        <select id="searchMonth" class="form-control">
+                            <option value="">--select--</option>
+                            <option value="01">Baisakh</option>
+                            <option value="02">Jesth</option>
+                            <option value="03">Asar</option>
+                            <option value="04">Sawan</option>
+                            <option value="05">Bhadau</option>
+                            <option value="06">Aaswin</option>
+                            <option value="07">Kartik</option>
+                            <option value="08">Mangsir</option>
+                            <option value="09">Push</option>
+                            <option value="10">Magh</option>
+                            <option value="11">Falgun</option>
+                            <option value="12">Chait</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px">Student Id</label>
+                        </div>
+                        <input type="text" class="form-control" name="StudentId" id="searchStudentid" />
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchDueReport" type="submit" data-name="">Search</button>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-12">
+                    <button class="btn btn-success pull-right" id="generatePdf">Generate PDF</button>
+                    <button class="btn btn-success pull-right" id="generatePdfInline" style="margin-right:20px;">Generate PDF1</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;" id="divDue">
+                        <table id="tblDueReport" class="table table-bordered table-striped"></table>
+                    </div>
+                    <div style="width:100%;overflow:auto;" id="divDue1">
+                        <table id="tblDueReport1" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
             </div>
         <div id="divFollowUp">
     

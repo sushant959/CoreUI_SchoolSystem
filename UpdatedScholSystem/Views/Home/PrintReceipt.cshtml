@@ -2,9 +2,10 @@
     ViewBag.Title = "PrintReceipt";
     Layout = null;
 }
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
-@Scripts.Render("~/bundles/jquery")
+<link href="~/Content1/bootstrap.css" rel="stylesheet" />
+<link href="~/Content1/Site.css" rel="stylesheet" />
+<script src="~/Scripts1/modernizr-2.8.3.js"></script>
+<script src="~/Scripts1/jquery-3.3.1.js"></script>
 
 <style>
     .title-header {
@@ -150,7 +151,7 @@
                     </tbody>
                 </table>
             </div>
-           
+
             <br />
             <div>
                 <table style="width:100%">
@@ -159,7 +160,7 @@
                             <td style="text-align:end">
                                 <label>Signature:</label> <input type="text" class="text-line" />
                             </td>
-                            
+
                         </tr>
 
                     </tbody>
@@ -203,7 +204,7 @@
                 var details = result[1];
                 var advanced = result[2];
                 debugger;
-              
+
                 var now = new Date();
                 var nowDate = now.toISOString().split('T')[0];
                 var studentname = [info[0]["FirstName"], ' ', info[0]["LastName"]].join('');
@@ -215,7 +216,7 @@
                 $("#receiptno").html(details[0]['ReceiptId']);
                 var total = details[0]["TotalAmount"] - details[0]["Fine"] + details[0]["Discount"];
                 $("#totalamount").html(total);
-                
+
                 $("#fine").html(details[0]["Fine"]);
                 $("#discount").html(details[0]["Discount"]);
                 $("#total").html(details[0]["TotalAmount"]);

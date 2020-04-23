@@ -323,7 +323,7 @@
                 <div class="col-md-6">
                     <div class="input-group mt-2">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:120px;">Amount Remain</label>
+                            <label class="input-group-text" id="amountremain" style="width:120px;">Amount Remain</label>
                         </div>
                         <input type="text" class="form-control" name="DueAmount" id="receiptAmountRemain" readonly />
                     </div>
@@ -359,7 +359,7 @@
                 <div class="col-sm-12 text-center">
                     <input type="submit" value="Submit" class="btn btn-default" id="btnSaveReceipt" />
                     <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
-    border-radius:20px !important;" id="btnCancel" onclick="cancel" value="Cancel" />
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
                 </div>
             </div>
         </form>
@@ -454,41 +454,65 @@
     </div>
 </div>
 
-<div id="modalBiliingDetails" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalBillingDetails" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Billing Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="" class="well well-sm">
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Student Id:&nbsp;</label>
-                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Name:&nbsp;</label>
-                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
+                <form id="form">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Student Id</label>
+                                </div>
+                                <input class="form-control" type="text" id="showstudentid" readonly />
+                            </div>
 
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Session:&nbsp;</label>
-                            <span id="showsession" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Month:&nbsp;</label>
-                            <span id="showmonth" style="flex:2"></span>&nbsp;&nbsp;
-
-                        </div><br />
-                        <h5>List of Billing Details</h5>
-                        <div style="width:100%;overflow:auto;">
-                            <table id="tblShowBillingDetails" class="table table-bordered table-striped">
-                                @*<thead></thead>*@
-                            </table>
                         </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Name</label>
+                                </div>
+                                <input class="form-control" type="text" id="showname" readonly />
+                            </div>
 
-                    </form>
-                </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Session</label>
+                                </div>
+                                <input class="form-control" type="text" id="showsession" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Month</label>
+                                </div>
+                                <input class="form-control" type="text" id="showmonth" readonly/>
+                            </div>
+
+                        </div>
+                    </div><br/>
+                    <h5>List of Billing Details</h5>
+                    <div >
+                        <table id="tblShowBillingDetails" class="table table-bordered">
+
+                        </table>
+                    </div>
+                </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -1012,13 +1036,13 @@
             success: function (result) {
                 debugger;
                 var Name = result[0]["FirstName"] + " " + result[0]["LastName"];
-                $("#modalBiliingDetails").modal('show');
-                $("#showstudentid").html(result[0]["StudentId"]);
-                $("#showname").html(Name);
-                $("#showsession").html(result[0]["Batch"]);
+                $("#modalBillingDetails").modal('show');
+                $("#showstudentid").val(result[0]["StudentId"]);
+                $("#showname").val(Name);
+                $("#showsession").val(result[0]["Batch"]);
                 var Month = convertMonth(result[0]["Month"]);
                 debugger;
-                $("#showmonth").html(Month);
+                $("#showmonth").val(Month);
                 $("#tblShowBillingDetails").dataTable({
                     data: result,
                     "destroy": true,
@@ -1161,15 +1185,10 @@
                 }
                 else if (result === true)
                 {
-                    $('#modalInfo').modal('show');
-
-                    $('#modalInfo .modal-title').html("Conform");
-                    $('#modalInfo .modal-body').html("Payment for this month already paid");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
-
-                    })
+                    toastr.error("Payment for this month already paid");
+                   
+                   
+                  
                 }
                 else {
                     debugger;
@@ -1652,19 +1671,17 @@
 
     var deleteBillingDetails = function (id, month, studentid,batch) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Billing details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Month : <b> " + month + "</b><br/> Session: <b> " + batch +"</b>");
+       
 
-        $('#btnDeleteModal').data('id', id);
-    }
-
-    $("#btnDeleteModal").on('click', function (e) {
-        e.preventDefault();
-        debugger;
-        var id = $(this).data('id');
-        debugger;
-        $.ajax({
+        swal({
+            title: "Do you want to delete Billing details of:  StudentId :  " + studentid + "  Month : " + month + "  Session:  " + batch + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                    $.ajax({
             url: "/api/DeleteBillingDetails",
             method: "POST",
             data: {
@@ -1674,13 +1691,7 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-                $('#modalDelete').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Deleted successfully.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
+                toastr.success("Deleted Successfully");
                     debugger;
                     var batch = $("#searchBatch").val();
                     var _class = $("#searchClass").val();
@@ -1714,7 +1725,7 @@
                         })
                     
                
-                })
+               
             },
 
             error: function (e) {
@@ -1722,8 +1733,11 @@
                 alert(e.statusText);
             }
         })
+            }
+        })
+    }
 
-    })
+    
     var cancel = function () {
         debugger;
         swal({
@@ -1832,45 +1846,32 @@
         var fd = $("#deleteMultipleBill").serializeJSON();
         if (fd.BillingId == undefined) {
             debugger;
-            $('#modalInfo').modal('show');
-            $('#modalInfo .modal-title').html("Error!");
-            $('#modalInfo .modal-body').html("Please Select row to delete billing");
-            $(".redirect").on('click', function () {
-                debugger;
-                $('#modalInfo').modal('hide');
-
-            })
+            toast.dangerMode("Please select row to delete billing");
         
         }
         else {
             var count = fd.BillingId.length;
-            $('#modalMultipleDelete').modal('show');
-            $('#modalMultipleDelete .modal-title').html("Conform");
-            $('#modalMultipleDelete .modal-body').html("Do you want to delete Billing details of:  " + count + " Student ?</b> ");
-            debugger;
-         
-        }
-       
-    })
-
-    $("#btnDeleteMultipleModal").on("click", function (e) {
-        e.preventDefault();
-        debugger;
-        var fd = $("#deleteMultipleBill").serializeJSON();
+           
+            swal({
+                title: "Do you want to delete Billing details of:  " + count + " Student ? ",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                var fd = $("#deleteMultipleBill").serializeJSON();
         $.ajax({
             url: "/api/MultipleBillingDetails",
             method: "POST",
             data: fd,
             dataTable: "json",
             success: function (result) {
-                debugger;
-                $('#modalMultipleDelete').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Deleted successfully.");
-                $(".redirect").on('click', function () {
+               
+                toastr.success("Deleted successfully.");
+               
                     debugger;
-                    $('#modalInfo').modal('hide');
+                    
                     debugger;
                     var batch = $("#searchBatch").val();
                     var _class = $("#searchClass").val();
@@ -1908,13 +1909,20 @@
                         })
                     }
 
-                })
+               
             },
             error: function (e) {
 
             }
         })
+            }
+        })
+            debugger;
+         
+        }
+       
     })
+
 
     $("#undodelete").on('click', function (e) {
         e.preventDefault();
