@@ -560,10 +560,10 @@ namespace UpdatedScholSystem.Service
             {
                 MySqlCommand cmd = new MySqlCommand("getallpresentattendance", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Batch", Batch);
-                cmd.Parameters.AddWithValue("@DateFrom", DateFrom);
-                cmd.Parameters.AddWithValue("@DateTo", DateTo);
-                cmd.Parameters.AddWithValue("@CompanyId", CompanyId);
+                cmd.Parameters.AddWithValue("@_Batch", Batch);
+                cmd.Parameters.AddWithValue("@_DateFrom", DateFrom);
+                cmd.Parameters.AddWithValue("@_DateTo", DateTo);
+                cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);
                 adap.SelectCommand = cmd;
                 conn.Open();
                 adap.Fill(dt);

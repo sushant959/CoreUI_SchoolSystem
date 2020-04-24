@@ -4,38 +4,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row" id="divStudentInfo">
-    <div class="col-sm-12">
-        <div class="panel panel-default" style="background-color:floralwhite !important;">
-            <div class="panel-heading" id="titleStudentAttendanceForm" style="background-color:aqua">Student Attendance Form</div>
-            <div class="panel-body" style="background-color:transparent">
-                <form id="formStudentAttendance">
-                    <div class="flexContainer">
-                        <input type="hidden" name="CompanyId" />
-                        <label style="flex:1.3">Date:&nbsp;&nbsp;</label>
-                        <input type="text" name="Date" class="form-control nepali-calendar" id="txtdatefield" placeholder="साल-महिना-गते" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">Batch :&nbsp;</label>
-                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                       
-                    </div><br />
-                          <div class="flexContainer">
-                              <label style="flex:1.3">Class:&nbsp;&nbsp;</label>
-                              <select id="class" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                              <label style="flex:1.3">Section :&nbsp;</label>
-                              <select id="section" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                          </div><br />
-                    <div id="tblStudentList" class="add well well-sm" style="width:100%;overflow:auto;">
-
-                    </div><br/>
-                    <div class="form-group">
-                        <div class="col-sm-12 text-center">
-                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
-                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+<div class="row" id="divStudentAttendanceForm">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-title">Student Attendance Form</h4>
+        <form id="formStudentInfo">
+            <div class="form-row">
+                <input type="hidden" name="CompanyId" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Date</label>
                         </div>
+                        <input type="text" name="Date" id="txtdatefield" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
                     </div>
-                </form>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Batch</label>
+                        </div>
+                        <select id="batch" name="Batch" class="form-control"></select>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="form-row">
+                <input type="hidden" name="CompanyId" />
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Class</label>
+                        </div>
+                        <select id="class" class="form-control"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Section</label>
+                        </div>
+                        <select id="section" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div id="tblStudentList" class="add" style="width:100%;overflow:auto">
+
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12 text-center">
+                    <input type="submit" value="Submit" class="btn btn-default" id="btnsubmit" />
+                    <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <div class="modal fade" tabindex="-1" id="modalInfo"
@@ -178,7 +203,7 @@
             success: function (result) {
                 debugger;
                 var i = 0;
-                var html= `<table class="bordered-table table-striped">`;
+                var html= `<table class="table table-bordered">`;
                 html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Class</th><th>Section</th><th>Attendance</th></thead>`;
                 html += ` <tbody class='rowTable'>`;
 
@@ -222,7 +247,7 @@
             success: function (result) {
                 debugger;
                 var i = 0;
-                var html = `<table class="bordered-table table-striped">`;
+                var html = `<table class="table table-bordered">`;
                 html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Class</th><th>Section</th><th>Attendance</th></thead>`;
                 html += ` <tbody class='rowTable'>`;
 
@@ -267,7 +292,7 @@
             success: function (result) {
                 debugger;
                 var i = 0;
-                var html = `<table class="bordered-table table-striped">`;
+                var html = `<table class="table table-bordered">`;
                 html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Class</th><th>Section</th><th>Attendance</th></thead>`;
                 html += ` <tbody class='rowTable'>`;
 
@@ -311,15 +336,10 @@
             data: fd,
             dataType: "json",
             success: function (result) {
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html(" Successful.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
+                toastr.success("Added Successfully");
                     $("form").find("input[type=text],select").val("");
                     location.href = "/Home/StudentAttendance";
-                })
+                
             },
             error: function (e) {
                 console.error(e);
@@ -332,16 +352,22 @@
     var cancel = function () {
         debugger;
       
-            $('#modalCancel').modal('show');
-            $('#modal-title1').html("Confirm");
-            $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willCancel) => {
+            if (willCancel) {
+
+                location.href = "/Home/StudentAttendance";
+
+
+            }
+        })
         
     }
 
-    $("#btnCancelModal").on('click', function () {
-        debugger;
-        $('#modalCancel').modal('hide');
-        location.href = "/Home/StudentAttendance";
-    });
+  
 </script>
 

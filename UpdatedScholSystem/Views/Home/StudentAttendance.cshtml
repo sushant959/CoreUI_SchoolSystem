@@ -3,82 +3,125 @@
     ViewBag.Title = "StudentAttendance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="StudentDashboard">
-        <a href="/Home/StudentAttendanceForm" class="btn btn-success">Add Student Attendance</a>
-</div><hr/>
-<div id="divStudentAttendanceReport">
-            <h4 id="reportname" style="color:orangered"></h4>
-    <div class="flexContainer" style="justify-content:center">
-        <div style="text-align:center;">
-            <div class="flexContainer" style="margin-left:30px;">
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Batch</label>
-                    <select id="searchBatch" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Class</label>
-                    <select id="searchClass" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Section</label>
-                    <select id="searchSection" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center">
-                    <label>Date Range</label>
-                    <div class="flexContainer">
-                        <input type="text" id="datefrom" class="form-control nepali-calendar" placeholder="साल-महिना-गते" style="max-width:120px;" />↔
-                        <input type="text" id="dateto" class="form-control nepali-calendar" placeholder="साल-महिना-गते" style="max-width:120px;" />
+<div id="StudentAttendanceDashboard">
+    <a href="/Home/StudentAttendanceForm" class="btn btn-default pull-right"> + Add Student Attendance</a>
+
+    <div id="divStudentAttendanceReport">
+        <h4 class="clearfix" id="reportname" style="color:orangered"></h4>
+        <div class="card p-3">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Batch</label>
+                        </div>
+                        <select id="searchBatch" class="form-control"></select>
+
                     </div>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none;">
-                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
                 </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Class</label>
+                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:60px">Section</label>
+                        </div>
+                        <select id="searchSection" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:90px">DateRange</label>
+                        </div>
+                        <input type="text" id="datefrom" placeholder="साल-महिना-गते" class="form-control nepali-calendar" /> <label style="margin-top:6px;">↔</label>
+                        <input type="text" id="dateto" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearch" type="submit" data-name="">Search</button>
+                </div>
+            </div><br />
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblStudentAttendanceReport" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
-    <br />
-
-    <div class="row">
-        <div class="col-sm-10">
-        </div>
-
-        <br />
-    </div>
-    <div class="row">
-        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
-            <table id="tblStudentAttendanceReport" class="table table-bordered table-striped" style="width:100%"></table>
-        </div>  
     </div>
 </div>
 
-<div id="modalShowAttendance" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+
+<div id="modalShowAttendance" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Attendance Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="" class="well well-sm">
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Student Id:&nbsp;</label>
-                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Name:&nbsp;</label>
-                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Session:&nbsp;</label>
-                            <span id="showsession" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Date Range:&nbsp;</label>
-                            <span id="showdate" style="flex:2"></span>&nbsp;&nbsp;
-                        </div><br />
-                        <div style="width:100%;overflow:auto;">
-                            <table id="tblShowAttendanceDetails" class="table table-bordered table-striped">
-                            </table>
+                <form id="form">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Student Id</label>
+                                </div>
+                                <input class="form-control" type="text" id="showstudentid" readonly />
+                            </div>
+
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Name</label>
+                                </div>
+                                <input class="form-control" type="text" id="showname" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Session</label>
+                                </div>
+                                <input class="form-control" type="text" id="showsession" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Date Range</label>
+                                </div>
+                                <input class="form-control" type="text" id="showdate" readonly />
+                            </div>
+
+                        </div>
+                    </div><br />
+                   
+                    <div>
+                         <table id="tblShowAttendanceDetails" class="table table-bordered" style="width:100%;overflow:auto"></table>       
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -189,7 +232,7 @@
 
     })
     var showResultData = function (data,datefrom,dateto) {
-       
+
         $("#tblStudentAttendanceReport").dataTable({
             data: data,
             'destroy': true,
@@ -203,16 +246,16 @@
                 {
                     extend: 'csv',
                     footer: false,
-                   
+
                 },
                 {
                     extend: 'excel',
                     footer: false,
-                  
+
                 }
             ],
             columns: [
-             
+
                 {
                     'title': 'SN',
                     'data': 'SN',
@@ -252,7 +295,7 @@
                         data = "<a href='#' onclick='showPresentDays(\"" + row.Batch + "\",\"" + row.StudentId + "\",\"" + datefrom + "\",\"" + dateto + "\")'>"+ row.Present +"</a>";
                         return data;
                     }
-                    
+
                 },
                 {
                     'title': 'Absent',
@@ -286,11 +329,11 @@
                 debugger;
                 var Name = result[0]["FirstName"] + " " + result[0]["LastName"];
                 $("#modalShowAttendance").modal('show');
-                $("#showstudentid").html(studentid);
-                $("#showname").html(Name);
-                $("#showsession").html(batch);
+                $("#showstudentid").val(studentid);
+                $("#showname").val(Name);
+                $("#showsession").val(batch);
                 debugger;
-                $("#showdate").html(datefrom + " to " + dateto);
+                $("#showdate").val(datefrom + " to " + dateto);
                 $("#tblShowAttendanceDetails").dataTable({
                     data: result,
                     "destroy": true,
@@ -317,7 +360,7 @@
                             'title': 'Attendance',
                             'data': 'Attendance'
                         },
-                       
+
                     ]
                 });
             },

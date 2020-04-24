@@ -5,22 +5,21 @@
 }
 
 <div id="StaffDashboard">
-        <a href="/Home/StaffForm" class="btn btn-success">Add New Staff</a>
-</div><hr/>
-<br/>
-<div id="divteacherReport">
-    <div class="row">
-        <div class="col-sm-3">
-            <h4 id="reportname">List of Staff Details </h4>
-        </div>
+    <a href="/Home/StaffForm" class="btn pull-right btn-default"> + Add New Staff</a>
 
-        <br />
-    </div>
-    <div class="row">
-        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
-            <table id="tblTeacherReport" class="table table-bordered table-striped" style="width:100%"></table>
+    <div id="divTeacherReport">
+        <h4 class="clearfix" id="reportname">List of all Staff Details </h4>
+        <div class="card p-3">
+           
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblTeacherReport" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+
+            </div>
         </div>
-       
     </div>
 </div>
 <div class="modal fade" tabindex="-1" id="modalInfo"
