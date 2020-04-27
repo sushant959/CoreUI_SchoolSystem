@@ -188,45 +188,35 @@
 
     var deleteTeacher = function (id,firstname,lastname) {
         debugger;
-        $('#modalDeleteTeacher').modal('show');
-        $('#modalDeleteTeacher .modal-title').html("Confirm");
-        $('#modalDeleteTeacher .modal-body').html("You're about to delete the record of Staff :<b> " + firstname + " " + lastname +"</b ><br/> Are you sure ? ");
+        
+          swal({
+              title: "You're about to delete the record of Staff : " + firstname + " " + lastname + " Are you sure ? ",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
 
-        $('#btnDeleteModalTeacher').data('id', id);
-        debugger;
-    }
+                $.ajax({
+                    url: "/api/DeleteTeacher",
+                    method: "Post",
+                    data: {
+                        StaffId: id,
+                        CompanyId:@Session["CompanyId"],
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        toastr.success("Deleted Successfully");
+                        loadData();
+                            }
+                        })
+                    }
+                })
 
-    $("#btnDeleteModalTeacher").on('click', function (e) {
-        debugger;
-        e.preventDefault();
-        var id = $(this).data('id');
-        $.ajax({
-            url: "/api/DeleteTeacher",
-            method: "Post",
-            data: {
-                StaffId: id,
-                CompanyId:@Session["CompanyId"],
-            },
-            dataType: "json",
-            success: function (result) {
-                debugger;
-                $('#modalDeleteTeacher').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html("Deleted Successfully");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
-                    debugger;
-                    loadData();
-                });
-
-            },
-            error: function (e) {
-                console.error(e);
-                alert(e.statusText);
             }
-        })
-    })
+      
+    
 </script>
 

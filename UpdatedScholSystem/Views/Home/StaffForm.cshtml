@@ -48,11 +48,11 @@
 
                     </div>
                     @*<div class="input-group mt-2">
-                <div class="input-group-prepend">
-                    <label style="width:130px;"></label>
-                </div>
-                <label id="error_email" style="color: red;"></label>
-            </div>*@
+                    <div class="input-group-prepend">
+                        <label style="width:130px;"></label>
+                    </div>
+                    <label id="error_email" style="color: red;"></label>
+                </div>*@
 
                 </div>
 
@@ -123,290 +123,284 @@
                     </div>
 
                 </div>
-                <div class="col-sm-6"></div><br /><br/>
+                <div class="col-sm-6"></div>
+            </div><br />
+            <div id="education">
+
                 <h5>Education</h5>
-                <div id="education">
-                    <div id="degreedetails">
-                        <div class="form-row">
-                            <input type="hidden" name="Education[0][EducationId]" />
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Degree</label>
-                                    </div>
-                                    <input type="text" name="Education[0][Degree]" class="form-control" required />
+                <div id="degreedetails">
+                    <div class="form-row">
+                        <input type="hidden" name="Educations[0][EducationId]" />
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Degree</label>
                                 </div>
+                                <input type="text" name="Educations[0][Degree]" class="form-control" required />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Institution</label>
-                                    </div>
-                                    <input type="text" name="Education[0][Institution]" class="form-control" required />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Institution</label>
                                 </div>
+                                <input type="text" name="Educations[0][Institution]" class="form-control" required />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Total Marks</label>
-                                    </div>
-                                    <input type="text" name="Education[0][TotalMarks]" class="form-control" onkeypress="return isNumberKey(event)" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Total Marks</label>
                                 </div>
+                                <input type="text" name="Educations[0][TotalMarks]" class="form-control" onkeypress="return isNumberKey(event)" />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Division</label>
-                                    </div>
-                                    <input type="text" name="Education[0][Division]" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Division</label>
                                 </div>
+                                <input type="text" name="Educations[0][Division]" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="pull-right">
-                    <input type="button" style="border-radius:10px;margin-top:5px;margin-right:5px;" id="btnAddRow" data-rows="1" value="+ Add more" />
-                    <input type="button" style="border-radius:10px;margin-top:5px;" id="btnRemoveRow" value="- Remove one" />
-                </div>
-                <br />
-                <br/>
+            </div>
+            <div class="pull-right">
+                <input type="button" style="border-radius:10px;margin-top:5px;margin-right:5px;" id="btnAddRow" data-rows="1" value="+ Add more" />
+                <input type="button" style="border-radius:10px;margin-top:5px;" id="btnRemoveRow" value="- Remove one" />
+            </div>
+            <br />
 
-                <div id="experience">
+            <div id="experience">
                 <h5>Previous Experience</h5>
-                    <div id="experiencedetails">
-                        <div class="form-row">
-                            <input type="hidden" name="Experience[0][ExperienceId]" />
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Organisation</label>
-                                    </div>
-                                    <input type="text" name="Experience[0][Organisation]" class="form-control" required />
+                <div id="experiencedetails">
+                    <div class="form-row">
+                        <input type="hidden" name="Experiences[0][ExperienceId]" />
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Organisation</label>
                                 </div>
+                                <input type="text" name="Experiences[0][Organisation]" class="form-control" required />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Post</label>
-                                    </div>
-                                    <input type="text" name="Experience[0][Post]" class="form-control" required />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Post</label>
                                 </div>
+                                <input type="text" name="Experiences[0][Post]" class="form-control" required />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Date From</label>
-                                    </div>
-                                    <input type="text" id="dateFrom" name="Experience[0][DateFrom]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Date From</label>
                                 </div>
+                                <input type="text" id="dateFrom" name="Experiences[0][DateFrom]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group mt-2">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" style="width:130px;">Date To</label>
-                                    </div>
-                                    <input type="text" id="dateTo" name="Experience[0][DateTo]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Date To</label>
                                 </div>
+                                <input type="text" id="dateTo" name="Experiences[0][DateTo]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="pull-right">
-                    <input type="button" style="border-radius:10px;margin-top:5px;margin-right:5px;" id="btnAddRowExp" data-rows="1" value="+ Add more" />
-                    <input type="button" style="border-radius:10px;margin-top:5px;" id="btnRemoveRowExp" value="- Remove one" />
-                </div><br />
-                <br />
-                <h5>Current Address</h5>
-                <div class="form-row">
-                    <input type="hidden" name="CurrentAddress[AddressId]" />
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">House No.</label>
-                            </div>
-                            <input type="text" class="form-control" name="CurrentAddress[Qno]" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">Street</label>
-                            </div>
-                            <input type="text" class="form-control" name="CurrentAddress[Street]" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">Municipality</label>
-                            </div>
-                            <input type="text" class="form-control" name="CurrentAddress[Municipality]" />
-                        </div>
-                    </div>
+            </div>
+            <div class="pull-right">
+                <input type="button" style="border-radius:10px;margin-top:5px;margin-right:5px;" id="btnAddRowExp" data-rows="1" value="+ Add more" />
+                <input type="button" style="border-radius:10px;margin-top:5px;" id="btnRemoveRowExp" value="- Remove one" />
+            </div><br />
+            <h5>Documents</h5>
 
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Country</label>
-                            </div>
-                            <select class="form-control country" name="CurrentAddress[Country]" id="selectCountry"></select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">State</label>
-                            </div>
-                            <select class="form-control state" name="CurrentAddress[State]" id="selectCurrentState"></select>
-                        </div>
-                    </div>
+            <div id="docList">
 
-                </div><br />
+            </div>
 
-                <div class="form-inline" style="color:green;"><input type='checkbox' class='checkbox' id="sameAddress" value='true' />&nbsp;&nbsp;Permanent address same as Current address</div><br />
-
-                <h5>Permanent Address</h5>
-                <div class="form-row">
-                    <input type="hidden" name="PermanentAddress[AddressId]" />
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">House No.</label>
-                            </div>
-                            <input type="text" class="form-control" name="PermanentAddress[Qno]" />
+            <div class="form-row">
+                <div class="col-md-12">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:150px;margin-right:10px;">Upload Documents:</label>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">Street</label>
-                            </div>
-                            <input type="text" class="form-control" name="PermanentAddress[Street]" />
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:100px;">Municipality</label>
-                            </div>
-                            <input type="text" class="form-control" name="PermanentAddress[Municipality]" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Country</label>
-                            </div>
-                            <select class="form-control country" name="PermanentAddress[Country]" id="selectCountry"></select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">State</label>
-                            </div>
-                            <select class="form-control state" name="PermanentAddress[State]" id="selectCurrentState"></select>
-                        </div>
-                    </div>
-
-                </div><br />
-                <h5>Emergency Contact</h5>
-                <div class="form-row">
-                    <input type="hidden" name="EmergencyDetails[EmergencyContactId]" />
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Parents</label>
-                            </div>
-                            <input type="text" name="EmergencyDetails[ParentName]" class="form-control" />
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Contact No.</label>
-                            </div>
-                            <input type="text" name="EmergencyDetails[ContactNumber]" class="form-control number" onkeypress="return isNumberKey(event)" />
-                        </div>
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label style="width:130px;"></label>
-                            </div>
-                            <label class="message" style="color: red;"></label>
-                        </div>
+                        <input type="file" name="Document[]" id="multiFiles" style="margin-top:5px;" multiple />
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Location</label>
-                            </div>
-                            <input type="text" name="EmergencyDetails[Location]" class="form-control" />
+            </div><br />
+            <h5>Current Address</h5>
+            <div class="form-row">
+                <input type="hidden" name="CurrentAddress[AddressId]" />
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">House No.</label>
                         </div>
-
-                    </div>
-                </div><br />
-
-                <h5>Scholarship</h5>
-                <div class="form-row">
-                    <input type="hidden" name="Scholarship[StudentScholarshipId]" />
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Scholarship</label>
-                            </div>
-                            <select class="form-control" name="Scholarship[ScholarshipName]" id="selectScholarshipName"></select>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Provide Details:</label>
-                            </div>
-                            <textarea name="Scholarship[Description]" class="form-control input-sm/"></textarea>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Admission Date</label>
-                            </div>
-                            <input type="text" id="admissiondate" placeholder="साल-महिना-गते" class="form-control nepali-calendar" name="Scholarship[DateOfAdmission]" />
-                        </div>
-
-                    </div>
-                </div><br />
-                <h5>Student Status</h5>
-                <div class="form-row">
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Status</label>
-                            </div>
-                            <select class="form-control" name="Status">
-                                <option value="Active">Active</option>
-                                <option value="NotActive">Not-Active</option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="input-group mt-2">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width:130px;">Student Type</label>
-                            </div>
-                            <select class="form-control" name="StudentType" id="selectStudentType"></select>
-                        </div>
-
+                        <input type="text" class="form-control" name="CurrentAddress[HouseNo]" />
                     </div>
                 </div>
-                <br />
-</form>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Street</label>
+                        </div>
+                        <input type="text" class="form-control" name="CurrentAddress[Street]" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Municipality</label>
+                        </div>
+                        <input type="text" class="form-control" name="CurrentAddress[Municipality]" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Country</label>
+                        </div>
+                        <select class="form-control country" name="CurrentAddress[Country]" id="selectCountry"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">State</label>
+                        </div>
+                        <select class="form-control state" name="CurrentAddress[State]" id="selectCurrentState"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">MobileNo</label>
+                        </div>
+                        <input type="text" class="form-control number" name="CurrentAddress[MobileNo]" onkeypress="return isNumberKey(event)" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label style="width:130px;"></label>
+                        </div>
+                        <label class="message" style="color: red;"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">PhoneNo</label>
+                        </div>
+                        <input type="text" class="form-control phone" name="CurrentAddress[PhoneNo]" onkeypress="return isNumberKey(event)" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label style="width:130px;"></label>
+                        </div>
+                        <label class="error_phone" style="color: red;"></label>
+                    </div>
+                </div>
+            </div><br />
+
+            <div class="form-inline" style="color:green;"><input type='checkbox' class='checkbox' id="sameAddress" value='true' />&nbsp;&nbsp;Permanent address same as Current address</div><br />
+
+            <h5>Permanent Address</h5>
+            <div class="form-row">
+                <input type="hidden" name="PermanentAddress[AddressId]" />
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">House No.</label>
+                        </div>
+                        <input type="text" class="form-control" name="PermanentAddress[HouseNo]" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Street</label>
+                        </div>
+                        <input type="text" class="form-control" name="PermanentAddress[Street]" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:100px;">Municipality</label>
+                        </div>
+                        <input type="text" class="form-control" name="PermanentAddress[Municipality]" />
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Country</label>
+                        </div>
+                        <select class="form-control country" name="PermanentAddress[Country]" id="selectCountry"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">State</label>
+                        </div>
+                        <select class="form-control state" name="PermanentAddress[State]" id="selectCurrentState"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">MobileNo</label>
+                        </div>
+                        <input type="text" class="form-control number" name="PermanentAddress[MobileNo]" onkeypress="return isNumberKey(event)" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label style="width:130px;"></label>
+                        </div>
+                        <label class="message" style="color: red;"></label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">PhoneNo</label>
+                        </div>
+                        <input type="text" class="form-control phone" name="PermanentAddress[PhoneNo]" onkeypress="return isNumberKey(event)" />
+                    </div>
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label style="width:130px;"></label>
+                        </div>
+                        <label class="error_phone" style="color: red;"></label>
+                    </div>
+                </div>
+            </div><br />
+           
+            <h5>Teacher Status</h5>
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Status</label>
+                        </div>
+                        <select class="form-control" name="Status">
+                            <option value="Active">Active</option>
+                            <option value="NotActive">Not-Active</option>
+                        </select>
+                    </div>
+
+                </div>
+               
+              
+            </div>
+            <br />
+        </form>
 
         <div class="form-group">
             <div class="col-sm-12 text-center">
@@ -647,10 +641,10 @@
                     if (edit == "edit") {
                         var html = "";
                         for (var d in result) {
-                            html += `<div class="well well-sm docItem" style="margin-bottom:0px">
-                             <span style="color:darkgoldenrod">${result[d]}</span>
-                             <button class="close" data-filename="${result[d]}" title="delete">&times;</button>
-                             </div>`;
+                            html += ` <div class="form-row"><div class="col-md-6 docItem" style="margin-bottom:0px;background-color:lightgray">
+                                    <a href="/UploadedFiles/teacher/documents/${ result[d]}" target="_blank"> ${result[d]} </a>
+                                <button class="close" data-filename="${ result[d]}" title="Delete this file">&times;</button>
+                            </div></div >`;
 
                         }
                         $("#docList").append(html);
@@ -659,10 +653,10 @@
 
                         var html = "";
                         for (var d in result) {
-                            html += `<div class="well well-sm docItem" style="margin-bottom:0px">
-                             <span style="color:darkgoldenrod">${result[d]}</span>
-                             <button class="close" data-filename="${result[d]}" title="delete" disabled>&times;</button>
-                             </div>`;
+                            html += ` <div class="form-row"><div class="col-md-6 docItem" style="margin-bottom:0px;background-color:lightgray">
+                                    <a href="/UploadedFiles/teacher/documents/${ result[d]}" target="_blank"> ${result[d]} </a>
+                                <button class="close" data-filename="${ result[d]}" title="Delete this file" disabled>&times;</button>
+                            </div></div >`;
 
                         }
                         $("#docList").append(html);
@@ -682,35 +676,34 @@
         e.preventDefault();
         var _this = $(this);
         var filename = _this.data("filename");
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Confirm");
-        $('#modalDelete .modal-body').html("Are You Sure You want to delete document: <br /><b>" + filename + "</b>");
-        $('#btnDeleteModal').data('filename', filename);
-        $('#btnDeleteModal').data('_this', _this);
+
+        swal({
+            title: "Do you want to delete document " + filename + "?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                $.ajax({
+                    url: '/api/DeleteTeacherDocument',
+                    method: 'POST',
+                    dataType: "json",
+                    data: { "filename": filename },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        toastr.success("Deleted Successfully");
+                        _this.parent(".docItem").remove();
+                       
+                    }
+                })
+            }
+        })
     })
 
-    $("#btnDeleteModal").on('click', function (e) {
-        debugger;
-        e.preventDefault();
-        var _this = $(this).data("_this");
-        var filename = $(this).data("filename");
-        debugger;
-        $.ajax({
-            url: '/api/DeleteTeacherDocument',
-            method: 'POST',
-            dataType: "json",
-            data: { "filename": filename },
-            success: function (response) {
-                debugger;
-                $('#modalDelete').modal('hide');
-                _this.parent(".docItem").remove();
-            },
-            error: function (e) {
-                console.error(e);
-                alert(e.statusText);
-            }
-        });
-    });
+   
 
     var getDepartment = function () {
         $.ajax({
@@ -897,13 +890,13 @@
         $("#btnAddRow").data("rows", row + 1);
         var html = `<div id="degreedetails">
                     <div class="form-row">
-                        <input type="hidden" name="Education[${row}][EducationId]" />
+                        <input type="hidden" name="Educations[${row}][EducationId]" />
                         <div class="col-md-6">
                             <div class="input-group mt-2">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:130px;">Degree</label>
                                 </div>
-                                <input type="text" name="Education[${row}][Degree]" class="form-control" required />
+                                <input type="text" name="Educations[${row}][Degree]" class="form-control" required />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -911,7 +904,7 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:130px;">Institution</label>
                                 </div>
-                                <input type="text" name="Education[${row}][Institution]" class="form-control" required />
+                                <input type="text" name="Educations[${row}][Institution]" class="form-control" required />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -919,7 +912,7 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:130px;">Total Marks</label>
                                 </div>
-                                <input type="text" name="Education[${row}][TotalMarks]" class="form-control" onkeypress="return isNumberKey(event)" />
+                                <input type="text" name="Educations[${row}][TotalMarks]" class="form-control" onkeypress="return isNumberKey(event)" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -942,13 +935,13 @@
         $("#btnAddRowExp").data("rows", row + 1);
         var html = `<div id="experiencedetails">
                         <div class="form-row">
-                            <input type="hidden" name="Experience[${row}][ExperienceId]" />
+                            <input type="hidden" name="Experiences[${row}][ExperienceId]" />
                             <div class="col-md-6">
                                 <div class="input-group mt-2">
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:130px;">Organisation</label>
                                     </div>
-                                    <input type="text" name="Experience[${row}][Organisation]" class="form-control" required />
+                                    <input type="text" name="Experiences[${row}][Organisation]" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -956,7 +949,7 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:130px;">Post</label>
                                     </div>
-                                    <input type="text" name="Experience[${row}][Post]" class="form-control" required />
+                                    <input type="text" name="Experiences[${row}][Post]" class="form-control" required />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -964,7 +957,7 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:130px;">Date From</label>
                                     </div>
-                                    <input type="text" id="dateFrom" name="Experience[${row}][DateFrom]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                                    <input type="text" id="dateFrom" name="Experiences[${row}][DateFrom]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -972,7 +965,7 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:130px;">Date To</label>
                                     </div>
-                                    <input type="text" id="dateTo" name="Experience[${row}][DateTo]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
+                                    <input type="text" id="dateTo" name="Experiences[${row}][DateTo]" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
                                 </div>
                             </div>
                         </div>
@@ -986,7 +979,7 @@
         debugger;
         var _this = $(this);
         var id = _this.val();
-        var target = _this.siblings(".state");
+        var target = $(this).parent().parent().siblings().find(".state");
         $.ajax({
             url: "/api/GetStates/",
             method: "GET",
@@ -1018,9 +1011,19 @@
             location.href = "/Home/StaffManagement";
         }
         else {
-            $('#modalCancel').modal('show');
-            $('#modal-title1').html("Confirm");
-            $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+            swal({
+                title: "Are You sure You want to cancel it ?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+
+                    location.href = "/Home/StaffManagement";
+
+
+                }
+            })
         }
     }
 
@@ -1119,20 +1122,21 @@
                 debugger;
                 SaveDocument(data);
 
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html(" Successful.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
+               
+                   
                     $("form").find("input[type=text],input[type=file],textarea,select").val("");
                     $("#education").empty();
                     $("#experience").empty();
                     $("#docList").empty();
-                    location.href = "/Home/StaffManagement";
-                    loadData();
+                    toastr.success("Added Successfully");
+                    window.setTimeout(function () {
+                        location.href = "/Home/StaffManagement";
+                        loadData();
+                    }, 2000);
+                   
+                    
 
-                })
+               
             },
             error: function (e) {
                 console.error(e);
