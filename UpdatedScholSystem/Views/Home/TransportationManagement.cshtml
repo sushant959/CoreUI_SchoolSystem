@@ -13,128 +13,168 @@
     </label>
 </div>
 <br /><br />
-      <div id="divstartpoint">
-          <div class="row">
-              <div class="col-sm-3">
-                  <h4 id="batchname"></h4>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-6">
-                      <h4 id="titlestartpoint" style="color:orangered"></h4>
-                      <table id="tblStartPoint" class="table table-bordered table-striped" style="width:100%"></table>
-              </div>
-          </div>
-      </div>
-<div id="divStartPlaceDetails">
-    <br />
+<div id="divstartpoint">
+    <div class="row">
+        <div class="col-sm-3">
+            <h4 id="batchname"></h4>
+        </div>
+    </div>
+    <div class="card p-3">
+        <h4 id="titlestartpoint" style="color:orangered"></h4>
+        <div style="width:100%;overflow:auto; max-height:80vh">
+            <table id="tblStartPoint" class="table table-bordered">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row" id="divStartPlaceDetails">
+    <div class="col-md-3"></div>
     <div class="col-md-6">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Start Place</h4>
-            <form id="formStartPoint" class="well well-sm">
-                <div class="flexContainer">
-                <input type="hidden" name="PlaceId" />
-                <input type="hidden" name="CompanyId" />
-                    <label style="flex:1">Start Place :&nbsp;</label>
-                    <input type="text" class="form-control" name="Place" style="flex:1.5" required />&nbsp;&nbsp;
-                </div><br />
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" style="width:70px;" type="submit" id="btnSaveStartPoint">Add</button>
-                </div>
-            </form>
+        <div class="card p-3">
+            <div class="class-body">
+                <h4 class="card-title">Add Start Place</h4><hr />
+                <form id="formStartPoint" class="form-row">
+
+                    <input type="hidden" name="CompanyId" id="companyid" value="" />
+                    <input type="hidden" name="PlaceId" />
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Start Place</label>
+                            </div>
+                            <input type="text" name="Place" class="form-control" />
+                            <button class="btn btn-primary" id="btnSaveStartPoint" type="submit" style="margin-left:10px;" data-name="">Add</button>
+                        </div>
+                    </div>
+                  
+
+                </form>
+            </div>
         </div>
     </div>
 </div>
 <div id="divTransportationDetails">
     <br />
-    <div class="col-md-11">
-        <div class="thumbnail">
-            <h4 class="well-sm">Add Transportation Fee</h4>
-            <form id="formtransportation" class="well well-sm">
-                <div class="flexContainer">
-                    <div style="flex:none; text-align:center">
-                        <label>Place</label>
-                        <input type="hidden" name="TransportationId" value="" />
-                        <input type="hidden" name="CompanyId" />
-                        <div class="flexContainer">
-                            <input type="text" id="placefrom" class="form-control" placeholder="start" style="max-width:120px;" required readonly/>↔
-                            <input type="text" name="PlaceTo" class="form-control" placeholder="destination" style="max-width:120px;" required />
+    <div class="col-md-10 offset-1">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add Transportation Fee</h4><hr />
+                <form id="formtransportation">
+                    <div class="form-row mb-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Place</label>
+                                    <input type="hidden" name="TransportationId" />
+                                    <input type="hidden" name="CompanyId" />
+                                </div>
+                                <input type="text" id="placefrom" class="form-control" placeholder="start" readonly /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="PlaceTo" class="form-control" placeholder="destination" />
+                            </div>
                         </div>
-                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <div style="flex:none; text-align:center">
-                        <label>Distance(In Km)</label>
-                        <div class="flexContainer">
-                            <input type="text" name="DistaneFrom" class="form-control" placeholder="From(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
-                            <input type="text" name="DistanceTo" class="form-control" placeholder="To(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                    </div>
+                   <div class="form-row mb-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Distance(In Km)</label>
+                                   
+                                </div>
+                                <input type="text" name="DistanceFrom" class="form-control" placeholder="From(In km)" /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="DistanceTo" class="form-control" placeholder="To(In km)" />
+                            </div>
                         </div>
-                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                     <div class="form-row mb-2">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Amount</label>
+                                   
+                                </div>
+                                <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" onkeyup="return isNumberKey(event)" /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" onkeyup="return isNumberKey(event)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row mb-2">
+                        <div class="col-md-6">
+                           
+                        </div>
+                        <div class="col-md-6">
 
-                    <div style="flex:none; text-align:center">
-                        <label>Amount</label>
-                        <div class="flexContainer">
-                            <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
-                            <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
-                        </div>
-                    </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                </div>
-                <div class="pull-right">
-                    <button class="btn btn-warning btn-block" id="btnSaveTransportationDetails">Add</button>
-                </div>
+                            <button class="btn btn-primary pull-right" id="btnSaveTransportationDetails" type="submit" style="margin-left:10px;" data-name="">Add</button>
 
-            </form>
-        </div><br />
-    </div>
-    <div class="col-md-12">
-        <div id="transportationDetails" style="width:100%;overflow:auto;">
-            <h4 id="titlename" style="color:orangered"></h4>
-            <table id="tblTransportationDetails" class="table table-bordered table-striped" style="width:100%"></table>
-        </div><br /><br />
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <div class="form-row">
+                    <h5 id="titlename">List of all Fine</h5>
+                    <table id="tblTransportationDetails" class="table table-bordered">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div id="modalEditTransport" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm" style="width:900px!important">
+<div id="modalEditTransport" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
                 <h4 class="modal-title">Edit Transport Fee</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalTransportDetails" class="well well-sm">
-                        <div class="flexContainer">
-                            <div style="flex:none; text-align:center">
-                                <label>Place</label>
-                                <input type="hidden" name="TransportationId" value="" />
-                                <input type="hidden" name="CompanyId" />
-                                <div class="flexContainer">
-                                    <input type="text" name="PlaceFrom" class="form-control" placeholder="start" style="max-width:120px;" readonly required />↔
-                                    <input type="text" name="PlaceTo" class="form-control" placeholder="destination" style="max-width:120px;" readonly required />
-                                </div>
-                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <div style="flex:none; text-align:center">
-                                <label>Distance(In Km)</label>
-                                <div class="flexContainer">
-                                    <input type="text" name="DistaneFrom" class="form-control" placeholder="From(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
-                                    <input type="text" name="DistanceTo" class="form-control" placeholder="To(In Km)" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
-                                </div>
-                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
 
-                            <div style="flex:none; text-align:center">
-                                <label>Amount</label>
-                                <div class="flexContainer">
-                                    <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />↔
-                                    <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" style="max-width:120px;" onkeypress="return isNumberKey(event)" required />
+                <form id="formModalTransportDetails" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <input type="hidden" name="TransportationId" />
+                            <input type="hidden" name="CompanyId" value="" />
+                            <div class="input-group mt-2">
+
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Place</label>
                                 </div>
-                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                <input type="text" name="PlaceFrom" class="form-control" placeholder="start" /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="PlaceTo" class="form-control" placeholder="destination" />
+                            </div>
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Distance(In Km)</label>
+
+                                </div>
+                                <input type="text" name="DistanceFrom" class="form-control" placeholder="From(In km)" /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="DistanceTo" class="form-control" placeholder="To(In km)" />
+                            </div>
+
+
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Amount</label>
+
+                                </div>
+                                <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" onkeyup="return isNumberKey(event)" /> <label style="margin-top:5px;"><-></label>
+                                <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" onkeyup="return isNumberKey(event)" />
+                            </div>
+
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalTransport">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalTransport" value="Update" />
+                    </div>
 
+                </form>
             </div>
         </div>
     </div>
@@ -155,30 +195,41 @@
         </div>
     </div>
 </div>
-<div id="modalEditStartPoint" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditStartPoint" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Edit Start Point</h4>
+                <h5 class="modal-title">Edit Start Point</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalStartPoint" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="PlaceId" />
-                            <input type="hidden" name="CompanyId" />
-                            <label style="flex:1">Start Place :&nbsp;</label>
-                            <input type="text" class="form-control" name="Place" style="flex:1.5" required />&nbsp;&nbsp;
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnModalSaveStartPoint">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+
+                <form id="formModalStartPoint" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="PlaceId" />
+                                <input type="hidden" name="CompanyId" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px;">Start Place</label>
+                                </div>
+                                <input type="text" class="form-control" name="Place"  />
+                            </div>
+                          
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnModalSaveStartPoint" value="Update" />
+                    </div>
+
+
+
+                </form>
 
             </div>
+
         </div>
     </div>
 </div>
@@ -233,6 +284,7 @@
             dataType: "json",
             success: function (result) {
                 $("#modalEditStartPoint").modal('hide');
+                toastr.success("Updated Successfully");
                 loadData("StartPoint");
             },
             error: function (e) {
@@ -258,6 +310,7 @@
             success: function (result) {
                 debugger;
                 $("#formtransportation").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+                toastr.success("Added Successfully");
                 loadData("TransportationDetails");
             },
             error: function (e) {
@@ -267,8 +320,9 @@
         })
     })
 
-    $("#btnEditModalTransport").on('click', function () {
+    $("#btnEditModalTransport").on('click', function (e) {
         debugger;
+        e.preventDefault();
         var fd = $("#formModalTransportDetails").serializeJSON();
         fd.CompanyId=@Session["CompanyId"];
         if (fd.DistanceFrom == '' || fd.DistanceTo == '' || fd.OneWayAmount == '' || fd.TwoWayAmount == '') return;
@@ -282,6 +336,7 @@
                 debugger;
                 $("#modalEditTransport").modal('hide');
                 $("#formModalTransportDetails").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+                toastr.success("Updated Successfully");
                 loadData("TransportationDetails");
             },
             error: function (e) {
@@ -377,7 +432,7 @@
                         return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editStartPoint(\"" + row.PlaceId + "\",\"" + row.Place + "\")'>Edit</a></div>";
                     }
                 },
-               
+
             ]
         });
         debugger;
@@ -391,7 +446,7 @@
         $("#tblTransportationDetails").dataTable({
             data: result,
             'destroy': true,
-                
+
             columns: [
 
                 {
@@ -442,7 +497,7 @@
         $("#modalEditTransport").modal('show');
         $("#modalEditTransport [name='TransportationId']").val(id);
         $("#modalEditTransport [name='PlaceTo']").val(placeto);
-        $("#modalEditTransport [name='DistaneFrom']").val(distancefrom);
+        $("#modalEditTransport [name='DistanceFrom']").val(distancefrom);
         $("#modalEditTransport [name='DistanceTo']").val(distanceto);
         $("#modalEditTransport [name='OneWayAmount']").val(oneway);
         $("#modalEditTransport [name='TwoWayAmount']").val(twoway);
@@ -479,16 +534,17 @@
 
     var deleteTransportDetails = function (id,placeto, distancefrom, distanceto, oneway, twoway) {
         debugger;
-        $('#modalDelete').modal('show');
-        $('#modalDelete .modal-title').html("Confirm");
-        $('#modalDelete .modal-body').html("Do You want to delete Transport details of:<br/><br/>Place To:<b> " + placeto + "</b><br/> One Way Amount:<b>" + oneway + "</b><br/>Two Way Amount:<b>" + twoway + "<b> ?");
-
-        $('#btnDeleteModal').data('id', id);
-    }
-
-    $("#btnDeleteModal").on('click', function (e) {
-        var id = $(this).data('id');
-        $.ajax({
+      
+       
+           swal({
+               title: "Do You want to delete Transport details of: Place To: " + placeto + " One Way Amount: " + oneway + " Two Way Amount: " + twoway + "  ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+         $.ajax({
             url: "/api/DeleteTransportDetails",
             method: "POST",
             data: {
@@ -496,11 +552,8 @@
                 CompanyId:@Session["CompanyId"],
             },
             dataType: "json",
-            success: function (result) {
-                $('#modalDelete').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Deleted successfully.");
+             success: function (result) {
+                 toastr.success("Deleted Successfully");
                 loadData("TransportationDetails");
             },
             error: function (e) {
@@ -508,7 +561,13 @@
                 alert(e.statusText);
             }
         })
-    })
+      
+
+            }
+        })
+    }
+
+
 
     var hideAll = function () {
         $("#divstartpoint").hide();
