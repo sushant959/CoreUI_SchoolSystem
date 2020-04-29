@@ -5,94 +5,170 @@
 }
 
 <div id="StudentDashboard">
-        <a href="/Home/StudentTransportMappingForm" class="btn btn-success">Add Student Transport </a>
-</div><hr/>
-<div id="divStudentTransportMapping">
-            <h4 id="reportname" style="color:orangered"></h4>
-    <div class="flexContainer" style="justify-content:center">
-        <div style="text-align:center;">
-            <div class="flexContainer" style="margin-left:30px;">
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Batch</label>
-                    <select id="searchBatch" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Faculty</label>
-                    <select id="searchFaculty" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Class</label>
-                    <select id="searchClass" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Section</label>
-                    <select id="searchSection" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label>Student Id</label>
-                    <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
-                </div>&nbsp;&nbsp;
-                <div style="flex:none;">
-                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a href="/Home/StudentTransportMappingForm" class="btn pull-right btn-default"> + Add Student Transport</a>
         </div>
     </div>
-    <br />
+    <div id="divStudentReport">
+        <h4 class="clearfix" id="reportname">List of all student </h4>
+        <div class="card p-3">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Batch</label>
+                        </div>
+                        <select id="searchBatch" class="form-control"></select>
 
-    <div class="row">
-        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
-            <table id="tblStudentTransportReport" class="table table-bordered table-striped" style="width:100%"></table>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Faculty</label>
+                        </div>
+                        <select id="searchFaculty" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:50px">Class</label>
+                        </div>
+                        <select id="searchClass" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:60px">Section</label>
+                        </div>
+                        <select id="searchSection" class="form-control"></select>
+
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:80px">Student Id</label>
+                        </div>
+                        <input type="text" class="form-control" id="searchStudentId" placeholder="" />
+
+                    </div>
+                </div>
+              
+
+                <div class="col-sm-2">
+                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearch" type="submit" data-name="">Search</button>
+                </div>
+
+
+
+
+            </div><br />
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblStudentTransportReport" class="table table-bordered table-striped"></table>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
 
-<div id="modalEditStudentTransport" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+<div id="modalEditStudentTransport" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Edit StudentTransport Details</h4>
+                <h4 class="modal-title" id="exampleModalCenterTitle">Edit StudentTransport Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="formModalStudentTransport" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="StudentTransportId" />
-                            <input type="hidden" name="CompanyId" />
-                            <label style="flex:1.5">Batch :&nbsp;</label>
-                            <select class="form-control" name="Batch" style="flex:2" id="selectmodalBatch" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="flex:1.5">StudentId :&nbsp;</label>
-                            <input type="text" class="form-control" name="StudentId" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.5">FirstName:&nbsp;</label>
-                            <input type="text" class="form-control" name="FirstName" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="flex:1.5">LastName:&nbsp;</label>
-                            <input type="text" class="form-control" name="LastName" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                              <div class="flexContainer">
-                                  <label style="flex:1.5">Class :&nbsp;</label>
-                                  <input type="text" class="form-control" name="Class" style="flex:2" readonly required />&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <label style="flex:1.5">PlaceTo :&nbsp;</label>
-                                  <select class="form-control" name="PlaceTo" style="flex:2" id="selectmodalPlaceTo" required></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                              </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.5">Type :&nbsp;</label>
-                            <select class="form-control" name="Type" style="flex:2" id="selectmodalType" required>
-                                <option value="">--select--</option>
-                                <option value="OneWay">One Way</option>
-                                <option value="TwoWay">Two Way</option>
-                            </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label style="flex:1.5">Amount :&nbsp;</label>
-                            <input type="text" id="selectmodalAmount" class="form-control" name="Amount" style="flex:2" required />&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div><br />
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-warning modalclose" id="btnEditModalStudentTransport">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <form id="formModalStudentTransport">
+                    <input type="hidden" name="StudentTransportId" />
+                    <input type="hidden" name="CompanyId" />
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Batch</label>
+                                </div>
+                                <select class="form-control" name="Batch" id="selectmodalBatch"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Student Id</label>
+                                </div>
+                                <input type="text" class="form-control" name="StudentId" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">FirstName</label>
+                                </div>
+                                <input type="text" class="form-control" name="FirstName" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">LastName</label>
+                                </div>
+                                <input type="text" class="form-control" name="LastName" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Class</label>
+                                </div>
+                                <input type="text" class="form-control" name="Class" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Place To</label>
+                                </div>
+                                <select class="form-control" name="PlaceTo" id="selectmodalPlaceTo"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Type</label>
+                                </div>
+                                <select class="form-control" name="Type" id="selectmodalType">
+                                    <option value="">--select--</option>
+                                    <option value="OneWay">One Way</option>
+                                    <option value="TwoWay">Two Way</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px">Amount</label>
+                                </div>
+                                <input type="text" class="form-control" name="Amount" id="selectmodalAmount" />
+                            </div>
+                        </div>
+                    </div>
+                        <div class="d-flex mt-3" style="justify-content:center">
+                            <input type="submit" class="btn btn-default w-25" id="btnEditModalStudentTransport" value="Save" />
+                        </div>
+                </form>
             </div>
         </div>
     </div>
@@ -281,11 +357,39 @@
     }
 
     function deletStudentTransport(id, batch,to, type, amount, studentid, firstname, lastname) {
-        $("#modalDelete").modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete transport details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Name : <b> " + firstname + " " + lastname + " </b><br/> Session: <b> " + batch + "</b><br/>PlaceTo: <b> " + to + "</b><br/>Type : <b> " + type + "</b><br/>Amount: <b> " + amount + "</b> ?");
+        
+            swal({
+                title: "Do you want to delete transport details of: StudentId :  " + studentid + " Name :  " + firstname + " " + lastname + "  Session:  " + batch + " PlaceTo:  " + to + " Type : " + type + " Amount:  " + amount + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                       $.ajax({
+            url: "/api/DeleteStudentTransportDetails",
+            method: "POST",
+            data: {
+                Id:id,
+                CompanyId:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
 
-        $('#btnDeleteModal').data('id', id);
+                toastr.success("Deleted Successfully");
+                    loadData();
+              
+            },
+
+            error: function (e) {
+                console.error(e);
+                alert(e.statusText);
+            }
+        })
+              
+                    }
+                })
     }
 
     $("#btnDeleteModal").on('click', function (e) {
@@ -402,9 +506,7 @@
             success: function (result) {
                 debugger;
                 $('#modalEditStudentTransport').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Updated successfully.");
+               toastr.success("Updated successfully.");
                 loadData();
             },
             error: function (e) {

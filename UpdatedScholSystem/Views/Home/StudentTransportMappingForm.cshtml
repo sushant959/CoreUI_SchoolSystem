@@ -5,41 +5,71 @@
 }
 
 <div class="row" id="divStudentTransportInfo">
-    <div class="col-sm-12">
-        <div class="panel panel-default" style="background-color:floralwhite !important;">
-            <div class="panel-heading" id="titleStudentTransportForm" style="background-color:aqua">Student Transport Form</div>
-            <div class="panel-body" style="background-color:transparent">
-                <form id="formStudentTransport">
-                    <div class="flexContainer">
-                        <input type="hidden" name="CompanyId" />
-                        <label style="flex:1.3">Batch :&nbsp;</label>
-                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">Faculty :&nbsp;</label>
-                        <select id="faculty" name="Faculty" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1.3">Class:&nbsp;&nbsp;</label>
-                        <select id="class" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">Section :&nbsp;</label>
-                        <select id="section" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div><br />
-                          <div class="flexContainer">
-                              <label style="width:182px;">FirstName:&nbsp;&nbsp;</label>
-                              <input type="text" class="form-control" id="firstname" style="width:307px"  />&nbsp;&nbsp;&nbsp;&nbsp;
-                              
-                          </div><br />
-                    <div id="tblStudentList" class="add well well-sm" style="width:100%;overflow:auto;">
-
-                    </div><br />
-                    <div class="form-group">
-                        <div class="col-sm-12 text-center">
-                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
-                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-title" id="titleStudentForm">Student Transport Form</h4>
+        <hr />
+        <form id="formStudentTransport">
+            
+                <input type="hidden" name="CompanyId"/>
+                            
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:130px;">Select Batch</label>
+                            </div>
+                            <select class="form-control" name="Batch" id="batch"></select>
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-6">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:130px;">Select Faculty</label>
+                            </div>
+                            <select class="form-control" name="Faculty" id="faculty"></select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:130px;">Select Class</label>
+                            </div>
+                            <select class="form-control" name="Class" id="class"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:130px;">Select Section</label>
+                            </div>
+                            <select class="form-control" name="Section" id="section"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:130px;">FirstName</label>
+                            </div>
+                            <input type="text" class="form-control"  id="firstname" />
+                        </div>
+                    </div>
+                </div><br />
+                <div id="tblStudentList" style="width:100%;overflow:auto">
+
+                </div>
+        </form>
+
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <input type="submit" value="Submit" class="btn btn-default" id="btnsubmit" />
+                <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -303,8 +333,8 @@
         var pickuppoint=result[3];
         debugger;
         var i = 0;
-        var html = `<table class="bordered-table table-striped">`;
-        html += `<thead><tr><th th rowspan="2">&nbsp;</th><th rowspan="2" style="width:110px;">Student Id</th><th rowspan="2" style="width:180px;">Name</th><th rowspan="2" style="width:100px;">Class</th><th colspan="4">List Of Route</th></tr>`;
+        var html = `<table class="table table-bordered">`;
+        html += `<thead style="text-align:center"><tr><th th rowspan="2">&nbsp;</th><th rowspan="2" style="width:110px;">Student Id</th><th rowspan="2" style="width:180px;">Name</th><th rowspan="2" style="width:100px;">Class</th><th colspan="4">List Of Route</th></tr>`;
         html += `<tr><th>From</th><th>To</th><th>Type</th><th>Amount</th></tr></thead>`;
         html += ` <tbody class='rowTable'>`;
 
@@ -390,15 +420,13 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success");
-                $('#modalInfo .modal-body').html(" Successful.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
-                    $("form").find("input[type=text],select").val("");
+               
+                $("form").find("input[type=text],select").val("");
+                toastr.success("Added Successfully");
+                   
+                window.setTimeout(function () {
                     location.href = "/Home/StudentTransportMapping";
-                })
+                }, 2000);
 
             },
             error: function (e) {
@@ -411,17 +439,21 @@
     var cancel = function () {
         debugger;
 
-        $('#modalCancel').modal('show');
-        $('#modal-title1').html("Confirm");
-        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
 
-    }
+                location.href = "/Home/StudentTransportMapping";
 
-    $("#btnCancelModal").on('click', function () {
-        debugger;
-        $('#modalCancel').modal('hide');
-        location.href = "/Home/StudentTransportMapping";
-    });
+
+            }
+        });
+
+    };
 
 
     $("#firstname").on('input', function (e) {
