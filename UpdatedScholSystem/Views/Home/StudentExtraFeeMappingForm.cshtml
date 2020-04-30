@@ -9,17 +9,30 @@
     }
 </style>
 <div class="row" id="divStudentExtraFeeInfo">
-    <div class="col-sm-12">
-        <div class="panel panel-default" style="background-color:floralwhite !important;">
-            <div class="panel-heading" id="titleStudentTransportForm" style="background-color:aqua">Student Extra Fee Form</div>
-            <div class="panel-body" style="background-color:transparent">
-                <form id="formStudentExtraFee">
-                    <div class="flexContainer">
-                        <input type="hidden" name="CompanyId" />
-                        <label style="flex:1.3">Batch :&nbsp;</label>
-                        <select id="batch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">Month :&nbsp;</label>
-                        <select name="Month" class="form-control" style="flex:2">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 card p-3">
+        <h4 class="card-title" id="titleStudentForm">Student Extra Fee Form</h4>
+        <hr />
+        <form id="formStudentExtraFee">
+
+            <input type="hidden" name="CompanyId" />
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Select Batch</label>
+                        </div>
+                        <select class="form-control" name="Batch" id="batch"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Select Month</label>
+                        </div>
+                        <select name="Month" class="form-control">
+                            <option value="">--Select---</option>
                             <option value="01">Baisakh</option>
                             <option value="02">Jesth</option>
                             <option value="03">Asar</option>
@@ -32,32 +45,57 @@
                             <option value="10">Magh</option>
                             <option value="11">Falgun</option>
                             <option value="12">Chait</option>
-                        </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1.3">Faculty :&nbsp;</label>
-                        <select id="faculty" name="Faculty" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">Class:&nbsp;&nbsp;</label>
-                        <select id="class" name="Class" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div><br />
-                    <div class="flexContainer">
-                        <label style="flex:1.3">Section :&nbsp;</label>
-                        <select id="section" name="Section" class="form-control" style="flex:2"></select>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label style="flex:1.3">FirstName:&nbsp;&nbsp;</label>
-                        <input type="text" name="Name" id="firstname" class="form-control" style="flex:2" />&nbsp;&nbsp;&nbsp;&nbsp;
-                    </div><br />
-                    <div id="tblStudentList" class="add well well-sm" style="width:100%;overflow:auto;">
-
-                    </div><br />
-                    <div class="form-group">
-                        <div class="col-sm-12 text-center">
-                            <input type="submit" value="Submit" class="btn btn-warning" id="btnsubmit" />
-                            <input type="button" class="btn btn-danger" id="btnCancel" onclick="cancel()" value="Cancel" />
-                        </div>
+                        </select>
                     </div>
-                </form>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Select Faculty</label>
+                        </div>
+                        <select class="form-control" name="Faculty" id="faculty"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Select Class</label>
+                        </div>
+                        <select class="form-control" name="Class" id="class"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">Select Section</label>
+                        </div>
+                        <select class="form-control" name="Secton" id="section"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group mt-2">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" style="width:130px;">FirstName</label>
+                        </div>
+                        <input type="text" class="form-control" id="firstname" name="Name" />
+                    </div>
+                </div>
+            </div><br />
+            <div id="tblStudentList" style="width:100%;overflow:auto">
+
+            </div>
+        </form>
+
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <input type="submit" value="Submit" class="btn btn-default" id="btnsubmit" />
+                <input type="button" class="btn btn-danger" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    border-radius:20px !important;" id="btnCancel" onclick="cancel()" value="Cancel" />
             </div>
         </div>
+
+
     </div>
 </div>
 <div class="modal fade" tabindex="-1" id="modalInfo"
@@ -207,7 +245,7 @@
     var showResult = function (result) {
         debugger;
         var i = 0;
-        var html = `<table class="bordered-table">`;
+        var html = `<table class="table table-bordered">`;
         html += `<thead><th>&nbsp;</th><th>FeeName</th><th>Amount</th></tr>`;
 
         html += ` <tbody class='rowTable'>`;
@@ -230,7 +268,7 @@
         var extrafee = result[2];
         debugger;
         var i = 0;
-        var html = `<table class="bordered-table">`;
+        var html = `<table class="table table-bordered">`;
         html += `<thead><th>&nbsp;</th><th style="width:110px;">Student Id</th><th style="width:180px;">Name</th><th style="width:100px;">Class</th><th>Extra Fee</th></tr>`;
        
         html += ` <tbody class='rowTable'>`;
@@ -245,7 +283,7 @@
             html += `<td><div class='showupdiv'><a href='#' class='btn btn-info'>click to select Extra Fee</a></div><div style='display:none;' id='showdowndiv${i}'>`;
             
                 var j = 0;
-                var html1 = `<table class="bordered-table">`;
+                var html1 = `<table class="table table-bordered">`;
                 html1 += `<thead><th>&nbsp;</th><th>FeeName</th><th>Amount</th></tr>`;
 
                 html1 += ` <tbody class='rowTable'>`;
@@ -324,15 +362,13 @@
                 data: fd,
                 dataType: "json",
                 success: function (result) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html(" Successful.");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
+                   
                         $("form").find("input[type=text],select").val("");
+                       
+                    toastr.success("Added Successfully");
+                    window.setTimeout(function () {
                         location.href = "/Home/StudentExtraFeeMapping";
-                    })
+                    }, 2000);
                 },
                 error: function (e) {
                     console.error(e);
@@ -347,15 +383,13 @@
                 data: fd,
                 dataType: "json",
                 success: function (result) {
-                    $('#modalInfo').modal('show');
-                    $('#modalInfo .modal-title').html("Success");
-                    $('#modalInfo .modal-body').html(" Successful.");
-                    $(".redirect").on('click', function () {
-                        debugger;
-                        $('#modalInfo').modal('hide');
+                   
                         $("form").find("input[type=text],select").val("");
+                    toastr.success("Added Successfully");
+                    window.setTimeout(function () {
                         location.href = "/Home/StudentExtraFeeMapping";
-                    })
+                    }, 2000);
+                   
                 },
                 error: function (e) {
                     console.error(e);
@@ -379,17 +413,23 @@
     var cancel = function () {
         debugger;
 
-        $('#modalCancel').modal('show');
-        $('#modal-title1').html("Confirm");
-        $('#modal-body1').html("Are You Sure You Want to Cancel ?");
+        swal({
+            title: "Are You sure You want to cancel it ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                location.href = "/Home/StudentExtraFeeMapping";
+
+
+            }
+        })
 
     }
 
-    $("#btnCancelModal").on('click', function () {
-        debugger;
-        $('#modalCancel').modal('hide');
-        location.href = "/Home/StudentExtraFeeMapping";
-    });
+   
 
 
     var getClass = function (faculty) {

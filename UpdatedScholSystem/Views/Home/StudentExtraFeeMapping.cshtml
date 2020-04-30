@@ -3,35 +3,52 @@
     ViewBag.Title = "StudentExtraFeeMapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <a href="/Home/StudentExtraFeeMappingForm" class="btn btn-success">Add Student Extra Fee </a>
-</div><hr/>
+<div id="ExtraFeeDashboard">
+    <a href="/Home/StudentExtraFeeMappingForm" class="btn btn-default pull-right"> + Add Student Extra Fee</a>
 
-<div id="divStudentExtraFeeMapping">
-            <h4 id="reportname" style="color:orangered"></h4>
-    <div class="flexContainer" style="justify-content:center">
-        <div style="text-align:center;">
-            <div class="flexContainer">
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Batch</label>
-                    <select id="searchBatch" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Faculty</label>
-                    <select id="searchFaculty" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Class</label>
-                    <select id="searchClass" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Section</label>
-                    <select id="searchSection" class="form-control" style="width:auto"></select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:120px">
-                    <label class="fieldname">Month</label>
-                    <select id="searchMonth" class="form-control" style="width:auto">
-                        <option value="">---select--</option>
+    <div id="divStudentExtraFeeMapping">
+        <h4 class="clearfix" id="reportname" style="color:orangered"></h4>
+        <div class="card p-3">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-sm-2">
+
+                    <label style="width:60px;margin-left:60px;">Batch</label>
+
+                    <select id="searchBatch" class="form-control"></select>
+
+
+                </div>
+                <div class="col-sm-2">
+
+                    <label style="width:100px;margin-left:40px;">Faculty</label>
+
+                    <select id="searchFaculty" class="form-control"></select>
+
+
+                </div>
+                <div class="col-sm-2">
+
+                    <label style="width:80px;margin-left:40px;">Class</label>
+
+                    <select id="searchClass" class="form-control"></select>
+
+
+                </div>
+                <div class="col-sm-2">
+
+                    <label style="width:80px;margin-left:40px;">Section</label>
+
+                    <select id="searchSection" class="form-control"></select>
+
+
+                </div>
+                <div class="col-sm-2">
+
+
+                    <label style="width:60px;margin-left:40px;">Month</label>
+
+                    <select id="searchMonth" class="form-control">
+                        <option value="">--Select---</option>
                         <option value="01">Baisakh</option>
                         <option value="02">Jesth</option>
                         <option value="03">Asar</option>
@@ -45,100 +62,172 @@
                         <option value="11">Falgun</option>
                         <option value="12">Chait</option>
                     </select>
-                </div>&nbsp;&nbsp;
-                <div style="flex:none; text-align:center; min-width:70px">
-                    <label>Student Id</label>
-                    <input type="text" id="searchStudentId" class="form-control" style="width:auto" />
-                </div>&nbsp;&nbsp;
-                <div style="flex:none;">
-                    <button class="btn btn-warning btn-block" style="margin-top:20px;" id="btnSearch" type="submit" data-name="">Search</button>
+
+
+                </div>
+                <div class="col-sm-2">
+
+                    <label style="width:80px;margin-left:40px;">Student Id</label>
+
+                    <input type="text" id="searchStudentId" class="form-control" />
+
+
                 </div>
             </div>
-        </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col-sm-12" id="divTable" style="width:100%;overflow:auto">
-            <table id="tblStudentExtraFeeReport" class="table table-bordered table-striped" style="width:100%"></table>
-        </div>
-    </div>
-</div>
-
-<div id="modalExtraFeeDetails" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Extra Fee Details</h4>
-            </div>
-            <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="" class="well well-sm">
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Student Id:&nbsp;</label>
-                            <span id="showstudentid" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Name:&nbsp;</label>
-                            <span id="showname" style="flex:2"></span>&nbsp;&nbsp;
-
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Session:&nbsp;</label>
-                            <span id="showsession" style="flex:2"></span>&nbsp;&nbsp;
-                            <label style="flex:1.2">Month:&nbsp;</label>
-                            <span id="showmonth" style="flex:2"></span>&nbsp;&nbsp;
-                        </div><br />
-                        <h5>List of Extra Fee Details</h5>
-                        <div style="width:100%;overflow:auto;">
-                            <table id="tblShowExtraFeeDetails" class="table table-bordered table-striped">
-                            </table>
-                        </div>
-                    </form>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default btn-block pull-right" id="btnSearch" type="submit" data-name="">Search</button>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+           <br />
 
-<div id="modalEditExtraFeeDetails" class="modal fade" tabindex="-1" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"> &times; </button>
-                <h4 class="modal-title">Edit Extra Fee Details</h4>
-            </div>
-            <div class="modal-body">
-                <div class="thumbnail">
-                    <form id="editStudentExtraFee" class="well well-sm">
-                        <div class="flexContainer">
-                            <input type="hidden" name="StudentExtraFeeId" id="studentextrafeeid" />
-                            <input type="hidden" name="CompanyId" />
-                            <label style="flex:1.2">Student Id:&nbsp;</label>
-                            <input type="text" name="ExtraFeeDetails[0][StudentId]" id="editstudentid" class="form-control" style="flex:2" readonly />&nbsp;&nbsp;
-                            <label style="flex:1.2">Name:&nbsp;</label>
-                            <input type="text" class="form-control" id="editname" style="flex:2" readonly />&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="flex:1.2">Session:&nbsp;</label>
-                            <select id="editbatch" name="Batch" class="form-control" style="flex:2"></select>&nbsp;&nbsp;
-                            <label style="flex:1.2">Class:&nbsp;</label>
-                            <select id="editclass" class="form-control" style="flex:2" disabled></select>&nbsp;&nbsp;
-                        </div><br />
-                        <div class="flexContainer">
-                            <label style="width:109px;">Month:&nbsp;</label>
-                            <input type="text" id="editmonth" name="Month" class="form-control" style="width:209px;" readonly />
-                        </div><br />
-                        <h5>Select Extra Fee Details</h5>
-                        <div style="width:100%;overflow:auto;">
-                            <table id="tblExtraFeeDetails" class="table table-bordered table-striped">
-                                @*<thead></thead>*@
-                            </table>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button class="btn btn-warning modalclose" id="btnEditStudentExtraFee">Save</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div style="width:100%;overflow:auto;">
+                        <table id="tblStudentExtraFeeReport" class="table table-bordered table-striped"></table>
                     </div>
                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalEditExtraFeeDetails" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Extra Fee Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editStudentExtraFee">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <input type="hidden" name="StudentExtraFeeId" id="studentextrafeeid" />
+                            <input type="hidden" name="CompanyId" />
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Student Id</label>
+                                </div>
+                                <input class="form-control" type="text" name="ExtraFeeDetails[0][StudentId]" id="editstudentid" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Name</label>
+                                </div>
+                                <input class="form-control" type="text" id="editname" readonly />
+                            </div>
+
+                        </div>
+                   
+                   
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Session</label>
+                                </div>
+                                <select id="editbatch" name="Batch" class="form-control"></select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Class</label>
+                                </div>
+                                <select id="editclass" class="form-control" disabled></select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Month</label>
+                                </div>
+                                <input type="text" id="editmonth" name="Month" class="form-control" readonly />
+                            </div>
+
+                        </div>
+                    </div><br />
+                    
+                    <h5>Select Extra Fee Details</h5>
+                   <div class="row" id="tblExtraFeeDetails" style="width:100%;overflow:auto">
+
+                   </div>
+                    
+                    <br />
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditStudentExtraFee" value="Update" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalExtraFeeDetails" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Extra Fee Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Student Id</label>
+                                </div>
+                                <input class="form-control" type="text" id="showstudentid" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Name</label>
+                                </div>
+                                <input class="form-control" type="text" id="showname" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Session</label>
+                                </div>
+                                <input class="form-control" type="text" id="showsession" readonly />
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:130px;">Month</label>
+                                </div>
+                                <input class="form-control" type="text" id="showmonth" readonly />
+                            </div>
+
+                        </div>
+                    </div><br />
+                    <h5>List of Extra Fee Details</h5>
+                    <div>
+                        <table id="tblShowExtraFeeDetails" class="table table-bordered" style="width:100%;overflow:auto"></table>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -338,10 +427,10 @@
             success: function (result) {
                 var Name = firstname + " " + lastname;
                 $("#modalExtraFeeDetails").modal('show');
-                $("#showstudentid").html(studentid);
-                $("#showname").html(Name);
-                $("#showsession").html(batch);
-                $("#showmonth").html(month);
+                $("#showstudentid").val(studentid);
+                $("#showname").val(Name);
+                $("#showsession").val(batch);
+                $("#showmonth").val(month);
                 $("#tblShowExtraFeeDetails").dataTable({
                     data: result,
                     "destroy": true,
@@ -429,7 +518,7 @@
                 $("#editmonth").val(month);
                 $("#studentextrafeeid").val(id);
                 var i = 0;
-                    var html = `<table class="bordered-table table-striped">`;
+                    var html = `<table class="table table-bordered">`;
                     html += `<thead><th style='text-align:center;'>&nbsp;</th><th>FeeName</th><th>Amount</th></thead>`;
                     html += ` <tbody class='rowTable'>`;
                 for (var r in result) {
@@ -479,14 +568,8 @@
             success: function (result) {
                 debugger;
                 $("#modalEditExtraFeeDetails").modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Edited successfully.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
-                    loadData();
-                })
+                toastr.success("Updated Successfully");
+                loadData();
             },
             error: function (e) {
                 console.error(e);
@@ -497,18 +580,17 @@
 
     var deletStudentExtraFee = function (id, batch, month, studentid, firstname, lastname) {
         debugger;
-        $("#modalDelete").modal('show');
-        $('#modalDelete .modal-title').html("Conform");
-        $('#modalDelete .modal-body').html("Do you want to delete Extra Fee details of: <br/> StudentId : <b> " + studentid + "</b> <br/> Name : <b> " + firstname + " " + lastname + " </b><br/> Session: <b> " + batch + "</b><br/>Month: <b> " + month + "</b><br/> ?");
+       
+               swal({
+                   title: "Do you want to delete Extra Fee details of:  StudentId : " + studentid + " Name :  " + firstname + " " + lastname + "  Session:  " + batch + " Month:  " + month + " ?" ,
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
 
-        $('#btnDeleteModal').data('id', id);
-    }
-    $("#btnDeleteModal").on('click', function (e) {
-        e.preventDefault();
-        debugger;
-        var id = $(this).data('id');
-        debugger;
-        $.ajax({
+                 $.ajax({
             url: "/api/DeleteStudentExtraFeeDetails",
             method: "POST",
             data: {
@@ -518,15 +600,9 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-                $('#modalDelete').modal('hide');
-                $('#modalInfo').modal('show');
-                $('#modalInfo .modal-title').html("Success!");
-                $('#modalInfo .modal-body').html("Deleted successfully.");
-                $(".redirect").on('click', function () {
-                    debugger;
-                    $('#modalInfo').modal('hide');
+                toastr.success("Deleted Successfully");
                     loadData();
-                })
+              
             },
 
             error: function (e) {
@@ -534,8 +610,11 @@
                 alert(e.statusText);
             }
         })
-
-    })
+                    }
+                })
+    }
+   
+ 
 
     $("#btnSearch").on('click', function (e) {
         e.preventDefault();
