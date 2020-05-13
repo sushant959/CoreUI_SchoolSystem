@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "UserAccess";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+    List<UpdatedScholSystem.Models.Group> group = ViewBag.Group;
+}
+@*@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}*@
+<h2>UserAccess</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage User Access</h4>
+                <hr />
+                @*@if (actions.Contains("add"))
+                {*@
+                    <form id="addUserAccess" method="post" action="/Settings/UserControl">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" style="width:70px">Group</label>
+                                    </div>
+                                    <select class="form-control" name="Group_ID" id="group">
+                                        <option value=""></option>
+                                        @foreach (var l in group)
+                                        {
+                                            <option value="@l.ID">@l.UserRole</option>
+                                        }
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="row" id="tableRow">
+
+                            <div class="col-sm-12">
+                                <h4>Grant Permission</h4>
+                                <hr />
+                                <table class="table table-bordered" id="tablePermission"></table>
+                            </div>
+                        </div>
+
+
+                        <div class="d-flex mt-3" style="justify-content:center" id="btnadd">
+                            <input type="submit" class="btn btn-default w-25" id="btnUser" value="Add" />
+                        </div>
+
+
+                    </form>
+                @*}*@
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        debugger;
+        $("#tableRow").hide();
+        $("#btnUser").hide();
+    })
+    $("#group").on('change', function () {
+        debugger;
+        var group = $("#group").val();
+        if (group != "") {
+            $("#tableRow").show();
+            $("#tablePermission").empty();
+            $.ajax({
+                url: "/api/GetFeatureAndAction",
+                method: "GET",
+                 data: {
+                Company_ID:@Session["CompanyId"],
+            },
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    var actions = result.lstFeatureAction;
+                    var features = result.lstFeature;
+                    var html = `<thead>
+                                    <tr>
+                                          <th style="width:160px;text-align:center;">Feature</th>`;
+                    for (var r in actions) {
+                        var name = actions[r].Name;
+                        html += `<th style="width:160px;text-align:center;">${actions[r].Name}</th>`;
+                    }
+                    html += `</tr></thead><tbody>`;
+                    for (var k in features) {
+                        html += `<tr>
+                                     <td style="width:160px;text-align:center;"><input type="hidden" name="ActionFeatures[${k}][Feature_ID]" value="${features[k].ID}" /><span>${features[k].Name}</span></td>`
+                        for (var m in actions) {
+                            html += ` <td><input type="checkbox"  class="form-control" name="ActionFeatures[${k}][FeatureActions][${m}][IsChecked]" value="true" /><input type="hidden"  name="ActionFeatures[${k}][FeatureActions][${m}][ID]" value="${actions[m].ID}" /></td>`
+                        }
+                        html += `</tr>`;
+                    }
+                    html += `</tbody>`;
+                    $("#tablePermission").append(html);
+                    $("#btnUser").show();
+                    $.ajax({
+                        url: "/Settings/UserControlPermission",
+                        method: "GET",
+                        data: {
+                            id:group
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            debugger;
+                            for (var r in data) {
+                                for (var q in features) {
+                                    if ($('[name="ActionFeatures[' + q + '][Feature_ID]"]').val() == data[r].Feature_ID) {
+                                        for (var s in actions) {
+                                            if ($('[name="ActionFeatures[' + q + '][FeatureActions][' + s + '][ID]"]').val() == data[r].Action_ID) {
+                                                $('[name="ActionFeatures[' + q + '][FeatureActions][' + s + '][IsChecked]"]').attr('checked', true);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })
+                }
+            })
+
+        }
+    })
+
+</script>

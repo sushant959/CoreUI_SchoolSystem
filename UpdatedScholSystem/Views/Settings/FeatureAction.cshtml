@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "Action";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+}
+@*@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}*@
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Action</h4>
+                <hr />
+                @*@if (actions.Contains("add"))
+                {*@
+                    <form id="addAction">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <label class="input-group-text" style="width:70px">Action</label>
+                            </div>
+                            <input type="text"
+                                   name="Name"
+                                   class="form-control"
+                                   placeholder="Action"
+                                   required />
+                            <input type="submit" class="btn btn-primary" id="btnAddAction" value="Add" style="margin-left:10px;" />
+                        </div>
+                    </form>
+                @*}
+                @if (actions.Contains("report"))
+                {*@
+                    <hr />
+                    @*<h5>List of all District</h5>*@
+                    <table id="tblActionList" class="table table-bordered table-striped"></table>
+                @*}*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<div id="modelEditAction" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Action</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalActionForm" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px">Action</label>
+                                </div>
+                                <input type="text"
+                                       name="Name"
+                                       class="form-control"
+                                       placeholder="Name"
+                                       required />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditAction" value="Update" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDeleteAction" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:floralwhite !important;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red">Info</h5>
+                <button type="button" class="close redirect" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModule">Yes</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        loadData();
+    })
+    var loadData = function () {
+        $.ajax({
+            url: "/api/GetAllFeatureActions",
+            method: "GET",
+             data: {
+                Company_ID:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showResultData(result);
+            }
+        })
+    }
+    var showResultData = function (data) {
+        debugger;
+        $("#tblActionList").dataTable({
+            data: data,
+            'destroy': true,
+            columns: [
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'Name',
+                    'data': 'Name'
+                },
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        debugger;
+
+                        return `
+                            @*@if(actions.Contains("edit"))
+                            {*@
+                                <a href='#' onclick='editAction("${row.ID}","${row.Name}")' title='Edit'>
+                                    <i class='fa fa-edit fa-lg'></i>
+                                </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            @*@if(actions.Contains("delete"))
+                            {*@
+                                <a href='#' onclick='deleteAction("${row.ID}","${row.Name}")' title='Delete'>
+                                    <i class='fa fa-trash fa-lg'></i>
+                                </a>`;
+
+                    }
+                },
+            ]
+        })
+    }
+    $("#btnAddAction").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#addAction").serializeJSON();
+        fd.Company_ID=@Session["CompanyId"];
+        saveAction(fd);
+    })
+
+    var saveAction = function (data) {
+        debugger;
+        var user = data.Name.trim();
+        if (user == "") return;
+        data.Name = data.Name.toLowerCase();
+        $.ajax({
+            url: "/api/PostFeatureAction",
+            method: "POST",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modelEditAction").modal('hide');
+                toastr.success("Saved Successfully");
+                loadData();
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+
+    var editAction = function (id, name) {
+        var company=@Session["CompanyId"];
+        $("#modelEditAction").modal('show');
+        $("#modelEditAction [name='ID']").val(id);
+        $("#modelEditAction [name='Name']").val(name);
+        $("#modelEditAction [name='Company_ID']").val(company);
+    }
+    $("#btnEditAction").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#modalActionForm").serializeJSON();
+        saveAction(fd);
+    })
+
+    var deleteAction = function (id, value) {
+        var companyId =@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete Action " + value + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                $.ajax({
+                    url: '/api/DeleteFeatureAction',
+                    method: "POST",
+                    data: { ID: id },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        toastr.success("Deleted Successfully");
+                        loadData();
+
+                    },
+                    error: function (e) {
+                        debugger;
+                       
+                        loadData();
+                        alert(e.statusText);
+                        console.error(e)
+                    }
+                })
+
+
+            }
+        })
+    }
+
+   
+</script>
+

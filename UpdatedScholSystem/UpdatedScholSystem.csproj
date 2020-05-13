@@ -208,10 +208,12 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SuperAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActionFeature.cs" />
     <Compile Include="Models\Batch.cs" />
     <Compile Include="Models\BatchClass.cs" />
     <Compile Include="Models\Billing.cs" />
@@ -221,10 +223,13 @@
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\DayOff.cs" />
     <Compile Include="Models\Faculty.cs" />
+    <Compile Include="Models\Feature.cs" />
+    <Compile Include="Models\FeatureAction.cs" />
     <Compile Include="Models\FeeManagement.cs" />
     <Compile Include="Models\FeeStructure.cs" />
     <Compile Include="Models\Fine.cs" />
     <Compile Include="Models\FollowUp.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\MultipleBillingDelete.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\ResponseText.cs" />
@@ -245,6 +250,7 @@
     <Compile Include="Models\TeacherPersonalInfo.cs" />
     <Compile Include="Models\Transportation.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AppSettings.cs" />
     <Compile Include="Service\BaseDbServices.cs" />
@@ -264,6 +270,7 @@
     <Compile Include="Service\SuperAdminDbService.cs" />
     <Compile Include="Service\TeacherDbServices.cs" />
     <Compile Include="Service\TransportDbServices.cs" />
+    <Compile Include="Service\UserAccessDbServices.cs" />
     <Compile Include="Service\UserDbServices.cs" />
     <Compile Include="Service\Utilities.cs" />
   </ItemGroup>
@@ -411,6 +418,12 @@
     <Content Include="Views\SuperAdmin\CompanyManagement.cshtml" />
     <Content Include="Views\Home\PrintDueReport1.cshtml" />
     <Content Include="Views\Home\Logout.cshtml" />
+    <Content Include="Views\Shared\_LayoutSettings.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Settings\Group.cshtml" />
+    <Content Include="Views\Settings\Feature.cshtml" />
+    <Content Include="Views\Settings\FeatureAction.cshtml" />
+    <Content Include="Views\Settings\UserAccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

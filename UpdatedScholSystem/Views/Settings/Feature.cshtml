@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "Feature";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+}
+@*@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}*@
+
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Features</h4>
+                <hr />
+                @*@if (actions.Contains("add"))
+                {*@
+                    <form id="addFeature">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <label class="input-group-text" style="width:70px">Feature</label>
+                            </div>
+                            <input type="text"
+                                   name="Name"
+                                   class="form-control"
+                                   placeholder="Feature"
+                                   required />
+                            <input type="submit" class="btn btn-primary" id="btnAddFeature" value="Add" style="margin-left:10px;" />
+                        </div>
+                    </form>
+                @*}
+                @if (actions.Contains("report"))
+                {*@
+                    <hr />
+                    @*<h5>List of all District</h5>*@
+                    <table id="tblFeatureList" class="table table-bordered table-striped"></table>
+                @*}*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<div id="modelEditFeature" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalFeatureForm" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px">Feature</label>
+                                </div>
+                                <input type="text"
+                                       name="Name"
+                                       class="form-control"
+                                       placeholder="Feature"
+                                       required />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditFeature" value="Update" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDeleteFeature" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:floralwhite !important;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red">Info</h5>
+                <button type="button" class="close redirect" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModule">Yes</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        loadData();
+    })
+    var loadData = function () {
+        $.ajax({
+            url: "/api/GetAllFeatures",
+            method: "GET",
+             data: {
+                Company_ID:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showResultData(result);
+            }
+        })
+    }
+
+    var showResultData = function (data) {
+        debugger;
+        $("#tblFeatureList").dataTable({
+            data: data,
+            'destroy': true,
+            columns: [
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'Feature',
+                    'data': 'Name'
+                },
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        debugger;
+
+                        return `
+                            @*@if(actions.Contains("edit"))
+                            {*@
+                                <a href='#' onclick='editFeature("${row.ID}","${row.Name}")' title='Edit'>
+                                    <i class='fa fa-edit fa-lg'></i>
+                                </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            @*@if(actions.Contains("delete"))
+                            {*@
+                                <a href='#' onclick='deleteFeature("${row.ID}","${row.Name}")' title='Delete'>
+                                    <i class='fa fa-trash fa-lg'></i>
+                                </a>`;
+
+                    }
+                },
+            ]
+        })
+    }
+    $("#btnAddFeature").on('click', function (e) {
+        debugger;
+        e.preventDefault();
+        var fd = $("#addFeature").serializeJSON();
+        fd.Company_ID=@Session["CompanyId"];
+        saveFeature(fd);
+    })
+
+    var saveFeature = function (data) {
+        debugger;
+        if (data.Name == "") return;
+        $.ajax({
+            url: "/api/PostFeature",
+            method: "POST",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modelEditFeature").modal('hide');
+                toastr.success("Saved Successfully");
+                loadData();
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+
+    var editFeature = function (id, feature) {
+        var company=@Session["CompanyId"];
+        $("#modelEditFeature").modal('show');
+        $("#modelEditFeature [name='ID']").val(id);
+        $("#modelEditFeature [name='Name']").val(feature);
+        $("#modelEditFeature [name='Company_ID']").val(company);
+    }
+    $("#btnEditFeature").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#modalFeatureForm").serializeJSON();
+        saveFeature(fd);
+    })
+
+    var deleteFeature = function (id, value) {
+        var companyId =@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete Feature " + value + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                $.ajax({
+                    url: '/api/DeleteFeature',
+                    method: "POST",
+                    data: { ID: id },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        toastr.success("Deleted Successfully");
+                        loadData();
+
+                    },
+                    error: function (e) {
+                        debugger;
+                       
+                        loadData();
+                        alert(e.statusText);
+                        console.error(e)
+                    }
+                })
+
+
+            }
+        })
+       
+    }
+
+   
+</script>

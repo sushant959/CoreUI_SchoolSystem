@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "Group";
+    Layout = "~/Views/Shared/_LayoutSettings.cshtml";
+}
+@*@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}*@
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Manage Group</h4>
+                <hr />
+                @*@if (actions.Contains("add"))
+                {*@
+                    <form id="addGroup">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <label class="input-group-text" style="width:70px">Group</label>
+                            </div>
+                            <input type="text"
+                                   name="UserRole"
+                                   class="form-control"
+                                   placeholder="User Role"
+                                   required />
+                            <input type="submit" class="btn btn-primary" id="btnAddUserRole" value="Add" style="margin-left:10px;" />
+                        </div>
+                    </form>
+                @*}
+                @if (actions.Contains("report"))
+                {*@
+                    <hr />
+                    @*<h5>List of all District</h5>*@
+                    <table id="tblUserRoleList" class="table table-bordered table-striped"></table>
+                @*}*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<div id="modelEditGroup" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Group</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modalGroupForm" style="text-align:left">
+                    <div class="row" style="margin-left:10px;">
+                        <div class="col-md-12">
+                            <div class="input-group mt-2">
+                                <input type="hidden" name="ID" />
+                                <input type="hidden" name="Company_ID" id="companyid" value="" />
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:110px">Group</label>
+                                </div>
+                                <input type="text"
+                                       name="UserRole"
+                                       class="form-control"
+                                       placeholder="User Role"
+                                       required />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditGroup" value="Update" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalDeleteGroup" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color:floralwhite !important;">
+            <div class="modal-header">
+                <h5 class="modal-title" style="color:red">Info</h5>
+                <button type="button" class="close redirect" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning modalclose" id="btnDeleteModule">Yes</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        loadData();
+    })
+    var loadData = function () {
+        $.ajax({
+            url: "/api/GetAllGroups",
+            method: "GET",
+            data: {
+                Company_ID:@Session["CompanyId"],
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                showResultData(result);
+            }
+        })
+    }
+    var showResultData = function (data) {
+        debugger;
+        $("#tblUserRoleList").dataTable({
+            data: data,
+            'destroy': true,
+            columns: [
+                {
+                    'title': 'SN',
+                    'data': 'SN',
+                    'render': function (data, type, row, meta) {
+                        return "<span>" + (meta.row + 1) + "</span>";
+                    }
+                },
+                {
+                    'title': 'UserRole',
+                    'data':'UserRole'
+                },
+                {
+                    'title': 'Action',
+                    'data': 'Action',
+                    'render': function (data, type, row) {
+                        debugger;
+
+                        return `
+                            @*@if(actions.Contains("edit"))
+                            {*@
+                                <a href='#' onclick='editGroup("${row.ID}","${row.UserRole}")' title='Edit'>
+                                    <i class='fa fa-edit fa-lg'></i>
+                                </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            @*@if(actions.Contains("delete"))
+                            {*@
+                                <a href='#' onclick='deleteGroup("${row.ID}","${row.UserRole}")' title='Delete'>
+                                    <i class='fa fa-trash fa-lg'></i>
+                                </a>`;
+
+                    }
+                },
+            ]
+        })
+    }
+    $("#btnAddUserRole").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#addGroup").serializeJSON();
+        fd.Company_ID=@Session["CompanyId"];
+        saveGroup(fd);
+    })
+
+    var saveGroup = function (data) {
+        debugger;
+        var user = data.UserRole.trim();
+        if (user == "") return;
+        data.UserRole = data.UserRole.toLowerCase();
+
+        $.ajax({
+            url: "/api/PostGroup",
+            method: "POST",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                $("#modelEditGroup").modal('hide');
+                toastr.success("Saved Successfully");
+                loadData();
+            },
+            error: function (e) {
+
+            }
+        })
+    }
+
+    var editGroup = function (id, role) {
+        var company=@Session["CompanyId"];
+        $("#modelEditGroup").modal('show');
+        $("#modelEditGroup [name='ID']").val(id);
+        $("#modelEditGroup [name='UserRole']").val(role);
+        $("#modelEditGroup [name='Company_ID']").val(company);
+    }
+    $("#btnEditGroup").on('click', function (e) {
+        e.preventDefault();
+        var fd = $("#modalGroupForm").serializeJSON();
+        saveGroup(fd);
+    })
+
+    var deleteGroup = function (id, value) {
+         var companyId =@Session["CompanyId"];
+        swal({
+            title: "Do you want to delete Group " + value + " ?",
+            text: "You will not be able to restore the data!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                debugger;
+                $.ajax({
+                    url: '/api/DeleteGroup',
+                    method: "POST",
+                    data: { ID: id },
+                    dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        toastr.success("Deleted Successfully");
+                        loadData();
+
+                    },
+                    error: function (e) {
+                        debugger;
+                       
+                        loadData();
+                        alert(e.statusText);
+                        console.error(e)
+                    }
+                })
+
+
+            }
+        })
+       
+    }
+
+    
+</script>

@@ -14,6 +14,7 @@ using MySql.Data.MySqlClient;
 using NepaliDateConverter;
 using System.Web.Http.Cors;
 
+
 namespace UpdatedScholSystem.Controllers
 {
     [RoutePrefix("api")]
@@ -86,6 +87,33 @@ namespace UpdatedScholSystem.Controllers
                 _class
             };
             return Ok(lst);
+        }
+        [Route("GetFeatureAndAction"), HttpGet]
+        public IHttpActionResult GetFeatureAndAction()
+        {
+            var data = HttpContext.Current.Request;
+            var companyId = data["Company_ID"];
+            var features = BaseDbServices.Instance.GetData("select * from tblfeature where Company_ID='" + companyId + "'", null);
+            var actions = BaseDbServices.Instance.GetData("select * from tblfeatureaction where Company_ID='" + companyId + "'", null);
+            List<Feature> lstFeature = new List<Feature>();
+            for (int i = 0; i < features.Rows.Count; i++)
+            {
+                Feature feature = new Feature();
+                feature.ID = Convert.ToInt32(features.Rows[i]["ID"]);
+                feature.Name = features.Rows[i]["Name"].ToString();
+                feature.Company_ID = Convert.ToInt32(features.Rows[i]["Company_ID"]);
+                lstFeature.Add(feature);
+            }
+            List<FeatureAction> lstFeatureAction = new List<FeatureAction>();
+            for (int i = 0; i < actions.Rows.Count; i++)
+            {
+                FeatureAction featureaction = new FeatureAction();
+                featureaction.ID = Convert.ToInt32(actions.Rows[i]["ID"]);
+                featureaction.Name = actions.Rows[i]["Name"].ToString();
+                featureaction.Company_ID = Convert.ToInt32(actions.Rows[i]["Company_ID"]);
+                lstFeatureAction.Add(featureaction);
+            }
+            return Json(new { lstFeature, lstFeatureAction });
         }
         [Route("GetSuperAdminPassword"),HttpGet]
         public IHttpActionResult GetSuperAdminPassword()
@@ -372,7 +400,31 @@ namespace UpdatedScholSystem.Controllers
                 return Ok(lst);
             }
         }
+        [Route("GetAllFeatureActions"), HttpGet]
+        public IHttpActionResult GetAllFeatureActions()
+        {
+            var data = HttpContext.Current.Request;
+            var CompanyId = Convert.ToInt32(data["Company_ID"]);
+            var details = BaseDbServices.Instance.GetData("Select * from tblfeatureaction where Company_ID='" + CompanyId + "'", null);
+            return Json(details);
+        }
 
+        [Route("GetAllGroups"),HttpGet]
+        public IHttpActionResult GetAllGroups()
+        {
+            var data = HttpContext.Current.Request;
+            var CompanyId = Convert.ToInt32(data["Company_ID"]);
+            var details = BaseDbServices.Instance.GetData("Select * from tblgroup where Company_ID='" + CompanyId + "'", null);
+            return Json(details);
+        }
+        [Route("GetAllFeatures"), HttpGet]
+        public IHttpActionResult GetAllFeatures()
+        {
+            var data = HttpContext.Current.Request;
+            var CompanyId = Convert.ToInt32(data["Company_ID"]);
+            var details = BaseDbServices.Instance.GetData("Select * from tblfeature where Company_ID='" + CompanyId + "'", null);
+            return Json(details);
+        }
         [Route("GetDueInformation"),HttpGet]
         public IHttpActionResult GetDueInformation()
         {
@@ -806,6 +858,84 @@ namespace UpdatedScholSystem.Controllers
             BaseDbServices.Instance.RunQuery("Update tblbatchdetails set Status='Disable' where CompanyId='"+companyid+"'", null);
 
             GeneralSettingDbServices.Instance.SaveBatchDetails(from, to,companyid);
+            return Ok("");
+        }
+        [Route("PostGroup"),HttpPost]
+        public IHttpActionResult PostGroup([FromBody] Group group)
+        {
+            if (group.ID != 0)
+            {
+                UserAccessDbServices.Instance.PostGroup(group);
+            }
+            else
+            {
+                var allGroup = BaseDbServices.Instance.GetData("select * from tblgroup where Company_ID='" + group.Company_ID + "'");
+                if (allGroup.Rows.Count > 0)
+                {
+                    for (int i = 0; i < allGroup.Rows.Count; i++)
+                    {
+                        if (allGroup.Rows[i]["UserRole"].ToString() == group.UserRole)
+                        {
+                            return Json("");
+                        }
+                    }
+
+                }
+                UserAccessDbServices.Instance.PostGroup(group);
+            }
+                return Ok("");
+            
+        }
+        [Route("PostFeatureAction"),HttpPost]
+        public IHttpActionResult PostFeatureAction([FromBody] FeatureAction featureAction)
+        {
+            if(featureAction.ID !=0)
+            {
+                UserAccessDbServices.Instance.PostFeatureAction(featureAction);
+            }
+            else
+            {
+                var allFeatureAction = BaseDbServices.Instance.GetData("select * from tblfeatureaction where Company_ID='" + featureAction.Company_ID + "'");
+                if (allFeatureAction.Rows.Count > 0)
+                {
+                    for (int i = 0; i < allFeatureAction.Rows.Count; i++)
+                    {
+                        if (allFeatureAction.Rows[i]["Name"].ToString() == featureAction.Name)
+                        {
+                            return Json("");
+                        }
+                    }
+
+                }
+                UserAccessDbServices.Instance.PostFeatureAction(featureAction);
+                
+            }
+            return Ok("");
+        }
+
+        [Route("PostFeature"), HttpPost]
+        public IHttpActionResult PostFeature([FromBody] Feature feature)
+        {
+            if(feature.ID !=0)
+            {
+                UserAccessDbServices.Instance.PostFeature(feature);
+            }
+            else
+            {
+                var allFeature = BaseDbServices.Instance.GetData("select * from tblfeature where Company_ID='" + feature.Company_ID + "'");
+                if (allFeature.Rows.Count > 0)
+                {
+                    for (int i = 0; i < allFeature.Rows.Count; i++)
+                    {
+                        if (allFeature.Rows[i]["Name"].ToString() == feature.Name)
+                        {
+                            return Json("");
+                        }
+                    }
+
+                }
+            UserAccessDbServices.Instance.PostFeature(feature);
+            }
             return Ok("");
         }
 
@@ -1557,7 +1687,30 @@ namespace UpdatedScholSystem.Controllers
             BaseDbServices.Instance.RunQuery("Delete from tblscholarshipdetails where ScholarshipName=@name and Batch=@batch and Class=@class and Faculty=@faculty and CompanyId=@CompanyId", Param);
             return Ok("");
         }
-
+        [Route("DeleteFeatureAction"),HttpPost]
+        public IHttpActionResult DeleteFeatureAction()
+        {
+            var data = HttpContext.Current.Request;
+            var id = data["ID"];
+            BaseDbServices.Instance.RunQuery("Delete from tblfeatureaction where ID='" + id + "' ", null);
+            return Ok("");
+        }
+        [Route("DeleteGroup"),HttpPost]
+        public IHttpActionResult DeleteGroup()
+        {
+            var data = HttpContext.Current.Request;
+            var id = data["ID"];
+            BaseDbServices.Instance.RunQuery("Delete from tblgroup where ID='" + id + "' ", null);
+            return Ok("");
+        }
+        [Route("DeleteFeature"), HttpPost]
+        public IHttpActionResult DeleteFeature()
+        {
+            var data = HttpContext.Current.Request;
+            var id = data["ID"];
+            BaseDbServices.Instance.RunQuery("Delete from tblfeature where ID='" + id + "' ", null);
+            return Ok("");
+        }
         [Route("DeleteGeneralSetting"), HttpPost]
         public IHttpActionResult DeleteGeneralSetting()
         {

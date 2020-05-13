@@ -114,6 +114,8 @@ namespace UpdatedScholSystem.Service
             var result = GetData(selectQuery);
             return result;
         }
+
+      
         public DataTable GetData(string selectQuery, List<MySqlParameter> lstParam = null)
         {
            
