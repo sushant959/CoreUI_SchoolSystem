@@ -88,6 +88,35 @@ namespace UpdatedScholSystem.Controllers
             };
             return Ok(lst);
         }
+
+        [Route("UserControlPermission"),HttpGet]
+        public IHttpActionResult UserControlPermission()
+        {
+            var data = HttpContext.Current.Request;
+            var companyId = data["Company_ID"];
+            var id = data["id"];
+            var rolePermission = BaseDbServices.Instance.GetData("select * from tblusercontrol where Group_ID='" + id + "' and Company_ID='" + companyId + "'", null);
+            if(rolePermission.Rows.Count > 0)
+            {
+                List<UserControl> lstUserControl = new List<UserControl>();
+                for (int i = 0; i < rolePermission.Rows.Count; i++)
+                {
+                    UserControl userControl = new UserControl();
+                    userControl.ID = Convert.ToInt32(rolePermission.Rows[i]["ID"]);
+                    userControl.Group_ID = Convert.ToInt32(rolePermission.Rows[i]["Group_ID"]);
+                    userControl.Feature_ID = Convert.ToInt32(rolePermission.Rows[i]["Feature_ID"]);
+                    userControl.Action_ID = Convert.ToInt32(rolePermission.Rows[i]["Action_ID"]);
+                    userControl.Company_ID = Convert.ToInt32(rolePermission.Rows[i]["Company_ID"]);
+                    lstUserControl.Add(userControl);
+                }
+                return Json(lstUserControl);
+            }
+            else
+            {
+                return Json("");
+            }
+           
+        }
         [Route("GetFeatureAndAction"), HttpGet]
         public IHttpActionResult GetFeatureAndAction()
         {

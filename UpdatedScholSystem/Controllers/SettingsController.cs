@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -49,6 +50,36 @@ namespace UpdatedScholSystem.Controllers
 
             ViewBag.Group = lst;
             return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult UserControl( UserControl userControl)
+        {
+            userControl.Company_ID = (int)Session["companyID"];
+            var details = BaseDbServices.Instance.GetData("Select * from tblusercontrol where Group_ID='" + userControl.Group_ID + "' and Company_ID='" + userControl.Company_ID + "'", null);
+            if(details.Rows.Count > 0)
+            {
+                BaseDbServices.Instance.RunQuery("Delete from tblusercontrol where Group_ID='" + userControl.Group_ID + "' and Company_ID='" + userControl.Company_ID + "'", null);
+            }
+            //var u = db.Payrolls.FirstOrDefault(x => x.ID == payroll.ID);
+         
+            if (userControl.ActionFeatures != null && userControl.ActionFeatures.Count > 0)
+            {
+                foreach (var m in userControl.ActionFeatures)
+                {
+                    foreach (var r in m.FeatureActions.ToList())
+                    {
+                        if (r.IsChecked == true)
+                        {
+                            userControl.Feature_ID = m.Feature_ID;
+                            userControl.Action_ID = r.ID;
+                            UserAccessDbServices.Instance.PostUserControl(userControl);
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("UserAccess");
         }
     }
 }

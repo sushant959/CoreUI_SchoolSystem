@@ -98,9 +98,10 @@
                     $("#tablePermission").append(html);
                     $("#btnUser").show();
                     $.ajax({
-                        url: "/Settings/UserControlPermission",
+                        url: "/api/UserControlPermission",
                         method: "GET",
                         data: {
+                            Company_ID:@Session["CompanyId"],
                             id:group
                         },
                         dataType: "json",

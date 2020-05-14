@@ -46,6 +46,30 @@ namespace UpdatedScholSystem.Service
             }
         }
 
+
+        public void PostUserControl(UserControl usercontrol)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("save_usercontrol", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@_Group_ID", usercontrol.Group_ID);
+                cmd.Parameters.AddWithValue("@_Company_ID", usercontrol.Company_ID);
+                cmd.Parameters.AddWithValue("@_Feature_ID", usercontrol.Feature_ID);
+                cmd.Parameters.AddWithValue("@_Action_ID", usercontrol.Action_ID);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                conn.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+
+                conn.Close();
+                conn.Dispose();
+            }
+        }
         public void PostFeature(Feature feature)
         {
             try

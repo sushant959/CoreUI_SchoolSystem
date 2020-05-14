@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using UpdatedScholSystem.Models;
 
 namespace UpdatedScholSystem.Service
 {
@@ -92,5 +93,60 @@ namespace UpdatedScholSystem.Service
             document.Add(table);
             document.Close();
         }
+        public static List<string> getUserAccessFeatures(int c, string role)
+        {
+            List<string> features = new List<string>();
+            var roleId = BaseDbServices.Instance.GetData("select * from tblgroup where Company_ID='" + c + "' and UserRole='" + role + "'", null);
+            var id = roleId.Rows[0]["ID"];
+
+            var featureId = BaseDbServices.Instance.GetData("select * from tblusercontrol where Company_ID='" + c + "' and Group_ID='" + id + "'", null);
+            List<UserControl> lstUserControl = new List<UserControl>();
+
+            if (featureId.Rows.Count > 0)
+            {
+                for (int i = 0; i < featureId.Rows.Count; i++)
+                {
+                    UserControl userControl = new UserControl();
+                    userControl.ID = Convert.ToInt32(featureId.Rows[i]["ID"]);
+                    userControl.Group_ID = Convert.ToInt32(featureId.Rows[i]["Group_ID"]);
+                    userControl.Feature_ID = Convert.ToInt32(featureId.Rows[i]["Feature_ID"]);
+                    userControl.Action_ID = Convert.ToInt32(featureId.Rows[i]["Action_ID"]);
+                    userControl.Company_ID = Convert.ToInt32(featureId.Rows[i]["Company_ID"]);
+                    lstUserControl.Add(userControl);
+                }
+               
+            }
+            //var featureId = Repos.Instance.UserControlRepo.GetAll().Where(x => x.Company_ID == c && x.Group_ID == id).ToList();
+            var result = lstUserControl.GroupBy(test => test.Feature_ID)
+                                    .Select(grp => grp.First())
+                                    .ToList();
+            for (int k = 0; k < result.Count; k++)
+            {
+                var feId = result[k].Feature_ID;
+                var featureName = BaseDbServices.Instance.GetData("select * frm tblfeature where Company_ID='" + c + "' and ID='" + feId + "'", null);
+                features.Add(featureName.Rows[0]["Name"].ToString());
+            }
+            return features;
+        }
+        public static List<string> getUserFeatureActionAccess(int c, string role, string feature)
+        {
+            List<string> actions = new List<string>();
+            var roleId = BaseDbServices.Instance.GetData("select * from tblgroup where Company_ID='" + c + "' and UserRole='" + role + "'", null);
+            var id = roleId.Rows[0]["ID"];
+           
+            var featureDetail = BaseDbServices.Instance.GetData("select * from tblfeature where Company_ID='" + c + "' and Name='" + feature + "'", null);
+            var featureId = featureDetail.Rows[0]["ID"];
+ //var result = Repos.Instance.UserControlRepo.GetAll().Where(x => x.Company_ID == c && x.Group_ID == id && x.Feature_ID == featureId).ToList();
+            var result = BaseDbServices.Instance.GetData("select * from tblusercontrol where Company_ID='" + c + "' and Group_ID='" + id + "' and Feature_ID='" + featureId + "'", null);
+            for (int k = 0; k < result.Rows.Count; k++)
+            {
+                var actionId = result.Rows[k]["Action_ID"];
+                var featureName = BaseDbServices.Instance.GetData("select * from tblfeatureaction where Company_ID='" + c + "' and ID='" + actionId + "'", null);
+               // var featureName = Repos.Instance.FeatureActionRepo.SearchFor(x => x.Company_ID == c && x.ID == actionId).ToList();
+                actions.Add(featureName.Rows[0]["Name"].ToString());
+            }
+            return actions;
+        }
+
     }
 }
