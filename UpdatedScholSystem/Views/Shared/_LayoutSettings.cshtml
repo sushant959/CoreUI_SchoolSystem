@@ -1,7 +1,7 @@
 ﻿
-@*@{
+@{
     List<string> features = ViewBag.UserFeatures as List<string>;
-}*@
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,39 +79,41 @@
                             <i class="nav-icon fa fa-list-alt"></i> Access Layer
                         </a>
                         <ul class="nav-dropdown-items">
-                            @*@if (features.Contains("Group"))
-                            {*@
+                        
+                            @if (features.Contains("Group"))
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Settings/Group">
                                         <i class="nav-icon fa fa-list-alt"></i> Group
                                     </a>
                                 </li>
-                            @*}*@
-                            @*@if (features.Contains("Feature"))
-                            {*@
+                            }
+                               
+                                @if (features.Contains("Feature"))
+            {               
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Settings/Feature">
                                         <i class="nav-icon fa fa-list-alt"></i> Feature
                                     </a>
                                 </li>
-                            @*}*@
-                            @*@if (features.Contains("Action"))
-                            {*@
+                                }
+                                @if (features.Contains("Action"))
+            {
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Settings/FeatureAction">
                                         <i class="nav-icon fa fa-list-alt"></i> Action
                                     </a>
                                 </li>
-                            @*}*@
-                            @*@if (features.Contains("UserAccess"))
-                            {*@
+                                }
+                               @if (features.Contains("UserAccess"))
+            {
                                 <li class="nav-item">
                                     <a class="nav-link" href="/Settings/UserAccess">
                                         <i class="nav-icon fa fa-list-alt"></i> User Access
                                     </a>
                                 </li>
-                            @*}*@
-                        </ul>
+                                }
+                            </ul>
                     </li>
                 
                     <li class="nav-item mt-auto">

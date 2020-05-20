@@ -17,25 +17,37 @@ namespace UpdatedScholSystem.Controllers
         // GET: Settings
         public ActionResult Index()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return RedirectToAction("Group");
         }
 
         public ActionResult Group()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "Group");
+
             return View();
         }
 
         public ActionResult Feature()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "Feature");
+
             return View();
         }
 
         public ActionResult FeatureAction()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "Action");
+
             return View();
         }
         public ActionResult UserAccess()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "UserAccess");
             int c = (int)Session["CompanyID"];
             var groups = BaseDbServices.Instance.GetData("select * from tblgroup where Company_ID='" + c + "'", null);
             List<Group> lst = new List<Group>();

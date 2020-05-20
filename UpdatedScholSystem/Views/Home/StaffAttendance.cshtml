@@ -3,41 +3,48 @@
     ViewBag.Title = "StaffAttendance";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}
 <div id="StaffAttendanceDashboard">
+@if (actions.Contains("add"))
+{
     <a href="/Home/StaffAttendanceForm" class="btn btn-default pull-right"> + Add Staff Attendance</a>
-
+}
+@if (actions.Contains("report"))
+{
     <div id="divStafAttendanceReport">
         <h4 class="clearfix" id="reportname" style="color:orangered"></h4>
         <div class="card p-3">
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-sm-2">
-                   
-                            <label style="width:60px;margin-left:60px;">Batch</label>
-                        
-                        <select id="searchBatch" class="form-control"></select>
 
-                   
+                    <label style="width:60px;margin-left:60px;">Batch</label>
+
+                    <select id="searchBatch" class="form-control"></select>
+
+
                 </div>
                 <div class="col-sm-2">
-                  
-                            <label  style="width:100px;margin-left:40px;">Department</label>
-                        
-                        <select id="searchDepartment" class="form-control"></select>
 
-                   
+                    <label style="width:100px;margin-left:40px;">Department</label>
+
+                    <select id="searchDepartment" class="form-control"></select>
+
+
                 </div>
                 <div class="col-sm-2">
-                    
-                            <label  style="width:80px;margin-left:40px;">Designation</label>
-                        
-                        <select id="searchDesignation" class="form-control"></select>
 
-                    
+                    <label style="width:80px;margin-left:40px;">Designation</label>
+
+                    <select id="searchDesignation" class="form-control"></select>
+
+
                 </div>
                 <div class="col-sm-4">
-                       
-                            <label style="width:100px;margin-left:130px;">DateRange</label>
-                       
+
+                    <label style="width:100px;margin-left:130px;">DateRange</label>
+
                     <div class="input-group">
                         <input type="text" id="datefrom" placeholder="साल-महिना-गते" class="form-control nepali-calendar" /> <label style="margin-top:6px;">↔</label>
                         <input type="text" id="dateto" placeholder="साल-महिना-गते" class="form-control nepali-calendar" />
@@ -60,6 +67,7 @@
             </div>
         </div>
     </div>
+}
 </div>
 
 

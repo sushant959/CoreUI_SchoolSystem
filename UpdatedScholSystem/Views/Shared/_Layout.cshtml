@@ -67,98 +67,134 @@
         <div class="sidebar" style="background-color:#3f2462">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">
-                            <i class="nav-icon fa fa-dashboard"></i> Dashboard
-                        </a>
-                    </li>
+                    @if (features.Contains("Dashboard"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <i class="nav-icon fa fa-dashboard"></i> Dashboard
+                            </a>
+                        </li>
 
+                    }
+                    @if (features.Contains("GeneralSettings"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/GeneralSettings">
+                                <i class="nav-icon fa fa-users"></i> General Settings
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("StudentManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StudentManagement">
+                                <i class="nav-icon fa fa-money"></i> Student Management
+                                @*<i class="fa fa-circle text-warning pull-right"></i>*@
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("Scholarship"))
+                    {
 
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/ScholarshipManagement">
+                                <i class="nav-icon fa fa-plus"></i> Scholarship
+                                @*<i class="fa fa-circle text-warning pull-right"></i>*@
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("BillingManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/BillingManagement">
+                                <i class="nav-icon fa fa-flag"></i> Billing Management
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("ReceiptManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/ReceiptManagement">
+                                <i class="nav-icon fa fa-flag"></i> Receipt Management
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("DueReport"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/DueReport">
+                                <i class="nav-icon fa fa-flag"></i> Due Report
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("StudentAttendance"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StudentAttendance">
+                                <i class="nav-icon fa fa-flag"></i>Student Attendance
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("StaffManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StaffManagement">
+                                <i class="nav-icon fa fa-flag"></i> Staff Management
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("StaffAttendance"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StaffAttendance">
+                                <i class="nav-icon fa fa-flag"></i> Staff Attendance
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("FineManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/FineManagement">
+                                <i class="nav-icon fa fa-flag"></i> Fine Management
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("TransportManagement"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/TransportationManagement">
+                                <i class="nav-icon fa fa-flag"></i> Transport Management
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("TransportMapping"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StudentTransportMapping">
+                                <i class="nav-icon fa fa-flag"></i> Transport Mapping
+                            </a>
+                        </li>
+                    }
+                    @if (features.Contains("ExtraFeeMapping"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/StudentExtraFeeMapping">
+                                <i class="nav-icon fa fa-flag"></i> ExtraFee Mapping
+                            </a>
+                        </li>
+                    }
+                        @*@if (features.Contains("Settings"))
+                            StudentTransportMapping
+                            StudentExtraFeeMapping
+            {*@
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/GeneralSettings">
-                            <i class="nav-icon fa fa-users"></i> General Settings
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StudentManagement">
-                            <i class="nav-icon fa fa-money"></i> Student Management
-                            @*<i class="fa fa-circle text-warning pull-right"></i>*@
-                        </a>
-                    </li>
-
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/ScholarshipManagement">
-                            <i class="nav-icon fa fa-plus"></i> Scholarship
-                            @*<i class="fa fa-circle text-warning pull-right"></i>*@
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/BillingManagement">
-                            <i class="nav-icon fa fa-flag"></i> Billing Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/ReceiptManagement">
-                            <i class="nav-icon fa fa-flag"></i> Receipt Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/DueReport">
-                            <i class="nav-icon fa fa-flag"></i> Due Report
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StudentAttendance">
-                            <i class="nav-icon fa fa-flag"></i>Student Attendance
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StaffManagement">
-                            <i class="nav-icon fa fa-flag"></i> Staff Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StaffAttendance">
-                            <i class="nav-icon fa fa-flag"></i> Staff Attendance
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/FineManagement">
-                            <i class="nav-icon fa fa-flag"></i> Fine Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/TransportationManagement">
-                            <i class="nav-icon fa fa-flag"></i> Transport Management
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StudentTransportMapping">
-                            <i class="nav-icon fa fa-flag"></i> Transport Mapping
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Home/StudentExtraFeeMapping">
-                            <i class="nav-icon fa fa-flag"></i> ExtraFee Mapping
-                        </a>
-                    </li>
-                    @*@if (features.Contains("Settings"))
-                        StudentTransportMapping
-                        StudentExtraFeeMapping
-        {*@
-                    
-                    @*}*@
-                    <li class="nav-item mt-auto">
-                        <a class="nav-link nav-link-primary" href="/Settings">
-                            <i class="nav-icon fa fa-cog"></i>Settings
-                        </a>
-                    </li>
-                </ul>
+                        @*}*@
+                        <li class="nav-item mt-auto">
+                            <a class="nav-link nav-link-primary" href="/Settings">
+                                <i class="nav-icon fa fa-cog"></i>Settings
+                            </a>
+                        </li>
+                    </ul>
             </nav>
             <button class="sidebar-minimizer brand-minimizer" type="button"></button>
         </div>

@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
     List<UpdatedScholSystem.Models.Group> group = ViewBag.Group;
 }
-@*@{
+@{
     List<string> actions = ViewBag.FeatureActions as List<string>;
-}*@
+}
 <h2>UserAccess</h2>
 <div class="row">
     <div class="col-md-12">
@@ -14,8 +14,8 @@
             <div class="card-body">
                 <h4 class="card-title">Manage User Access</h4>
                 <hr />
-                @*@if (actions.Contains("add"))
-                {*@
+                @if (actions.Contains("add"))
+                {
                     <form id="addUserAccess" method="post" action="/Settings/UserControl">
                         <div class="row">
                             <div class="col-md-5">
@@ -39,6 +39,7 @@
                             <div class="col-sm-12">
                                 <h4>Grant Permission</h4>
                                 <hr />
+                                <button type="submit" class="btn btn-primary pull-right" id="btnSelectAll">Select All</button>
                                 <table class="table table-bordered" id="tablePermission"></table>
                             </div>
                         </div>
@@ -50,7 +51,7 @@
 
 
                     </form>
-                @*}*@
+                }
             </div>
         </div>
     </div>
@@ -126,4 +127,31 @@
         }
     })
 
+    $("#btnSelectAll").on('click', function (e) {
+        e.preventDefault();
+        debugger;
+        $.ajax({
+            url: "/api/GetFeatureAndAction",
+            method: "GET",
+            data: {
+                Company_ID:@Session["CompanyId"],
+                
+            },
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                var actions = result.lstFeatureAction;
+                var features = result.lstFeature;
+                for (var q in features) {
+                    
+                        for (var s in actions) {
+                            
+                                $('[name="ActionFeatures[' + q + '][FeatureActions][' + s + '][IsChecked]"]').attr('checked', true);
+                            }
+                        }
+                    
+                }
+            
+        })
+    })
 </script>

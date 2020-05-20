@@ -3,10 +3,17 @@
     ViewBag.Title = "BillingManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+    List<string> Receiptactions = ViewBag.FeatureReceiptActions as List<string>;
+}
 <div id="divBillingDetails">
-     
+    @if (actions.Contains("add"))
+    {
     <button class="btn btn-default pull-right" id="addBilling">+ Add New Bill</button>
+    }
+    @if (actions.Contains("report"))
+    {
     <div id="searchBilling">
         <h4 class="clearfix" id="reportname">List of all Billing </h4>
         <div class="card p-3">
@@ -85,10 +92,13 @@
 
 
             </div><br />
-            
+
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="btn btn-warning btn-block pull-right" style="margin-top:20px;width:150px;" id="btnDelete" >Delete Selected Row</button>
+                    @if (actions.Contains("delete"))
+                    {
+                    <button class="btn btn-warning btn-block pull-right" style="margin-top:20px;width:150px;" id="btnDelete">Delete Selected Row</button>
+                    }
                     <form id="deleteMultipleBill">
                         <div style="width:100%;overflow:auto;">
                             <table id="tblBillingDetails" class="table table-bordered"></table>
@@ -99,6 +109,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 <div class="row" id="divBillingForm">
     <div class="col-md-1"></div>
@@ -135,7 +146,7 @@
                         <select multiple="multiple" class="form-control multiselect" name="Section[]" id="selectSection"></select>
                     </div>
                 </div>
-                
+
             </div>
             <div class="form-row">
                 <div class="col-md-6">
@@ -143,7 +154,7 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width:100px;">StudentId</label>
                         </div>
-                       <input type="text" class="form-control" name="StudentId" id="studentid" />
+                        <input type="text" class="form-control" name="StudentId" id="studentid" />
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -152,7 +163,7 @@
                             <label class="input-group-text" style="width:100px;">Month</label>
                         </div>
                         <select multiple="multiple" id="selectmonth" class="form-control multiselect" name="Month[]">
-                            
+
                             <option value="01">Baisakh</option>
                             <option value="02">Jesth</option>
                             <option value="03">Asar</option>
@@ -169,9 +180,9 @@
                     </div>
                 </div>
             </div>
-          <div id="feestructure">
+            <div id="feestructure">
 
-          </div>
+            </div>
             <div class="form-group" id="billingfooter">
                 <div class="col-sm-12 text-center">
                     <input type="submit" value="Submit" class="btn btn-default" id="btnSaveBillingInfo" />
@@ -339,7 +350,7 @@
                         <input type="text" class="form-control" name="Status" id="receiptStatus" readonly />
                     </div>
                 </div>
-            </div><br/>
+            </div><br />
             <h5>Payment Method</h5>
             <input type="radio" id="paymentcash" name="PaymentMethod" value="cash" />&nbsp;&nbsp;&nbsp;&nbsp;Cash <br />
             <div class="form-inline"><input type="radio" id="paymentcheque" name="PaymentMethod" value="cheque" />&nbsp;&nbsp;&nbsp;&nbsp;Cheque &nbsp;&nbsp;&nbsp;&nbsp; <input type="text" id="bankname" name="BankName" style="width:200px;" placeholder="Bank Name" class="form-control" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="ChequeNo" id="chequeno" style="width:300px;" placeholder="Cheque Number" class="form-control" /></div>
@@ -500,16 +511,14 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:130px;">Month</label>
                                 </div>
-                                <input class="form-control" type="text" id="showmonth" readonly/>
+                                <input class="form-control" type="text" id="showmonth" readonly />
                             </div>
 
                         </div>
-                    </div><br/>
+                    </div><br />
                     <h5>List of Billing Details</h5>
-                    <div >
-                        <table id="tblShowBillingDetails" class="table table-bordered" style="width:100%;overflow:auto">
-
-                        </table>
+                    <div>
+                        <table id="tblShowBillingDetails" class="table table-bordered" style="width:100%;overflow:auto"></table>
                     </div>
                 </form>
             </div>
@@ -556,7 +565,7 @@
                     }
                     $("#selectBatch").html(v);
                 }
-              
+
                 if (sectionDetails != undefined) {
                     var v = "";
                     for (var i in sectionDetails) {
@@ -717,7 +726,7 @@
             toastr.error("Please select batch");
             return;
         }
-        
+
             if (ff.StudentId != '') {
                 debugger;
                 $.ajax({
@@ -728,7 +737,7 @@
                     success: function (result) {
                         debugger;
                         if (result == true) {
-                           
+
                                 $("#formBilling").find("input[type=text],textarea,select").val("");
                                 hideAll();
                                 $("#divBillingDetails").show();
@@ -762,16 +771,16 @@
                                         alert(e.statusText);
                                     }
                                 })
-                                
-                            
+
+
                         }
                         else if (result == false) {
-                           
-                           
+
+
                                 $('#modalInfo').modal('hide');
                             $("#formBilling").find("input[type=text],textarea,select").val("");
                             toastr.error("Fee Details already exists");
-                           
+
                         }
                     },
                     error: function (e) {
@@ -790,7 +799,7 @@
                     success: function (result) {
                         debugger;
 
-                       
+
                             $('#modalInfo').modal('hide');
                             $("#formBilling").find("input[type=text],textarea,select").val("");
                             hideAll();
@@ -824,7 +833,7 @@
                                     alert(e.statusText);
                                 }
                             })
-                       
+
                     },
                     error: function (e) {
                         console.error(e);
@@ -833,9 +842,9 @@
                 })
             }
         });
-    
-    
-   
+
+
+
 
     var loadData = function () {
         debugger;
@@ -924,11 +933,41 @@
                         debugger;
                         if (row.IsCreated == false) {
 
-                            return "<div style='display:flex'><a href='#' onclick='deleteBillingDetails(\"" + row.BillingId + "\",\"" + row.Month + "\",\"" + row.StudentId + "\",\"" + row.Batch + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='createRecipt(\"" + row.BillingId + "\",\"" + row.StudentId + "\",\"" + row.Month + "\",\"" + row.Date + "\",\"" + row.Batch + "\")' title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='BillingDetails(\"" + row.BillingId + "\")' title='details'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' class='btn btn-info' onclick='PrintBilling(\"" + row.BillingId + "\",\"" + convertMonthInt(row.Month) + "\",\"" + row.Batch + "\")'>Print</a></div>";
+                            return `<div style='display:flex'>
+                            @if (actions.Contains("delete"))
+                            {
+                                <a href='#' onclick='deleteBillingDetails("${row.BillingId}","${row.Month}","${row.StudentId}","${row.Batch}")'
+                                title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' />
+                                </a> }  &nbsp;
+                            @if (Receiptactions.Contains("add"))
+                            {
+                                <a href='#' onclick='createRecipt("${row.BillingId}","${row.StudentId}","${row.Month}","${row.Date}","${row.Batch}")' 
+                                title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' />
+                                </a> }  &nbsp;
+                            @if (actions.Contains("view"))
+                            {
+                            <a href='#' onclick='BillingDetails("${row.BillingId}")' title='details'>
+                            <img src='/Content/images/view.png' style='width:30px;height:30px;' />
+                            </a> } &nbsp;
+                             <a href='#' class='btn btn-info' onclick='PrintBilling("${row.BillingId}","${convertMonthInt(row.Month)}","${row.Batch}")'>Print
+                            </a>
+                            </div>`;
                         }
                         else {
-                            return "<div style='display:flex;justify-content:flex-end;'><a href='#' onclick='createRecipt(\"" + row.BillingId + "\",\"" + row.StudentId + "\",\"" + row.Month + "\",\"" + row.Date + "\",\"" + row.Batch + "\")' title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' style='display:none;'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='BillingDetails(\"" + row.BillingId + "\")' title='details'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' class='btn btn-info' onclick='PrintBilling(\"" + row.BillingId + "\",\"" + convertMonthInt(row.Month) + "\",\"" + row.Batch + "\")'>Print</a></div>";
-                           
+                            return `<div style='display:flex'>
+                           @if (Receiptactions.Contains("add"))
+                           {
+                                <a href='#' onclick='createRecipt("${row.BillingId}","${row.StudentId}","${row.Month}","${row.Date}","${row.Batch}")' 
+                                title='create receipt'><img src='/Content/images/receipt.png' style='width:30px;height:30px;' />
+                                </a> }  &nbsp;
+                            @if (actions.Contains("view"))
+                            {
+                            <a href='#' onclick='BillingDetails("${row.BillingId}")' title='details'>
+                            <img src='/Content/images/view.png' style='width:30px;height:30px;' />
+                            </a> } &nbsp;
+                             <a href='#' class='btn btn-info' onclick='PrintBilling("${row.BillingId}","${convertMonthInt(row.Month)}","${row.Batch}")'>Print
+                            </a>
+                            </div>`;
 
                         }
                     }
@@ -973,7 +1012,7 @@
                     'data': 'Date'
                 },
                 {
-                   
+
                     'title': 'Status',
                     'data': 'Status'
                 },
@@ -998,7 +1037,7 @@
         var month = $("#searchMonth").val();
         var status = $("#searchStatus").val();
         debugger;
-      
+
             debugger;
             $.ajax({
                 url: "/api/SearchBillingDetails",
@@ -1021,7 +1060,7 @@
                     alert(e.statusText);
                 }
             })
-        
+
     })
 
     var BillingDetails = function (id) {
@@ -1050,9 +1089,9 @@
                     "ordering": false,
                     "info": false,
                     "searching":false,
-                   
+
                     columns: [
-                      
+
                         {
                             'title': 'SN',
                             'data': 'SN',
@@ -1073,7 +1112,7 @@
                             'title': 'Amount',
                             'data': 'Amount'
                         }
-                      
+
                     ]
                 });
             },
@@ -1090,7 +1129,7 @@
         month = convertMonthInt(month);
         debugger;
         $("#formReceipt").find("input[type=text],input[type=hidden],input[type=number]").val('');
-       
+
         $("#btnSaveReceipt").val("Submit");
         debugger;
         $.ajax({
@@ -1160,7 +1199,7 @@
                                     $("#receiptTotalFee").val(details[0]["Total"]);
                                     var mn = details[0]["Month"];
                                     debugger;
-                                   
+
                                     getFine(date, details[0]["Total"]);
                                     getDue(billingid, StudentId, details[0]["Month"], details[0]["Total"]);
                                     debugger;
@@ -1186,9 +1225,9 @@
                 else if (result === true)
                 {
                     toastr.error("Payment for this month already paid");
-                   
-                   
-                  
+
+
+
                 }
                 else {
                     debugger;
@@ -1215,7 +1254,7 @@
                     $("#receiptTotalFee").val(result[0]["Total"]);
                     var mn = result[0]["Month"];
                     debugger;
-                    
+
                     getFine(date, result[0]["Total"]);
                     getDue(id, studentid, result[0]["Month"], result[0]["Total"]);
                     debugger;
@@ -1243,7 +1282,7 @@
             success: function (result) {
                 if (result != 0) {
                     $("#receiptAdvancedPaid").val(result[0]["Amount"]);
-                   
+
                 }
                 else {
                     $("#receiptAdvancedPaid").val(0);
@@ -1296,10 +1335,10 @@
             success: function (result) {
                 debugger;
                 var topay = 0;
-               
+
                 if (result[0]['paid'] != null) {
                     var paid = parseFloat(result[0]["paid"]) + parseFloat(result[0]["dis"] - parseFloat(result[0]["fine"]));
-                   
+
                     $("#previousdue").html("Paid Amount");
                     $("#receiptDueAmount").val(paid);
                     topay = total - paid;
@@ -1334,7 +1373,7 @@
             debugger;
             fine = parseFloat($("#receiptFine").val());
         }
-      
+
         var Total = parseFloat($("#receiptTotalFee").val());
         var due = parseFloat($("#receiptDueAmount").val());
         if (parseFloat(due) == 0) {
@@ -1371,8 +1410,8 @@
         }
     })
 
-   
-   
+
+
     $("#paymentcheque").on('click', function () {
         $("#bankname").attr('disabled', false);
         $("#chequeno").attr('disabled', false);
@@ -1422,7 +1461,7 @@
             $("#btnSaveReceipt").attr('disabled', false);
             $("#receiptStatus").val("Paid");
         }
-        
+
         else {
             $("#amountremain").text("Amount Remain");
             $("#receiptAmountRemain").val(Math.abs(amount));
@@ -1430,7 +1469,7 @@
             $("#receiptStatus").val("Partial Paid");
         }
 
-        
+
         var amountPaid = $("#receiptAmountPaid").val();
         if (amountPaid == "") {
             amountPaid = 0;
@@ -1440,9 +1479,9 @@
             $("#receiptStatus").val("");
         }
         //debugger;
-        
+
         //var topay = parseInt(amountPaid);
-       
+
         //if (totalAmount >= 0) {
         //    debugger;
         //    if (topay > totalAmount) {
@@ -1451,7 +1490,7 @@
         //        $("#receiptStatus").val("Paid");
         //    }
         //    else {
-                
+
         //        var amountDue = parseInt(totalAmount) - parseInt(amountPaid);
         //        $("#amountremain").text("Amount Remain");
         //        $("#receiptAmountRemain").val(amountDue);
@@ -1464,13 +1503,13 @@
         //        $("#btnSaveReceipt").attr('disabled', false);
         //    }
         //}
-        
+
 
     })
 
     $("#btnSaveReceipt").on('click', function (e) {
         e.preventDefault();
- 
+
             debugger;
         var fd = $("#formReceipt").serializeJSON();
         fd.CompanyId=@Session["CompanyId"];
@@ -1537,7 +1576,7 @@
                 else if (due != 0) {
                     savePaidStatus(fd.BillingId, fd.StudentId, "PartialPaid");
                 }
-                
+
                 debugger;
                 toastr.success("Created Successfully");
                     $("#formReceipt").find("input[type=text],input[type=hidden],textarea,select").val("");
@@ -1578,7 +1617,7 @@
                             }
                         })
                     }
-               
+
             },
             error: function (e) {
                 debugger;
@@ -1589,9 +1628,9 @@
 
             }
         })
-            
 
-    
+
+
     })
 
 
@@ -1671,7 +1710,7 @@
 
     var deleteBillingDetails = function (id, month, studentid,batch) {
         debugger;
-       
+
 
         swal({
             title: "Do you want to delete Billing details of:  StudentId :  " + studentid + "  Month : " + month + "  Session:  " + batch + " ?",
@@ -1699,8 +1738,8 @@
                     var month = $("#searchMonth").val();
                     var status = $("#searchStatus").val();
                     debugger;
-                   
-                  
+
+
                         debugger;
                         $.ajax({
                             url: "/api/SearchBillingDetails",
@@ -1723,9 +1762,9 @@
                                 alert(e.statusText);
                             }
                         })
-                    
-               
-               
+
+
+
             },
 
             error: function (e) {
@@ -1737,7 +1776,7 @@
         })
     }
 
-    
+
     var cancel = function () {
         debugger;
         swal({
@@ -1787,7 +1826,7 @@
         else {
             $("#receiptFine").attr('disabled', true);
             debugger;
-           
+
             var total = parseInt($("#receiptTotalFee").val());
             var paid = parseInt($("#receiptDueAmount").val());
             var sum = total - paid;
@@ -1847,11 +1886,11 @@
         if (fd.BillingId == undefined) {
             debugger;
             toast.dangerMode("Please select row to delete billing");
-        
+
         }
         else {
             var count = fd.BillingId.length;
-           
+
             swal({
                 title: "Do you want to delete Billing details of:  " + count + " Student ? ",
             text: "You will not be able to restore the data!",
@@ -1867,11 +1906,11 @@
             data: fd,
             dataTable: "json",
             success: function (result) {
-               
+
                 toastr.success("Deleted successfully.");
-               
+
                     debugger;
-                    
+
                     debugger;
                     var batch = $("#searchBatch").val();
                     var _class = $("#searchClass").val();
@@ -1909,7 +1948,7 @@
                         })
                     }
 
-               
+
             },
             error: function (e) {
 
@@ -1918,9 +1957,9 @@
             }
         })
             debugger;
-         
+
         }
-       
+
     })
 
 

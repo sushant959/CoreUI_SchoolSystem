@@ -3,6 +3,9 @@
     ViewBag.Title = "ScholarshipManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}
 <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default active">
         <input type="radio" name="Tab" data-value="ScholarshipName" data-text="Scholarship details" autocomplete="off" checked>Scholarship Name
@@ -21,50 +24,60 @@
             <div class="card-body">
                 <h4 class="card-title">Manage Scholarship</h4>
                 <hr />
-                <form id="formScholarshipName" class="form-row">
-                    <input type="hidden" name="CompanyId" value="" />
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">Scholarship Name</label>
+                @if (actions.Contains("add"))
+                {
+                    <form id="formScholarshipName" class="form-row">
+                        <input type="hidden" name="CompanyId" value="" />
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Scholarship Name</label>
+                                </div>
+                                <input type="text" name="ScholarshipName" class="form-control" />
+                                <button class="btn btn-primary" id="btnSaveScholarshipName" type="submit" style="margin-left:10px;" data-name="">Add</button>
                             </div>
-                            <input type="text" name="ScholarshipName" class="form-control" />
-                            <button class="btn btn-primary" id="btnSaveScholarshipName" type="submit" style="margin-left:10px;" data-name="">Add</button>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
+                }
                 <hr />
-                <h5>List of all Scholarship</h5>
-                <table id="tblScholarshipName" class="table table-bordered">
-                    <thead></thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+                @if (actions.Contains("report"))
+                {
+                    <h5>List of all Scholarship</h5>
+                    <table id="tblScholarshipName" class="table table-bordered">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                }
+                </div>
         </div>
 
     </div>
 </div>
 <div id="divScholarshipDetails">
+    @if (actions.Contains("add"))
+    {
+        <button class="btn btn-default pull-right" id="addScholarshipDetails">Add Scholarship</button>
+    }
+        <div>
+            @if (actions.Contains("report"))
+            {
+                <h4 class="clearfix">List of all Scholarship</h4>
+                <div class="card p-2">
 
-    <button class="btn btn-default pull-right" id="addScholarshipDetails">Add Scholarship</button>
-    <div>
-        <h4 class="clearfix">List of all Scholarship</h4>
-        <div class="card p-2">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="width:100%;overflow:auto;">
+                                <table id="tblScholarshipDetails" class="table table-bordered table-striped"></table>
+                            </div>
+                        </div>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div style="width:100%;overflow:auto;">
-                        <table id="tblScholarshipDetails" class="table table-bordered table-striped"></table>
                     </div>
                 </div>
-
-            </div>
+            }
         </div>
 
     </div>
-
-</div>
 <div class="row" id="divScholarshipForm">
     <div class="col-md-1"></div>
     <div class="col-md-10 card p-3">
@@ -126,56 +139,60 @@
 </div>
 
 <div id="divSpecialScholarship">
+    @if (actions.Contains("add"))
+    {
+        <button class="btn btn-default pull-right" id="addSpecialScholarship">Add Special Scholarship</button>
+    }
+        <div>
+            @if (actions.Contains("report"))
+            {
+                <h4 class="clearfix">List of all Special Scholarship</h4>
+                <div class="card p-2">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-sm-3">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:70px">Batch</label>
+                                </div>
+                                <select id="searchBatch" class="form-control"></select>
 
-    <button class="btn btn-default pull-right" id="addSpecialScholarship">Add Special Scholarship</button>
-    <div>
-        <h4 class="clearfix">List of all Special Scholarship</h4>
-        <div class="card p-2">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-sm-3">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:70px">Batch</label>
+                            </div>
                         </div>
-                        <select id="searchBatch" class="form-control"></select>
+                        <div class="col-sm-3">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:70px">Class</label>
+                                </div>
+                                <select id="searchClass" class="form-control"></select>
 
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:70px">Class</label>
+                            </div>
                         </div>
-                        <select id="searchClass" class="form-control"></select>
+                        <div class="col-sm-3">
+                            <div class="input-group mt-2">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" style="width:100px">Student Id</label>
+                                </div>
+                                <input type="text" id="searchStudentId" class="form-control" />
 
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:100px">Student Id</label>
+                            </div>
                         </div>
-                        <input type="text" id="searchStudentId" class="form-control" />
+                        <div class="col-sm-2">
+                            <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchScholarship" type="submit" data-name="">Search</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="width:100%;overflow:auto;">
+                                <table id="tblSpecialScholarship" class="table table-bordered table-striped"></table>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchScholarship" type="submit" data-name="">Search</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div style="width:100%;overflow:auto;">
-                        <table id="tblSpecialScholarship" class="table table-bordered table-striped"></table>
-                    </div>
-                </div>
-
-            </div>
+            }
         </div>
 
     </div>
-
-</div>
 <div class="row" id="divSpecialScholarshipForm">
     <div class="col-md-1"></div>
     <div class="col-md-10 card p-3">
@@ -222,10 +239,10 @@
                         <select class="form-control" name="Faculty" id="selectSpecialFaculty"></select>
                     </div>
                 </div>
-            </div><br/>
+            </div><br />
             <div class="form-row" id="tblSpecialScholarshipDetails">
 
-            </div><br/>
+            </div><br />
             <div class="form-group" id="specialfooter">
                 <div class="col-sm-12 text-center">
                     <input type="submit" value="Submit" class="btn btn-default" id="btnSaveSpecialScholarship" />
@@ -462,8 +479,22 @@
                         if (c != "ScholarshipId") {
                             tblBody += "<td>" + result[r][c] + "</td>";
                         }
+                    }                   
+ tblBody += "<td>";
+                    debugger;
+
+                    if('@actions.Contains("edit")' == 'True')
+                    {
+                        debugger;
+                        
+                        tblBody += "<a href='#' onclick='updateScholarshipName(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>";
+
                     }
-                    tblBody += "<td><a href='#' onclick='updateScholarshipName(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\",\"" + _type + "\" ) ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
+                    if ('@actions.Contains("delete")' =='True') {
+                        tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['ScholarshipId'] + "\",\"" + result[r]['ScholarshipName'] + "\",\"" + _type + "\" ) ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>";
+
+                    }
+                    tblBody += "</td>";
                 }
                 tblBody += "</tr>";
                 $("#tblScholarshipName thead").html("<tr>" + tblHeader + "</tr>");
@@ -480,7 +511,24 @@
                 for (var r in result) {
                     var view = "scholarshipdetails";
                     var SN = (parseInt(r) + 1);
-                    tblBody += "<tr><td><a href='#' onclick='editScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='editScholarshipDetails(\"" + result[r]['ScholarshipName'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Class'] + "\",\"" + result[r]['Faculty'] + "\",\"" + view + "\")' title='view'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a></td><td>" + SN + "</td>";
+                    tblBody += `<tr><td>
+                                @if (actions.Contains("edit"))
+                                {
+                                    <a href='#' onclick='editScholarshipDetails("${result[r]['ScholarshipName']}","${result[r]['Batch']}","${result[r]['Class']}","${result[r]['Faculty']}")' title='edit'>
+                                    <img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>
+                                } &nbsp;|&nbsp;
+                                @if (actions.Contains("delete"))
+                                {
+                                    <a href='#' onclick='deleteScholarshipDetails("${result[r]['ScholarshipName']}","${result[r]['Batch']}","${result[r]['Class']}","${result[r]['Faculty']}")' title='delete'>
+                                    <img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>
+                                } &nbsp;|&nbsp;
+                                @if (actions.Contains("view"))
+                                {
+                                    <a href='#' onclick='editScholarshipDetails("${result[r]['ScholarshipName']}","${result[r]['Batch']}","${result[r]['Class']}","${result[r]['Faculty']}","${view}")' title='view'>
+                                    <img src='/Content/images/view.png' style='width:30px;height:30px;' /></a>
+                                }
+
+                                    </td><td>" + SN + "</td>`;
 
                     for (var c in result[r]) {
                         if (c != "Id") {
@@ -964,7 +1012,7 @@
             success: function (result) {
                 debugger;
                 if (result == true) {
-                   
+
                         $('#tblSpecialScholarshipDetails').empty();
                         debugger;
                         hideAll();
@@ -973,13 +1021,13 @@
                     toastr.success("Added Successfully");
                 }
                 else if(result == false){
-                   
+
                         $("#formSpecialScholarship select").val('');
                         $("#studentid").val('');
                     $('#tblSpecialScholarshipDetails').empty();
                     toastr.error("Scholarship for Student already added");
 
-                    
+
                 }
             },
             error: function (e) {
@@ -1030,7 +1078,23 @@
                     'data': 'Action',
 
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' onclick='editSpecialScholarship(\"" + row.StudentId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#'  onclick='deleteSpecialScholarship(\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + _type + "\",\"" + row.Batch + "\")' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#'  onclick='editSpecialScholarship(\"" + row.StudentId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + view + "\")' title='view'><img src='/Content/images/view.png' style='width:30px;height:30px;' /></a></div>";
+                        return `<div style='display:flex'>
+                        @if (actions.Contains("edit"))
+                        {
+                        <a href='#' onclick='editSpecialScholarship("${row.StudentId}","${row.Batch}","${row.Class}","${row.Faculty}")' title='edit'>
+                        <img src='/Content/images/edit3.png' style='width:30px;height:30px;' />
+                        </a> } &nbsp;
+                        @if(actions.Contains("delete"))
+                        { 
+                        <a href='#'  onclick='deleteSpecialScholarship("${row.StudentId}","${row.FirstName}","${row.LastName}","${ _type }","${row.Batch}")' title='delete'>
+                        <img src='/Content/images/delete.png' style='width:30px;height:30px;' />
+                        </a>} &nbsp;
+                        @if (actions.Contains("view"))
+                        {
+                        <a href='#'  onclick='editSpecialScholarship("${row.StudentId}","${row.Batch}","${row.Class}","${row.Faculty}","${view}")' title='view'>
+                        <img src='/Content/images/view.png' style='width:30px;height:30px;' />
+                        </a> }
+                        </div>`;
                     }
                 },
 
@@ -1181,7 +1245,7 @@
     }
 
     var deleteSpecialScholarship = function (id,firstname,lastname,type,batch) {
-      
+
         var companyId=@Session["CompanyId"];
           swal({
               title: "Do you want to delete Scholarship details of  StudentId : " + id + "  Name:  " + firstname + " " + lastname + " Batch :  " + batch + " ?",
@@ -1196,8 +1260,8 @@
 
             }
         })
-       
-    
+
+
 
     }
 
@@ -1468,7 +1532,7 @@
 
             }
         })
-       
+
 
         debugger;
     };
@@ -1813,7 +1877,23 @@
                     'data': 'Action',
 
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\")'>Delete</a>&nbsp;<a href='#' class='btn btn-info' onclick='editScholarshipDetails(\"" + row.ScholarshipName + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Faculty + "\",\"" + view + "\")'>View</a></div>";
+                        return `<div style='display:flex'>
+                            @if (actions.Contains("edit"))
+                            {
+                                <a href='#' class='btn btn-info' onclick='editScholarshipDetails("${row.ScholarshipName}","${row.Batch}","${row.Class}","${row.Faculty}")'>Edit
+                                </a> 
+                            } &nbsp;
+                            @if (actions.Contains("delete"))
+                            {
+                                <a href='#' class='btn btn-info' onclick='deleteScholarshipDetails("${row.ScholarshipName}","${row.Batch}","${row.Class}","${row.Faculty}")'>Delete
+                                </a>
+                            } &nbsp;
+                            @if (actions.Contains("view"))
+                            {
+                                <a href='#' class='btn btn-info' onclick='editScholarshipDetails("${row.ScholarshipName}","${row.Batch}","${row.Class}","${+ row.Faculty}","${view}")'>View
+                                </a>
+                            }
+                                </div>`;
                     }
                 },
 

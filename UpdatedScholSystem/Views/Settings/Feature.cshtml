@@ -3,9 +3,9 @@
     ViewBag.Title = "Feature";
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
-@*@{
+@{
     List<string> actions = ViewBag.FeatureActions as List<string>;
-}*@
+}
 
 <div class="row">
     <div class="col-md-3"></div>
@@ -14,8 +14,8 @@
             <div class="card-body">
                 <h4 class="card-title">Manage Features</h4>
                 <hr />
-                @*@if (actions.Contains("add"))
-                {*@
+                @if (actions.Contains("add"))
+                {
                     <form id="addFeature">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -31,13 +31,13 @@
                             <input type="submit" class="btn btn-primary" id="btnAddFeature" value="Add" style="margin-left:10px;" />
                         </div>
                     </form>
-                @*}
+                }
                 @if (actions.Contains("report"))
-                {*@
+                {
                     <hr />
                     @*<h5>List of all District</h5>*@
                     <table id="tblFeatureList" class="table table-bordered table-striped"></table>
-                @*}*@
+                }
             </div>
         </div>
     </div>
@@ -138,16 +138,16 @@
                         debugger;
 
                         return `
-                            @*@if(actions.Contains("edit"))
-                            {*@
+                            @if (actions.Contains("edit"))
+                            {
                                 <a href='#' onclick='editFeature("${row.ID}","${row.Name}")' title='Edit'>
                                     <i class='fa fa-edit fa-lg'></i>
-                                </a> &nbsp;&nbsp;&nbsp;&nbsp;
-                            @*@if(actions.Contains("delete"))
-                            {*@
+                                </a> } &nbsp;&nbsp;&nbsp;&nbsp;
+                            @if (actions.Contains("delete"))
+                            {
                                 <a href='#' onclick='deleteFeature("${row.ID}","${row.Name}")' title='Delete'>
                                     <i class='fa fa-trash fa-lg'></i>
-                                </a>`;
+                                </a> } `;
 
                     }
                 },

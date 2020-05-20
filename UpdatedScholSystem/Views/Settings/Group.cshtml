@@ -3,9 +3,9 @@
     ViewBag.Title = "Group";
     Layout = "~/Views/Shared/_LayoutSettings.cshtml";
 }
-@*@{
+@{
     List<string> actions = ViewBag.FeatureActions as List<string>;
-}*@
+}
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -13,8 +13,8 @@
             <div class="card-body">
                 <h4 class="card-title">Manage Group</h4>
                 <hr />
-                @*@if (actions.Contains("add"))
-                {*@
+                @if (actions.Contains("add"))
+                {
                     <form id="addGroup">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -30,13 +30,13 @@
                             <input type="submit" class="btn btn-primary" id="btnAddUserRole" value="Add" style="margin-left:10px;" />
                         </div>
                     </form>
-                @*}
+                }
                 @if (actions.Contains("report"))
-                {*@
+                {
                     <hr />
                     @*<h5>List of all District</h5>*@
                     <table id="tblUserRoleList" class="table table-bordered table-striped"></table>
-                @*}*@
+                }
             </div>
         </div>
     </div>
@@ -136,16 +136,16 @@
                         debugger;
 
                         return `
-                            @*@if(actions.Contains("edit"))
-                            {*@
+                            @if (actions.Contains("edit"))
+                            {
                                 <a href='#' onclick='editGroup("${row.ID}","${row.UserRole}")' title='Edit'>
                                     <i class='fa fa-edit fa-lg'></i>
-                                </a> &nbsp;&nbsp;&nbsp;&nbsp;
-                            @*@if(actions.Contains("delete"))
-                            {*@
+                                </a> } &nbsp;&nbsp;&nbsp;&nbsp;
+                            @if (actions.Contains("delete"))
+                            {
                                 <a href='#' onclick='deleteGroup("${row.ID}","${row.UserRole}")' title='Delete'>
                                     <i class='fa fa-trash fa-lg'></i>
-                                </a>`;
+                                </a> } `;
 
                     }
                 },

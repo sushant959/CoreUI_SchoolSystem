@@ -21,7 +21,7 @@ namespace UpdatedScholSystem.Controllers
 
             if (Session["user"] != null)
             {
-                
+                ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
                 return View();
             }
             else if (token != null)
@@ -44,7 +44,7 @@ namespace UpdatedScholSystem.Controllers
                     Session["user"] = new { Email = email, Role = role };
                     Session["Role"] = role;
                     Session["Email"] = email;
-
+                    ViewBag.UserFeatures = Utilities.getUserAccessFeatures(c, role);
                     return View();
                 }
                 catch (Exception ex)
@@ -162,55 +162,78 @@ namespace UpdatedScholSystem.Controllers
 
         public ActionResult GeneralSettings()
         {
-            
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "GeneralSettings");
             return View();
         }
         public ActionResult StudentManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StudentManagement");
             return View();
         }
         public ActionResult ScholarshipManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "Scholarship");
             return View();
         }
 
         public ActionResult BillingManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "BillingManagement");
+            ViewBag.FeatureReceiptActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "ReceiptManagement");
+
             return View();
         }
 
         public ActionResult ReceiptManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "ReceiptManagement");
             return View();
         }
 
         public ActionResult StudentAttendance()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StudentAttendance");
             return View();
         }
 
         public ActionResult StaffAttendance()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StaffManagement");
             return View();
         }
 
         public ActionResult FineManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "FineManagement");
             return View();
         }
 
         public ActionResult TeacherAttendance()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "TeacherAttendance");
             return View();
         }
 
         public ActionResult StaffManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StaffManagement");
             return View();
         }
 
         public ActionResult StudentForm(string id = null, string value = null)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+           
             var StudentNo = id != null;
             ViewBag.StudentId = StudentNo ? 1 : 0;
             ViewBag.StudentNo = id;
@@ -220,6 +243,7 @@ namespace UpdatedScholSystem.Controllers
 
         public ActionResult StaffForm(int id = 0, string value = null)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             var TeacherNo = id != 0;
             ViewBag.TeacherId = TeacherNo ? 1 : 0;
             ViewBag.TeacherNo = id;
@@ -229,40 +253,46 @@ namespace UpdatedScholSystem.Controllers
 
         public ActionResult StudentAttendanceForm()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return View();
         }
 
         public ActionResult StaffAttendanceForm()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return View();
         }
 
         [Route("ViewStaffDetails/{id}")]
         public ActionResult ViewStaffDetails(int id)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return RedirectToAction("StaffForm", new { id = id });
         }
 
         [Route("Home/ViewStudentDetails/{id}")]
         public ActionResult ViewStudentDetails(string id)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return RedirectToAction("StudentForm", new { id = id });
         }
         [Route("Home/EditStudentDetails/{id}")]
         public ActionResult EditStudentDetails(string id)
         {
-
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return RedirectToAction("StudentForm", new { id = id, value = "edit" });
         }
 
         [Route("Home/editStaffDetails/{id}")]
         public ActionResult EditStaffDetails(int id)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return RedirectToAction("StaffForm", new { id = id, value = "edit" });
         }
 
         public ActionResult PrintBilling(int BillingId,string Month,string Batch)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             ViewBag.Id = BillingId;
             ViewBag.month = Month;
             ViewBag.batch = Batch;
@@ -271,6 +301,7 @@ namespace UpdatedScholSystem.Controllers
 
         public ActionResult PrintDueReport(string Batch,string Class,string StudentId)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             ViewBag.Batch = Batch;
             ViewBag.Class = Class;
             ViewBag.StudentId = StudentId;
@@ -279,6 +310,7 @@ namespace UpdatedScholSystem.Controllers
 
         public ActionResult PrintDueReport1(string Batch, string Class, string StudentId)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             ViewBag.Batch = Batch;
             ViewBag.Class = Class;
             ViewBag.StudentId = StudentId;
@@ -286,40 +318,52 @@ namespace UpdatedScholSystem.Controllers
         }
         public ActionResult PrintReceipt(int ReceiptId,int BillingId)
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             ViewBag.ReceiptId = ReceiptId;
             ViewBag.BillingId = BillingId;
             return View();
         }
         public ActionResult DueReport()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "DueReport");
             return View();
         }
         public ActionResult TransportationManagement()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "TransportManagement");
             return View();
         }
 
         public ActionResult StudentTransportMapping()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "TransportMapping");
             return View();
         }
         public ActionResult StudentTransportMappingForm()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return View();
         }
         public ActionResult StudentExtraFeeMapping()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "ExtraFeeMapping");
             return View();
         }
 
         public ActionResult StudentExtraFeeMappingForm()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return View();
         }
 
         [AllowAnonymous]
         public ActionResult CompanyRegistration()
         {
+            ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
             return View();
         }
 

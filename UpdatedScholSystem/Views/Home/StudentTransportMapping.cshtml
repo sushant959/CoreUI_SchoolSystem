@@ -3,13 +3,20 @@
     ViewBag.Title = "StudentTransportMapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}
 <div id="StudentDashboard">
     <div class="row">
+        @if (actions.Contains("add"))
+        {
         <div class="col-md-12">
             <a href="/Home/StudentTransportMappingForm" class="btn pull-right btn-default"> + Add Student Transport</a>
         </div>
+        }
     </div>
+    @if (actions.Contains("report"))
+    {
     <div id="divStudentReport">
         <h4 class="clearfix" id="reportname">List of all student </h4>
         <div class="card p-3">
@@ -59,7 +66,7 @@
 
                     </div>
                 </div>
-              
+
 
                 <div class="col-sm-2">
                     <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearch" type="submit" data-name="">Search</button>
@@ -80,6 +87,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
 <div id="modalEditStudentTransport" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -165,9 +173,9 @@
                             </div>
                         </div>
                     </div>
-                        <div class="d-flex mt-3" style="justify-content:center">
-                            <input type="submit" class="btn btn-default w-25" id="btnEditModalStudentTransport" value="Save" />
-                        </div>
+                    <div class="d-flex mt-3" style="justify-content:center">
+                        <input type="submit" class="btn btn-default w-25" id="btnEditModalStudentTransport" value="Save" />
+                    </div>
                 </form>
             </div>
         </div>
@@ -307,8 +315,17 @@
                     'title': 'Action',
                     'data': 'Action',
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#'  onclick='updateStudentTransport(\"" + row.StudentTransportId + "\",\"" + row.Batch + "\",\"" + row.PlaceTo + "\",\"" + row.Type + "\",\"" + row.Amount + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.Class + "\") '><img src='/Content/images/edit3.png' style='width:30px; height:30px; ' /></a>&nbsp<a href='#' onclick='deletStudentTransport(\"" + row.StudentTransportId + "\",\"" + row.Batch + "\",\"" + row.PlaceTo + "\",\"" + row.Type + "\",\"" + row.Amount + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\") '><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></div>";
-                    },
+                        return `<div style='display:flex'>
+                            @if (actions.Contains("edit"))
+                            {
+                                <a href='#'  onclick='updateStudentTransport("${row.StudentTransportId}","${row.Batch}","${row.PlaceTo}","${row.Type}","${row.Amount}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.Class}") '><img src='/Content/images/edit3.png' style='width:30px; height:30px; ' />
+                                </a> }  &nbsp
+                            @if (actions.Contains("delete"))
+                            {
+                            <a href='#' onclick='deletStudentTransport("${row.StudentTransportId}","${row.Batch}","${row.PlaceTo}","${row.Type}","${row.Amount}","${row.StudentId}","${row.FirstName}","${row.LastName}") '><img src='/Content/images/delete.png' style='width:30px;height:30px;' />
+
+                            </a> } </div>`;
+                            },
                     'sortable': false,
                 },
                 {
@@ -336,7 +353,7 @@
                     'title': 'Class',
                     'data': 'Class'
                 },
-               
+
                 {
                     'title': 'Drop Point',
                     'data': 'PlaceTo'
@@ -357,7 +374,7 @@
     }
 
     function deletStudentTransport(id, batch,to, type, amount, studentid, firstname, lastname) {
-        
+
             swal({
                 title: "Do you want to delete transport details of: StudentId :  " + studentid + " Name :  " + firstname + " " + lastname + "  Session:  " + batch + " PlaceTo:  " + to + " Type : " + type + " Amount:  " + amount + " ?",
             text: "You will not be able to restore the data!",
@@ -379,7 +396,7 @@
 
                 toastr.success("Deleted Successfully");
                     loadData();
-              
+
             },
 
             error: function (e) {
@@ -387,7 +404,7 @@
                 alert(e.statusText);
             }
         })
-              
+
                     }
                 })
     }
@@ -445,7 +462,7 @@
             dataType: "json",
             success: function (result) {
                 var batchDetails = result[1];
-              
+
                 if (batchDetails != undefined) {
                     var v = "<option selected='true' disabled='disabled'>--select--</option>";
                     for (var i in batchDetails) {
@@ -455,7 +472,7 @@
                     $("#selectmodalBatch").html(v);
                     $("#selectmodalBatch").val(batch);
                 }
-              
+
             }
         })
         $.ajax({
@@ -483,7 +500,7 @@
                 alert(e.statusText);
             }
         })
-        
+
     }
 
     $("#btnEditModalStudentTransport").on('click', function (e) {

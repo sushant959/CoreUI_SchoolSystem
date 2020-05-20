@@ -3,85 +3,91 @@
     ViewBag.Title = "ReceiptManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+
+}
 <div id="divReceiptDetails">
-   
 
-    <div id="divReceiptReport">
-        <h4 class="clearfix" id="reportname">List of all Receipt Details </h4>
-        <div class="card p-3">
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-sm-3">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:50px">Batch</label>
+    @if (actions.Contains("report"))
+    {
+        <div id="divReceiptReport">
+            <h4 class="clearfix" id="reportname">List of all Receipt Details </h4>
+            <div class="card p-3">
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-sm-3">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:50px">Batch</label>
+                            </div>
+                            <select id="searchBatch" class="form-control"></select>
+
                         </div>
-                        <select id="searchBatch" class="form-control"></select>
-
                     </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:50px">Class</label>
+                    <div class="col-sm-2">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:50px">Class</label>
+                            </div>
+                            <select id="searchClass" class="form-control"></select>
+
                         </div>
-                        <select id="searchClass" class="form-control"></select>
-
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:90px">Student Id</label>
+                    <div class="col-sm-3">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:90px">Student Id</label>
+                            </div>
+                            <input type="text" class="form-control" id="searchStudentId" placeholder="" />
+
                         </div>
-                        <input type="text" class="form-control" id="searchStudentId" placeholder="" />
-
                     </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="input-group mt-2">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" style="width:60px">Month</label>
+                    <div class="col-sm-2">
+                        <div class="input-group mt-2">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width:60px">Month</label>
+                            </div>
+                            <select id="searchMonth" class="form-control">
+                                <option value="">--select--</option>
+                                <option value="01">Baisakh</option>
+                                <option value="02">Jesth</option>
+                                <option value="03">Asar</option>
+                                <option value="04">Sawan</option>
+                                <option value="05">Bhadau</option>
+                                <option value="06">Aaswin</option>
+                                <option value="07">Kartik</option>
+                                <option value="08">Mangsir</option>
+                                <option value="09">Push</option>
+                                <option value="10">Magh</option>
+                                <option value="11">Falgun</option>
+                                <option value="12">Chait</option>
+
+                            </select>
+
                         </div>
-                        <select id="searchMonth" class="form-control">
-                            <option value="">--select--</option>
-                            <option value="01">Baisakh</option>
-                            <option value="02">Jesth</option>
-                            <option value="03">Asar</option>
-                            <option value="04">Sawan</option>
-                            <option value="05">Bhadau</option>
-                            <option value="06">Aaswin</option>
-                            <option value="07">Kartik</option>
-                            <option value="08">Mangsir</option>
-                            <option value="09">Push</option>
-                            <option value="10">Magh</option>
-                            <option value="11">Falgun</option>
-                            <option value="12">Chait</option>
-
-                        </select>
-
                     </div>
-                </div>
-
-               
-                <div class="col-sm-2">
-                    <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchReceipt" type="submit" data-name="">Search</button>
-                </div>
 
 
-
-
-            </div><br />
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div style="width:100%;overflow:auto;">
-                        <table id="tblReceiptDetails" class="table table-bordered table-striped"></table>
+                    <div class="col-sm-2">
+                        <button class="btn btn-default btn-block" style="margin-top:5px;" id="btnSearchReceipt" type="submit" data-name="">Search</button>
                     </div>
-                </div>
 
+
+
+
+                </div><br />
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div style="width:100%;overflow:auto;">
+                            <table id="tblReceiptDetails" class="table table-bordered table-striped"></table>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
 
 <div class="modal fade" tabindex="-1" id="modalInfo"
@@ -160,7 +166,7 @@
 
     var hideAll = function () {
         $("#divReceiptDetails").hide();
-       
+
     }
 
 
@@ -281,7 +287,14 @@
                         //    return "<div style='display:flex;justify-content:flex-end;'><a href='#' class='btn btn-info' onclick='PrintReceipt(\"" + row.ReceiptId + "\",\"" + row.BillingId + "\")'>Print</a></div>";
                         //}
                         //else {
-                            return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='PrintReceipt(\"" + row.ReceiptId + "\",\"" + row.BillingId + "\")'>Print</a>&nbsp;&nbsp;<a href='#' class='btn btn-warning' onclick='deleteReceipt(\"" + row.ReceiptId + "\",\"" + row.StudentId + "\",\"" + row.PaidAmount + "\",\"" + row.Month + "\",\"" + row.Batch + "\")'>Cancel</a></div>";
+                        return `<div style='display:flex'>
+                                    <a href='#' class='btn btn-info' onclick='PrintReceipt("${row.ReceiptId}","${row.BillingId}")'>Print
+                                    </a>&nbsp;&nbsp;
+                                @if (actions.Contains("delete"))
+                                {
+                                    <a href='#' class='btn btn-warning' onclick='deleteReceipt("${row.ReceiptId}","${row.StudentId}","${row.PaidAmount}","${row.Month}","${row.Batch}")'>Cancel
+                                    </a> } 
+                                </div>`;
 
                         //}
                     }
@@ -376,7 +389,7 @@
         var studentid = $("#searchStudentId").val();
         var month = $("#searchMonth").val();
         debugger;
-     
+
             debugger;
             $.ajax({
                 url: "/api/SearchReceiptDetails",
@@ -399,9 +412,9 @@
                     alert(e.statusText);
                 }
             })
-        
+
     })
-   
+
     var cancel = function () {
 
         debugger;
@@ -424,7 +437,7 @@
 
     var deleteReceipt = function (receiptid, studentid,amount,month,batch) {
         debugger;
-       
+
         swal({
             title: "Do you want to delete Receipt details of:  StudentId :  " + studentid + " Month :  " + month + " Amount:  " + amount + " ?",
             text: "You will not be able to restore the data!",
@@ -449,9 +462,9 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-               
+
                toastr.success("Deleted successfully.");
-               
+
                     debugger;
                     var batch = $("#searchBatch").val();
                     var _class = $("#searchClass").val();
@@ -482,10 +495,10 @@
                         }
                     })
 
-                  
-                  
 
-                
+
+
+
             },
 
             error: function (e) {
@@ -497,7 +510,7 @@
         })
     }
 
-    
+
 </script>
 
 

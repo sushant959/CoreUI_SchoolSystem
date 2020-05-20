@@ -123,7 +123,7 @@ namespace UpdatedScholSystem.Service
             for (int k = 0; k < result.Count; k++)
             {
                 var feId = result[k].Feature_ID;
-                var featureName = BaseDbServices.Instance.GetData("select * frm tblfeature where Company_ID='" + c + "' and ID='" + feId + "'", null);
+                var featureName = BaseDbServices.Instance.GetData("select * from tblfeature where Company_ID='" + c + "' and ID='" + feId + "'", null);
                 features.Add(featureName.Rows[0]["Name"].ToString());
             }
             return features;

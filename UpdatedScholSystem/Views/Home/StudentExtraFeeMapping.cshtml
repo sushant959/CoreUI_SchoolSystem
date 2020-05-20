@@ -3,9 +3,16 @@
     ViewBag.Title = "StudentExtraFeeMapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}
 <div id="ExtraFeeDashboard">
+    @if (actions.Contains("add"))
+    {
     <a href="/Home/StudentExtraFeeMappingForm" class="btn btn-default pull-right"> + Add Student Extra Fee</a>
-
+    }
+    @if (actions.Contains("report"))
+    {
     <div id="divStudentExtraFeeMapping">
         <h4 class="clearfix" id="reportname" style="color:orangered"></h4>
         <div class="card p-3">
@@ -81,7 +88,7 @@
                     <button class="btn btn-default btn-block pull-right" id="btnSearch" type="submit" data-name="">Search</button>
                 </div>
             </div>
-           <br />
+            <br />
 
             <div class="row">
                 <div class="col-sm-12">
@@ -93,6 +100,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 <div id="modalEditExtraFeeDetails" class="modal fade company-user-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -126,8 +134,8 @@
                             </div>
 
                         </div>
-                   
-                   
+
+
                         <div class="col-md-6">
                             <div class="input-group mt-2">
                                 <div class="input-group-prepend">
@@ -156,12 +164,12 @@
 
                         </div>
                     </div><br />
-                    
-                    <h5>Select Extra Fee Details</h5>
-                   <div class="row" id="tblExtraFeeDetails" style="width:100%;overflow:auto">
 
-                   </div>
-                    
+                    <h5>Select Extra Fee Details</h5>
+                    <div class="row" id="tblExtraFeeDetails" style="width:100%;overflow:auto">
+
+                    </div>
+
                     <br />
                     <div class="d-flex mt-3" style="justify-content:center">
                         <input type="submit" class="btn btn-default w-25" id="btnEditStudentExtraFee" value="Update" />
@@ -374,7 +382,21 @@
                     'title': 'Action',
                     'data': 'Action',
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' onclick='updateStudentExtraFee(\"" + row.StudentExtraFeeId + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.Batch + "\",\"" + row.Month + "\",\"" + row.Class + "\") '><img src='/Content/images/edit3.png' style='width:30px;height:30px;'/></a>&nbsp<a href='#' onclick='deletStudentExtraFee(\"" + row.StudentExtraFeeId + "\",\"" + row.Batch + "\", \"" + row.Month + "\",\"" + row.StudentId + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\") '><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>&nbsp;<a href='#' onclick='ExtraFeeDetails(\"" + row.StudentExtraFeeId + "\",\"" + row.Batch + "\",\"" + row.Class + "\",\"" + row.Month + "\",\"" + row.FirstName + "\",\"" + row.LastName + "\",\"" + row.StudentId + "\")' title='details'><img src='/Content/images/view.png' style='width:30px;height:30px;'/></a></div>";
+                        return `<div style='display:flex'>
+                            @if (actions.Contains("edit"))
+                            {
+                            <a href='#' onclick='updateStudentExtraFee("${row.StudentExtraFeeId}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.Batch}","${row.Month}","${row.Class}") '><img src='/Content/images/edit3.png' style='width:30px;height:30px;'/>
+                            </a> }  &nbsp
+                        @if (actions.Contains("delete"))
+                        {
+                        <a href='#' onclick='deletStudentExtraFee("${row.StudentExtraFeeId}","${row.Batch}","${row.Month}","${row.StudentId}","${row.FirstName}","${row.LastName}") '><img src='/Content/images/delete.png' style='width:30px;height:30px;' />
+
+                        </a> }  &nbsp;
+                        @if(actions.Contains("view"))
+                        { 
+                        <a href='#' onclick='ExtraFeeDetails("${row.StudentExtraFeeId}","${row.Batch}","${row.Class}","${row.Month}","${row.FirstName}","${row.LastName}","${row.StudentId}")' title='details'>
+                        <img src='/Content/images/view.png' style='width:30px;height:30px;'/>
+                        </a> } </div>`;
                     },
                     'sortable': false,
                 },
@@ -407,7 +429,7 @@
                     'title': 'Month',
                     'data': 'Month'
                 },
-                
+
             ]
         });
         debugger;
@@ -453,7 +475,7 @@
                             'title': 'FeeName',
                             'data': 'FeeName'
                         },
-                      
+
                         {
                             'title': 'Amount',
                             'data': 'Amount'
@@ -539,7 +561,7 @@
                             html += `</tr>`;
                         }
                         i++;
-                    
+
                 }
                     html += `</tbody>`;
                     html += `</table>`;
@@ -580,7 +602,7 @@
 
     var deletStudentExtraFee = function (id, batch, month, studentid, firstname, lastname) {
         debugger;
-       
+
                swal({
                    title: "Do you want to delete Extra Fee details of:  StudentId : " + studentid + " Name :  " + firstname + " " + lastname + "  Session:  " + batch + " Month:  " + month + " ?" ,
             text: "You will not be able to restore the data!",
@@ -602,7 +624,7 @@
                 debugger;
                 toastr.success("Deleted Successfully");
                     loadData();
-              
+
             },
 
             error: function (e) {
@@ -613,8 +635,8 @@
                     }
                 })
     }
-   
- 
+
+
 
     $("#btnSearch").on('click', function (e) {
         e.preventDefault();

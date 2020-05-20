@@ -3,7 +3,9 @@
     ViewBag.Title = "TransportationManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    List<string> actions = ViewBag.FeatureActions as List<string>;
+}
 <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default active">
         <input type="radio" name="Tab" data-value="StartPoint" data-text="Start Place details" autocomplete="off" checked>Start Place
@@ -13,6 +15,8 @@
     </label>
 </div>
 <br /><br />
+@if (actions.Contains("report"))
+{
 <div id="divstartpoint">
     <div class="row">
         <div class="col-sm-3">
@@ -29,6 +33,9 @@
         </div>
     </div>
 </div>
+}
+@if (actions.Contains("add"))
+{
 <div class="row" id="divStartPlaceDetails">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -48,19 +55,22 @@
                             <button class="btn btn-primary" id="btnSaveStartPoint" type="submit" style="margin-left:10px;" data-name="">Add</button>
                         </div>
                     </div>
-                  
+
 
                 </form>
             </div>
         </div>
     </div>
 </div>
+}
 <div id="divTransportationDetails">
     <br />
     <div class="col-md-10 offset-1">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Add Transportation Fee</h4><hr />
+                @if(actions.Contains("add"))
+                { 
                 <form id="formtransportation">
                     <div class="form-row mb-2">
                         <div class="col-md-12">
@@ -75,24 +85,24 @@
                             </div>
                         </div>
                     </div>
-                   <div class="form-row mb-2">
+                    <div class="form-row mb-2">
                         <div class="col-md-12">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:110px;">Distance(In Km)</label>
-                                   
+
                                 </div>
                                 <input type="text" name="DistanceFrom" class="form-control" placeholder="From(In km)" /> <label style="margin-top:5px;"><-></label>
                                 <input type="text" name="DistanceTo" class="form-control" placeholder="To(In km)" />
                             </div>
                         </div>
                     </div>
-                     <div class="form-row mb-2">
+                    <div class="form-row mb-2">
                         <div class="col-md-12">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:110px;">Amount</label>
-                                   
+
                                 </div>
                                 <input type="text" name="OneWayAmount" class="form-control" placeholder="One Way" onkeyup="return isNumberKey(event)" /> <label style="margin-top:5px;"><-></label>
                                 <input type="text" name="TwoWayAmount" class="form-control" placeholder="Two Way" onkeyup="return isNumberKey(event)" />
@@ -101,7 +111,7 @@
                     </div>
                     <div class="form-row mb-2">
                         <div class="col-md-6">
-                           
+
                         </div>
                         <div class="col-md-6">
 
@@ -110,7 +120,10 @@
                         </div>
                     </div>
                 </form>
+                }
                 <hr />
+                @if (actions.Contains("report"))
+                {
                 <div class="form-row">
                     <h5 id="titlename">List of all Fine</h5>
                     <table id="tblTransportationDetails" class="table table-bordered">
@@ -118,6 +131,7 @@
                         <tbody></tbody>
                     </table>
                 </div>
+                }
             </div>
         </div>
     </div>
@@ -215,9 +229,9 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" style="width:110px;">Start Place</label>
                                 </div>
-                                <input type="text" class="form-control" name="Place"  />
+                                <input type="text" class="form-control" name="Place" />
                             </div>
-                          
+
                         </div>
                     </div>
                     <div class="d-flex mt-3" style="justify-content:center">
@@ -309,7 +323,7 @@
             dataType: "json",
             success: function (result) {
                 debugger;
-                $("#formtransportation").find("input[type=text],input[type=hidden],input[type=radio]").val("");
+               $("#formtransportation").find("input[type=text],input[type=hidden],input[type=radio]").val("");
                 toastr.success("Added Successfully");
                 loadData("TransportationDetails");
             },
@@ -429,7 +443,11 @@
                     'data': 'Action',
 
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editStartPoint(\"" + row.PlaceId + "\",\"" + row.Place + "\")'>Edit</a></div>";
+                        return `<div style='display:flex'>
+                                 @if (actions.Contains("edit"))
+                                 {
+                                <a href='#' class='btn btn-info' onclick='editStartPoint("${row.PlaceId}","${row.Place}")'>Edit
+                                </a> } </div>`;
                     }
                 },
 
@@ -454,7 +472,15 @@
                     'data': 'Action',
 
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='editTransportDetails(\"" + row.TransportationId + "\",\"" + row.PlaceTo + "\",\"" + row.DistanceFrom + "\",\"" + row.DistanceTo + "\",\"" + row.OneWayAmount + "\",\"" + row.TwoWayAmount + "\")'>Edit</a>&nbsp;<a href='#' class='btn btn-info' onclick='deleteTransportDetails(\"" + row.TransportationId + "\",\"" + row.PlaceTo + "\",\"" + row.DistanceFrom + "\",\"" + row.DistanceTo + "\",\"" + row.OneWayAmount + "\",\"" + row.TwoWayAmount + "\")'>Delete</a></div>";
+                        return `<div style='display:flex'>
+                        @if (actions.Contains("edit"))
+                        {
+                        <a href='#' class='btn btn-info' onclick='editTransportDetails("${row.TransportationId}","${row.PlaceTo}","${row.DistanceFrom}","${row.DistanceTo}","${row.OneWayAmount}","${row.TwoWayAmount}")'>Edit
+                        </a> }  &nbsp;
+                        @if (actions.Contains("delete"))
+                        {
+                        <a href='#' class='btn btn-info' onclick='deleteTransportDetails("${row.TransportationId}","${row.PlaceTo}","${row.DistanceFrom}","${row.DistanceTo}","${row.OneWayAmount}","${row.TwoWayAmount}")'>Delete
+                        </a> } </div>`;
                     }
                 },
                 {
@@ -534,8 +560,8 @@
 
     var deleteTransportDetails = function (id,placeto, distancefrom, distanceto, oneway, twoway) {
         debugger;
-      
-       
+
+
            swal({
                title: "Do You want to delete Transport details of: Place To: " + placeto + " One Way Amount: " + oneway + " Two Way Amount: " + twoway + "  ?",
             text: "You will not be able to restore the data!",
@@ -561,7 +587,7 @@
                 alert(e.statusText);
             }
         })
-      
+
 
             }
         })
