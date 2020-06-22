@@ -27,11 +27,11 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var tblname = "tbl" + data["urlName"];
-            var companyid = Convert.ToInt32(data["CompanyId"]);
-            var details = new DataTable();
+            var companyid = Convert.ToInt32(data["CompanyId"]); 
+             var details = new DataTable();
             if (tblname == "tblbatchdetails")
             {
-                details = BaseDbServices.Instance.GetData("select * from " + tblname + " where IsDeleted =0 and CompanyId='"+ companyid + "' order by FromYear DESC");
+                details = BaseDbServices.Instance.GetData("select * from " + tblname + " where IsDeleted =0 and CompanyId='"+ companyid + "' order by SessionFrom DESC");
                 removeUnwantedColumns(ref details, tblname);
             }
             else if (tblname == "tblclassdetails" || tblname == "tblfacultydetails" || tblname == "tblsectiondetails" || tblname == "tblfeestructuredetails" || tblname == "tblcountrydetails" || tblname == "tblstatedetails" || tblname == "tblstudenttype" || tblname == "tblresponsetext" || tblname =="tblstartdate")
@@ -462,9 +462,9 @@ namespace UpdatedScholSystem.Controllers
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
             if (name == "duereport")
             {
-                var activeBatch = BaseDbServices.Instance.GetData("select FromYear,ToYear from tblbatchdetails where Status='Active' and CompanyId='"+CompanyId+"'", null);
+                var activeBatch = MasterDbAccess.DbService.GetData("select SessionFrom,SessionTo from sessions where Status='Active' and CompanyId='"+CompanyId+"'", null);
 
-                var batch = activeBatch.Rows[0]["FromYear"] + "-" + activeBatch.Rows[0]["ToYear"];
+                var batch = activeBatch.Rows[0]["SessionFrom"] + "-" + activeBatch.Rows[0]["SessionTo"];
 
                 var details = DueDbService.Instance.GetAllDueDetails(batch,CompanyId);
 
@@ -699,7 +699,7 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var Faculty = BaseDbServices.Instance.GetData("Select FacultyId, FacultyName from tblfacultydetails where CompanyId='"+ CompanyId + "'", null);
+            var Faculty = MasterDbAccess.DbService.GetData("Select FacultyId, FacultyName from faculties where CompanyId='"+ CompanyId + "'", null);
             return Ok(Faculty);
         }  
 
@@ -792,11 +792,13 @@ namespace UpdatedScholSystem.Controllers
             var Batch = new DataTable();
             var Faculty = new DataTable();
             var Section = new DataTable();
-
-            Class = BaseDbServices.Instance.GetData("Select ClassName from tblclassdetails where CompanyId='" + CompanyId + "'", null);
-            Batch = BaseDbServices.Instance.GetData("Select FromYear,ToYear from tblbatchdetails where CompanyId='" + CompanyId + "' order by BatchId DESC", null);
-            Faculty = BaseDbServices.Instance.GetData("Select FacultyName from tblfacultydetails where CompanyId='" + CompanyId + "'", null);
-            Section = BaseDbServices.Instance.GetData("Select SectionName from tblsectiondetails where CompanyId='" + CompanyId + "'", null);
+            Class = MasterDbAccess.ClassDbService.Instance.GetAllClassesDataTable(CompanyId);
+            //Class = BaseDbServices.Instance.GetData("Select ClassName from tblclassdetails where CompanyId='" + CompanyId + "'", null);
+            //Batch = BaseDbServices.Instance.GetData("Select SessionFrom,SessionTo from tblbatchdetails where CompanyId='" + CompanyId + "' order by BatchId DESC", null);
+            Batch = MasterDbAccess.SessionDbService.Instance.GetAllSessionsDataTable(CompanyId);
+            //Faculty = BaseDbServices.Instance.GetData("Select FacultyName from tblfacultydetails where CompanyId='" + CompanyId + "'", null);
+            Faculty = MasterDbAccess.FacultyDbService.Instance.GetAllFacultiesDataTable(CompanyId);
+            Section = MasterDbAccess.DbService.GetData("Select SectionName from sections where CompanyId='" + CompanyId + "'", null);
 
             List<DataTable> lst = new List<DataTable>
                 {
@@ -881,8 +883,8 @@ namespace UpdatedScholSystem.Controllers
         public IHttpActionResult PostBatchDetails()
         {
             var data = HttpContext.Current.Request;
-            var from = Convert.ToInt32(data["FromYear"]);
-            var to = Convert.ToInt32(data["ToYear"]);
+            var from = Convert.ToInt32(data["SessionFrom"]);
+            var to = Convert.ToInt32(data["SessionTo"]);
             var companyid = Convert.ToInt32(data["CompanyId"]);
             BaseDbServices.Instance.RunQuery("Update tblbatchdetails set Status='Disable' where CompanyId='"+companyid+"'", null);
 
@@ -991,10 +993,10 @@ namespace UpdatedScholSystem.Controllers
              if (obj.Department == null)
                 {
 
-                    var classlist = BaseDbServices.Instance.GetData("select tblfacultydetails.FacultyName,tblclassdetails.ClassName" +
-                        " FROM tblclassdetails" +
-                        " inner join tblfacultydetails on tblclassdetails.FacultyId = tblfacultydetails.FacultyId " +
-                        " where tblfacultydetails.CompanyId=@Companyid and tblclassdetails.CompanyId=@Companyid", Info);
+                    var classlist = MasterDbAccess.DbService.GetData("select faculties.FacultyName,classes.ClassName" +
+                        " FROM classes" +
+                        " inner join faculties on classes.Faculty_ID = faculties.FacultyId " +
+                        " where faculties.CompanyId=@Companyid and classes.Company_ID=@Companyid", Info);
                     for (int i = 0; i < classlist.Rows.Count; i++)
                     {
                         BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
@@ -1035,10 +1037,10 @@ namespace UpdatedScholSystem.Controllers
                         {
                             if (obj.Faculty == null)
                             {
-                                var classlist = BaseDbServices.Instance.GetData("select tblfacultydetails.FacultyName,tblclassdetails.ClassName" +
-                               " FROM tblclassdetails" +
-                              " inner join tblfacultydetails on tblclassdetails.FacultyId = tblfacultydetails.FacultyId " +
-                              "where tblfacultydetails.CompanyId=@Companyid and tblclassdetails.CompanyId=@Companyid",Info);
+                                var classlist = MasterDbAccess.DbService.GetData("select faculties.FacultyName,classes.ClassName" +
+                               " FROM classes" +
+                              " inner join faculties on classes.Faculty_ID = faculties.FacultyId " +
+                              "where faculties.CompanyId=@Companyid and classes.Company_ID=@Companyid",Info);
                                 for (int i = 0; i < classlist.Rows.Count; i++)
                                 {
                                     BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
@@ -1057,8 +1059,8 @@ namespace UpdatedScholSystem.Controllers
                                 {
                                     foreach(var m in obj.Faculty)
                                     {
-                                        var facultyid = BaseDbServices.Instance.GetData("select FacultyId from tblfacultydetails where FacultyName='" + m + "' and CompanyId=@Companyid",Info);
-                                        var list= BaseDbServices.Instance.GetData("select ClassName from tblclassdetails where FacultyId='" + facultyid.Rows[0]["FacultyId"] + "' and CompanyId=@Companyid", Info);
+                                        var facultyid = MasterDbAccess.DbService.GetData("select FacultyId from faculties where FacultyName='" + m + "' and CompanyId=@Companyid",Info);
+                                        var list= MasterDbAccess.DbService.GetData("select ClassName from classes where Faculty_ID='" + facultyid.Rows[0]["FacultyId"] + "' and Company_ID=@Companyid", Info);
                                         for (int i = 0; i < list.Rows.Count; i++)
                                         {
                                             BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
@@ -1075,8 +1077,8 @@ namespace UpdatedScholSystem.Controllers
                                 {
                                     foreach(var n in obj.Class)
                                     {
-                                        var facultyId= BaseDbServices.Instance.GetData("select FacultyId from tblclassdetails where ClassName='" + n + "' and CompanyId=@Companyid", Info);
-                                    var faculty= BaseDbServices.Instance.GetData("select FacultyName from tblfacultydetails where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@Companyid", Info);
+                                        var facultyId= MasterDbAccess.DbService.GetData("select Faculty_ID from classes where ClassName='" + n + "' and Company_ID=@Companyid", Info);
+                                    var faculty= MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@Companyid", Info);
                                     BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
                                             " inner join tbldayoff on tbldayoffdetails.DayOffId=tbldayoff.DayOffId " +
                                             " where Department='Student' and Faculty='" + faculty.Rows[0]["FacultyName"].ToString() + "' " +
@@ -1093,7 +1095,7 @@ namespace UpdatedScholSystem.Controllers
                         {
                         if (obj.Faculty == null)
                         {
-                            var facultyList = BaseDbServices.Instance.GetData("Select FacultyName from tblfacultydetails where CompanyId=@Companyid", Info);
+                            var facultyList = MasterDbAccess.DbService.GetData("Select FacultyName from faculties where CompanyId=@Companyid", Info);
                             for (int i = 0; i < facultyList.Rows.Count; i++)
                             {
                                 BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
@@ -1555,10 +1557,11 @@ namespace UpdatedScholSystem.Controllers
         [Route("GetTotalHolidays"),HttpGet]
         public IHttpActionResult GetTotalHolidays()
         {
-            var activeBatch = BaseDbServices.Instance.GetData("select FromYear,ToYear from tblbatchdetails where Status='Active'", null);
+            //var activeBatch = BaseDbServices.Instance.GetData("select SessionFrom,SessionTo from tblbatchdetails where Status='Active'", null);
+            var activeBatch = MasterDbAccess.DbService.GetData("select SessionFrom,SessionTo from sessions where Status='Active'",null);
             if (activeBatch.Rows.Count > 0)
             {
-                var batch = activeBatch.Rows[0]["FromYear"] + "-" + activeBatch.Rows[0]["ToYear"];
+                var batch = activeBatch.Rows[0]["SessionFrom"] + "-" + activeBatch.Rows[0]["SessionTo"];
                 var className = BaseDbServices.Instance.GetData("select Distinct Class from tbldayoffdetails" +
                     " inner join tbldayoff on tbldayoff.DayOffId=tbldayoffdetails.DayOffId" +
                     " where Class != 'Null' and Batch ='" + batch + "'", null);
@@ -2208,7 +2211,7 @@ namespace UpdatedScholSystem.Controllers
             var studentList = new DataTable();
             if(obj.Class == null && obj.Section == null)
             {
-                var classlist = BaseDbServices.Instance.GetData("select ClassName from tblclassdetails where CompanyId='"+obj.CompanyId+"'", null);
+                var classlist = MasterDbAccess.DbService.GetData("select ClassName from classes where Company_ID='"+obj.CompanyId+"'", null);
                 for(int p =0;p <classlist.Rows.Count;p++)
                 {
                    
@@ -2560,7 +2563,7 @@ namespace UpdatedScholSystem.Controllers
             }
             else if(obj.Class == null && obj.Section != null)
             {
-                var classlist = BaseDbServices.Instance.GetData("select ClassName from tblclassdetails and CompanyId='"+obj.CompanyId+"'", null);
+                var classlist = MasterDbAccess.DbService.GetData("select ClassName from classes and Company_ID='"+obj.CompanyId+"'", null);
                 for (int p = 0; p < classlist.Rows.Count; p++)
                 {
                     foreach (var e in obj.Section)
@@ -4624,8 +4627,8 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@CompanyId",CompanyId),
               
             };
-            var id= BaseDbServices.Instance.GetData("select FacultyId from tblfacultydetails where FacultyName=@faculty and CompanyId=@CompanyId",info);
-            var details = BaseDbServices.Instance.GetData("select ClassName from tblclassdetails where FacultyId='" + id.Rows[0]["FacultyId"] + "' and CompanyId=@CompanyId", info);
+            var id= MasterDbAccess.DbService.GetData("select FacultyId from faculties where FacultyName=@faculty and CompanyId=@CompanyId",info);
+            var details = MasterDbAccess.DbService.GetData("select ClassName from classes where Faculty_ID='" + id.Rows[0]["FacultyId"] + "' and Company_ID=@CompanyId", info);
             return Ok(details);
         }
 
@@ -4638,8 +4641,8 @@ namespace UpdatedScholSystem.Controllers
             {
                 foreach (var r in obj.Faculty)
                 {
-                    var id = BaseDbServices.Instance.GetData("select FacultyId from tblfacultydetails where FacultyName='" + r + "' and CompanyId='"+obj.CompanyId+"'", null);
-                    var details = BaseDbServices.Instance.GetData("select ClassName from tblclassdetails where FacultyId='" + id.Rows[0]["FacultyId"] + "' and CompanyId='"+obj.CompanyId+"'", null);
+                    var id = MasterDbAccess.DbService.GetData("select FacultyId from faculties where FacultyName='" + r + "' and CompanyId='"+obj.CompanyId+"'", null);
+                    var details = MasterDbAccess.DbService.GetData("select ClassName from classes where Faculty_ID='" + id.Rows[0]["FacultyId"] + "' and Company_ID='"+obj.CompanyId+"'", null);
                     lst.Add(details);
                 }
             }
@@ -5811,8 +5814,8 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@class", Class),
                 new MySqlParameter("@companyid", CompanyId)
             };
-            var facultyId = BaseDbServices.Instance.GetData("select FacultyId from tblclassdetails where ClassName=@class and CompanyId=@companyid", Info);
-            var faculty = BaseDbServices.Instance.GetData("select FacultyName from tblfacultydetails where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@companyid", Info);
+            var facultyId = MasterDbAccess.DbService.GetData("select Faculty_ID from classes where ClassName=@class and Company_ID=@companyid", Info);
+            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@companyid", Info);
             return Ok(faculty);
         }
 
@@ -5862,10 +5865,10 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var batchdetails = BaseDbServices.Instance.GetData("select FromYear,ToYear from tblbatchdetails where Status='Active' and CompanyId='"+CompanyId+"'", null);
+            var batchdetails = MasterDbAccess.DbService.GetData("select SessionFrom,SessionTo from sessions where Status='Active' and CompanyId='"+CompanyId+"'", null);
             if (batchdetails.Rows.Count > 0)
             {
-                var batch = batchdetails.Rows[0]["FromYear"] + "-" + batchdetails.Rows[0]["ToYear"];
+                var batch = batchdetails.Rows[0]["SessionFrom"] + "-" + batchdetails.Rows[0]["SessionTo"];
                 int Year = Convert.ToInt32(DateTime.Now.Year);
                 int Month = Convert.ToInt32(DateTime.Now.Month);
                 int Day = Convert.ToInt32(DateTime.Now.Day);
@@ -5951,10 +5954,10 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var batchdetails = BaseDbServices.Instance.GetData("select FromYear,ToYear from tblbatchdetails where Status='Active' and CompanyId='"+CompanyId+"'", null);
+            var batchdetails = MasterDbAccess.DbService.GetData("select SessionFrom,SessionTo from sessions where Status='Active' and CompanyId='"+CompanyId+"'", null);
             if (batchdetails.Rows.Count > 0)
             {
-                var batch = batchdetails.Rows[0]["FromYear"] + "-" + batchdetails.Rows[0]["ToYear"];
+                var batch = batchdetails.Rows[0]["SessionFrom"] + "-" + batchdetails.Rows[0]["SessionTo"];
                 int Year = Convert.ToInt32(DateTime.Now.Year);
                 int Month = Convert.ToInt32(DateTime.Now.Month);
                 int Day = Convert.ToInt32(DateTime.Now.Day);
@@ -6539,10 +6542,10 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var activeBatch = BaseDbServices.Instance.GetData("select FromYear,ToYear from tblbatchdetails where Status='Active' and CompanyId='"+ CompanyId + "'", null);
+            var activeBatch = MasterDbAccess.DbService.GetData("select SessionFrom,SessionTo from sessions where Status='Active' and CompanyId='"+ CompanyId + "'", null);
             if (activeBatch.Rows.Count > 0)
             {
-                var batch = activeBatch.Rows[0]["FromYear"] + "-" + activeBatch.Rows[0]["ToYear"];
+                var batch = activeBatch.Rows[0]["SessionFrom"] + "-" + activeBatch.Rows[0]["SessionTo"];
                 var totalBilling = BaseDbServices.Instance.GetTotalPaid(batch,CompanyId);
                 totalBilling.Columns.RemoveAt(2);
                 totalBilling.Columns.RemoveAt(3);

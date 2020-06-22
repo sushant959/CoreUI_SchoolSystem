@@ -83,8 +83,8 @@ namespace UpdatedScholSystem.Service
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@_BatchId", obj.BatchId);
                 cmd.Parameters.AddWithValue("@_CompanyId", obj.CompanyId);
-                cmd.Parameters.AddWithValue("@_FromYear", obj.FromYear);
-                cmd.Parameters.AddWithValue("@_ToYear", obj.ToYear);
+                cmd.Parameters.AddWithValue("@_FromYear", obj.SessionFrom);
+                cmd.Parameters.AddWithValue("@_ToYear", obj.SessionTo);
                 conn.Open();
                 cmd.ExecuteNonQuery();
                 conn.Close();

@@ -10,54 +10,44 @@
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.
       min.css" />
 <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<div data-toggle="buttons">
-    <div class="btn-toolbar">
-        <label class="btn btn-default active">
-            <input type="radio" name="Tab" data-value="BatchDetails" data-text="Batch details" autocomplete="off" checked>Batch
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="FacultyDetails" data-text="Faculty details" autocomplete="off" />Faculty
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="ClassDetails" data-text="Class details" autocomplete="off" />Class
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="SectionDetails" data-text="Section details" autocomplete="off" />Section
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="FeeStructureDetails" data-text="Fee Structure details" autocomplete="off" />Fee Structure
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="ClassFeeDetails" data-text="Class Fee details" autocomplete="off" />Class Fee
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="CountryDetails" data-text="Country details" autocomplete="off" />Country
-        </label><br />
+<div class="btn-group" data-toggle="buttons">
+    
+    @*<label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="SectionDetails" data-text="Section details" autocomplete="off" checked>Section
+    </label>*@
+    <label class="btn btn-default active">
+        <input type="radio" name="Tab" data-value="FeeStructureDetails" data-text="Fee Structure details" autocomplete="off" checked>Fee Structure
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ClassFeeDetails" data-text="Class Fee details" autocomplete="off" />Class Fee
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="CountryDetails" data-text="Country details" autocomplete="off" />Country
+    </label><br />
 
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="StateDetails" data-text="State details" autocomplete="off" />State
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="StudentType" data-text="Student Type" autocomplete="off" />Student Type
-        </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StateDetails" data-text="State details" autocomplete="off" />State
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StudentType" data-text="Student Type" autocomplete="off" />Student Type
+    </label>
 
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="ResponseText" data-text="Response Text" autocomplete="off" />Response Text
-        </label>
-    </div>
-    <div class="btn-toolbar">
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="DayOff" data-text="Day Off" autocomplete="off" />Non-Working Day
-        </label>
-        <label class="btn btn-default">
-            <input type="radio" name="Tab" data-value="StartDate" data-text="Start Date" autocomplete="off" />Start Date
-        </label>
-    </div>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="ResponseText" data-text="Response Text" autocomplete="off" />Response Text
+    </label>
+
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="DayOff" data-text="Day Off" autocomplete="off" />Non-Working Day
+    </label>
+    <label class="btn btn-default">
+        <input type="radio" name="Tab" data-value="StartDate" data-text="Start Date" autocomplete="off" />Start Date
+    </label>
+
 </div>
 
 <br /><br />
 @*/////////////////////////////----------Batch Details (Start)-----------/////////////////////////////////////*@
-@if (actions.Contains("report"))
+@*@if (actions.Contains("report"))
 {
     <div id="batchResult">
         <div class="row">
@@ -74,8 +64,8 @@
             </div>
         </div>
     </div>
-}
-@if (actions.Contains("add"))
+}*@
+@*@if (actions.Contains("add"))
 {
     <div class="row" id="divBatchDetails">
         <div class="col-md-3"></div>
@@ -92,7 +82,7 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">From Year</label>
                                 </div>
-                                <input type="text" name="FromYear" class="form-control" placeholder="From Year" id="fromYear" required onkeypress="return isNumberKey(event)" />
+                                <input type="text" name="SessionFrom" class="form-control" placeholder="From Year" id="fromYear" required onkeypress="return isNumberKey(event)" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -100,7 +90,7 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">To Year</label>
                                 </div>
-                                <input type="text" name="ToYear" class="form-control" placeholder="To Year" id="toYear" required onkeypress="return isNumberKey(event)" />
+                                <input type="text" name="SessionTo" class="form-control" placeholder="To Year" id="toYear" required onkeypress="return isNumberKey(event)" />
                                 <button class="btn btn-primary" id="btnSaveBatch" type="submit" style="margin-left:10px;" data-name="">Add</button>
                             </div>
                         </div>
@@ -110,7 +100,7 @@
             </div>
         </div>
     </div>
-}
+}*@
     <div id="divStartDate">
         <br />
         <div class="col-md-8 offset-2">
@@ -159,7 +149,7 @@
     @*////////////////////////////-----------Batch Details (End)-------------///////////////////////////////////////*@
 
     @*////////////////////////////-----------Class Details (Start)-----------///////////////////////////////////////*@
-    <div id="divClassDetails">
+    @*<div id="divClassDetails">
         <br />
         <div class="col-md-8 offset-2">
             <div class="card">
@@ -240,13 +230,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
 
     @*///////////////////////////------------Class Details (End)-------------/////////////////////////////////////////*@
 
     @*///////////////////////////------------Faculty Details (start)-------------/////////////////////////////////////////*@
-    <div id="divFacultyDetails">
+    @*<div id="divFacultyDetails">
         <br />
         <div class="col-md-8 offset-2">
             <div class="card">
@@ -290,13 +280,13 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
     @*///////////////////////////------------Faculty Details (End)-------------/////////////////////////////////////////*@
 
     @*///////////////////////////------------Section Details (start)-------------/////////////////////////////////////////*@
 
-    <div id="divSectionDetails">
+    @*<div id="divSectionDetails">
         <br />
         <div class="col-md-8 offset-2">
             <div class="card">
@@ -340,7 +330,7 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
 
 
@@ -842,7 +832,7 @@
         </div>
     </div>
 
-    <div id="divStudentType">
+    @*<div id="divStudentType">
         <br />
         <div class="col-md-6 offset-3">
             <div class="card">
@@ -878,7 +868,7 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
     <div id="divResponseText">
         <br />
@@ -956,7 +946,6 @@
         </div>
     </div>
     <div id="modalEditClass" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        >
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1095,14 +1084,14 @@
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:110px;">From Year</label>
                                     </div>
-                                    <input type="text" class="form-control" name="FromYear" required onkeypress="return isNumberKey(event)" />
+                                    <input type="text" class="form-control" name="SessionFrom" required onkeypress="return isNumberKey(event)" />
                                 </div>
                                 <div class="input-group mt-2">
 
                                     <div class="input-group-prepend">
                                         <label class="input-group-text" style="width:110px;">To Year</label>
                                     </div>
-                                    <input type="text" class="form-control" name="ToYear" required onkeypress="return isNumberKey(event)" />
+                                    <input type="text" class="form-control" name="SessionTo" required onkeypress="return isNumberKey(event)" />
                                 </div>
                             </div>
                         </div>
@@ -1447,7 +1436,7 @@
         </div>
     </div>
 
-    <div id="modalEditStudentType" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    @*<div id="modalEditStudentType" class="modal fade addModule-modal-sm" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1485,7 +1474,7 @@
 
             </div>
         </div>
-    </div>
+    </div>*@
 
 
     <div class="modal fade" tabindex="-1" id="modalCancel1"
@@ -1513,10 +1502,11 @@
         var listType = $("input[name='Tab']:checked").data('value');
         var batchname = $("input[name='Tab']:checked").data('text');
         debugger;
-        $("#batchname").html("List of all " + batchname);
+      //  $("#batchname").html("List of all " + batchname);
         var companyid=@Session["CompanyId"];
         hideAll();
         loadData(listType, companyid);
+        $("#feeStructure").prop("checked", true);
         $('.multiselect').on('mousedown','option', function (e) {
             e.preventDefault();
             $(this).prop('selected', !$(this).prop('selected'));
@@ -1526,6 +1516,7 @@
 
     $("input[name ='Tab']").on('change', function () {
         debugger;
+       
         var listType = $("input[name='Tab']:checked").data('value');
         var titlename = $("input[name='Tab']:checked").data('text');
         debugger;
@@ -1845,12 +1836,12 @@
                     if (result.length == 1 && _type == "BatchDetails") {
                         if (result[r]['Status'] == "Disable") {
                             if ('@actions.Contains("delete")' == 'True') {
-                                tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
+                                tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['SessionFrom'] + "\",\"" + result[r]['SessionTo'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
                             }
                         }
                         else {
                             if ('@actions.Contains("edit")' == 'True') {
-                                tblBody += "<td><a href='#' onclick='editBatchDetails(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='upgradeBatch(\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
+                                tblBody += "<td><a href='#' onclick='editBatchDetails(\"" + result[r]['BatchId'] + "\",\"" + result[r]['SessionFrom'] + "\",\"" + result[r]['SessionTo'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='upgradeBatch(\"" + result[r]['SessionFrom'] + "\",\"" + result[r]['SessionTo'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
                             }
                         }
                         tblBody += "</tr>";
@@ -1860,12 +1851,12 @@
                     else if (result.length > 1 && _type == "BatchDetails") {
                         if (result[r]['Status'] == "Disable") {
                             if ('@actions.Contains("delete")' == 'True') {
-                                tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
+                                tblBody += "<td><a href='#' onclick='deleteBatch(\"" + result[r]['BatchId'] + "\",\"" + result[r]['SessionFrom'] + "\",\"" + result[r]['SessionTo'] + "\",\"" + _type + "\" ) '>Delete</a></td>";
                             }
                         }
                         else {
                             if ('@actions.Contains("edit")' == 'True') {
-                                tblBody += "<td><a href='#' onclick='upgradeBatch(\"" + result[r]['FromYear'] + "\",\"" + result[r]['ToYear'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
+                                tblBody += "<td><a href='#' onclick='upgradeBatch(\"" + result[r]['SessionFrom'] + "\",\"" + result[r]['SessionTo'] + "\",\"" + _type + "\")'>Upgrade</a></td>";
                             }
                         }
                         tblBody += "</tr>";
@@ -1874,30 +1865,54 @@
                     }
 
                     else if (_type == "ClassDetails") {
-                        tblBody += "<td><a href='#' onclick='updateClassDetails(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassCode'] + "\",\"" + result[r]['ClassName'] +
-                            "\",\"" + result[r]['ClassType'] + "\",\"" + result[r]['StudentLimit'] + "\",\"" + result[r]["FacultyId"] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassName'] + "\",\"" + _type + "\") ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='updateClassDetails(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassCode'] + "\",\"" + result[r]['ClassName'] +
+                                "\",\"" + result[r]['ClassType'] + "\",\"" + result[r]['StudentLimit'] + "\",\"" + result[r]["FacultyId"] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;"
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href ='#' onclick='deleteSettings(\"" + result[r]['ClassId'] + "\",\"" + result[r]['ClassName'] + "\",\"" + _type + "\") ' title = 'delete' > <img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a>";
+                        }
+                        tblBody += "</td></tr>";
                         $("#tblClassDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblClassDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Class details");
                     }
                     else if (_type == "FacultyDetails") {
-                        tblBody += "<td><a href='#' onclick='updateFacultyDetails(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyCode'] + "\",\"" + result[r]['FacultyName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyName'] + "\",\"" + _type + "\") ' title='delete'><img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='updateFacultyDetails(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyCode'] + "\",\"" + result[r]['FacultyName'] + "\") ' title='edit'><img src='/Content/images/edit3.png' style='width:30px;height:30px;' /></a>&nbsp;|&nbsp;"
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href ='#' onclick ='deleteSettings(\"" + result[r]['FacultyId'] + "\",\"" + result[r]['FacultyName'] + "\",\"" + _type + "\") ' title = 'delete' > <img src='/Content/images/delete.png' style='width:30px;height:30px;' /></a> ";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblFacultyDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblFacultyDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Faculty details");
                     }
                     else if (_type == "SectionDetails") {
-                        tblBody += "<td><a href='#' onclick='updateSectionDetails(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + result[r]['StudentLimit'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + _type + "\") '>Delete</a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='updateSectionDetails(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + result[r]['StudentLimit'] + "\") '>Edit</a>&nbsp;|&nbsp;"
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['SectionId'] + "\",\"" + result[r]['SectionName'] + "\",\"" + _type + "\") '>Delete</a>";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblSectionDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblSectionDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Section details");
                     }
                     else if (_type == "StartDate") {
-                        tblBody += "<td><a href='#' onclick='updateStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Date'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]["Date"] + "\",\"" + result[r]["Batch"] + "\",\"" + _type + "\") '>Delete</a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='updateStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]['Batch'] + "\",\"" + result[r]['Date'] + "\") '>Edit</a>&nbsp;|&nbsp";
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href='#' onclick='deleteStartDate(\"" + result[r]['StartDateId'] + "\",\"" + result[r]["Date"] + "\",\"" + result[r]["Batch"] + "\",\"" + _type + "\") '>Delete</a>";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblStartDate thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblStartDate tbody").html(tblBody);
                     }
@@ -1907,31 +1922,54 @@
 
                         }
                         else {
-
-                            tblBody += "<td><a href='#' onclick='updateFeeStructureDetails(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                            tblBody += "<td>";
+                            if ('@actions.Contains("edit")') {
+                                tblBody += "<a href='#' onclick='updateFeeStructureDetails(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\") '>Edit</a>&nbsp;|&nbsp;";
+                            }
+                            if ('@actions.Contains("delete")') {
+                                tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['FeeStructureId'] + "\",\"" + result[r]['FeeStructureName'] + "\",\"" + _type + "\") '>Delete</a>";
+                            }
                         }
-                        tblBody += "</tr>";
+                        tblBody += "</td></tr>";
                         $("#tblFeeStructureDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblFeeStructureDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Fee Structure");
                     }
                     else if (_type == "CountryDetails") {
-                        tblBody += "<td><a href='#' onclick='UpdateCountryDetails(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\",\"" + _type + "\") '>Delete</a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='UpdateCountryDetails(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;";
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['CountryId'] + "\",\"" + result[r]['CountryName'] + "\",\"" + _type + "\") '>Delete</a>";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblCountryDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblCountryDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Country");
                     }
                     else if (_type == "ResponseText") {
-                        tblBody += "<td><a href='#' onclick='UpdateResponseText(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\",\"" + _type + "\") '>Delete</a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='UpdateResponseText(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\") '>Edit</a>&nbsp;|&nbsp;";
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['ResponseTextId'] + "\",\"" + result[r]['ResponseText'] + "\",\"" + _type + "\") '>Delete</a>";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblResponseText thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblResponseText tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Response Text");
                     }
                     else if (_type == "StateDetails") {
-                        tblBody += "<td><a href='#' onclick='UpdateStateDetails(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + _type + "\") '>Delete</a></td>";
-                        tblBody += "</tr>";
+                        tblBody += "<td>";
+                        if ('@actions.Contains("edit")') {
+                            tblBody += "<a href='#' onclick='UpdateStateDetails(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + result[r]['CountryName'] + "\") '>Edit</a>&nbsp;|&nbsp;";
+                        }
+                        if ('@actions.Contains("delete")') {
+                            tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['StateId'] + "\",\"" + result[r]['StateName'] + "\",\"" + _type + "\") '>Delete</a>";
+                        }
+                            tblBody += "</td></tr>";
                         $("#tblStateDetails thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblStateDetails tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all State");
@@ -1942,9 +1980,15 @@
 
                         }
                         else {
-                            tblBody += "<td><a href='#' onclick='UpdateStudentType(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\") '>Edit</a>&nbsp;|&nbsp;<a href='#' onclick='deleteSettings(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\",\"" + _type + "\") '>Delete</a></td>";
+                            tblBody += "<td>";
+                            if ('@actions.Contains("edit")') {
+                                tblBody += "<a href='#' onclick='UpdateStudentType(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\") '>Edit</a>&nbsp;|&nbsp;";
+                            }
+                            if ('@actions.Contains("delete")') {
+                                tblBody += "<a href='#' onclick='deleteSettings(\"" + result[r]['StudentTypeId'] + "\",\"" + result[r]['StudentTypeName'] + "\",\"" + _type + "\") '>Delete</a>";
+                            }
                         }
-                        tblBody += "</tr>";
+                        tblBody += "</td></tr>";
                         $("#tblStudentType thead").html("<tr>" + tblHeader + "</tr>");
                         $("#tblStudentType tbody").html(tblBody);
                         $("#tbl" + _type + " .titlename").html("List of all Student Type");
@@ -1995,7 +2039,7 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $("#selectBatch").html(v);
                     $("#selectBatch").val(batch);
@@ -2118,26 +2162,26 @@
 
     var upgradeBatch = function (fromyear, toyear, type) {
         debugger;
-        var FromYear = parseInt(fromyear) + 1;
-        var ToYear = parseInt(toyear) + 1;
+        var SessionFrom = parseInt(fromyear) + 1;
+        var SessionTo = parseInt(toyear) + 1;
         var companyid=@Session["CompanyId"];
-        saveBatch(FromYear, ToYear, companyid, type);
+        saveBatch(SessionFrom, SessionTo, companyid, type);
 
     }
     $("#btnSaveBatch").on('click', function (e) {
         debugger;
         e.preventDefault();
-        var FromYear = $("#fromYear").val();
-        var ToYear = $("#toYear").val();
+        var SessionFrom = $("#fromYear").val();
+        var SessionTo = $("#toYear").val();
         var companyid =@Session["CompanyId"];
-        saveBatch(FromYear, ToYear, companyid, "BatchDetails");
+        saveBatch(SessionFrom, SessionTo, companyid, "BatchDetails");
     })
-    var saveBatch = function (FromYear, ToYear,companyid, type) {
+    var saveBatch = function (SessionFrom, SessionTo,companyid, type) {
         debugger;
         $.ajax({
             url: "/api/PostBatchDetails",
             method: "POST",
-            data: { FromYear: FromYear, ToYear: ToYear, CompanyId: companyid },
+            data: { SessionFrom: SessionFrom, SessionTo: SessionTo, CompanyId: companyid },
             dataType: "json",
             success: function (result) {
                 debugger;
@@ -2192,7 +2236,7 @@
                 if (batchDetails != undefined) {
                     var v = "";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $("#modalStartDateBatch").html(v);
                     $("#modalStartDateBatch").val(batch);
@@ -2273,8 +2317,8 @@
         debugger;
         $("#modalEditBatch").modal('show');
         $("#modalEditBatch [name='BatchId']").val(id);
-        $("#modalEditBatch [name='FromYear']").val(from);
-        $("#modalEditBatch [name='ToYear']").val(to);
+        $("#modalEditBatch [name='SessionFrom']").val(from);
+        $("#modalEditBatch [name='SessionTo']").val(to);
     }
 
     function updateSectionDetails(id, name, limit) {
@@ -2336,7 +2380,7 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $("#dayoffBatch").html(v);
                     $("#dayoffBatch").val(batch);
@@ -3232,7 +3276,7 @@
         e.preventDefault();
         var fd = $("#formModalBatchDetails").serializeJSON();
         fd.CompanyId=@Session["CompanyId"];
-        if (fd.FromYear == '' || fd.ToYear == '') return;
+        if (fd.SessionFrom == '' || fd.SessionTo == '') return;
         $.ajax({
             url: "/api/EditBatchDetails",
             method: "POST",
@@ -3552,7 +3596,7 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $("#selectBatch").html(v);
                     $("#searchBatch").html(v);
@@ -3635,7 +3679,17 @@
                     'title': 'Action',
                     'data': 'Action',
                     'render': function (data, type, row) {
-                        return "<div style='display:flex'><a href='#' class='btn btn-info' onclick='updateFeeDetails(\"" + row.FeeId + "\",\"" + row.FeeStructureName + "\", \"" + row.FeeName + "\",\"" + row.Amount + "\",\"" + row.Refundable + "\",\"" + row.StudentType + "\") '>Edit</a>&nbsp<a href='#' class='btn btn-info' onclick='deleteFee(\"" + row.FeeId + "\",\"" + row.FeeName + "\",\"" + _type + "\",\"" + row.FeeStructureName + "\",\"" + row.StudentType + "\") '>Delete</a></div>";
+                        return `<div style='display:flex'>
+                         @if (actions.Contains("edit"))
+                         {
+                        <a href='#' class='btn btn-info'
+                        onclick='updateFeeDetails("${row.FeeId}","${row.FeeStructureName}","${row.FeeName}","${row.Amount}",${row.Refundable}","${row.StudentType}") '>
+                        Edit</a> } &nbsp;   
+                         @if (actions.Contains("delete"))
+                         {
+                        <a href='#' class='btn btn-info'
+                        onclick='deleteFee("${row.FeeId}","${row.FeeName}","${_type}","${row.FeeStructureName}","${row.StudentTyp}") '>
+                        Delete</a> } </div>`;
                     },
                     'sortable': false,
                 }
@@ -3686,7 +3740,7 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $("#dayoffBatch").html(v);
                 }

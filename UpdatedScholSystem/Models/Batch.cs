@@ -8,8 +8,8 @@ namespace UpdatedScholSystem.Models
     public class Batch
     {
         public int BatchId { get; set; }
-        public int FromYear { get; set; }
-        public int ToYear { get; set; }
+        public int SessionFrom { get; set; }
+        public int SessionTo { get; set; }
         public string Status { get; set; }
         public int CompanyId { get; set; }
     }

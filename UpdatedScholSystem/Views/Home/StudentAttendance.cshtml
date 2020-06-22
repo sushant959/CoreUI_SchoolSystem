@@ -168,11 +168,11 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $(".batch").html(v);
                     $("#searchBatch").html(v);
-                    //$("#searchBatch").val(batchDetails[0]['FromYear'] + "-" + batchDetails[0]['ToYear']);
+                    //$("#searchBatch").val(batchDetails[0]['SessionFrom'] + "-" + batchDetails[0]['SessionTo']);
                 }
                 if (facultyDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";

@@ -570,7 +570,7 @@
                 if (batchDetails != undefined) {
                     var v = "<option value=''>--Select--</option>";
                     for (var i in batchDetails) {
-                        v += "<option value='" + batchDetails[i]['FromYear'] + "-" + batchDetails[i]['ToYear'] + "'>" + batchDetails[i]['FromYear'] + " - " + batchDetails[i]['ToYear'] + "</option>";
+                        v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
                     }
                     $(".batch").html(v);
                     $("#searchBatch").html(v);
