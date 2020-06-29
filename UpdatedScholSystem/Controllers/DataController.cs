@@ -601,7 +601,8 @@ namespace UpdatedScholSystem.Controllers
             var Class = data["Class"];
             var Month = data["Month"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var details = BillingDbServices.Instance.GetAllDemoBillingDetails(Batch,Class,Month,CompanyId);
+            var classId = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName='" + Class + "' and Company_ID = '" + CompanyId + "'", null);
+            var details = BillingDbServices.Instance.GetAllDemoBillingDetails(Batch,Convert.ToInt32(classId.Rows[0]["ClassId"]),Month,CompanyId);
             return Ok(details);
         }
 
@@ -638,7 +639,7 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var companyId = data["CompanyId"];
-            var Country = BaseDbServices.Instance.GetData("Select * from tblcountrydetails where CompanyId='"+ companyId + "'", null);
+            var Country = MasterDbAccess.DbService.GetData("Select * from tblcountrydetails where CompanyId='"+ companyId + "'", null);
             return Ok(Country);
         }
 
@@ -656,7 +657,7 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId =Convert.ToInt32(data["CompanyId"]);
-            var Scholarship = BaseDbServices.Instance.GetData("Select * from tblscholarshipname where CompanyId='" + CompanyId + "'", null);
+            var Scholarship = MasterDbAccess.DbService.GetData("Select * from scholarshipnames where CompanyId='" + CompanyId + "'", null);
             return Ok(Scholarship);
         }
 
@@ -1414,52 +1415,55 @@ namespace UpdatedScholSystem.Controllers
         public IHttpActionResult PostStudentExtraFee([FromBody] StudentExtraFee obj)
         {
             var studentlist = new DataTable();
-            
+            var session = MasterDbAccess.DbService.GetData("select SessionId from sessions where SessionFrom = '" + obj.Batch.Substring(0, 4) + "' and CompanyId = '" + obj.CompanyId + "'", null);
+            var faculty = MasterDbAccess.DbService.GetData("select FacultyId from faculties where FacultyName = '" + obj.Faculty + "' and CompanyId = '" + obj.CompanyId + "'", null);
+            var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + obj.Class + "' and Company_ID = '" + obj.CompanyId + "'", null);
+            var section = MasterDbAccess.DbService.GetData("select SectionId from sections where SectionName = '" + obj.Section + "' and CompanyId = '" + obj.CompanyId + "'", null);
             if (obj.Batch != null && obj.Faculty == null)
             {
-                studentlist = BaseDbServices.Instance.GetData("select StudentId from tblstudentinfo where IsDeleted=0 and Status='Active' and CompanyId='"+obj.CompanyId+"'", null);
+                studentlist =MasterDbAccess.DbService.GetData("select StudentId from studentinfoes where Status='Active' and CompanyId='"+obj.CompanyId+"'", null);
             }
             else if(obj.Batch !=null && obj.Faculty !=null && obj.Class == null)
             {
                 List<MySqlParameter> Info = new List<MySqlParameter>()
                     {
-                        new MySqlParameter("@batch",obj.Batch),
-                        new MySqlParameter("@faculty",obj.Faculty),
+                        new MySqlParameter("@batch",session.Rows[0]["SessionId"]),
+                        new MySqlParameter("@faculty",faculty.Rows[0]["FaculyId"]),
                         new MySqlParameter("@CompanyId",obj.CompanyId)
                     };
-                studentlist = BaseDbServices.Instance.GetData("select tblstudentinfo.StudentId from tblstudentinfo" +
-                    " inner join tblcurrenteducation on tblstudentinfo.StudentId=tblcurrenteducation.StudentId" +
-                    " where tblstudentinfo.IsDeleted=0 and tblstudentinfo.Status='Active'" +
-                    " and tblcurrenteducation.Faculty=@faculty and tblstudentinfo.CompanyId=@CompanyId", Info);
+                studentlist =MasterDbAccess.DbService.GetData("select studentinfoes.StudentId from studentinfoes" +
+                    " inner join currenteducations on studentinfoes.StudentId=currenteducations.CurrentEduId" +
+                    " where studentinfoes.Status='Active'" +
+                    " and currenteducations.FacultyId=@faculty and studentinfoes.CompanyId=@CompanyId", Info);
             }
             else if(obj.Batch != null && obj.Faculty != null && obj.Class !=null && obj.Section == null)
             {
                 List<MySqlParameter> Info = new List<MySqlParameter>()
                     {
-                        new MySqlParameter("@batch",obj.Batch),
-                        new MySqlParameter("@faculty",obj.Faculty),
-                        new MySqlParameter("@class",obj.Class),
+                        new MySqlParameter("@batch",session.Rows[0]["SessionId"]),
+                        new MySqlParameter("@faculty",faculty.Rows[0]["FaculyId"]),
+                        new MySqlParameter("@class",classes.Rows[0]["ClassId"]),
                          new MySqlParameter("@CompanyId",obj.CompanyId)
                     };
-                studentlist = BaseDbServices.Instance.GetData("select tblstudentinfo.StudentId from tblstudentinfo" +
-                    " inner join tblcurrenteducation on tblstudentinfo.StudentId=tblcurrenteducation.StudentId" +
-                    " where tblstudentinfo.IsDeleted=0 and tblstudentinfo.Status='Active'" +
-                    " and tblcurrenteducation.Class=@class and tblstudentinfo.CompanyId=@CompanyId", Info);
+                studentlist = BaseDbServices.Instance.GetData("select studentinfoes.StudentId from studentinfoes" +
+                    " inner join currenteducations on studentinfoes.StudentId=currenteducations.CurrentEduId" +
+                    " where studentinfoes.Status='Active'" +
+                    " and currenteducations.ClassId=@class and studentinfoes.CompanyId=@CompanyId", Info);
             }
             else if (obj.Batch != null && obj.Faculty != null && obj.Class != null && obj.Section != null)
             {
                 List<MySqlParameter> Info = new List<MySqlParameter>()
                     {
-                        new MySqlParameter("@batch",obj.Batch),
-                        new MySqlParameter("@faculty",obj.Faculty),
-                        new MySqlParameter("@class",obj.Class),
-                        new MySqlParameter("@section",obj.Section),
+                       new MySqlParameter("@batch",session.Rows[0]["SessionId"]),
+                        new MySqlParameter("@faculty",faculty.Rows[0]["FaculyId"]),
+                        new MySqlParameter("@class",classes.Rows[0]["ClassId"]),
+                        new MySqlParameter("@section",section.Rows[0]["SectionId"]),
                         new MySqlParameter("@CompanyId",obj.CompanyId)
                     };
-                studentlist = BaseDbServices.Instance.GetData("select tblstudentinfo.StudentId from tblstudentinfo" +
-                    " inner join tblcurrenteducation on tblstudentinfo.StudentId=tblcurrenteducation.StudentId" +
-                    " where tblstudentinfo.IsDeleted=0 and tblstudentinfo.Status='Active'" +
-                    " and tblcurrenteducation.Class=@class and tblcurrenteducation.Section=@section and tblstudentinfo.CompanyId=@CompanyId ", Info);
+                studentlist = BaseDbServices.Instance.GetData("select studentinfoes.StudentId from studentinfoes" +
+                    " inner join currenteducations on studentinfoes.StudentId=currenteducations.CurrentEduId" +
+                    " where studentinfoes.Status='Active'" +
+                    " and currenteducations.ClassId=@class and currenteducations.SectionId=@section and studentinfoes.CompanyId=@CompanyId ", Info);
             }
             for (int i=0;i < studentlist.Rows.Count;i++)
             {
@@ -1505,12 +1509,7 @@ namespace UpdatedScholSystem.Controllers
 
 
 
-        [Route("PostSectionDetails"), HttpPost]
-        public IHttpActionResult PostSectionDetails([FromBody] Section obj)
-        {
-            GeneralSettingDbServices.Instance.SaveSectionDetails(obj);
-            return Ok("");
-        }
+       
 
         [Route("PostCountryDetails"), HttpPost]
         public IHttpActionResult PostCountryDetails([FromBody] Country obj)
@@ -1852,7 +1851,13 @@ namespace UpdatedScholSystem.Controllers
         public IHttpActionResult PostBillingDetails([FromBody] Billing obj)
         {
 
+
             var studentinfo = BillingDbServices.Instance.GetStudentClass(obj.StudentId.ToString(),Convert.ToInt32(obj.CompanyId));
+            var session = MasterDbAccess.DbService.GetData("select * from sessions where SessionId = '" + studentinfo.Rows[0]["SessionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId = '" + studentinfo.Rows[0]["FacultyId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+            var classes = MasterDbAccess.DbService.GetData("select ClassName from classes where ClassId = '" + studentinfo.Rows[0]["ClassId"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+            var section = MasterDbAccess.DbService.GetData("select SectionName from sections where SectionId = '" + studentinfo.Rows[0]["SectionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
             if (studentinfo.Rows.Count == 0)
             {
                 return Ok(false);
@@ -1863,14 +1868,16 @@ namespace UpdatedScholSystem.Controllers
             }
             else
             {
-                var studentType = studentinfo.Rows[0]["StudentType"];
+                var type = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId = '" + studentinfo.Rows[0]["StudentTypeId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                var studentType = type.Rows[0]["Name"];
                 foreach(var w in obj.Month)
                 { 
                 List<MySqlParameter> Info = new List<MySqlParameter>()
                     {
-                        new MySqlParameter("@batch",studentinfo.Rows[0]["Batch"] ),
-                        new MySqlParameter("@class",studentinfo.Rows[0]["Class"]),
-                        new MySqlParameter("@faculty",studentinfo.Rows[0]["Faculty"]),
+                        new MySqlParameter("@batch",session.Rows[0]["SessionFrom"] + "-" + session.Rows[0]["SessionTo"] ),
+                        new MySqlParameter("@class",classes.Rows[0]["ClassName"]),
+                        new MySqlParameter("@faculty",faculty.Rows[0]["FacultyName"]),
                         new MySqlParameter("@id",obj.StudentId),
                         new MySqlParameter("@month",w),
                         new MySqlParameter("@Cbatch",obj.Batch),
@@ -2007,7 +2014,9 @@ namespace UpdatedScholSystem.Controllers
                 }
                 else
                 {
-                    var scholarshipname = studentinfo.Rows[0]["ScholarshipName"].ToString();
+                        var schol = MasterDbAccess.DbService.GetData("select Name from scholarshipnames where ScholarshipId = '" + studentinfo.Rows[0]["ScholarshipNameId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                        var scholarshipname = schol.Rows[0]["Name"].ToString();
                     if (scholarshipname != "")
                     {
                         var FeeStructure = BaseDbServices.Instance.GetData("Select FeeStructureName from tblfeestructuredetails where CompanyId=@CompanyId", Info);
@@ -2211,23 +2220,34 @@ namespace UpdatedScholSystem.Controllers
             var studentList = new DataTable();
             if(obj.Class == null && obj.Section == null)
             {
+
                 var classlist = MasterDbAccess.DbService.GetData("select ClassName from classes where Company_ID='"+obj.CompanyId+"'", null);
                 for(int p =0;p <classlist.Rows.Count;p++)
                 {
-                   
-                    studentList = BillingDbServices.Instance.GetAllStudentId(obj.Batch,classlist.Rows[p]["ClassName"].ToString(),obj.CompanyId);
+                      var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + classlist.Rows[p]["ClassName"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                    var session = MasterDbAccess.DbService.GetData("select SessionId from sessions where SessionFrom = '" + obj.Batch.Substring(0, 4) + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                    studentList = BillingDbServices.Instance.GetAllStudentId(Convert.ToInt32(session.Rows[0]["SessionId"]), Convert.ToInt32(classes.Rows[0]["ClassId"].ToString()),obj.CompanyId);
 
                     for (int m = 0; m < studentList.Rows.Count; m++)
                     {
                         var studentinfo = BillingDbServices.Instance.GetStudentClassInfo(studentList.Rows[m]["StudentId"].ToString(),obj.CompanyId);
+                        var sessionname = MasterDbAccess.DbService.GetData("select * from sessions where SessionId = '" + studentinfo.Rows[0]["SessionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                        var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId = '" + studentinfo.Rows[0]["FacultyId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                        var classename = MasterDbAccess.DbService.GetData("select ClassName from classes where ClassId = '" + studentinfo.Rows[0]["ClassId"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                        var section = MasterDbAccess.DbService.GetData("select SectionName from sections where SectionId = '" + studentinfo.Rows[0]["SectionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
                         foreach (var s in obj.Month)
                         {
-                            var studentType = studentinfo.Rows[0]["StudentType"];
+                            var type = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId = '" + studentinfo.Rows[0]["StudentTypeId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                            var studentType = type.Rows[0]["Name"];
+                            
                             List<MySqlParameter> Info = new List<MySqlParameter>()
                                 {
-                                    new MySqlParameter("@batch",studentinfo.Rows[0]["Batch"] ),
-                                    new MySqlParameter("@class",studentinfo.Rows[0]["Class"]),
-                                    new MySqlParameter("@faculty",studentinfo.Rows[0]["Faculty"]),
+                                    new MySqlParameter("@batch",sessionname.Rows[0]["SessionFrom"] + "-" + sessionname.Rows[0]["SessionTo"] ),
+                                    new MySqlParameter("@class",classename.Rows[0]["ClassName"]),
+                                    new MySqlParameter("@faculty",faculty.Rows[0]["FacultyName"]),
                                     new MySqlParameter("@id",studentList.Rows[m]["StudentId"].ToString()),
                                     new MySqlParameter("@Cbatch",obj.Batch),
                                     new MySqlParameter("@month",s),
@@ -2364,7 +2384,8 @@ namespace UpdatedScholSystem.Controllers
                             }
                             else
                             {
-                                var scholarshipname = studentinfo.Rows[0]["ScholarshipName"].ToString();
+                                var schol=MasterDbAccess.DbService.GetData("select Name from scholarshipnames where ScholarshipId='"+ studentinfo.Rows[0]["ScholarshipNameId"] + "' and CompanyId='"+ obj.CompanyId +"'",null);
+                                var scholarshipname = schol.Rows[0]["Name"].ToString();
                                 if (scholarshipname != "")
                                 {
                                     var FeeStructure = BaseDbServices.Instance.GetData("Select FeeStructureName from tblfeestructuredetails where CompanyId='"+obj.CompanyId+"'", null);
@@ -2563,24 +2584,34 @@ namespace UpdatedScholSystem.Controllers
             }
             else if(obj.Class == null && obj.Section != null)
             {
-                var classlist = MasterDbAccess.DbService.GetData("select ClassName from classes and Company_ID='"+obj.CompanyId+"'", null);
+
+                var classlist = MasterDbAccess.DbService.GetData("select * from classes and Company_ID='"+obj.CompanyId+"'", null);
+                var _batch = MasterDbAccess.DbService.GetData("select SessionId from sessions where  SessionFrom='" + obj.Batch.Substring(0, 4) + "' and CompanyId='" + obj.CompanyId + "'", null);
                 for (int p = 0; p < classlist.Rows.Count; p++)
                 {
+                    
                     foreach (var e in obj.Section)
                     {
-                        studentList = BillingDbServices.Instance.GetStudentList(obj.Batch, classlist.Rows[p]["ClassName"].ToString(),e,obj.CompanyId);
+                         var _section = MasterDbAccess.DbService.GetData("select SectionId from sections where  SectionName='" + e + "' and CompanyId='" + obj.CompanyId + "'", null);
+
+                        studentList = BillingDbServices.Instance.GetStudentList(Convert.ToInt32(_batch.Rows[0]["SessionId"]), Convert.ToInt32(classlist.Rows[p]["ClassId"]),Convert.ToInt32(_section.Rows[0]["SectionId"]),obj.CompanyId);
 
                         for (int m = 0; m < studentList.Rows.Count; m++)
                         {
                             var studentinfo = BillingDbServices.Instance.GetStudentClassInfo(studentList.Rows[m]["StudentId"].ToString(),obj.CompanyId);
+                            var sessionname = MasterDbAccess.DbService.GetData("select * from sessions where SessionId = '" + studentinfo.Rows[0]["SessionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId = '" + studentinfo.Rows[0]["FacultyId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                            var classename = MasterDbAccess.DbService.GetData("select ClassName from classes where ClassId = '" + studentinfo.Rows[0]["ClassId"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                           
                             foreach (var s in obj.Month)
                             {
-                                var studentType = studentinfo.Rows[0]["StudentType"];
+                                var type = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId='" + studentinfo.Rows[0]["ScholarshipNameId"] + "' and CompanyId ='" + obj.CompanyId + "'", null);
+                                var studentType = type.Rows[0]["Name"];
                                 List<MySqlParameter> Info = new List<MySqlParameter>()
                                 {
-                                    new MySqlParameter("@batch",studentinfo.Rows[0]["Batch"] ),
-                                    new MySqlParameter("@class",studentinfo.Rows[0]["Class"]),
-                                    new MySqlParameter("@faculty",studentinfo.Rows[0]["Faculty"]),
+                                    new MySqlParameter("@batch",sessionname.Rows[0]["SessionFrom"] + "-" + sessionname.Rows[0]["SessionTo"] ),
+                                    new MySqlParameter("@class",classename.Rows[0]["ClassName"]),
+                                    new MySqlParameter("@faculty",faculty.Rows[0]["FacultyName"]),
                                     new MySqlParameter("@id",studentList.Rows[m]["StudentId"].ToString()),
                                     new MySqlParameter("@Cbatch",obj.Batch),
                                     new MySqlParameter("@month",s),
@@ -2717,7 +2748,10 @@ namespace UpdatedScholSystem.Controllers
                                 }
                                 else
                                 {
-                                    var scholarshipname = studentinfo.Rows[0]["ScholarshipName"].ToString();
+                                    var schol = MasterDbAccess.DbService.GetData("select Name from scholarshipnames where ScholarshipId = '" + studentinfo.Rows[0]["ScholarshipNameId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                                    var scholarshipname = schol.Rows[0]["Name"].ToString();
+                                    
                                     if (scholarshipname != "")
                                     {
                                         var FeeStructure = BaseDbServices.Instance.GetData("Select FeeStructureName from tblfeestructuredetails where CompanyId='"+obj.CompanyId+"'", null);
@@ -2917,21 +2951,32 @@ namespace UpdatedScholSystem.Controllers
                 }
             else if(obj.Class !=null && obj.Section == null)
             {
+                var session = MasterDbAccess.DbService.GetData("select SessionId from sessions where SessionFrom = '" + obj.Batch.Substring(0, 4) + "' and CompanyId = '" + obj.CompanyId + "'", null);
                 foreach (var e in obj.Class)
                 {
-                    studentList = BillingDbServices.Instance.GetAllStudentId(obj.Batch,e,obj.CompanyId);
+                    var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + e + "' and Company_ID = '" + obj.CompanyId + "'", null);
+
+                    studentList = BillingDbServices.Instance.GetAllStudentId(Convert.ToInt32(session.Rows[0]["SessionId"]),Convert.ToInt32(classes.Rows[0]["ClassId"]),obj.CompanyId);
 
                     for (int m = 0; m < studentList.Rows.Count; m++)
                     {
+
                         var studentinfo = BillingDbServices.Instance.GetStudentClassInfo(studentList.Rows[m]["StudentId"].ToString(),obj.CompanyId);
+                        var sessionname = MasterDbAccess.DbService.GetData("select * from sessions where SessionId = '" + studentinfo.Rows[0]["SessionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                        var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId = '" + studentinfo.Rows[0]["FacultyId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                        var classename = MasterDbAccess.DbService.GetData("select ClassName from classes where ClassId = '" + studentinfo.Rows[0]["ClassId"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                        //var section = MasterDbAccess.DbService.GetData("select SectionName from sections where SectionId = '" + studentinfo.Rows[0]["SectionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
                         foreach (var s in obj.Month)
                         {
-                            var studentType = studentinfo.Rows[0]["StudentType"];
+
+                            var type = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId = '" + studentinfo.Rows[0]["StudentTypeId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                            var studentType = type.Rows[0]["Name"];
                             List<MySqlParameter> Info = new List<MySqlParameter>()
                                 {
-                                    new MySqlParameter("@batch",studentinfo.Rows[0]["Batch"] ),
-                                    new MySqlParameter("@class",studentinfo.Rows[0]["Class"]),
-                                    new MySqlParameter("@faculty",studentinfo.Rows[0]["Faculty"]),
+                                    new MySqlParameter("@batch",sessionname.Rows[0]["SessionFrom"] + "-" + sessionname.Rows[0]["SessionTo"] ),
+                                    new MySqlParameter("@class",classename.Rows[0]["ClassName"]),
+                                    new MySqlParameter("@faculty",faculty.Rows[0]["FacultyName"]),
                                     new MySqlParameter("@id",studentList.Rows[m]["StudentId"].ToString()),
                                     new MySqlParameter("@Cbatch",obj.Batch),
                                     new MySqlParameter("@month",s),
@@ -3068,7 +3113,10 @@ namespace UpdatedScholSystem.Controllers
                             }
                             else
                             {
-                                var scholarshipname = studentinfo.Rows[0]["ScholarshipName"].ToString();
+                                var schol = MasterDbAccess.DbService.GetData("select Name from scholarshipnames where ScholarshipId = '" + studentinfo.Rows[0]["ScholarshipNameId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                                var scholarshipname = schol.Rows[0]["Name"].ToString();
+                                
                                 if (scholarshipname != "")
                                 {
                                     var FeeStructure = BaseDbServices.Instance.GetData("Select FeeStructureName from tblfeestructuredetails where CompanyId='"+obj.CompanyId+"'", null);
@@ -3267,24 +3315,34 @@ namespace UpdatedScholSystem.Controllers
             }
             else if(obj.Class != null && obj.Section != null)
             {
-               
+                var session = MasterDbAccess.DbService.GetData("select SessionId from sessions where SessionFrom = '" + obj.Batch.Substring(0, 4) + "' and CompanyId = '" + obj.CompanyId + "'", null);
                 foreach (var w in obj.Class)
                 {
+                    var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + w + "' and Company_ID = '" + obj.CompanyId + "'", null);
                     foreach (var e in obj.Section)
                     {
-                        studentList = BillingDbServices.Instance.GetStudentList(obj.Batch,w, e,obj.CompanyId);
+                        var section = MasterDbAccess.DbService.GetData("select SectionId from classes where SectionName = '" + e + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                        studentList = BillingDbServices.Instance.GetStudentList(Convert.ToInt32(session.Rows[0]["SessionId"]),Convert.ToInt32(classes.Rows[0]["ClassId"]),Convert.ToInt32(section.Rows[0]["SectionId"]),obj.CompanyId);
 
                         for (int m = 0; m < studentList.Rows.Count; m++)
                         {
+
                             var studentinfo = BillingDbServices.Instance.GetStudentClassInfo(studentList.Rows[m]["StudentId"].ToString(),obj.CompanyId);
+                            var sessionname = MasterDbAccess.DbService.GetData("select * from sessions where SessionId = '" + studentinfo.Rows[0]["SessionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId = '" + studentinfo.Rows[0]["FacultyId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+                            var classename = MasterDbAccess.DbService.GetData("select ClassName from classes where ClassId = '" + studentinfo.Rows[0]["ClassId"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                            var sectionname = MasterDbAccess.DbService.GetData("select SectionName from sections where SectionId = '" + studentinfo.Rows[0]["SectionId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
                             foreach (var s in obj.Month)
                             {
-                                var studentType = studentinfo.Rows[0]["StudentType"];
+
+                                var type = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId = '" + studentinfo.Rows[0]["StudentTypeId"] + "' and CompanyId = '" + obj.CompanyId + "'", null);
+
+                                var studentType = type.Rows[0]["Name"];
                                 List<MySqlParameter> Info = new List<MySqlParameter>()
                                 {
-                                    new MySqlParameter("@batch",studentinfo.Rows[0]["Batch"] ),
-                                    new MySqlParameter("@class",studentinfo.Rows[0]["Class"]),
-                                    new MySqlParameter("@faculty",studentinfo.Rows[0]["Faculty"]),
+                                    new MySqlParameter("@batch",sessionname.Rows[0]["SessionFrom"] + "-" + sessionname.Rows[0]["SessionTo"] ),
+                                    new MySqlParameter("@class",classename.Rows[0]["ClassName"]),
+                                    new MySqlParameter("@faculty",studentinfo.Rows[0]["FacultyName"]),
                                     new MySqlParameter("@id",studentList.Rows[m]["StudentId"].ToString()),
                                     new MySqlParameter("@Cbatch",obj.Batch),
                                     new MySqlParameter("@month",s),
@@ -3383,7 +3441,7 @@ namespace UpdatedScholSystem.Controllers
                                         }
                                     }
 
-                                    var studentextrafeeid = BaseDbServices.Instance.GetData("select StudentExtraFeeId from tblstudentextrafee where Batch=@Cbatch and Month=@month and StudentId=@id and CompanyId=@CompanyId", Info);
+                                    var studentextrafeeid = BaseDbServices.Instance.GetData("selec StudentExtraFeeId from tblstudentextrafee where Batch=@Cbatch and Month=@month and StudentId=@id and CompanyId=@CompanyId", Info);
                                     if (studentextrafeeid.Rows.Count > 0)
                                     {
                                         var extrafee = BaseDbServices.Instance.GetData("select FeeName,Amount from tblstudentextrafeedetails where StudentExtraFeeId='" + studentextrafeeid.Rows[0]["StudentExtraFeeId"] + "' and CompanyId='"+obj.CompanyId+"'", null);
@@ -5815,7 +5873,7 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@companyid", CompanyId)
             };
             var facultyId = MasterDbAccess.DbService.GetData("select Faculty_ID from classes where ClassName=@class and Company_ID=@companyid", Info);
-            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@companyid", Info);
+            var faculty = MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId ='" + facultyId.Rows[0]["Faculty_ID"] + "' and CompanyId=@companyid", Info);
             return Ok(faculty);
         }
 

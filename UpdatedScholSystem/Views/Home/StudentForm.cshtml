@@ -279,7 +279,7 @@
 
              </div><br />
 
-             <div class="form-inline" style="color:green;"><input type='checkbox' class='checkbox' id="sameAddress" value='true' />&nbsp;&nbsp;Permanent address same as Current address</div><br />
+             @*<div class="form-inline" style="color:green;"><input type='checkbox' class='checkbox' id="sameAddress" value='true' />&nbsp;&nbsp;Permanent address same as Current address</div><br />*@
 
              <h5>Permanent Address</h5>
              <div class="form-row">
@@ -1078,25 +1078,25 @@
         })
     }
 
-    $(".checkbox").change(function () {
+    //$(".checkbox").change(function () {
        
-        debugger;
-        if (this.checked) {
-            $('[name="PermanentAddress[Qno]"]').val($('[name ="CurrentAddress[Qno]"]').val());
-            $('[name="PermanentAddress[Street]"]').val($('[name ="CurrentAddress[Street]"]').val());
-            $('[name="PermanentAddress[Municipality]"]').val($('[name ="CurrentAddress[Municipality]"]').val());
-            $('[name="PermanentAddress[Country]"]').val($('[name ="CurrentAddress[Country]"]').val());
-            $('[name="PermanentAddress[State]"]').html("<option value=" + $('[name ="CurrentAddress[State]"]').val() + ">" + $('[name ="CurrentAddress[State]"]').val() + "</option>").val();
-        }
-        else {
-            $('[name="PermanentAddress[Qno]"]').val('');
-            $('[name="PermanentAddress[Street]"]').val('');
-            $('[name="PermanentAddress[Municipality]"]').val('');
-            $('[name="PermanentAddress[Country]"]').val('');
-            $('[name="PermanentAddress[State]"]').val('');
-            debugger;
-        }
-    });
+    //    debugger;
+    //    if (this.checked) {
+    //        $('[name="PermanentAddress[Qno]"]').val($('[name ="CurrentAddress[Qno]"]').val());
+    //        $('[name="PermanentAddress[Street]"]').val($('[name ="CurrentAddress[Street]"]').val());
+    //        $('[name="PermanentAddress[Municipality]"]').val($('[name ="CurrentAddress[Municipality]"]').val());
+    //        $('[name="PermanentAddress[Country]"]').val($('[name ="CurrentAddress[Country]"]').val());
+    //        $('[name="PermanentAddress[State]"]').html("<option value=" + $('[name ="CurrentAddress[State]"]').val() + ">" + $('[name ="CurrentAddress[State]"]').val() + "</option>").val();
+    //    }
+    //    else {
+    //        $('[name="PermanentAddress[Qno]"]').val('');
+    //        $('[name="PermanentAddress[Street]"]').val('');
+    //        $('[name="PermanentAddress[Municipality]"]').val('');
+    //        $('[name="PermanentAddress[Country]"]').val('');
+    //        $('[name="PermanentAddress[State]"]').val('');
+    //        debugger;
+    //    }
+    //});
 
     function isNumberKey(evt) {
         var charCode = (evt.which) ? evt.which : evt.keyCode;

@@ -119,7 +119,7 @@ namespace UpdatedScholSystem.Service
         }
 
 
-        public DataTable GetAllDemoBillingDetails(string Batch,string Class,string Month,int CompanyId)
+        public DataTable GetAllDemoBillingDetails(string Batch,int Class,string Month,int CompanyId)
         {
             
             DataTable dt = new DataTable();
@@ -359,7 +359,7 @@ namespace UpdatedScholSystem.Service
             return dt;
         }
 
-        public DataTable GetStudentList(string Batch, string Class,string Section,int CompanyId)
+        public DataTable GetStudentList(int Batch, int Class,int Section,int CompanyId)
         {
 
             DataTable dt = new DataTable();
@@ -386,7 +386,7 @@ namespace UpdatedScholSystem.Service
             return dt;
         }
 
-        public DataTable GetAllStudentId(string Batch, string Class,int CompanyId)
+        public DataTable GetAllStudentId(int Batch, int Class,int CompanyId)
         {
 
             DataTable dt = new DataTable();
