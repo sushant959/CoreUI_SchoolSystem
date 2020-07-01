@@ -119,7 +119,27 @@ namespace UpdatedScholSystem.Service
             conn.Dispose();
             return dt;
         }
+        public DataTable TotalDue()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("_totaldue", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
+                adap.SelectCommand = cmd;
+                conn.Open();
+                adap.Fill(dt);
+            }
+            catch (Exception ex)
+
+            {
+                throw;
+            }
+            conn.Close();
+            conn.Dispose();
+            return dt;
+        }
         public DataTable GetAllStudentListDueByStudentId(string StudentId,int CompanyId)
         {
 

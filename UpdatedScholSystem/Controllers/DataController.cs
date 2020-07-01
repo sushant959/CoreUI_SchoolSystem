@@ -3961,6 +3961,54 @@ namespace UpdatedScholSystem.Controllers
 
         }
 
+        //[Route("testView"), HttpGet]
+        //public IHttpActionResult testView()
+        //{
+        //    // SELECT FirstName, LastName, StudentId, Batch, Class, SUM(due) AS Due FROM
+        //    //   GROUP BY FirstName, LastName, StudentId, Batch, Class, CompanyId HAVING StudentId = '2021-5' AND CompanyId = '1
+        //    var check = TeacherDbServices.Instance.TestViewAlter();
+        //    DataTable table = new DataTable();
+        //    table.Columns.Add("ID", typeof(int));
+        //    table.Columns.Add("Percentage", typeof(int));
+        //    table.Columns.Add("Test", typeof(string));
+
+        //    table.Rows.Add(1, 50,"test1");
+        //    table.Rows.Add(1, 30,"test1");
+        //    table.Rows.Add(2, 0,"test2");
+        //    table.Rows.Add(2, 100,"test2");
+
+        //    var res = (from p in check.AsEnumerable()
+        //                  where p.Field<string>("StudentId") == "2021-5" && p.Field<int>("CompanyId") == 1
+                          
+        //                  group p by new
+        //                  {
+                       
+        //                   ID = p.Field<string>("StudentId"),
+        //                   firstname = p.Field<string>("FirstName"),
+        //                   lastname =p.Field<string>("LastName"),
+        //                   batch =p.Field<string>("Batch"),
+        //                   classes=p.Field<string>("Class")
+        //                  }  into gs
+                          
+        //                  select new
+        //                  {
+        //                      StudentId = gs.Key.ID,
+        //                      FirstName=gs.Key.firstname,
+        //                      LastName=gs.Key.lastname,
+        //                      Batch=gs.Key.batch,
+        //                      Class=gs.Key.classes,
+        //                      Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+                            
+                              
+        //                  }).ToList();
+
+
+
+        //    DataTable tt = res.CopyToDataTable();
+        //    var test = BaseDbServices.Instance.GetData("'", null);
+        //    return Ok(check);
+        //}
+
         [Route("GetStaffListByDesignation"), HttpGet]
         public IHttpActionResult GetStaffListByDesignation()
         {
@@ -4185,11 +4233,11 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@id",BillingId),
                 new MySqlParameter("@CompanyId",CompanyId)
             };
-            var details = BaseDbServices.Instance.GetData("select tblbillingdetails.*,tblstudentinfo.FirstName,tblstudentinfo.LastName,tblbilling.StudentId,tblbilling.Batch,tblbilling.Month " +
-                " from tblbillingdetails " +
-                " inner join tblbilling on tblbillingdetails.BillingId = tblbilling.BillingId " +
-                " inner join tblstudentinfo on tblstudentinfo.StudentId=tblbilling.StudentId" +
-                " where tblbillingdetails.BillingId =@id and tblbillingdetails.CompanyId=@CompanyId",info);
+            var details = BaseDbServices.Instance.GetData("select test.tblbillingdetails.*,ebmasterdb.studentinfoes.FirstName,ebmasterdb.studentinfoes.LastName,test.tblbilling.StudentId,test.tblbilling.Batch,test.tblbilling.Month " +
+                " from test.tblbillingdetails " +
+                " inner join test.tblbilling on test.tblbillingdetails.BillingId = test.tblbilling.BillingId " +
+                " inner join ebmasterdb.studentinfoes on ebmasterdb.studentinfoes.StudentId=test.tblbilling.StudentId" +
+                " where test.tblbillingdetails.BillingId =@id and test.tblbillingdetails.CompanyId=@CompanyId",info);
             return Ok(details);
         }
 
@@ -4377,28 +4425,163 @@ namespace UpdatedScholSystem.Controllers
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
             if(StudentId !="")
             {
-                var studentlist = DueDbService.Instance.GetAllStudentListDueByStudentId(StudentId,CompanyId);
-                return Ok(studentlist);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var result = (from p in studentlist.AsEnumerable()
+                              where p.Field<string>("StudentId") == StudentId && p.Field<int>("CompanyId") == CompanyId
+                              orderby p.Field<string>("Class")
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+                
+
+                return Ok(result);
             }
             if (Batch == "" && Class == "")
             {
-                var studentlist = DueDbService.Instance.GetAllStudentListDue(CompanyId);
-                return Ok(studentlist);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var result = (from p in studentlist.AsEnumerable()
+                              where p.Field<int>("CompanyId") == CompanyId
+                              orderby p.Field<string>("Class")
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+
+
+                return Ok(result);
             }
             else if(Batch !="" && Class =="")
             {
-                var studentlist = DueDbService.Instance.GetAllStudentListDueByBatch(Batch,CompanyId);
-                return Ok(studentlist);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var result = (from p in studentlist.AsEnumerable()
+                              where p.Field<string>("Batch") == Batch && p.Field<int>("CompanyId") == CompanyId
+                              orderby p.Field<string>("Class")
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+
+
+                return Ok(result);
             }
             else if (Batch == "" && Class != "")
             {
-                var studentlist = DueDbService.Instance.GetAllStudentListDueByClass(Class,CompanyId);
-                return Ok(studentlist);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var result = (from p in studentlist.AsEnumerable()
+                              where p.Field<string>("Class") == Class && p.Field<int>("CompanyId") == CompanyId
+                              
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+
+
+                return Ok(result);
             }
             else if (Batch != "" && Class != "")
             {
-                var studentlist = DueDbService.Instance.GetAllStudentListDueByBatchClass(Batch,Class,CompanyId);
-                return Ok(studentlist);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var result = (from p in studentlist.AsEnumerable()
+                              where p.Field<string>("Batch") == Batch && p.Field<string>("Class") == Class && p.Field<int>("CompanyId") == CompanyId
+                             
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+
+
+                return Ok(result);
             }
             return Ok("");
         }
@@ -4567,11 +4750,14 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@receiptid",ReceiptId),
                 new MySqlParameter("@billingid", BillingId)
             };
-            var receiptdetails = BaseDbServices.Instance.GetData("Select tblreceipt.*,tblstudentinfo.FirstName,tblstudentinfo.LastName,tblcurrenteducation.Batch,tblcurrenteducation.Class,tblcurrenteducation.Faculty" +
-                " from tblreceipt" +
-                " inner join tblstudentinfo on tblreceipt.StudentId=tblstudentinfo.StudentId" +
-                " inner join tblcurrenteducation on tblreceipt.StudentId = tblcurrenteducation.StudentId" +
-                " where ReceiptId=@receiptid", Detail);
+            var receiptdetails = BaseDbServices.Instance.GetData("Select test.tblreceipt.*,ebmasterdb.studentinfoes.FirstName,ebmasterdb.studentinfoes.LastName,ebmasterdb.sessions.SessionFrom,ebmasterdb.sessions.SessionTo,ebmasterdb.classes.ClassName,ebmasterdb.faculties.FacultyName" +
+                " from test.tblreceipt" +
+                " inner join ebmasterdb.studentinfoes on test.tblreceipt.StudentId=ebmasterdb.studentinfoes.StudentId" +
+                " inner join ebmasterdb.currenteducations on test.tblreceipt.StudentId = ebmasterdb.currenteducations.CurrentEduId" +
+                "inner join ebmasterdb.sessions on ebmasterdb.sessions.SessionId = ebmasterdb.currenteducations.SessionId" +
+                "inner join ebmasterdb.faculties on ebmasterdb.faculties.FacultyId = ebmasterdb.currenteducations.FacultyId" +
+                "inner join ebmasterdb.classes on ebmasterdb.classes.ClassId = ebmasterdb.currenteducations.ClassId" +
+                " where test.tblreceipt.ReceiptId=@receiptid", Detail);
             
             return Ok(receiptdetails);
 
@@ -5321,8 +5507,9 @@ namespace UpdatedScholSystem.Controllers
                 new MySqlParameter("@id",StudentId),
                 new MySqlParameter("@CompanyId",CompanyId)
             };
-            var StudentType = BaseDbServices.Instance.GetData("Select StudentType from tblstudentInfo where StudentId=@id and CompanyId=@CompanyId", Detail);
-            var type = StudentType.Rows[0]["StudentType"];
+            var StudentTypeId = MasterDbAccess.DbService.GetData("Select StudentTypeId from studentInfoes where StudentId=@id and CompanyId=@CompanyId", Detail);
+            var StudentType = MasterDbAccess.DbService.GetData("select Name from studenttypes where StudentTypeId = '" + StudentTypeId.Rows[0]["StudentTypeId"] + "'", null);
+            var type = StudentType.Rows[0]["Name"];
             var id = BaseDbServices.Instance.GetData("Select BatchClassId from tblbatchclass where Batch=@batch and Faculty=@faculty and Class=@class and CompanyId=@CompanyId", Detail);
             var ids = id.Rows[0]["BatchClassId"];
             var FeeDetails = new DataTable();
@@ -5779,7 +5966,7 @@ namespace UpdatedScholSystem.Controllers
             var Section = data["Section"];
             var Name = data["Name"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var studentdetails = StudentTransportDbServices.Instance.GetAllStudentListByName(Batch,Faculty,Class,Section,Name,CompanyId);
+            var studentdetails = StudentTransportDbServices.Instance.GetAllStudentListByName(Batch.Substring(0,4),Faculty,Class,Section,Name,CompanyId);
             var pickUpPoint = BaseDbServices.Instance.GetData("select Place from tblstartpoint where CompanyId='"+CompanyId+"'", null);
             var transportdetails = BaseDbServices.Instance.GetData("select * from tbltransportation where CompanyId='"+ CompanyId + "'", null);
             var extrafee = BaseDbServices.Instance.GetData("select FeeName,Amount from tblfeedetails where FeeStructureName='Extra' and CompanyId='"+ CompanyId + "'", null);
@@ -6241,7 +6428,7 @@ namespace UpdatedScholSystem.Controllers
         }
 
         [Route("SearchBillingDetails"), HttpGet]
-        public IHttpActionResult SearchBillingDetails()
+        public IHttpActionResult SearchBillingDetails() //from here 
         {
             var data = HttpContext.Current.Request;
             var Batch = data["Batch"];

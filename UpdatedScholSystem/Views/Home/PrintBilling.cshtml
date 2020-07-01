@@ -230,8 +230,8 @@
                 var studentname = [info[0]["FirstName"], ' ', info[0]["LastName"]].join('');
                 $("#billno").html(info[0]['BillingId']);
                 $("#name").html(studentname);
-                $("#class").html(info[0]['Class']);
-                $("#section").html(info[0]['Section']);
+                $("#class").html(info[0]['ClassName']);
+                $("#section").html(info[0]['SectionName']);
                 $("#batch").html(info[0]['Batch']);
                 $("#studentid").html(info[0]['StudentId']);
                 $("#month").html(convertMonth(info[0]["Month"]));

@@ -532,6 +532,16 @@
         $('.nepali-calendar').nepaliDatePicker();
         hideAll();
         $("#divBillingDetails").show();
+        $.ajax({
+            url: "/api/testView",
+            method: "GET",
+            dataType: "json",
+            success: function (result) {
+
+            debugger;
+            }
+        })
+       
         getClassBatchFaculty();
     })
 
@@ -1193,8 +1203,8 @@
                                     var studentname = [details[0]["FirstName"], ' ', details[0]["LastName"]].join('');
                                     $("#receiptStudentName").val(studentname);
                                     $("#receiptBatch").val(details[0]["Batch"]);
-                                    $("#receiptClass").val(details[0]["Class"]);
-                                    $("#receiptFaculty").val(details[0]["Faculty"]);
+                                    $("#receiptClass").val(details[0]["ClassName"]);
+                                    $("#receiptFaculty").val(details[0]["FacultyName"]);
                                     $("#receiptMonth").val(convertMonth(details[0]["Month"]));
                                     $("#receiptTotalFee").val(details[0]["Total"]);
                                     var mn = details[0]["Month"];

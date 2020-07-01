@@ -318,7 +318,7 @@
                         return `<div style='display:flex'>
                             @if (actions.Contains("edit"))
                             {
-                                <a href='#'  onclick='updateStudentTransport("${row.StudentTransportId}","${row.Batch}","${row.PlaceTo}","${row.Type}","${row.Amount}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.Class}") '><img src='/Content/images/edit3.png' style='width:30px; height:30px; ' />
+                                <a href='#'  onclick='updateStudentTransport("${row.StudentTransportId}","${row.Batch}","${row.PlaceTo}","${row.Type}","${row.Amount}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.ClassName}") '><img src='/Content/images/edit3.png' style='width:30px; height:30px; ' />
                                 </a> }  &nbsp
                             @if (actions.Contains("delete"))
                             {
@@ -351,7 +351,7 @@
                 },
                 {
                     'title': 'Class',
-                    'data': 'Class'
+                    'data': 'ClassName'
                 },
 
                 {

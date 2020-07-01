@@ -385,7 +385,7 @@
                         return `<div style='display:flex'>
                             @if (actions.Contains("edit"))
                             {
-                            <a href='#' onclick='updateStudentExtraFee("${row.StudentExtraFeeId}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.Batch}","${row.Month}","${row.Class}") '><img src='/Content/images/edit3.png' style='width:30px;height:30px;'/>
+                            <a href='#' onclick='updateStudentExtraFee("${row.StudentExtraFeeId}","${row.StudentId}","${row.FirstName}","${row.LastName}","${row.Batch}","${row.Month}","${row.ClassName}") '><img src='/Content/images/edit3.png' style='width:30px;height:30px;'/>
                             </a> }  &nbsp
                         @if (actions.Contains("delete"))
                         {
@@ -394,7 +394,7 @@
                         </a> }  &nbsp;
                         @if(actions.Contains("view"))
                         { 
-                        <a href='#' onclick='ExtraFeeDetails("${row.StudentExtraFeeId}","${row.Batch}","${row.Class}","${row.Month}","${row.FirstName}","${row.LastName}","${row.StudentId}")' title='details'>
+                        <a href='#' onclick='ExtraFeeDetails("${row.StudentExtraFeeId}","${row.Batch}","${row.ClassName}","${row.Month}","${row.FirstName}","${row.LastName}","${row.StudentId}")' title='details'>
                         <img src='/Content/images/view.png' style='width:30px;height:30px;'/>
                         </a> } </div>`;
                     },
@@ -423,7 +423,7 @@
                 },
                 {
                     'title': 'Class',
-                    'data': 'Class'
+                    'data': 'ClassName'
                 },
                 {
                     'title': 'Month',

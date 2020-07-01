@@ -310,7 +310,7 @@
             html += `<td><input type='checkbox' class='checktr' name='StudentTransportDetails[${i}][IsChecked]' value='true' /></td>`;
             html += `<td><input type="text" class='form-control'  name='StudentTransportDetails[${i}][StudentId]' value="${studentdetails[r]['StudentId']}" readonly/></td>`;
             html += `<td><input type="text" class='form-control'  name='' value="${studentdetails[r]['FirstName']} ${studentdetails[r]['LastName']} " readonly/></td>`;
-            html += `<td><input type='text' class='form-control Refundable' name='' value="${studentdetails[r]['Class']}" readonly/></td>`;
+            html += `<td><input type='text' class='form-control Refundable' name='' value="${studentdetails[r]['ClassName']}" readonly/></td>`;
             html += `<td><input type="text" class='form-control'  name='' value="${pickuppoint[0]['Place']}" readonly/></td>`;
             html += `<td><select class='form-control PlaceTo' name='StudentTransportDetails[${i}][PlaceTo]'>`;
             html += `<option selected='true' disabled='disabled'>--select--</option>`;

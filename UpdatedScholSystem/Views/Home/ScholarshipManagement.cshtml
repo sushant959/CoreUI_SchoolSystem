@@ -1721,10 +1721,10 @@
             success: function (result) {
                 debugger;
                 if (result.length != 0) {
-                    $("#selectSpecialClass").val(result[0]['Class']);
-                    $("#selectSpecialFaculty").val(result[0]['Faculty']);
+                    $("#selectSpecialClass").val(result[0]['ClassName']);
+                    $("#selectSpecialFaculty").val(result[0]['FacultyName']);
                     //$("#selectSpecialBatch").val(result[0]['Batch']);
-                    $("#studenttype").val(result[0]['StudentType']);
+                    $("#studenttype").val(result[0]['Name']);
                     $("#selectSpecialBatch").attr("disabled", false);
                     $("#btnSaveSpecialScholarship").attr("disabled", false);
                 }

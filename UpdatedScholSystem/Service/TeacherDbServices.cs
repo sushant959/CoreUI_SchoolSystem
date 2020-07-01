@@ -316,7 +316,7 @@ namespace UpdatedScholSystem.Service
             return dt;
         }
 
-        public DataTable GetStaffListByDepartment(string batch, string department,int CompanyId)
+        public DataTable GetStaffListByDepartment(string batch, string department, int CompanyId)
         {
             DataTable dt = new DataTable();
             try
@@ -325,7 +325,7 @@ namespace UpdatedScholSystem.Service
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@_Batch", batch);
                 cmd.Parameters.AddWithValue("@_Department", department);
-                cmd.Parameters.AddWithValue("@_CompanyId",CompanyId);
+                cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);
                 adap.SelectCommand = cmd;
                 conn.Open();
                 adap.Fill(dt);
@@ -333,12 +333,14 @@ namespace UpdatedScholSystem.Service
             catch (Exception ex)
 
             {
-                 throw;
+                throw;
             }
             conn.Close();
             conn.Dispose();
             return dt;
+
         }
+       
 
         public DataTable GetStaffListByDesignation(string batch, string department, string designation,int CompanyId)
         {

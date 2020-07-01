@@ -209,7 +209,7 @@
                 var nowDate = now.toISOString().split('T')[0];
                 var studentname = [info[0]["FirstName"], ' ', info[0]["LastName"]].join('');
                 $("#name").html(studentname);
-                $("#class").html(info[0]['Class']);
+                $("#class").html(info[0]['ClassName']);
                 $("#studentid").html(info[0]['StudentId']);
                 $("#month").html(convertMonth(details[0]["Month"]));
                 $("#date").html(nowDate);
