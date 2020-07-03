@@ -258,9 +258,24 @@ namespace UpdatedScholSystem.Service
                 {
                     
                     DataTable dt = new DataTable();
-                    if (fieldName == "Batch")
+                    if (fieldName == "SessionId")
                     {
-                        MySqlCommand cmd = new MySqlCommand($"select {fieldName} , count(*) as count from tblstudentinfo group by { fieldName},IsDeleted,Status,CompanyId having IsDeleted=0 and Status='Active' and CompanyId='"+CompanyId+"' ", conn);
+                        MySqlCommand cmd = new MySqlCommand($"select CONCAT(ebmasterdb.sessions.SessionFrom ,'-',ebmasterdb.sessions.SessionTo) AS Batch  , count(*) as count from ebmasterdb.studentinfoes" +
+                              $" inner join ebmasterdb.currenteducations on ebmasterdb.currenteducations.CurrentEduId = ebmasterdb.studentinfoes.StudentId " +
+                             $" inner join ebmasterdb.sessions on ebmasterdb.currenteducations.SessionId = ebmasterdb.sessions.SessionId " +
+                            $" group by ebmasterdb.sessions.SessionId,ebmasterdb.studentinfoes.Status,ebmasterdb.studentinfoes.CompanyId having ebmasterdb.studentinfoes.Status='Active' and ebmasterdb.studentinfoes.CompanyId='" +CompanyId+"' ", conn);
+                        adap.SelectCommand = cmd;
+                        conn.Open();
+                        adap.Fill(dt);
+                        lst.Add(dt);
+                        conn.Close();
+                    }
+                    else if(fieldName == "ClassId")
+                    {
+                        MySqlCommand cmd = new MySqlCommand($"select ebmasterdb.classes.ClassName , count(*) as count from ebmasterdb.currenteducations" +
+                            $" inner join ebmasterdb.studentinfoes on ebmasterdb.currenteducations.CurrentEduId = ebmasterdb.studentinfoes.StudentId " +
+                             $" inner join ebmasterdb.classes on ebmasterdb.currenteducations.ClassId = ebmasterdb.classes.ClassId " +
+                            $"group by ebmasterdb.classes.ClassName,ebmasterdb.studentinfoes.Status,ebmasterdb.studentinfoes.CompanyId having ebmasterdb.studentinfoes.Status='Active' and ebmasterdb.studentinfoes.CompanyId='" +CompanyId+"' ", conn);
                         adap.SelectCommand = cmd;
                         conn.Open();
                         adap.Fill(dt);
@@ -269,7 +284,10 @@ namespace UpdatedScholSystem.Service
                     }
                     else
                     {
-                        MySqlCommand cmd = new MySqlCommand($"select {fieldName} , count(*) as count from tblcurrenteducation inner join tblstudentinfo on tblcurrenteducation.StudentId = tblstudentInfo.StudentId group by { fieldName},tblstudentinfo.IsDeleted,Status,tblstudentinfo.CompanyId having tblstudentinfo.IsDeleted=0 and Status='Active' and tblstudentinfo.CompanyId='"+CompanyId+"' ", conn);
+                        MySqlCommand cmd = new MySqlCommand($"select ebmasterdb.faculties.FacultyName , count(*) as count from ebmasterdb.currenteducations" +
+                           $" inner join ebmasterdb.studentinfoes on ebmasterdb.currenteducations.CurrentEduId = ebmasterdb.studentinfoes.StudentId " +
+                            $" inner join ebmasterdb.faculties on ebmasterdb.currenteducations.FacultyId = ebmasterdb.faculties.FacultyId " +
+                           $"group by ebmasterdb.faculties.FacultyName,ebmasterdb.studentinfoes.Status,ebmasterdb.studentinfoes.CompanyId having ebmasterdb.studentinfoes.Status='Active' and ebmasterdb.studentinfoes.CompanyId='" + CompanyId + "' ", conn);
                         adap.SelectCommand = cmd;
                         conn.Open();
                         adap.Fill(dt);

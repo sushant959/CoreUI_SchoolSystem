@@ -13,7 +13,8 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using NepaliDateConverter;
 using System.Web.Http.Cors;
-
+using System.ComponentModel;
+using System.Reflection;
 
 namespace UpdatedScholSystem.Controllers
 {
@@ -466,7 +467,41 @@ namespace UpdatedScholSystem.Controllers
 
                 var batch = activeBatch.Rows[0]["SessionFrom"] + "-" + activeBatch.Rows[0]["SessionTo"];
 
-                var details = DueDbService.Instance.GetAllDueDetails(batch,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Batch") == batch && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               CompanyId = gs.Key.company,
+                               Batch = gs.Key.batch,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable details = ToDataTable(res);
 
                 for (int i = 0; i < details.Rows.Count; i++)
                 {
@@ -2222,12 +2257,10 @@ namespace UpdatedScholSystem.Controllers
             {
 
                 var classlist = MasterDbAccess.DbService.GetData("select ClassName from classes where Company_ID='"+obj.CompanyId+"'", null);
-                for(int p =0;p <classlist.Rows.Count;p++)
+                for(int p =0;p < classlist.Rows.Count;p++)
                 {
-                      var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + classlist.Rows[p]["ClassName"] + "' and Company_ID = '" + obj.CompanyId + "'", null);
-                    var session = MasterDbAccess.DbService.GetData("select SessionId from sessions where SessionFrom = '" + obj.Batch.Substring(0, 4) + "' and CompanyId = '" + obj.CompanyId + "'", null);
-
-                    studentList = BillingDbServices.Instance.GetAllStudentId(Convert.ToInt32(session.Rows[0]["SessionId"]), Convert.ToInt32(classes.Rows[0]["ClassId"].ToString()),obj.CompanyId);
+                      
+                    studentList = BillingDbServices.Instance.GetAllStudentId(obj.Batch.Substring(0,4),classlist.Rows[p]["ClassName"].ToString(),obj.CompanyId);
 
                     for (int m = 0; m < studentList.Rows.Count; m++)
                     {
@@ -2956,7 +2989,7 @@ namespace UpdatedScholSystem.Controllers
                 {
                     var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + e + "' and Company_ID = '" + obj.CompanyId + "'", null);
 
-                    studentList = BillingDbServices.Instance.GetAllStudentId(Convert.ToInt32(session.Rows[0]["SessionId"]),Convert.ToInt32(classes.Rows[0]["ClassId"]),obj.CompanyId);
+                    studentList = BillingDbServices.Instance.GetAllStudentId(obj.Batch.Substring(0,4),e,obj.CompanyId);
 
                     for (int m = 0; m < studentList.Rows.Count; m++)
                     {
@@ -4428,7 +4461,7 @@ namespace UpdatedScholSystem.Controllers
                 var studentlist = DueDbService.Instance.TotalDue();
                 var result = (from p in studentlist.AsEnumerable()
                               where p.Field<string>("StudentId") == StudentId && p.Field<int>("CompanyId") == CompanyId
-                              orderby p.Field<string>("Class")
+                             
                               group p by new
                               {
 
@@ -4449,10 +4482,13 @@ namespace UpdatedScholSystem.Controllers
                                   Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
 
 
-                              }).ToList();
+                              } into selection
+                              orderby selection.Class
+                              select selection
+                              
+                              ).ToList();
 
                 
-
                 return Ok(result);
             }
             if (Batch == "" && Class == "")
@@ -4460,7 +4496,7 @@ namespace UpdatedScholSystem.Controllers
                 var studentlist = DueDbService.Instance.TotalDue();
                 var result = (from p in studentlist.AsEnumerable()
                               where p.Field<int>("CompanyId") == CompanyId
-                              orderby p.Field<string>("Class")
+                              
                               group p by new
                               {
 
@@ -4481,9 +4517,12 @@ namespace UpdatedScholSystem.Controllers
                                   Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
 
 
-                              }).ToList();
+                              } into selection
+                               orderby selection.Class
+                              select selection
+                              ).ToList();
 
-
+                
 
                 return Ok(result);
             }
@@ -4492,7 +4531,7 @@ namespace UpdatedScholSystem.Controllers
                 var studentlist = DueDbService.Instance.TotalDue();
                 var result = (from p in studentlist.AsEnumerable()
                               where p.Field<string>("Batch") == Batch && p.Field<int>("CompanyId") == CompanyId
-                              orderby p.Field<string>("Class")
+                             
                               group p by new
                               {
 
@@ -4513,7 +4552,10 @@ namespace UpdatedScholSystem.Controllers
                                   Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
 
 
-                              }).ToList();
+                              } into selection
+                              orderby selection.Class
+                              select selection
+                              ).ToList();
 
 
 
@@ -6428,7 +6470,7 @@ namespace UpdatedScholSystem.Controllers
         }
 
         [Route("SearchBillingDetails"), HttpGet]
-        public IHttpActionResult SearchBillingDetails() //from here 
+        public IHttpActionResult SearchBillingDetails() 
         {
             var data = HttpContext.Current.Request;
             var Batch = data["Batch"];
@@ -6440,7 +6482,32 @@ namespace UpdatedScholSystem.Controllers
             var result = BillingDbServices.Instance.GetSearchedBilling(Batch, Class, Month, Status, StudentId,CompanyId);
             return Ok(result);
         }
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
 
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
+        }
         [Route("SearchDueReport"), HttpGet]
         public IHttpActionResult SearchDueReport()
         {
@@ -6452,7 +6519,37 @@ namespace UpdatedScholSystem.Controllers
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
             if(StudentId != "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByStudentId(StudentId,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                              where p.Field<string>("StudentId") == StudentId && p.Field<int>("CompanyId") == CompanyId
+                             
+                              group p by new
+                              {
+
+                                  ID = p.Field<string>("StudentId"),
+                                  firstname = p.Field<string>("FirstName"),
+                                  lastname = p.Field<string>("LastName"),
+                                  batch = p.Field<string>("Batch"),
+                                  classes = p.Field<string>("Class"),
+                                  company = p.Field<int>("CompanyId")
+                              } into gs
+
+                              select new
+                              {
+                                  StudentId = gs.Key.ID,
+                                  FirstName = gs.Key.firstname,
+                                  LastName = gs.Key.lastname,
+                                  Batch = gs.Key.batch,
+                                  Class = gs.Key.classes,
+                                  CompanyId = gs.Key.company,
+                                  Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                              }).ToList();
+
+
+                DataTable result = ToDataTable(res);
+               
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     var info = DueDbService.Instance.GetPartialDueByStudentId(result.Rows[i]["StudentId"].ToString(), result.Rows[i]["Batch"].ToString(),CompanyId);
@@ -6485,7 +6582,40 @@ namespace UpdatedScholSystem.Controllers
 
             else if (Class == "" && Month == "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByBatch(Batch,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Batch") == Batch && p.Field<int>("CompanyId") == CompanyId
+                           
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+                           
+                           ).ToList();
+                           
+
+
+
+                DataTable result = ToDataTable(res);
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     var info = DueDbService.Instance.GetPartialDueByStudentId(result.Rows[i]["StudentId"].ToString(), result.Rows[i]["Batch"].ToString(),CompanyId);
@@ -6517,7 +6647,43 @@ namespace UpdatedScholSystem.Controllers
             }
             else if(Batch =="" && Class =="")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByMonth(Month,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Month") == Month && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               month = p .Field<string>("Month"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Month = gs.Key.month,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
+
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     if (Convert.ToInt32(result.Rows[i]["Due"]) != 0)
@@ -6556,7 +6722,43 @@ namespace UpdatedScholSystem.Controllers
             }
             else if (Batch == "" && Month == "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByClass(Class,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Class") == Class && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               classes = p.Field<string>("Class"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Class = gs.Key.classes,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
+
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     var info = DueDbService.Instance.GetPartialDueByStudentId(result.Rows[i]["StudentId"].ToString(), result.Rows[i]["Batch"].ToString(),CompanyId);
@@ -6588,7 +6790,43 @@ namespace UpdatedScholSystem.Controllers
             }
             else if (Month == "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByBatchClass(Batch,Class,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Batch") == Batch && p.Field<string>("Class") == Class && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               classes = p.Field<string>("Class"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Class = gs.Key.classes,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
+
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     var info = DueDbService.Instance.GetPartialDueByStudentId(result.Rows[i]["StudentId"].ToString(), result.Rows[i]["Batch"].ToString(),CompanyId);
@@ -6620,7 +6858,44 @@ namespace UpdatedScholSystem.Controllers
             }
             else if (Class == "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByBatchMonth(Batch, Month,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Batch") == Batch && p.Field<string>("Month") == Month && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               classes = p.Field<string>("Class"),
+                               month = p.Field<string>("Month"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Month = gs.Key.month,
+                               Class = gs.Key.classes,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     if (Convert.ToInt32(result.Rows[i]["Due"]) != 0)
@@ -6660,7 +6935,44 @@ namespace UpdatedScholSystem.Controllers
 
             else if (Batch == "")
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByClassMonth(Class, Month,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Month") == Month && p.Field<string>("Class") == Class && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               classes = p.Field<string>("Class"),
+                               month = p.Field<string>("Month"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Class = gs.Key.classes,
+                               Month = gs.Key.month,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     if (Convert.ToInt32(result.Rows[i]["Due"]) != 0)
@@ -6699,7 +7011,44 @@ namespace UpdatedScholSystem.Controllers
             }
             else
             {
-                var result = DueDbService.Instance.GetSearchedDueReportByBatchClassMonth(Batch,Class, Month,CompanyId);
+                var studentlist = DueDbService.Instance.TotalDue();
+                var res = (from p in studentlist.AsEnumerable()
+                           where p.Field<string>("Batch") == Batch && p.Field<string>("Class") == Class && p.Field<string>("Month") == Month && p.Field<int>("CompanyId") == CompanyId
+
+                           group p by new
+                           {
+
+                               ID = p.Field<string>("StudentId"),
+                               firstname = p.Field<string>("FirstName"),
+                               lastname = p.Field<string>("LastName"),
+                               batch = p.Field<string>("Batch"),
+                               classes = p.Field<string>("Class"),
+                               month = p.Field<string>("Month"),
+                               company = p.Field<int>("CompanyId")
+                           } into gs
+
+                           select new
+                           {
+                               StudentId = gs.Key.ID,
+                               FirstName = gs.Key.firstname,
+                               LastName = gs.Key.lastname,
+                               Batch = gs.Key.batch,
+                               Class = gs.Key.classes,
+                               Month = gs.Key.month,
+                               Due = gs.Sum((s) => Int32.Parse(s["due"].ToString())),
+
+
+                           } into selection
+
+                           orderby selection.Due descending
+                           select selection
+
+                           ).ToList();
+
+
+
+
+                DataTable result = ToDataTable(res);
                 for (int i = 0; i < result.Rows.Count; i++)
                 {
                     if (Convert.ToInt32(result.Rows[i]["Due"]) != 0)
@@ -6831,13 +7180,13 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            List<DataTable> aggTotal = BaseDbServices.Instance.GetAggregateTotal(CompanyId,"Class", "Faculty", "Batch");
+            List<DataTable> aggTotal = BaseDbServices.Instance.GetAggregateTotal(CompanyId,"SessionId","ClassId", "FacultyId");
             List<DataTable> aggBillingSum = new List<DataTable>();
             List<DataTable> aggReceiptSum = new List<DataTable>();
             
-            var total = BaseDbServices.Instance.GetData($"SELECT COUNT(*) AS total FROM tblstudentinfo where IsDeleted=0 and Status='Active' and CompanyId='"+CompanyId+"'");
-            var male = BaseDbServices.Instance.GetData($"select count(*) as total from tblstudentinfo group by Gender,IsDeleted,Status,CompanyId having Gender='Male' and IsDeleted=0 and Status='Active' and CompanyId='" + CompanyId + "'");
-            var female = BaseDbServices.Instance.GetData($"select count(*) as total from tblstudentinfo group by Gender,IsDeleted,Status,CompanyId having Gender='Female' and IsDeleted=0 and Status='Active' and CompanyId='" + CompanyId + "'");
+            var total = BaseDbServices.Instance.GetData($"SELECT COUNT(*) AS total FROM ebmasterdb.studentinfoes where Status='Active' and CompanyId='" +CompanyId+"'");
+            var male = BaseDbServices.Instance.GetData($"select count(*) as total from ebmasterdb.studentinfoes group by Gender,Status,CompanyId having Gender='Male' and Status='Active' and CompanyId='" + CompanyId + "'");
+            var female = BaseDbServices.Instance.GetData($"select count(*) as total from ebmasterdb.studentinfoes group by Gender,Status,CompanyId having Gender='Female' and Status='Active' and CompanyId='" + CompanyId + "'");
             //var billingSum = BaseDbServices.Instance.GetBillingSum();
             //var receiptSum = BaseDbServices.Instance.GetReceiptSum();
 

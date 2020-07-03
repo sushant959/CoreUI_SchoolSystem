@@ -386,7 +386,7 @@ namespace UpdatedScholSystem.Service
             return dt;
         }
 
-        public DataTable GetAllStudentId(int Batch, int Class,int CompanyId)
+        public DataTable GetAllStudentId(string Batch, string Class,int CompanyId)
         {
 
             DataTable dt = new DataTable();

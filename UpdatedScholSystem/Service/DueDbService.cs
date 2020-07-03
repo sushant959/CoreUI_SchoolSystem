@@ -347,7 +347,7 @@ namespace UpdatedScholSystem.Service
             DataTable dt = new DataTable();
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getsearchedduebystudentid", conn);
+                MySqlCommand cmd = new MySqlCommand("_totaldue", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@_StudentId", StudentId);
                 cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);
