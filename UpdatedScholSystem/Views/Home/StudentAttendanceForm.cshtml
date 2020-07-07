@@ -178,8 +178,8 @@
                     html += `<td><input type="text" class='form-control'  name='Attendance[${i}][StudentId]' value="${result[r]['StudentId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control Amount' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value="${result[r]['Class']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value="${result[r]['Section']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value="${result[r]['ClassName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value="${result[r]['SectionName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance']=="P"?"selected":""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
@@ -222,8 +222,8 @@
                     html += `<td><input type="text" class='form-control'  name='Attendance[${i}][StudentId]' value="${result[r]['StudentId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control Amount' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['Class']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['Section']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['ClassName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['SectionName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
@@ -267,8 +267,8 @@
                     html += `<td><input type="text" class='form-control'  name='Attendance[${i}][StudentId]' value="${result[r]['StudentId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control Amount' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['Class']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['Section']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['ClassName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control Refundable' name='' value=" ${result[r]['SectionName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>

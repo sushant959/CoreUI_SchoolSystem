@@ -1258,8 +1258,8 @@
                     var studentname = [result[0]["FirstName"], ' ', result[0]["LastName"]].join('');
                     $("#receiptStudentName").val(studentname);
                     $("#receiptBatch").val(result[0]["Batch"]);
-                    $("#receiptClass").val(result[0]["Class"]);
-                    $("#receiptFaculty").val(result[0]["Faculty"]);
+                    $("#receiptClass").val(result[0]["ClassName"]);
+                    $("#receiptFaculty").val(result[0]["FacultyName"]);
                     $("#receiptMonth").val(convertMonth(result[0]["Month"]));
                     $("#receiptTotalFee").val(result[0]["Total"]);
                     var mn = result[0]["Month"];

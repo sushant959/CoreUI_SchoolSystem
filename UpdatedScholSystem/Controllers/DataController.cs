@@ -674,7 +674,7 @@ namespace UpdatedScholSystem.Controllers
         {
             var data = HttpContext.Current.Request;
             var companyId = data["CompanyId"];
-            var Country = MasterDbAccess.DbService.GetData("Select * from tblcountrydetails where CompanyId='"+ companyId + "'", null);
+            var Country = MasterDbAccess.DbService.GetData("Select * from _settings where ebmasterdb._settings.Key ='Country' and  Company_ID ='" + companyId + "'", null);
             return Ok(Country);
         }
 
@@ -703,8 +703,8 @@ namespace UpdatedScholSystem.Controllers
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
             var Scholarship = new DataTable();
             var StudentType = new DataTable();
-            Scholarship = BaseDbServices.Instance.GetData("Select ScholarshipName from tblscholarshipname where CompanyId='"+ CompanyId + "'", null);
-            StudentType = BaseDbServices.Instance.GetData("Select StudentTypeName from tblstudenttype where CompanyId='" + CompanyId + "'", null);
+            Scholarship = MasterDbAccess.DbService.GetData("Select Name as ScholarshipName from scholarshipnames where CompanyId='"+ CompanyId + "'", null);
+            StudentType = MasterDbAccess.DbService.GetData("Select Name as StudentTypeName from studenttypes where CompanyId='" + CompanyId + "'", null);
             List<DataTable> lst = new List<DataTable>
             {
                 Scholarship,
@@ -1114,7 +1114,7 @@ namespace UpdatedScholSystem.Controllers
                                     foreach(var n in obj.Class)
                                     {
                                         var facultyId= MasterDbAccess.DbService.GetData("select Faculty_ID from classes where ClassName='" + n + "' and Company_ID=@Companyid", Info);
-                                    var faculty= MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId='" + facultyId.Rows[0]["FacultyId"] + "' and CompanyId=@Companyid", Info);
+                                    var faculty= MasterDbAccess.DbService.GetData("select FacultyName from faculties where FacultyId='" + facultyId.Rows[0]["Faculty_ID"] + "' and CompanyId=@Companyid", Info);
                                     BaseDbServices.Instance.RunQuery("delete tbldayoffdetails from tbldayoffdetails " +
                                             " inner join tbldayoff on tbldayoffdetails.DayOffId=tbldayoff.DayOffId " +
                                             " where Department='Student' and Faculty='" + faculty.Rows[0]["FacultyName"].ToString() + "' " +
@@ -1476,11 +1476,11 @@ namespace UpdatedScholSystem.Controllers
                 List<MySqlParameter> Info = new List<MySqlParameter>()
                     {
                         new MySqlParameter("@batch",session.Rows[0]["SessionId"]),
-                        new MySqlParameter("@faculty",faculty.Rows[0]["FaculyId"]),
+                        new MySqlParameter("@faculty",faculty.Rows[0]["FacultyId"]),
                         new MySqlParameter("@class",classes.Rows[0]["ClassId"]),
                          new MySqlParameter("@CompanyId",obj.CompanyId)
                     };
-                studentlist = BaseDbServices.Instance.GetData("select studentinfoes.StudentId from studentinfoes" +
+                studentlist = MasterDbAccess.DbService.GetData("select studentinfoes.StudentId from studentinfoes" +
                     " inner join currenteducations on studentinfoes.StudentId=currenteducations.CurrentEduId" +
                     " where studentinfoes.Status='Active'" +
                     " and currenteducations.ClassId=@class and studentinfoes.CompanyId=@CompanyId", Info);
@@ -1495,7 +1495,7 @@ namespace UpdatedScholSystem.Controllers
                         new MySqlParameter("@section",section.Rows[0]["SectionId"]),
                         new MySqlParameter("@CompanyId",obj.CompanyId)
                     };
-                studentlist = BaseDbServices.Instance.GetData("select studentinfoes.StudentId from studentinfoes" +
+                studentlist = MasterDbAccess.DbService.GetData("select studentinfoes.StudentId from studentinfoes" +
                     " inner join currenteducations on studentinfoes.StudentId=currenteducations.CurrentEduId" +
                     " where studentinfoes.Status='Active'" +
                     " and currenteducations.ClassId=@class and currenteducations.SectionId=@section and studentinfoes.CompanyId=@CompanyId ", Info);
@@ -1644,7 +1644,8 @@ namespace UpdatedScholSystem.Controllers
             {
                 new MySqlParameter("@Country", name)
             };
-            var details = BaseDbServices.Instance.GetData("Select StateName from tblstatedetails where CountryName=@Country and CompanyId='" + CompanyId + "'", Country);
+            var countryId = MasterDbAccess.DbService.GetData("select ID from _settings where ebmasterdb._settings.Key='Country' and Value=@Country", Country);
+            var details = MasterDbAccess.DbService.GetData("Select * from _province where Country_ID='" + countryId.Rows[0]["ID"] +"'", Country);
             return Ok(details);
         }
 
@@ -6278,7 +6279,7 @@ namespace UpdatedScholSystem.Controllers
                     }
                     for (int j = 0; j < presentAttendance.Rows.Count; j++)
                     {
-                        var holiday = StudentDBServices.Instance.GetTotalHolidays(batch, presentAttendance.Rows[j]["Class"].ToString(), date, nepaliDate,CompanyId);
+                        var holiday = StudentDBServices.Instance.GetTotalHolidays(batch, presentAttendance.Rows[j]["ClassName"].ToString(), date, nepaliDate,CompanyId);
                         DateTime d1 = Convert.ToDateTime(date);
                         DateTime d2 = Convert.ToDateTime(nepaliDate);
                         TimeSpan span = d2 - d1;
@@ -6350,7 +6351,7 @@ namespace UpdatedScholSystem.Controllers
             }
             for(int j =0; j <presentAttendance.Rows.Count;j++)
             {
-                var holiday = StudentDBServices.Instance.GetTotalHolidays(Batch, presentAttendance.Rows[j]["Class"].ToString(), DateFrom, DateTo,CompanyId);
+                var holiday = StudentDBServices.Instance.GetTotalHolidays(Batch, presentAttendance.Rows[j]["ClassName"].ToString(), DateFrom, DateTo,CompanyId);
                     DateTime d1 = Convert.ToDateTime(DateFrom);
                     DateTime d2 = Convert.ToDateTime(DateTo);
                     TimeSpan span = d2 - d1;

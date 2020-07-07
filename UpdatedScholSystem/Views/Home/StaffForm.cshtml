@@ -531,7 +531,37 @@
                                     })
                                     $('[name="' + d + '"]').val(teacherInfo[d]);
                                 }
-                                else {
+                                else{
+
+                                }
+                            }
+                                else if (d == "Batch") {
+                                if (teacherInfo[d] != null) {
+                                    $.ajax({
+                                        url: "/api/GetClassBatchFaculty",
+                                        method: "GET",
+                                        data: {
+                                            CompanyId:@Session["CompanyId"],
+                                        },
+                                        dataType: "json",
+                                        success: function (result) {
+                                            debugger;
+                                            var batchdetails = result[1];
+
+                                            if (batchdetails != undefined) {
+                                                var v = "";
+                                                for (var i in batchdetails) {
+                                                    v += "<option value='" + batchDetails[i]['SessionFrom'] + "-" + batchDetails[i]['SessionTo'] + "'>" + batchDetails[i]['SessionFrom'] + " - " + batchDetails[i]['SessionTo'] + "</option>";
+
+                                                }
+                                                $(".batch").html(v);
+                                            }
+
+                                        }
+                                    })
+                                    $('[name="' + d + '"]').val(teacherInfo[d]);
+                                }
+                                else{
 
                                 }
                             }
@@ -839,7 +869,7 @@
                     debugger;
                     var v = "<option>--Select--</option>";
                     for (var i in result) {
-                        v += "<option value =" + result[i]['CountryName'] + ">" + result[i]['CountryName'] + "</option>";
+                        v += "<option value =" + result[i]['Value'] + ">" + result[i]['Value'] + "</option>";
                     }
                     $(".country").html(v);
                 }
@@ -992,7 +1022,7 @@
                 debugger;
                 var v = "<option disabled>--Select--</option>";
                 for (var d in result) {
-                    v += "<option value=" + result[d]['StateName'] + ">" + result[d]['StateName'] + "</option>";
+                    v += '<option value ="' + result[d]["Name"] + '">' + result[d]["Name"] + '</option>';
                 }
                 target.html(v);
             },
