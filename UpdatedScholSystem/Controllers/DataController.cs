@@ -820,7 +820,7 @@ namespace UpdatedScholSystem.Controllers
 
         [Route("GetClassBatchFaculty"), HttpGet, AllowAnonymous]
         //[EnableCors("*", "*", "*")]
-        public IHttpActionResult GetClassBatchFaculty()
+        public IHttpActionResult GetClassBatchFaculty(int companyId)
         {
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
@@ -3355,7 +3355,7 @@ namespace UpdatedScholSystem.Controllers
                     var classes = MasterDbAccess.DbService.GetData("select ClassId from classes where ClassName = '" + w + "' and Company_ID = '" + obj.CompanyId + "'", null);
                     foreach (var e in obj.Section)
                     {
-                        var section = MasterDbAccess.DbService.GetData("select SectionId from classes where SectionName = '" + e + "' and Company_ID = '" + obj.CompanyId + "'", null);
+                        var section = MasterDbAccess.DbService.GetData("select SectionId from sections where SectionName = '" + e + "' and CompanyId = '" + obj.CompanyId + "'", null);
                         studentList = BillingDbServices.Instance.GetStudentList(Convert.ToInt32(session.Rows[0]["SessionId"]),Convert.ToInt32(classes.Rows[0]["ClassId"]),Convert.ToInt32(section.Rows[0]["SectionId"]),obj.CompanyId);
 
                         for (int m = 0; m < studentList.Rows.Count; m++)
@@ -4216,7 +4216,7 @@ namespace UpdatedScholSystem.Controllers
 
         [Route("GetStudentClass"),HttpGet]
         public IHttpActionResult GetStudentClass()
-        {
+      {
             var data = HttpContext.Current.Request;
             var StudentId = data["StudentId"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
