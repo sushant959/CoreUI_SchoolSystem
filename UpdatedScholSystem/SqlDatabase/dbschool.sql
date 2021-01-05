@@ -2,8 +2,7 @@
 SQLyog Enterprise - MySQL GUI v8.14 
 MySQL - 5.7.21-log : Database - test
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -1086,19 +1085,13 @@ CREATE TABLE `tblusertype` (
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `checkcompanystatus`(
-
-    IN _Email varchar(50)
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `checkcompanystatus`(
+    IN _Email varchar(50)
     )
-BEGIN
-
-	select tblcompanydetails.`Status` from tblcompanydetails
-
-	inner join tbluserdetail on tbluserdetail.`CompanyId`=tblcompanydetails.`CompanyId`
-
-	where tbluserdetail.`Email`=_Email;
-
+BEGIN
+	select tblcompanydetails.`Status` from tblcompanydetails
+	inner join tbluserdetail on tbluserdetail.`CompanyId`=tblcompanydetails.`CompanyId`
+	where tbluserdetail.`Email`=_Email;
 	END */$$
 DELIMITER ;
 
@@ -1108,33 +1101,20 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `edit_batch`(
-
-    IN _BatchId bigint,
-
-    IN _FromYear Int,
-
-    IN _ToYear int,
-
-    IN _CompanyId int
-
-    
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `edit_batch`(
+    IN _BatchId bigint,
+    IN _FromYear Int,
+    IN _ToYear int,
+    IN _CompanyId int
+    
     )
-BEGIN
-
-	Update tblbatchdetails
-
-	set
-
-	FromYear=_FromYear,
-
-	ToYear	=_ToYear
-
-	where BatchId=_BatchId and CompanyId=_CompanyId;
-
-
-
+BEGIN
+	Update tblbatchdetails
+	set
+	FromYear=_FromYear,
+	ToYear	=_ToYear
+	where BatchId=_BatchId and CompanyId=_CompanyId;
+
 	END */$$
 DELIMITER ;
 
@@ -1144,37 +1124,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `edit_studentTransport`(
-
-    IN _Id int,
-
-    IN _Batch varchar(50),
-
-    in _PlaceTo varchar(50),
-
-    in _Type varchar(50),
-
-    in _Amount int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `edit_studentTransport`(
+    IN _Id int,
+    IN _Batch varchar(50),
+    in _PlaceTo varchar(50),
+    in _Type varchar(50),
+    in _Amount int,
+    in _CompanyId int
     )
-BEGIN
-
-	update tblstudenttransport
-
-	set
-
-	Batch=_Batch,
-
-	PlaceTo=_PlaceTo,
-
-	Type=_Type,
-
-	Amount=_Amount
-
-	where StudentTransportId=_Id and CompanyId=_CompanyId;
-
+BEGIN
+	update tblstudenttransport
+	set
+	Batch=_Batch,
+	PlaceTo=_PlaceTo,
+	Type=_Type,
+	Amount=_Amount
+	where StudentTransportId=_Id and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1184,7 +1149,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getabsentattendance`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getabsentattendance`(
     IN _Batch varchar(50),
     in _Class varchar(50),
     in _Section varchar(50),
@@ -1216,7 +1181,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallabsentattendance`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallabsentattendance`(
     in _Batch varchar(50),
     in _DateFrom varchar(50),
     in _DateTo varchar(50),
@@ -1245,23 +1210,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallbatchclassfee`(In _CompanyId int)
-BEGIN
-
-	Select tblbatchclass.`BatchClassId`,tblbatchclass.`Batch`,tblbatchclass.Class,tblbatchclass.`Faculty`,
-
-	tblbatchclassfee.`FeeStructureName`,tblbatchclassfee.`StudentType`,tblbatchclassfee.`FeeName`,
-
-	tblbatchclassfee.`Amount`,tblbatchclassfee.`Refundable`
-
-	from tblbatchclass
-
-	inner join tblbatchclassfee on tblbatchclass.`BatchClassId`=tblbatchclassfee.`BatchClassId`
-
-	where tblbatchclass.`CompanyId`=_CompanyId;
-
-	
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallbatchclassfee`(In _CompanyId int)
+BEGIN
+	Select tblbatchclass.`BatchClassId`,tblbatchclass.`Batch`,tblbatchclass.Class,tblbatchclass.`Faculty`,
+	tblbatchclassfee.`FeeStructureName`,tblbatchclassfee.`StudentType`,tblbatchclassfee.`FeeName`,
+	tblbatchclassfee.`Amount`,tblbatchclassfee.`Refundable`
+	from tblbatchclass
+	inner join tblbatchclassfee on tblbatchclass.`BatchClassId`=tblbatchclassfee.`BatchClassId`
+	where tblbatchclass.`CompanyId`=_CompanyId;
+	
 	END */$$
 DELIMITER ;
 
@@ -1271,15 +1228,11 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallcompany`()
-BEGIN
-
-	select * from tblcompanydetails
-
-	inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
-
-	where tbluserdetail.`Role`='Admin';
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallcompany`()
+BEGIN
+	select * from tblcompanydetails
+	inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
+	where tbluserdetail.`Role`='Admin';
 	END */$$
 DELIMITER ;
 
@@ -1289,7 +1242,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getalldemobillingdetails`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getalldemobillingdetails`(
 	in _Batch varchar(50),
 	in _Class int,
 	in _Month Varchar(50),
@@ -1328,7 +1281,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallfollowup`(IN _CompanyId int)
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallfollowup`(IN _CompanyId int)
 BEGIN
 	select ebmasterdb.studentinfoes.FirstName,ebmasterdb.studentinfoes.LastName,tblfollowup.*
 	from tblfollowup
@@ -1343,7 +1296,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallpresentattendance`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallpresentattendance`(
     IN _Batch VARCHAR(50),
     IN _DateFrom VARCHAR(50),
     IN _DateTo VARCHAR(50),
@@ -1371,7 +1324,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallreceiptdetails`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallreceiptdetails`(
     IN _Batch varchar(50),
     in _Class varchar(50),
     in _Month varchar(50),
@@ -1394,15 +1347,11 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallscholarshipdetails`(in _CompanyId int)
-BEGIN
-
-	select Distinct ScholarshipName,Batch,Class,Faculty
-
-	from tblscholarshipdetails
-
-	where CompanyId=_CompanyId;
-
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallscholarshipdetails`(in _CompanyId int)
+BEGIN
+	select Distinct ScholarshipName,Batch,Class,Faculty
+	from tblscholarshipdetails
+	where CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1412,7 +1361,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallsearchedextrafee`(
+/*!50003 CREATE DEFINER=`ebpearls`@`%` PROCEDURE `getallsearchedextrafee`(
     IN _Batch VARCHAR(50), 
     IN _Class VARCHAR(50),
     IN _Faculty VARCHAR(50),
@@ -1495,37 +1444,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstaffabsentattendance`(
-
-    in _Batch varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstaffabsentattendance`(
+    in _Batch varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Absent
-
-	from tblteacherinfo
-
-	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
-
-	where tblteacherinfo.`Batch` =_Batch
-
-	And (Date >= _DateFrom and Date <= _DateTo)
-
-	And tblstaffattendance.`Attendance`='A'
-
-	and tblstaffattendance.`CompanyId`=_CompanyId
-
-	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
-
-	order by tblteacherinfo.`Department`;
-
+BEGIN
+	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Absent
+	from tblteacherinfo
+	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
+	where tblteacherinfo.`Batch` =_Batch
+	And (Date >= _DateFrom and Date <= _DateTo)
+	And tblstaffattendance.`Attendance`='A'
+	and tblstaffattendance.`CompanyId`=_CompanyId
+	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
+	order by tblteacherinfo.`Department`;
 	END */$$
 DELIMITER ;
 
@@ -1535,37 +1469,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstaffpresentattendance`(
-
-    IN _Batch VARCHAR(50),
-
-    IN _DateFrom VARCHAR(50),
-
-    IN _DateTo VARCHAR(50),
-
-    IN _CompanyId INT
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstaffpresentattendance`(
+    IN _Batch VARCHAR(50),
+    IN _DateFrom VARCHAR(50),
+    IN _DateTo VARCHAR(50),
+    IN _CompanyId INT
     )
-BEGIN
-
-	SELECT tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,COUNT(tblstaffattendance.`Attendance`) AS Present
-
-	FROM tblteacherinfo
-
-	INNER JOIN tblstaffattendance ON tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
-
-	WHERE tblteacherinfo.`Batch` =_Batch
-
-	AND (DATE >= _DateFrom AND DATE <= _DateTo)
-
-	AND tblstaffattendance.`Attendance`='P'
-
-	AND tblstaffattendance.`CompanyId`=_CompanyId
-
-	GROUP BY tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
-
-	ORDER BY tblteacherinfo.`Department`;
-
+BEGIN
+	SELECT tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,COUNT(tblstaffattendance.`Attendance`) AS Present
+	FROM tblteacherinfo
+	INNER JOIN tblstaffattendance ON tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
+	WHERE tblteacherinfo.`Batch` =_Batch
+	AND (DATE >= _DateFrom AND DATE <= _DateTo)
+	AND tblstaffattendance.`Attendance`='P'
+	AND tblstaffattendance.`CompanyId`=_CompanyId
+	GROUP BY tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
+	ORDER BY tblteacherinfo.`Department`;
 	END */$$
 DELIMITER ;
 
@@ -1575,27 +1494,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudent`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudent`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	Select tblstudentinfo.*,tblcurrenteducation.`Class`,tblcurrenteducation.`Faculty`,tblcurrenteducation.`Section`
-
-	From tblstudentinfo
-
-	inner join tblcurrenteducation on tblstudentinfo.`StudentId`=tblcurrenteducation.`StudentId`
-
-	where tblcurrenteducation.`Batch`=_Batch and tblcurrenteducation.`Class`=_Class and tblstudentinfo.`IsDeleted`=0 and tblcurrenteducation.`IsDeleted`=0 
-
-	and tblstudentinfo.`CompanyId`=_CompanyId and tblcurrenteducation.`CompanyId`=_CompanyId;
-
+BEGIN
+	Select tblstudentinfo.*,tblcurrenteducation.`Class`,tblcurrenteducation.`Faculty`,tblcurrenteducation.`Section`
+	From tblstudentinfo
+	inner join tblcurrenteducation on tblstudentinfo.`StudentId`=tblcurrenteducation.`StudentId`
+	where tblcurrenteducation.`Batch`=_Batch and tblcurrenteducation.`Class`=_Class and tblstudentinfo.`IsDeleted`=0 and tblcurrenteducation.`IsDeleted`=0 
+	and tblstudentinfo.`CompanyId`=_CompanyId and tblcurrenteducation.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1759,16 +1668,11 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistdue`(in _CompanyId int)
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having  _totaldue.CompanyId=_CompanyId
-
-	order by Class;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having  _totaldue.CompanyId=_CompanyId
+	order by Class;
 	END */$$
 DELIMITER ;
 
@@ -1778,23 +1682,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebybatch`(
-
-    in _Batch varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebybatch`(
+    in _Batch varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having _totaldue.`Batch`=_Batch and _totaldue.`CompanyId`=_CompanyId
-
-	order by Class;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having _totaldue.`Batch`=_Batch and _totaldue.`CompanyId`=_CompanyId
+	order by Class;
 	END */$$
 DELIMITER ;
 
@@ -1804,23 +1700,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebybatchclass`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebybatchclass`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having _totaldue.`Batch`=_Batch and _totaldue.`Class`=_Class and _totaldue.`CompanyId`=_CompanyId;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having _totaldue.`Batch`=_Batch and _totaldue.`Class`=_Class and _totaldue.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1830,21 +1718,14 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebyclass`(
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebyclass`(
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having _totaldue.`Class`=_Class and _totaldue.CompanyId=_CompanyId;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having _totaldue.`Class`=_Class and _totaldue.CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1854,21 +1735,14 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebystudentid`(
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallstudentlistduebystudentid`(
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having StudentId=_StudentId and CompanyId=_CompanyId;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having StudentId=_StudentId and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1896,14 +1770,10 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getallteacher`(in _CompanyId int)
-BEGIN
-
-	select TeacherId,FirstName,LastName,Designation,Department,Faculty,Gender,JoiningDate,Status
-
-	from tblteacherinfo 
-
-	where IsDeleted=0 and CompanyId=_CompanyId;
-
+BEGIN
+	select TeacherId,FirstName,LastName,Designation,Department,Faculty,Gender,JoiningDate,Status
+	from tblteacherinfo 
+	where IsDeleted=0 and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -1913,29 +1783,18 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getalltransportbyid`(
-
-     in _Batch varchar(50),
-
-     in _Month varchar(50),
-
-     in _StudentId varchar(50),
-
-     in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getalltransportbyid`(
+     in _Batch varchar(50),
+     in _Month varchar(50),
+     in _StudentId varchar(50),
+     in _CompanyId int
     )
-BEGIN
-
-	select tblbillingdetails.`FeeName`, tblbillingdetails.`FeeStructureName`
-
-	from tblbillingdetails
-
-	inner join tblbilling on tblbillingdetails.`BillingId`=tblbilling.`BillingId`
-
-	where tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month and tblbilling.`StudentId`=_StudentId and tblbillingdetails.`FeeName`='Transport Fee'
-
-	and tblbillingdetails.`CompanyId`=_CompanyId and tblbilling.`CompanyId`=_CompanyId;
-
+BEGIN
+	select tblbillingdetails.`FeeName`, tblbillingdetails.`FeeStructureName`
+	from tblbillingdetails
+	inner join tblbilling on tblbillingdetails.`BillingId`=tblbilling.`BillingId`
+	where tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month and tblbilling.`StudentId`=_StudentId and tblbillingdetails.`FeeName`='Transport Fee'
+	and tblbillingdetails.`CompanyId`=_CompanyId and tblbilling.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2050,14 +1909,10 @@ DELIMITER ;
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getcompanydetailsbyid`(IN _CompanyId int)
-BEGIN
-
-	select * from tblcompanydetails
-
-	inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
-
-	where tblcompanydetails.`CompanyId`=_CompanyId and tbluserdetail.`Role`='Admin';
-
+BEGIN
+	select * from tblcompanydetails
+	inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
+	where tblcompanydetails.`CompanyId`=_CompanyId and tbluserdetail.`Role`='Admin';
 	END */$$
 DELIMITER ;
 
@@ -2090,23 +1945,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getduelist`(
-
-    in _Batch varchar(50),
-
-    IN _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getduelist`(
+    in _Batch varchar(50),
+    IN _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,CompanyId,Batch,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,CompanyId,Batch
-
-	having _totaldue.`Batch`=_Batch and _totaldue.`CompanyId`=_CompanyId
-
-	order by Due desc;
-
+BEGIN
+	select FirstName,LastName,StudentId,CompanyId,Batch,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,CompanyId,Batch
+	having _totaldue.`Batch`=_Batch and _totaldue.`CompanyId`=_CompanyId
+	order by Due desc;
 	END */$$
 DELIMITER ;
 
@@ -2116,29 +1963,18 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getextrafeebyid`(
-
-    in _Batch varchar(50),
-
-    in _Month varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getextrafeebyid`(
+    in _Batch varchar(50),
+    in _Month varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select tblbillingdetails.`FeeName`
-
-	from tblbillingdetails
-
-	inner join tblbilling on tblbillingdetails.`BillingId`=tblbilling.`BillingId`
-
-	where tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month and tblbilling.`StudentId`=_StudentId and tblbillingdetails.`FeeStructureName`='Extra'
-
-	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
-
+BEGIN
+	select tblbillingdetails.`FeeName`
+	from tblbillingdetails
+	inner join tblbilling on tblbillingdetails.`BillingId`=tblbilling.`BillingId`
+	where tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month and tblbilling.`StudentId`=_StudentId and tblbillingdetails.`FeeStructureName`='Extra'
+	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2148,29 +1984,18 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getmonthlyfeebyid`(
-
-    in _Batch varchar(50),
-
-    in _Month varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getmonthlyfeebyid`(
+    in _Batch varchar(50),
+    in _Month varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select tblbillingdetails.FeeStructureName from tblbillingdetails
-
-	inner join tblbilling on tblbillingdetails.`BillingId` = tblbilling.`BillingId`
-
-	where tblbilling.`StudentId` =_StudentId and tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month 
-
-	and tblbillingdetails.`FeeStructureName` != 'Initial' and tblbillingdetails.`FeeStructureName` != 'Yearly'
-
-	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
-
+BEGIN
+	select tblbillingdetails.FeeStructureName from tblbillingdetails
+	inner join tblbilling on tblbillingdetails.`BillingId` = tblbilling.`BillingId`
+	where tblbilling.`StudentId` =_StudentId and tblbilling.`Batch`=_Batch and tblbilling.`Month`=_Month 
+	and tblbillingdetails.`FeeStructureName` != 'Initial' and tblbillingdetails.`FeeStructureName` != 'Yearly'
+	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2284,19 +2109,13 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getprintbillinginfo`(
-
-    in _BillingId int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getprintbillinginfo`(
+    in _BillingId int,
+    in _CompanyId int
     )
-BEGIN
-
-	select * from tblbillingdetails
-
-	where BillingId=_BillingId and Amount !=0 and CompanyId=_CompanyId;
-
+BEGIN
+	select * from tblbillingdetails
+	where BillingId=_BillingId and Amount !=0 and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2306,19 +2125,13 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getprintreceiptinfo`(
-
-    in _ReceiptId int,
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getprintreceiptinfo`(
+    in _ReceiptId int,
+    in _CompanyId int    
     )
-BEGIN
-
-	Select * from tblreceipt
-
-	where ReceiptId=_ReceiptId and CompanyId=_CompanyId;
-
+BEGIN
+	Select * from tblreceipt
+	where ReceiptId=_ReceiptId and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2435,33 +2248,20 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedclassfee`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedclassfee`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Faculty varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	SELECT tblbatchclass.`BatchClassId`,tblbatchclass.`Batch`,tblbatchclass.`Class`,tblbatchclass.`Faculty`,tblbatchclassfee.`StudentType`,
-
-	tblbatchclassfee.`FeeStructureName`,tblbatchclassfee.`FeeName`,tblbatchclassfee.`Amount`,tblbatchclassfee.`Refundable` from tblbatchclass
-
-	inner join tblbatchclassfee on tblbatchclass.`BatchClassId`=tblbatchclassfee.`BatchClassId`
-
-	where (tblbatchclass.`Batch` like concat('%',_Batch,'%') or tblbatchclass.`Batch`='' ) 
-
-	And (tblbatchclass.`Class` like concat('%',_Class,'%') or tblbatchclass.`Class`='' ) 
-
-	and (tblbatchclass.`Faculty` like concat('%',_Faculty,'%') or tblbatchclass.`Faculty`='') 
-
-	and tblbatchclass.`CompanyId`=_CompanyId;
-
+BEGIN
+	SELECT tblbatchclass.`BatchClassId`,tblbatchclass.`Batch`,tblbatchclass.`Class`,tblbatchclass.`Faculty`,tblbatchclassfee.`StudentType`,
+	tblbatchclassfee.`FeeStructureName`,tblbatchclassfee.`FeeName`,tblbatchclassfee.`Amount`,tblbatchclassfee.`Refundable` from tblbatchclass
+	inner join tblbatchclassfee on tblbatchclass.`BatchClassId`=tblbatchclassfee.`BatchClassId`
+	where (tblbatchclass.`Batch` like concat('%',_Batch,'%') or tblbatchclass.`Batch`='' ) 
+	And (tblbatchclass.`Class` like concat('%',_Class,'%') or tblbatchclass.`Class`='' ) 
+	and (tblbatchclass.`Faculty` like concat('%',_Faculty,'%') or tblbatchclass.`Faculty`='') 
+	and tblbatchclass.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2471,37 +2271,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearcheddayoff`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearcheddayoff`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _Faculty varchar(50),
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select * from tbldayoffdetails
-
-	inner join tbldayoff on tbldayoff.`DayOffId` = tbldayoffdetails.`DayOffId`
-
-	where (tbldayoff.`Batch` like  concat('%',_Batch,'%') or tbldayoff.`Batch`='' ) 
-
-	And (tbldayoffdetails.`Department` like CONCAT('%',_Department,'%') or tbldayoffdetails.`Department`='' )
-
-	AND (tbldayoffdetails.`Faculty` like CONCAT('%',_Faculty,'%') or tbldayoffdetails.`Faculty`='' or tbldayoffdetails.`Faculty` Is null)
-
-	AND (tbldayoffdetails.`Class` like Concat('%',_Class,'%') or tbldayoffdetails.`Class`='' or tbldayoffdetails.`Class` Is null)
-
-	AND tbldayoff.`CompanyId`=_CompanyId
-
-	And tbldayoffdetails.`CompanyId`=_CompanyId;
-
+BEGIN
+	select * from tbldayoffdetails
+	inner join tbldayoff on tbldayoff.`DayOffId` = tbldayoffdetails.`DayOffId`
+	where (tbldayoff.`Batch` like  concat('%',_Batch,'%') or tbldayoff.`Batch`='' ) 
+	And (tbldayoffdetails.`Department` like CONCAT('%',_Department,'%') or tbldayoffdetails.`Department`='' )
+	AND (tbldayoffdetails.`Faculty` like CONCAT('%',_Faculty,'%') or tbldayoffdetails.`Faculty`='' or tbldayoffdetails.`Faculty` Is null)
+	AND (tbldayoffdetails.`Class` like Concat('%',_Class,'%') or tbldayoffdetails.`Class`='' or tbldayoffdetails.`Class` Is null)
+	AND tbldayoff.`CompanyId`=_CompanyId
+	And tbldayoffdetails.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2511,23 +2296,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatch`(
-
-    IN _Batch varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatch`(
+    IN _Batch varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,CompanyId
-
-	having Batch=_Batch and CompanyId=_CompanyId
-
-	order by Due DESC;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,CompanyId
+	having Batch=_Batch and CompanyId=_CompanyId
+	order by Due DESC;
 	END */$$
 DELIMITER ;
 
@@ -2537,25 +2314,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchclass`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchclass`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having Batch=_Batch and Class=_Class and CompanyId=_CompanyId
-
-	order by Due desc;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having Batch=_Batch and Class=_Class and CompanyId=_CompanyId
+	order by Due desc;
 	END */$$
 DELIMITER ;
 
@@ -2565,27 +2333,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchclassmonth`(
-
-    in _Class varchar(50),
-
-    in _Month varchar(50),
-
-    in _Batch varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchclassmonth`(
+    in _Class varchar(50),
+    in _Month varchar(50),
+    in _Batch varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
-
-	having Batch=_Batch and Class=_Class and Month=_Month and CompanyId=_CompanyId
-
-	order by Due desc;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
+	having Batch=_Batch and Class=_Class and Month=_Month and CompanyId=_CompanyId
+	order by Due desc;
 	END */$$
 DELIMITER ;
 
@@ -2595,25 +2353,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchmonth`(
-
-    in _Batch varchar(50),
-
-    in _Month varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebybatchmonth`(
+    in _Batch varchar(50),
+    in _Month varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
-
-	having Batch=_Batch and Month=_Month and CompanyId=_CompanyId
-
-	order by Due desc;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
+	having Batch=_Batch and Month=_Month and CompanyId=_CompanyId
+	order by Due desc;
 	END */$$
 DELIMITER ;
 
@@ -2623,23 +2372,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebyclass`(
-
-    in _Class varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebyclass`(
+    in _Class varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having Class=_Class and CompanyId=_CompanyId
-
-	order by Due desc;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having Class=_Class and CompanyId=_CompanyId
+	order by Due desc;
 	END */$$
 DELIMITER ;
 
@@ -2649,25 +2390,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebyclassmonth`(
-
-    in _Class varchar(50),
-
-    in _Month varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebyclassmonth`(
+    in _Class varchar(50),
+    in _Month varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
-
-	having Class=@Class and Month=_Month and CompanyId=_CompanyId
-
-	order by Due DESC;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Month,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,Month,CompanyId
+	having Class=@Class and Month=_Month and CompanyId=_CompanyId
+	order by Due DESC;
 	END */$$
 DELIMITER ;
 
@@ -2677,23 +2409,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebymonth`(
-
-    in _Month varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebymonth`(
+    in _Month varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,Month,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Month,CompanyId
-
-	having Month=_Month and CompanyId=_CompanyId
-
-	order by Due DESC;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,Month,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Month,CompanyId
+	having Month=_Month and CompanyId=_CompanyId
+	order by Due DESC;
 	END */$$
 DELIMITER ;
 
@@ -2703,21 +2427,14 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebystudentid`(
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduebystudentid`(
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select FirstName,LastName,StudentId,Batch,CompanyId,Class,sum(due) as Due from _totaldue
-
-	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
-
-	having StudentId=_StudentId and CompanyId=_CompanyId;
-
+BEGIN
+	select FirstName,LastName,StudentId,Batch,CompanyId,Class,sum(due) as Due from _totaldue
+	group by FirstName,LastName,StudentId,Batch,Class,CompanyId
+	having StudentId=_StudentId and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2727,117 +2444,62 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduereport`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Month varchar(50),
-
-    in _StudentId varchar(50)
-
-    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedduereport`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Month varchar(50),
+    in _StudentId varchar(50)
+    
     )
-BEGIN
-
-	if _StudentId ='' then
-
-	set _StudentId=null;
-
-	select tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,sum(tblbillingdetails.`Amount`) as Total ,min(tblreceipt.`DueAmount`) as due from tblbilling
-
-	inner join tblbillingdetails on tblbilling.`BillingId`=tblbillingdetails.`BillingId`
-
-	inner join tblstudentinfo on tblstudentinfo.`StudentId`=tblbilling.`StudentId`
-
-	inner join tblreceipt on tblbilling.`BillingId`=tblreceipt.`BillingId`
-
-	inner join tblcurrenteducation on tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
-
-	where (tblbilling.`Batch` like concat('%',_Batch,'%') or tblBilling.`Batch`='' ) 
-
-	And (tblcurrenteducation.`Class` like concat('%',_Class,'%') or tblcurrenteducation.`Class`='' ) 
-
-	And (tblbilling.`Month` like concat('%',_Month,'%') or tblbilling.`Month`='' ) 
-
-	And (tblbilling.`StudentId` is null or tblbilling.`StudentId` like concat('%',_StudentId,'%'))
-
-	group by tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`
-
-	union
-
-	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,Sum(tblbillingdetails.`DueAmount`) AS due FROM tblbilling
-
-	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
-
-	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
-
-	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
-
-	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
-
-	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
-
-	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
-
-	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
-
-	AND (tblbilling.`StudentId` IS NULL OR tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
-
-	and tblbilling.`IsCreated`=0 
-
-	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`;
-
-	else
-
-	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,MIN(tblreceipt.`DueAmount`) AS due FROM tblbilling
-
-	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
-
-	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
-
-	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
-
-	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
-
-	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
-
-	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
-
-	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
-
-	AND (tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
-
-	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`
-
-	UNION
-
-	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,SUM(tblbillingdetails.`DueAmount`) AS due FROM tblbilling
-
-	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
-
-	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
-
-	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
-
-	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
-
-	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
-
-	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
-
-	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
-
-	AND (tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
-
-	AND tblbilling.`IsCreated`=0 
-
-	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`;
-
-	end if;
-
+BEGIN
+	if _StudentId ='' then
+	set _StudentId=null;
+	select tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,sum(tblbillingdetails.`Amount`) as Total ,min(tblreceipt.`DueAmount`) as due from tblbilling
+	inner join tblbillingdetails on tblbilling.`BillingId`=tblbillingdetails.`BillingId`
+	inner join tblstudentinfo on tblstudentinfo.`StudentId`=tblbilling.`StudentId`
+	inner join tblreceipt on tblbilling.`BillingId`=tblreceipt.`BillingId`
+	inner join tblcurrenteducation on tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
+	where (tblbilling.`Batch` like concat('%',_Batch,'%') or tblBilling.`Batch`='' ) 
+	And (tblcurrenteducation.`Class` like concat('%',_Class,'%') or tblcurrenteducation.`Class`='' ) 
+	And (tblbilling.`Month` like concat('%',_Month,'%') or tblbilling.`Month`='' ) 
+	And (tblbilling.`StudentId` is null or tblbilling.`StudentId` like concat('%',_StudentId,'%'))
+	group by tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`
+	union
+	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,Sum(tblbillingdetails.`DueAmount`) AS due FROM tblbilling
+	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
+	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
+	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
+	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
+	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
+	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
+	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
+	AND (tblbilling.`StudentId` IS NULL OR tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
+	and tblbilling.`IsCreated`=0 
+	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`;
+	else
+	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,MIN(tblreceipt.`DueAmount`) AS due FROM tblbilling
+	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
+	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
+	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
+	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
+	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
+	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
+	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
+	AND (tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
+	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`
+	UNION
+	SELECT tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`,SUM(tblbillingdetails.`Amount`) AS Total ,SUM(tblbillingdetails.`DueAmount`) AS due FROM tblbilling
+	INNER JOIN tblbillingdetails ON tblbilling.`BillingId`=tblbillingdetails.`BillingId`
+	INNER JOIN tblstudentinfo ON tblstudentinfo.`StudentId`=tblbilling.`StudentId`
+	INNER JOIN tblreceipt ON tblbilling.`BillingId`=tblreceipt.`BillingId`
+	INNER JOIN tblcurrenteducation ON tblcurrenteducation.`StudentId`=tblstudentinfo.`StudentId`
+	WHERE (tblbilling.`Batch` LIKE CONCAT('%',_Batch,'%') OR tblBilling.`Batch`='' ) 
+	AND (tblcurrenteducation.`Class` LIKE CONCAT('%',_Class,'%') OR tblcurrenteducation.`Class`='' ) 
+	AND (tblbilling.`Month` LIKE CONCAT('%',_Month,'%') OR tblbilling.`Month`='' ) 
+	AND (tblbilling.`StudentId` LIKE CONCAT('%',_StudentId,'%'))
+	AND tblbilling.`IsCreated`=0 
+	GROUP BY tblstudentinfo.`FirstName`,tblstudentinfo.`LastName`,tblstudentinfo.`FatherName`,tblstudentinfo.`FatherNumber`,tblstudentinfo.`MotherNumber`,tblbilling.`StudentId`,tblbilling.`BillingId`,tblbilling.`Month`,tblbilling.`Batch`,tblbilling.`Status`;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -2867,27 +2529,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedfee`(
-
-    in _Name varchar(50),
-
-    in _Type varchar(50),
-
-    in _CompanyId int
-
-    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedfee`(
+    in _Name varchar(50),
+    in _Type varchar(50),
+    in _CompanyId int
+    
     )
-BEGIN
-
-	select * from tblfeedetails
-
-	where (FeeStructureName like  concat('%',_Name,'%') or FeeStructureName='' ) 
-
-	And (StudentType like concat(_Type,'%') or StudentType='' ) 
-
-	and CompanyId=_CompanyId;
-
+BEGIN
+	select * from tblfeedetails
+	where (FeeStructureName like  concat('%',_Name,'%') or FeeStructureName='' ) 
+	And (StudentType like concat(_Type,'%') or StudentType='' ) 
+	and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -2967,43 +2619,25 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedstudent`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Section varchar(50),
-
-    in _FirstName varchar(50),
-
-    in _Type varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getsearchedstudent`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Section varchar(50),
+    in _FirstName varchar(50),
+    in _Type varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	Select tblstudentinfo.*,tblcurrenteducation.`Class`,tblcurrenteducation.`Faculty`,tblcurrenteducation.`Section`
-
-	From tblstudentinfo
-
-	inner join tblcurrenteducation on tblstudentinfo.`StudentId`=tblcurrenteducation.`StudentId`
-
-	where (tblcurrenteducation.`Batch` like  concat('%',_Batch,'%') or tblcurrenteducation.`Batch`='' ) 
-
-	And (tblcurrenteducation.`Class` like concat('%',_Class,'%') or tblcurrenteducation.`Class`='' ) 
-
-	And (tblcurrenteducation.`Section` like concat('%',_Section,'%') or tblcurrenteducation.`Section`='' ) 
-
-	And (tblstudentinfo.`FirstName` like concat(_FirstName,'%') or tblstudentinfo.`FirstName`='' ) 
-
-	And (tblstudentinfo.`StudentType` like concat('%',_Type,'%') or tblstudentinfo.`StudentType`='' ) 
-
-	And(tblstudentinfo.`IsDeleted`=0 and tblcurrenteducation.`IsDeleted`=0)
-
-	and tblstudentinfo.`CompanyId`=_CompanyId AND tblcurrenteducation.`CompanyId`=_CompanyId;
-
+BEGIN
+	Select tblstudentinfo.*,tblcurrenteducation.`Class`,tblcurrenteducation.`Faculty`,tblcurrenteducation.`Section`
+	From tblstudentinfo
+	inner join tblcurrenteducation on tblstudentinfo.`StudentId`=tblcurrenteducation.`StudentId`
+	where (tblcurrenteducation.`Batch` like  concat('%',_Batch,'%') or tblcurrenteducation.`Batch`='' ) 
+	And (tblcurrenteducation.`Class` like concat('%',_Class,'%') or tblcurrenteducation.`Class`='' ) 
+	And (tblcurrenteducation.`Section` like concat('%',_Section,'%') or tblcurrenteducation.`Section`='' ) 
+	And (tblstudentinfo.`FirstName` like concat(_FirstName,'%') or tblstudentinfo.`FirstName`='' ) 
+	And (tblstudentinfo.`StudentType` like concat('%',_Type,'%') or tblstudentinfo.`StudentType`='' ) 
+	And(tblstudentinfo.`IsDeleted`=0 and tblcurrenteducation.`IsDeleted`=0)
+	and tblstudentinfo.`CompanyId`=_CompanyId AND tblcurrenteducation.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3013,45 +2647,26 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffabsentattendance`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _Designation varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffabsentattendance`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _Designation varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Absent
-
-	from tblteacherinfo
-
-	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
-
-	where (tblteacherinfo.`Batch` like  concat('%',_Batch,'%') or tblteacherinfo.`Batch`='' ) 
-
-	And (tblteacherinfo.`Department` like concat('%',_Department,'%') or tblteacherinfo.`Department`='' ) 
-
-	And (tblteacherinfo.`Designation` like concat('%',_Designation,'%') or tblteacherinfo.`Designation`='' ) 
-
-	And (Date >= _DateFrom and Date <= _DateTo)
-
-	And tblstaffattendance.`Attendance`='A'
-
-	and tblstaffattendance.`CompanyId`=_CompanyId
-
-	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
-
-	order by tblteacherinfo.`Department`;
-
+BEGIN
+	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Absent
+	from tblteacherinfo
+	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
+	where (tblteacherinfo.`Batch` like  concat('%',_Batch,'%') or tblteacherinfo.`Batch`='' ) 
+	And (tblteacherinfo.`Department` like concat('%',_Department,'%') or tblteacherinfo.`Department`='' ) 
+	And (tblteacherinfo.`Designation` like concat('%',_Designation,'%') or tblteacherinfo.`Designation`='' ) 
+	And (Date >= _DateFrom and Date <= _DateTo)
+	And tblstaffattendance.`Attendance`='A'
+	and tblstaffattendance.`CompanyId`=_CompanyId
+	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Designation`,tblteacherinfo.`Faculty`
+	order by tblteacherinfo.`Department`;
 	END */$$
 DELIMITER ;
 
@@ -3061,33 +2676,20 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffattendancedetails`(
-
-    in _Batch varchar(50),
-
-    in _TeacherId varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffattendancedetails`(
+    in _Batch varchar(50),
+    in _TeacherId varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblstaffattendance.* from tblstaffattendance
-
-	inner join tblteacherinfo on tblteacherinfo.`TeacherId`=tblstaffattendance.`TeacherId`
-
-	where tblstaffattendance.`Batch`=_Batch
-
-	and tblstaffattendance.`TeacherId`=_TeacherId
-
-	and Date >=_DateFrom and Date <= _DateTo
-
-	and tblstaffattendance.`CompanyId`=_CompanyId;
-
+BEGIN
+	select tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblstaffattendance.* from tblstaffattendance
+	inner join tblteacherinfo on tblteacherinfo.`TeacherId`=tblstaffattendance.`TeacherId`
+	where tblstaffattendance.`Batch`=_Batch
+	and tblstaffattendance.`TeacherId`=_TeacherId
+	and Date >=_DateFrom and Date <= _DateTo
+	and tblstaffattendance.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3097,23 +2699,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffattendancelistbybatch`(
-
-    in _Batch varchar(50),
-
-    in _Date varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffattendancelistbybatch`(
+    in _Batch varchar(50),
+    in _Date varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select * from tblstaffattendance
-
-	where Batch=_Batch and Date=_Date and CompanyId=_CompanyId;
-
-
-
+BEGIN
+	select * from tblstaffattendance
+	where Batch=_Batch and Date=_Date and CompanyId=_CompanyId;
+
 	END */$$
 DELIMITER ;
 
@@ -3123,23 +2717,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbybatch`(
-
-    in _Batch varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbybatch`(
+    in _Batch varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select TeacherId,FirstName,LastName,Department,Designation
-
-	from tblteacherinfo
-
-	where Batch=_Batch and Status='Active' and CompanyId=_CompanyId and IsDeleted ='0'
-
-	order by Department;
-
+BEGIN
+	select TeacherId,FirstName,LastName,Department,Designation
+	from tblteacherinfo
+	where Batch=_Batch and Status='Active' and CompanyId=_CompanyId and IsDeleted ='0'
+	order by Department;
 	END */$$
 DELIMITER ;
 
@@ -3149,25 +2735,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbydepartment`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbydepartment`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select TeacherId,FirstName,LastName,Department,Designation
-
-	from tblteacherinfo
-
-	where Batch=_Batch and Department=_Department and Status='Active' and CompanyId=_CompanyId AND IsDeleted ='0'
-
-	order by Department;
-
+BEGIN
+	select TeacherId,FirstName,LastName,Department,Designation
+	from tblteacherinfo
+	where Batch=_Batch and Department=_Department and Status='Active' and CompanyId=_CompanyId AND IsDeleted ='0'
+	order by Department;
 	END */$$
 DELIMITER ;
 
@@ -3177,27 +2754,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbydesignation`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _Designation varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstafflistbydesignation`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _Designation varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select TeacherId,FirstName,LastName,Department,Designation
-
-	from tblteacherinfo
-
-	where Batch=_Batch and Department=_Department and Designation=_Designation and Status='Active' and CompanyId=_CompanyId AND IsDeleted ='0'
-
-	order by Department;
-
+BEGIN
+	select TeacherId,FirstName,LastName,Department,Designation
+	from tblteacherinfo
+	where Batch=_Batch and Department=_Department and Designation=_Designation and Status='Active' and CompanyId=_CompanyId AND IsDeleted ='0'
+	order by Department;
 	END */$$
 DELIMITER ;
 
@@ -3207,47 +2774,27 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffpresentattendance`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _Designation varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int
-
-    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstaffpresentattendance`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _Designation varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int
+    
     )
-BEGIN
-
-	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Present
-
-	from tblteacherinfo
-
-	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
-
-	where (tblteacherinfo.`Batch` like  concat('%',_Batch,'%') or tblteacherinfo.`Batch`='' ) 
-
-	And (tblteacherinfo.`Department` like concat('%',_Department,'%') or tblteacherinfo.`Department`='' ) 
-
-	And (tblteacherinfo.`Designation` like concat('%',_Designation,'%') or tblteacherinfo.`Designation`='' ) 
-
-	And (Date >= _DateFrom and Date <= _DateTo)
-
-	And tblstaffattendance.`Attendance`='P'
-
-	and tblstaffattendance.`CompanyId`=_CompanyId
-
-	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`
-
-	order by tblteacherinfo.`Department`;
-
+BEGIN
+	select tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`,count(tblstaffattendance.`Attendance`) as Present
+	from tblteacherinfo
+	inner join tblstaffattendance on tblstaffattendance.`TeacherId`=tblteacherinfo.`TeacherId`
+	where (tblteacherinfo.`Batch` like  concat('%',_Batch,'%') or tblteacherinfo.`Batch`='' ) 
+	And (tblteacherinfo.`Department` like concat('%',_Department,'%') or tblteacherinfo.`Department`='' ) 
+	And (tblteacherinfo.`Designation` like concat('%',_Designation,'%') or tblteacherinfo.`Designation`='' ) 
+	And (Date >= _DateFrom and Date <= _DateTo)
+	And tblstaffattendance.`Attendance`='P'
+	and tblstaffattendance.`CompanyId`=_CompanyId
+	group by tblteacherinfo.`TeacherId`,tblteacherinfo.`Batch`,tblteacherinfo.`FirstName`,tblteacherinfo.`LastName`,tblteacherinfo.`Department`,tblteacherinfo.`Faculty`,tblteacherinfo.`Designation`
+	order by tblteacherinfo.`Department`;
 	END */$$
 DELIMITER ;
 
@@ -3257,21 +2804,14 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstudentattendancelistbybatch`(
-
-    in _Batch varchar(50),
-
-    in _Date varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getstudentattendancelistbybatch`(
+    in _Batch varchar(50),
+    in _Date varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select * from tblstudentattendance
-
-	where Batch=_Batch and Date=_Date and CompanyId=_CompanyId;
-
+BEGIN
+	select * from tblstudentattendance
+	where Batch=_Batch and Date=_Date and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3419,31 +2959,19 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotaldepartmentholidays`(
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotaldepartmentholidays`(
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
-
-	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
-
-	where tbldayoffdetails.`Department`=_Department AND tbldayoff.`Batch`=_Batch and
-
-	DateFrom >=_DateFrom and DateTo <= _DateTo
-
-	and tbldayoff.`CompanyId`=_CompanyId;
-
+BEGIN
+	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
+	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
+	where tbldayoffdetails.`Department`=_Department AND tbldayoff.`Batch`=_Batch and
+	DateFrom >=_DateFrom and DateTo <= _DateTo
+	and tbldayoff.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3453,31 +2981,19 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotalholidays`(
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotalholidays`(
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
-
-	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
-
-	where tbldayoffdetails.`Class`=_Class AND tbldayoff.`Batch`=_Batch and
-
-	DateFrom >=_DateFrom and DateTo <= _DateTo
-
-	and tbldayoff.`CompanyId`=_CompanyId;
-
+BEGIN
+	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
+	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
+	where tbldayoffdetails.`Class`=_Class AND tbldayoff.`Batch`=_Batch and
+	DateFrom >=_DateFrom and DateTo <= _DateTo
+	and tbldayoff.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3487,33 +3003,20 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotalteacherholidays`( 
-
-    in _Batch varchar(50),
-
-    in _Department varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `gettotalteacherholidays`( 
+    in _Batch varchar(50),
+    in _Department varchar(50),
+    in _Faculty varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
-
-	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
-
-	where tbldayoffdetails.`Department`=_Department AND tbldayoffdetails.`Faculty`=_Faculty AND tbldayoff.`Batch`=_Batch and
-
-	DateFrom >=_DateFrom and DateTo <= _DateTo
-
-	and tbldayoff.`CompanyId`=_CompanyId;
-
+BEGIN
+	select Sum(DATEDIFF(DateFrom,DateTo) + 1) as Holiday from tbldayoff
+	inner join tbldayoffdetails on tbldayoff.`DayOffId`=tbldayoffdetails.`DayOffId`
+	where tbldayoffdetails.`Department`=_Department AND tbldayoffdetails.`Faculty`=_Faculty AND tbldayoff.`Batch`=_Batch and
+	DateFrom >=_DateFrom and DateTo <= _DateTo
+	and tbldayoff.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3523,27 +3026,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getyearlyfeebyid`(
-
-    IN _Batch varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `getyearlyfeebyid`(
+    IN _Batch varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	select tblbillingdetails.`FeeStructureName` from tblbillingdetails
-
-	inner join tblbilling on tblbillingdetails.`BillingId` = tblbilling.`BillingId`
-
-	where tblbilling.`StudentId` =_StudentId and tblbilling.`Batch`=_Batch
-
-	and (tblbillingdetails.`FeeStructureName` = 'Initial' or tblbillingdetails.`FeeStructureName` = 'Yearly')
-
-	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
-
+BEGIN
+	select tblbillingdetails.`FeeStructureName` from tblbillingdetails
+	inner join tblbilling on tblbillingdetails.`BillingId` = tblbilling.`BillingId`
+	where tblbilling.`StudentId` =_StudentId and tblbilling.`Batch`=_Batch
+	and (tblbillingdetails.`FeeStructureName` = 'Initial' or tblbillingdetails.`FeeStructureName` = 'Yearly')
+	and tblbilling.`CompanyId`=_CompanyId and tblbillingdetails.`CompanyId`=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -3553,17 +3046,12 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `login`(
-
-    in _id varchar(50),
-
-    out _pass varchar(50)
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `login`(
+    in _id varchar(50),
+    out _pass varchar(50)
     )
-BEGIN
-
-	select _pass=Password from tbluserdetail where Email=_id;
-
+BEGIN
+	select _pass=Password from tbluserdetail where Email=_id;
 	END */$$
 DELIMITER ;
 
@@ -3573,25 +3061,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `savestudentattendance`(
-
-    in _Batch varchar(50),
-
-    in _Date varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _Attendance varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `savestudentattendance`(
+    in _Batch varchar(50),
+    in _Date varchar(50),
+    in _StudentId varchar(50),
+    in _Attendance varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	INSERT INTO tblstudentattendance(Batch,tblstudentattendance.`Date`,StudentId,Attendance,CompanyId)
-
-					Values(_Batch,_Date,_StudentId,_Attendance,_CompanyId);
-
+BEGIN
+	INSERT INTO tblstudentattendance(Batch,tblstudentattendance.`Date`,StudentId,Attendance,CompanyId)
+					Values(_Batch,_Date,_StudentId,_Attendance,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -3601,25 +3080,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_advancedpaid`(
-
-    in _StudentId varchar(50),
-
-    in _Amount int,
-
-    in _Status varchar(50),
-
-    in _CompanyId int,
-
-    in _ReceiptId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_advancedpaid`(
+    in _StudentId varchar(50),
+    in _Amount int,
+    in _Status varchar(50),
+    in _CompanyId int,
+    in _ReceiptId int    
     )
-BEGIN
-
-	insert into tbladvancedpaid(StudentId,Amount,Status,CompanyId,ReceiptId)
-
-			Values(_StudentId,_Amount,_Status,_CompanyId,_ReceiptId);
-
+BEGIN
+	insert into tbladvancedpaid(StudentId,Amount,Status,CompanyId,ReceiptId)
+			Values(_StudentId,_Amount,_Status,_CompanyId,_ReceiptId);
 	END */$$
 DELIMITER ;
 
@@ -3629,23 +3099,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batch`(
-
-    in _FromYear int,
-
-    in _ToYear int,
-
-    in _CompanyId int,
-
-    in _Status varchar(50)    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batch`(
+    in _FromYear int,
+    in _ToYear int,
+    in _CompanyId int,
+    in _Status varchar(50)    
     )
-BEGIN
-
-	INSERT INTO tblbatchdetails(FromYear,ToYear,CompanyId,Status)
-
-				values(_FromYear,_ToYear,_CompanyId,_Status);
-
+BEGIN
+	INSERT INTO tblbatchdetails(FromYear,ToYear,CompanyId,Status)
+				values(_FromYear,_ToYear,_CompanyId,_Status);
 	END */$$
 DELIMITER ;
 
@@ -3655,53 +3117,30 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batchclass`(
-
-    in _BatchClassId int,
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _CompanyId int,
-
-    out _id int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batchclass`(
+    in _BatchClassId int,
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Faculty varchar(50),
+    in _CompanyId int,
+    out _id int    
     )
-BEGIN
-
-	if _BatchClassId =0 then
-
-	INSERT INTO tblbatchclass(Batch,Class,Faculty,CompanyId)
-
-				VALUES(_Batch,_Class,_Faculty,_CompanyId);
-
-set _id = last_insert_id();
-
-select _id;
-
-else
-
-UPDATE tblbatchclass
-
-		SET
-
-	Batch=_Batch,
-
-	Class=_Class,
-
-	Faculty=_Faculty
-
-	where BatchClassId=_BatchClassId and CompanyId=_CompanyId;
-
-	set _id=_BatchClassId;
-
-	select _id;
-
-	end if;
-
+BEGIN
+	if _BatchClassId =0 then
+	INSERT INTO tblbatchclass(Batch,Class,Faculty,CompanyId)
+				VALUES(_Batch,_Class,_Faculty,_CompanyId);
+set _id = last_insert_id();
+select _id;
+else
+UPDATE tblbatchclass
+		SET
+	Batch=_Batch,
+	Class=_Class,
+	Faculty=_Faculty
+	where BatchClassId=_BatchClassId and CompanyId=_CompanyId;
+	set _id=_BatchClassId;
+	select _id;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -3711,57 +3150,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batchclassfee`(
-
-    in _ID BIGINT,
-
-    IN _FeeId int,
-
-    in _FeeStructureName varchar(50),
-
-    in _FeeName varchar(50),
-
-    in _Amount int,
-
-    in _Refundable varchar(50),
-
-    in _BatchClassId int,
-
-    in _StudentType varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_batchclassfee`(
+    in _ID BIGINT,
+    IN _FeeId int,
+    in _FeeStructureName varchar(50),
+    in _FeeName varchar(50),
+    in _Amount int,
+    in _Refundable varchar(50),
+    in _BatchClassId int,
+    in _StudentType varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _ID = 0 then
-
-	INSERT INTO tblbatchclassfee(FeeStructureName,FeeName,Amount,Refundable,BatchClassId,FeeId,StudentType,CompanyId)
-
-					Values(_FeeStructureName,_FeeName,_Amount,_Refundable,_BatchClassId,_FeeId,_StudentType,_CompanyId);
-
-
-
-else
-
-update tblbatchclassfee
-
-set
-
-FeeStructureName=_FeeStructureName,
-
-FeeName=_FeeName,
-
-Amount=_Amount,
-
-Refundable=_Refundable,
-
-StudentType=_StudentType
-
-where BatchClassId=_BatchClassId and FeeId=_FeeId and CompanyId=_CompanyId;
-
-end if;
-
+BEGIN
+	if _ID = 0 then
+	INSERT INTO tblbatchclassfee(FeeStructureName,FeeName,Amount,Refundable,BatchClassId,FeeId,StudentType,CompanyId)
+					Values(_FeeStructureName,_FeeName,_Amount,_Refundable,_BatchClassId,_FeeId,_StudentType,_CompanyId);
+
+else
+update tblbatchclassfee
+set
+FeeStructureName=_FeeStructureName,
+FeeName=_FeeName,
+Amount=_Amount,
+Refundable=_Refundable,
+StudentType=_StudentType
+where BatchClassId=_BatchClassId and FeeId=_FeeId and CompanyId=_CompanyId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -3771,37 +3185,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_billing`(
-
-    in _StudentId varchar(50),
-
-    in _Date varchar(50),
-
-    in _Month varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Status varchar(20),
-
-    in _IsCreated bit,
-
-    in _CreatedBy varchar(50),
-
-    in _CompanyId int,
-
-    out _id int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_billing`(
+    in _StudentId varchar(50),
+    in _Date varchar(50),
+    in _Month varchar(50),
+    in _Batch varchar(50),
+    in _Status varchar(20),
+    in _IsCreated bit,
+    in _CreatedBy varchar(50),
+    in _CompanyId int,
+    out _id int
     )
-BEGIN
-
-	INSERT INTO tblbilling(StudentId,Date,Month,Status,IsCreated,Batch,CreatedBy,CompanyId)
-
-			VALUES(_StudentId,_Date,_Month,_Status,_IsCreated,_Batch,_CreatedBy,_CompanyId);
-
-			SEt _id =LAST_INSERT_ID();
-
-			select _id;
-
+BEGIN
+	INSERT INTO tblbilling(StudentId,Date,Month,Status,IsCreated,Batch,CreatedBy,CompanyId)
+			VALUES(_StudentId,_Date,_Month,_Status,_IsCreated,_Batch,_CreatedBy,_CompanyId);
+			SEt _id =LAST_INSERT_ID();
+			select _id;
 	END */$$
 DELIMITER ;
 
@@ -3811,25 +3210,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_billingdetails`(
-
-    in _BillingId varchar(50),
-
-    in _Amount int,
-
-    in _FeeStructureName varchar(50),
-
-    in _FeeName varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_billingdetails`(
+    in _BillingId varchar(50),
+    in _Amount int,
+    in _FeeStructureName varchar(50),
+    in _FeeName varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	INSERT INTO tblbillingdetails(BillingId,Amount,FeeStructureName,FeeName,CompanyId)
-
-				VALUES(_BillingId,_Amount,_FeeStructureName,_FeeName,_CompanyId);
-
+BEGIN
+	INSERT INTO tblbillingdetails(BillingId,Amount,FeeStructureName,FeeName,CompanyId)
+				VALUES(_BillingId,_Amount,_FeeStructureName,_FeeName,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -3839,53 +3229,30 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_class`(
-
-    in _ClassId bigint,
-
-    in _ClassName varchar(50),
-
-    in _ClassCode varchar(50),
-
-    in _ClassType varchar(50),
-
-    in _StudentLimit int,
-
-    in _FacultyId int,
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_class`(
+    in _ClassId bigint,
+    in _ClassName varchar(50),
+    in _ClassCode varchar(50),
+    in _ClassType varchar(50),
+    in _StudentLimit int,
+    in _FacultyId int,
+    in _CompanyId int    
     )
-BEGIN
-
-	if _ClassId = 0 then
-
-	Insert into tblclassdetails(ClassName,ClassCode,ClassType,StudentLimit,FacultyId,CompanyId)
-
-					values(_ClassName,_ClassCode,_ClassType,_StudentLimit,_FacultyId,_CompanyId);
-
-
-
-else
-
-Update tblclassdetails
-
-		set
-
-	ClassName=_ClassName,
-
-	ClassCode=_ClassCode,
-
-	ClassType=_ClassType,
-
-	StudentLimit=_StudentLimit,
-
-	FacultyId=_FacultyId
-
-	where ClassId=_ClassId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _ClassId = 0 then
+	Insert into tblclassdetails(ClassName,ClassCode,ClassType,StudentLimit,FacultyId,CompanyId)
+					values(_ClassName,_ClassCode,_ClassType,_StudentLimit,_FacultyId,_CompanyId);
+
+else
+Update tblclassdetails
+		set
+	ClassName=_ClassName,
+	ClassCode=_ClassCode,
+	ClassType=_ClassType,
+	StudentLimit=_StudentLimit,
+	FacultyId=_FacultyId
+	where ClassId=_ClassId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -3895,63 +3262,35 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_companydetails`(
-
-    in _CompanyId int,
-
-    in _Name varchar(50),
-
-    in _Address varchar(50),
-
-    in _PhoneNo varchar(50),
-
-    in _PAN VARCHAR(50),
-
-    IN _RegistrationDate varchar(50),
-
-    in _Status varchar(50),
-
-    out _id int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_companydetails`(
+    in _CompanyId int,
+    in _Name varchar(50),
+    in _Address varchar(50),
+    in _PhoneNo varchar(50),
+    in _PAN VARCHAR(50),
+    IN _RegistrationDate varchar(50),
+    in _Status varchar(50),
+    out _id int    
     )
-BEGIN
-
-	if _CompanyId = 0 then
-
-	INSERT INTO tblcompanydetails(Name,Address,PAN,PhoneNo,RegistrationDate,Status)
-
-					Values(_Name,_Address,_PAN,_PhoneNo,CURDATE(),_Status);
-
-				SET _id =LAST_INSERT_ID();
-
-				SELECT _id;
-
-
-
-else
-
-Update tblcompanydetails
-
-set
-
-Name = _Name,
-
-PhoneNo=_PhoneNo,
-
-Address=_Address,
-
-PAN=_PAN,
-
-Status=_Status
-
-WHERE CompanyId=_CompanyId;
-
-SEt _id =_CompanyId;
-
-select _id;
-
-end if;
-
+BEGIN
+	if _CompanyId = 0 then
+	INSERT INTO tblcompanydetails(Name,Address,PAN,PhoneNo,RegistrationDate,Status)
+					Values(_Name,_Address,_PAN,_PhoneNo,CURDATE(),_Status);
+				SET _id =LAST_INSERT_ID();
+				SELECT _id;
+
+else
+Update tblcompanydetails
+set
+Name = _Name,
+PhoneNo=_PhoneNo,
+Address=_Address,
+PAN=_PAN,
+Status=_Status
+WHERE CompanyId=_CompanyId;
+SEt _id =_CompanyId;
+select _id;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -3961,39 +3300,23 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_country`(
-
-    in _CountryId int,
-
-    in _CountryName varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_country`(
+    in _CountryId int,
+    in _CountryName varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _CountryId = 0 then
-
-
-
-	INSERT INTO tblcountrydetails(CountryName,CompanyId)
-
-					VAlues(_CountryName,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblcountrydetails
-
-		set
-
-		CountryName=_CountryName
-
-		where CountryId=_CountryId and CompanyId=_CompanyId;
-
-		end if;
-
+BEGIN
+	if _CountryId = 0 then
+
+	INSERT INTO tblcountrydetails(CountryName,CompanyId)
+					VAlues(_CountryName,_CompanyId);
+
+ELSE
+UPDATE tblcountrydetails
+		set
+		CountryName=_CountryName
+		where CountryId=_CountryId and CompanyId=_CompanyId;
+		end if;
 	END */$$
 DELIMITER ;
 
@@ -4003,57 +3326,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_currentaddress`(
-
-    in _AddressId int,
-
-    in _Qno varchar(50),
-
-    in _Street varchar(50),
-
-    in _Municipality varchar(50),
-
-    in _State varchar(50),
-
-    in _Country varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_currentaddress`(
+    in _AddressId int,
+    in _Qno varchar(50),
+    in _Street varchar(50),
+    in _Municipality varchar(50),
+    in _State varchar(50),
+    in _Country varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	IF _AddressId = 0 then
-
-INSERT INTO tblcurrentaddress(Qno,Street,Municipality,State,Country,StudentId,CompanyId)
-
-					VALUES(_Qno,_Street,_Municipality,_State,_Country,_StudentId,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblcurrentaddress
-
-	SET
-
-	Qno = _Qno,
-
-	Street = _Street,
-
-	Municipality = _Municipality,
-
-	State = _State,
-
-	Country = _Country,
-
-	StudentId = _StudentId
-
-	WHERE AddressId = _AddressId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	IF _AddressId = 0 then
+INSERT INTO tblcurrentaddress(Qno,Street,Municipality,State,Country,StudentId,CompanyId)
+					VALUES(_Qno,_Street,_Municipality,_State,_Country,_StudentId,_CompanyId);
+
+ELSE
+UPDATE tblcurrentaddress
+	SET
+	Qno = _Qno,
+	Street = _Street,
+	Municipality = _Municipality,
+	State = _State,
+	Country = _Country,
+	StudentId = _StudentId
+	WHERE AddressId = _AddressId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -4063,53 +3361,30 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_currenteducation`(
-
-    in _CurrentEducationId int,
-
-    in _Faculty varchar(50),
-
-    in _Class varchar(50),
-
-    in _Section varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _Batch varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_currenteducation`(
+    in _CurrentEducationId int,
+    in _Faculty varchar(50),
+    in _Class varchar(50),
+    in _Section varchar(50),
+    in _StudentId varchar(50),
+    in _Batch varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	IF _CurrentEducationId = 0 then
-
-INSERT INTO tblcurrenteducation(Faculty,Class,Section,StudentId,Batch,CompanyId)
-
-						VALUES(_Faculty,_Class,_Section,_StudentId,_Batch,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblcurrenteducation
-
-		SET
-
-		Faculty=_Faculty,
-
-		Class=_Class,
-
-		Section=_Section,
-
-		StudentId=_StudentId,
-
-		Batch=_Batch
-
-		where CurrentEducationId=_CurrentEducationId and CompanyId=_CompanyId;
-
-		end if;
-
+BEGIN
+	IF _CurrentEducationId = 0 then
+INSERT INTO tblcurrenteducation(Faculty,Class,Section,StudentId,Batch,CompanyId)
+						VALUES(_Faculty,_Class,_Section,_StudentId,_Batch,_CompanyId);
+
+ELSE
+UPDATE tblcurrenteducation
+		SET
+		Faculty=_Faculty,
+		Class=_Class,
+		Section=_Section,
+		StudentId=_StudentId,
+		Batch=_Batch
+		where CurrentEducationId=_CurrentEducationId and CompanyId=_CompanyId;
+		end if;
 	END */$$
 DELIMITER ;
 
@@ -4119,59 +3394,33 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_dayoff`(
-
-    in _DayOffId int,
-
-    in _Batch varchar(50),
-
-    in _Title varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _CompanyId int,
-
-    out _id int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_dayoff`(
+    in _DayOffId int,
+    in _Batch varchar(50),
+    in _Title varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _CompanyId int,
+    out _id int
     )
-BEGIN
-
-	if _DayOffId = 0 then
-
-INSERT INTO tbldayoff(Batch,Title,DateFrom,DateTo,CompanyId)
-
-			VALUES(_Batch,_Title,_DateFrom,_DateTo,_CompanyId);
-
-	set _id=last_Insert_ID();
-
-	SELECT _id;
-
-else
-
-
-
-update tbldayoff
-
-set
-
-Batch=_Batch,
-
-Title=_Title,
-
-DateFrom=_DateFrom,
-
-DateTo=_DateTo
-
-where DayOffId=_DayOffId and CompanyId=_CompanyId;
-
-set _id=_DayOffId;
-
-select _id=_DayOffId;
-
-end if;
-
+BEGIN
+	if _DayOffId = 0 then
+INSERT INTO tbldayoff(Batch,Title,DateFrom,DateTo,CompanyId)
+			VALUES(_Batch,_Title,_DateFrom,_DateTo,_CompanyId);
+	set _id=last_Insert_ID();
+	SELECT _id;
+else
+
+update tbldayoff
+set
+Batch=_Batch,
+Title=_Title,
+DateFrom=_DateFrom,
+DateTo=_DateTo
+where DayOffId=_DayOffId and CompanyId=_CompanyId;
+set _id=_DayOffId;
+select _id=_DayOffId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -4181,25 +3430,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_dayoffdetails`(
-
-    in _DayOffId int,
-
-    in _Department varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _Class varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_dayoffdetails`(
+    in _DayOffId int,
+    in _Department varchar(50),
+    in _Faculty varchar(50),
+    in _Class varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	insert into tbldayoffdetails(DayOffId,Department,Faculty,Class,CompanyId)
-
-				Values(_DayOffId,_Department,_Faculty,_Class,_CompanyId);
-
+BEGIN
+	insert into tbldayoffdetails(DayOffId,Department,Faculty,Class,CompanyId)
+				Values(_DayOffId,_Department,_Faculty,_Class,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -4209,41 +3449,24 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_discountdetails`(
-
-    in _Id int,
-
-    in _ScholarshipName varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _DisCountType varchar(50),
-
-    in _Discount int,
-
-    in _FeeStructureName varchar(50),
-
-    in _FeeId int,
-
-    in _Amount int,
-
-    in _StudentType varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_discountdetails`(
+    in _Id int,
+    in _ScholarshipName varchar(50),
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Faculty varchar(50),
+    in _DisCountType varchar(50),
+    in _Discount int,
+    in _FeeStructureName varchar(50),
+    in _FeeId int,
+    in _Amount int,
+    in _StudentType varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	INSERT INTO tblscholarshipdetails(ScholarshipName,Batch,Class,Faculty,DiscountType,Discount,FeeId,FeeStructureName,Amount,StudentType,CompanyId)
-
-							Values(_ScholarshipName,_Batch,_Class,_Faculty,_DisCountType,_Discount,_FeeId,_FeeStructureName,_Amount,_StudentType,_CompanyId);
-
-
-
+BEGIN
+	INSERT INTO tblscholarshipdetails(ScholarshipName,Batch,Class,Faculty,DiscountType,Discount,FeeId,FeeStructureName,Amount,StudentType,CompanyId)
+							Values(_ScholarshipName,_Batch,_Class,_Faculty,_DisCountType,_Discount,_FeeId,_FeeStructureName,_Amount,_StudentType,_CompanyId);
+
 	END */$$
 DELIMITER ;
 
@@ -4253,77 +3476,42 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_editstudent`(
-
-    in _StudentId varchar(50),
-
-    in _FirstName varchar(50),
-
-    in _LastName varchar(50),
-
-    in _DateOfBirth_BS varchar(50),
-
-    in _DateOfBirth_AD varchar(50),
-
-    in _Gender varchar(50),
-
-    in _EmailId varchar(50),
-
-    in _Batch varchar(50),
-
-    in _MobileNo varchar(50),
-
-    in _FatherName varchar(50),
-
-    in _FatherNumber varchar(50),
-
-    in _MotherName varchar(50),
-
-    in _MotherNumber varchar(50),
-
-    in _Status Varchar(50),
-
-    in _StudentType varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_editstudent`(
+    in _StudentId varchar(50),
+    in _FirstName varchar(50),
+    in _LastName varchar(50),
+    in _DateOfBirth_BS varchar(50),
+    in _DateOfBirth_AD varchar(50),
+    in _Gender varchar(50),
+    in _EmailId varchar(50),
+    in _Batch varchar(50),
+    in _MobileNo varchar(50),
+    in _FatherName varchar(50),
+    in _FatherNumber varchar(50),
+    in _MotherName varchar(50),
+    in _MotherNumber varchar(50),
+    in _Status Varchar(50),
+    in _StudentType varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	Update tblstudentinfo
-
-	SET
-
-	 FirstName=_FirstName,
-
-	 LastName=_LastName,
-
-	 DateOfBirth_BS=_DateOfBirth_BS,
-
-	 DateOfBirth_AD=_DateOfBirth_AD,
-
-	 Gender=_Gender,
-
-	 EmailId=_EmailId,
-
-	 MobileNo=_MobileNo,
-
-	 Batch=_Batch,
-
-	 FatherName=_FatherName,
-
-	 FatherNumber=_FatherNumber,
-
-	 MotherName=_MotherName,	
-
-	 MotherNumber=_MotherNumber,
-
-	 Status=_Status,
-
-	 StudentType=_StudentType
-
-	 Where StudentId=_StudentId and CompanyId=_CompanyId;
-
+BEGIN
+	Update tblstudentinfo
+	SET
+	 FirstName=_FirstName,
+	 LastName=_LastName,
+	 DateOfBirth_BS=_DateOfBirth_BS,
+	 DateOfBirth_AD=_DateOfBirth_AD,
+	 Gender=_Gender,
+	 EmailId=_EmailId,
+	 MobileNo=_MobileNo,
+	 Batch=_Batch,
+	 FatherName=_FatherName,
+	 FatherNumber=_FatherNumber,
+	 MotherName=_MotherName,	
+	 MotherNumber=_MotherNumber,
+	 Status=_Status,
+	 StudentType=_StudentType
+	 Where StudentId=_StudentId and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -4333,69 +3521,38 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_editteacher`(
-
-    in _TeacherId int,
-
-    in _FirstName varchar(50),
-
-    in _LastName varchar(50),
-
-    in _Designation Varchar(50),
-
-    in _Department varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _Gender varchar(50),
-
-    in _Email varchar(50),
-
-    in _DateOfBirth varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Citizenship varchar(50),
-
-    in _JoiningDate varchar(50),
-
-    in _Status varchar(50),
-
-    in _CompanyId int  
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_editteacher`(
+    in _TeacherId int,
+    in _FirstName varchar(50),
+    in _LastName varchar(50),
+    in _Designation Varchar(50),
+    in _Department varchar(50),
+    in _Faculty varchar(50),
+    in _Gender varchar(50),
+    in _Email varchar(50),
+    in _DateOfBirth varchar(50),
+    in _Batch varchar(50),
+    in _Citizenship varchar(50),
+    in _JoiningDate varchar(50),
+    in _Status varchar(50),
+    in _CompanyId int  
     )
-BEGIN
-
-	UPDATE tblteacherinfo
-
- set
-
- FirstName=_FirstName,
-
- LastName=_LastName,
-
- Designation=_Designation,
-
- Department=_Department,
-
- Faculty=_Faculty,
-
- Gender=_Gender,
-
- Email=_Email,
-
- DateOfBirth=_DateOfBirth,
-
- Batch=_Batch,
-
- Citizenship=_Citizenship,
-
- JoiningDate=_JoiningDate,
-
- tblteacherinfo.`Status`=_Status
-
- where TeacherId=_TeacherId and CompanyId=_CompanyId;
-
+BEGIN
+	UPDATE tblteacherinfo
+ set
+ FirstName=_FirstName,
+ LastName=_LastName,
+ Designation=_Designation,
+ Department=_Department,
+ Faculty=_Faculty,
+ Gender=_Gender,
+ Email=_Email,
+ DateOfBirth=_DateOfBirth,
+ Batch=_Batch,
+ Citizenship=_Citizenship,
+ JoiningDate=_JoiningDate,
+ tblteacherinfo.`Status`=_Status
+ where TeacherId=_TeacherId and CompanyId=_CompanyId;
 	END */$$
 DELIMITER ;
 
@@ -4405,27 +3562,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_education`(
-
-    in _Degree varchar(50),
-
-    in _Institution varchar(50),
-
-    in _TotalMarks int,
-
-    in _Division varchar(50),
-
-    in _TeacherId int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_education`(
+    in _Degree varchar(50),
+    in _Institution varchar(50),
+    in _TotalMarks int,
+    in _Division varchar(50),
+    in _TeacherId int,
+    in _CompanyId int
     )
-BEGIN
-
-	INSERT INTO tbleducation(Degree,Institution,TotalMarks,Division,TeacherId,CompanyId)
-
-				VALUES(_Degree,_Institution,_TotalMarks,_Division,_TeacherId,_CompanyId);
-
+BEGIN
+	INSERT INTO tbleducation(Degree,Institution,TotalMarks,Division,TeacherId,CompanyId)
+				VALUES(_Degree,_Institution,_TotalMarks,_Division,_TeacherId,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -4435,51 +3582,29 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_emergencycontact`(
-
-    in _EmergencyContactId int,
-
-    in _ParentName varchar(50),
-
-    in _ContactNumber varchar(50),
-
-    in _Location varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_emergencycontact`(
+    in _EmergencyContactId int,
+    in _ParentName varchar(50),
+    in _ContactNumber varchar(50),
+    in _Location varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	IF _EmergencyContactId = 0 then
-
-INSERT INTO tblemergencycontact(ParentName,ContactNumber,Location,StudentId,CompanyId)
-
-					VALUES(_ParentName,_ContactNumber,_Location,_StudentId,_CompanyId);
-
-
-
-ELSE
-
-
-
-UPDATE tblemergencycontact
-
-		SET
-
-	ParentName=_ParentName,
-
-	ContactNumber=_ContactNumber,
-
-	Location=_Location,
-
-	StudentId=_StudentId
-
-	WHERE EmergencyContactId=_EmergencyContactId and CompanyId=_CompanyId;
-
-end if;
-
+BEGIN
+	IF _EmergencyContactId = 0 then
+INSERT INTO tblemergencycontact(ParentName,ContactNumber,Location,StudentId,CompanyId)
+					VALUES(_ParentName,_ContactNumber,_Location,_StudentId,_CompanyId);
+
+ELSE
+
+UPDATE tblemergencycontact
+		SET
+	ParentName=_ParentName,
+	ContactNumber=_ContactNumber,
+	Location=_Location,
+	StudentId=_StudentId
+	WHERE EmergencyContactId=_EmergencyContactId and CompanyId=_CompanyId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -4489,27 +3614,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_experience`(
-
-    in _Organisation varchar(50),
-
-    in _Post varchar(50),
-
-    in _DateFrom varchar(50),
-
-    in _DateTo varchar(50),
-
-    in _TeacherId int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_experience`(
+    in _Organisation varchar(50),
+    in _Post varchar(50),
+    in _DateFrom varchar(50),
+    in _DateTo varchar(50),
+    in _TeacherId int,
+    in _CompanyId int
     )
-BEGIN
-
-	insert INTO tblexperience(Organisation,Post,DateFrom,DateTo,TeacherId,CompanyId)
-
-				VALUES(_Organisation,_Post,_DateFrom,_DateTo,_TeacherId,_CompanyId);
-
+BEGIN
+	insert INTO tblexperience(Organisation,Post,DateFrom,DateTo,TeacherId,CompanyId)
+				VALUES(_Organisation,_Post,_DateFrom,_DateTo,_TeacherId,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -4519,43 +3634,25 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_faculty`(
-
-    in _FacultyId bigint,
-
-    in _FacultyName varchar(50),
-
-    in _FacultyCode varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_faculty`(
+    in _FacultyId bigint,
+    in _FacultyName varchar(50),
+    in _FacultyCode varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _FacultyId = 0 then
-
-Insert into tblfacultydetails(FacultyName,FacultyCode,CompanyId)
-
-					values(_FacultyName,_FacultyCode,_Companyid);
-
-
-
-else
-
-
-
-Update tblfacultydetails
-
-		set
-
-	FacultyName=_FacultyName,
-
-	FacultyCode=_FacultyCode
-
-	where FacultyId=_FacultyId and CompanyId=_Companyid;
-
-	end if;
-
+BEGIN
+	if _FacultyId = 0 then
+Insert into tblfacultydetails(FacultyName,FacultyCode,CompanyId)
+					values(_FacultyName,_FacultyCode,_Companyid);
+
+else
+
+Update tblfacultydetails
+		set
+	FacultyName=_FacultyName,
+	FacultyCode=_FacultyCode
+	where FacultyId=_FacultyId and CompanyId=_Companyid;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -4615,55 +3712,31 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_feedetails`(
-
-    in _FeeId bigint,
-
-    in _FeeStructureName varchar(50),
-
-    in _FeeName varchar(50),
-
-    in _Amount int,
-
-    in _Refundable varchar(50),
-
-    in _StudentType varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_feedetails`(
+    in _FeeId bigint,
+    in _FeeStructureName varchar(50),
+    in _FeeName varchar(50),
+    in _Amount int,
+    in _Refundable varchar(50),
+    in _StudentType varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	if _FeeId = 0 then
-
-Insert into tblfeedetails(FeeStructureName,FeeName,Amount,Refundable,StudentType,CompanyId)
-
-					values(_FeeStructureName,_FeeName,_Amount,_Refundable,_StudentType,_CompanyId);
-
-
-
-else
-
-
-
-Update tblfeedetails
-
-		set
-
-	FeeStructureName=_FeeStructureName,
-
-	FeeName=_FeeName,
-
-	Amount=_Amount,
-
-	Refundable=_Refundable,
-
-	StudentType=_StudentType
-
-	where FeeId=_FeeId AND CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _FeeId = 0 then
+Insert into tblfeedetails(FeeStructureName,FeeName,Amount,Refundable,StudentType,CompanyId)
+					values(_FeeStructureName,_FeeName,_Amount,_Refundable,_StudentType,_CompanyId);
+
+else
+
+Update tblfeedetails
+		set
+	FeeStructureName=_FeeStructureName,
+	FeeName=_FeeName,
+	Amount=_Amount,
+	Refundable=_Refundable,
+	StudentType=_StudentType
+	where FeeId=_FeeId AND CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -4673,37 +3746,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_feestructure`(
-
-    in _FeeStructureId bigint,
-
-    in _FeeStructureName varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_feestructure`(
+    in _FeeStructureId bigint,
+    in _FeeStructureName varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _FeeStructureId = 0 then
-
-Insert into tblfeestructuredetails(FeeStructureName,CompanyId)
-
-					values(_FeeStructureName,_CompanyId);
-
-
-
-else
-
-Update tblfeestructuredetails
-
-		set
-
-	FeeStructureName=_FeeStructureName
-
-	where FeeStructureId=_FeeStructureId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _FeeStructureId = 0 then
+Insert into tblfeestructuredetails(FeeStructureName,CompanyId)
+					values(_FeeStructureName,_CompanyId);
+
+else
+Update tblfeestructuredetails
+		set
+	FeeStructureName=_FeeStructureName
+	where FeeStructureId=_FeeStructureId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -4713,47 +3771,27 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_finedetails`(
-
-    in _FineId int,
-
-    in _DayFrom int,
-
-    in _DayTo int,
-
-    in _FineType varchar(50),
-
-    in _FineAmount int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_finedetails`(
+    in _FineId int,
+    in _DayFrom int,
+    in _DayTo int,
+    in _FineType varchar(50),
+    in _FineAmount int,
+    in _CompanyId int
     )
-BEGIN
-
-	if _FineId = 0 then
-
-insert into tblfine(DayFrom,DayTo,FineType,FineAmount,CompanyId)
-
-			VALUES(_DayFrom,_DayTo,_FineType,_FineAmount,_CompanyId);
-
-else
-
-update tblfine
-
-set
-
-DayFrom=_DayFrom,
-
-DayTo=_DayTo,
-
-FineType=_FineType,
-
-FineAmount=_FineAmount
-
-where FineId=_FineId and CompanyId=_CompanyId;
-
-end if;
-
+BEGIN
+	if _FineId = 0 then
+insert into tblfine(DayFrom,DayTo,FineType,FineAmount,CompanyId)
+			VALUES(_DayFrom,_DayTo,_FineType,_FineAmount,_CompanyId);
+else
+update tblfine
+set
+DayFrom=_DayFrom,
+DayTo=_DayTo,
+FineType=_FineType,
+FineAmount=_FineAmount
+where FineId=_FineId and CompanyId=_CompanyId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -4763,27 +3801,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_followupdetails`(
-
-    in _StudentId varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Response varchar(200),
-
-    in _FollowUpDate varchar(50),
-
-    in _ExpectedDate varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_followupdetails`(
+    in _StudentId varchar(50),
+    in _Batch varchar(50),
+    in _Response varchar(200),
+    in _FollowUpDate varchar(50),
+    in _ExpectedDate varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	Insert into tblfollowup(StudentId,Response,FollowUpDate,ExpectedDate,Batch,CompanyId)
-
-				Values(_StudentId,_Response,_FollowUpDate,_ExpectedDate,_Batch,_CompanyId);
-
+BEGIN
+	Insert into tblfollowup(StudentId,Response,FollowUpDate,ExpectedDate,Batch,CompanyId)
+				Values(_StudentId,_Response,_FollowUpDate,_ExpectedDate,_Batch,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -4818,39 +3846,23 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_pasteducation`(
-
-    in _PastEducationId int,
-
-    in _Degree varchar(50),
-
-    in _School varchar(50),
-
-    in _TotalMarks int,
-
-    in _Division varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_pasteducation`(
+    in _PastEducationId int,
+    in _Degree varchar(50),
+    in _School varchar(50),
+    in _TotalMarks int,
+    in _Division varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	IF _PastEducationId = 0 then
-
-INSERT INTO tblpasteducation(Degree,School,TotalMarks,Division,StudentId,CompanyId)
-
-		VALUES(_Degree,_School,_TotalMarks,_Division,_StudentId,_CompanyId);
-
-ELSE
-
-INSERT INTO tblpasteducation(Degree,School,TotalMarks,Division,StudentId,CompanyId)
-
-		VALUES(_Degree,_School,_TotalMarks,_Division,_StudentId,_CompanyId);
-
-		end if;
-
+BEGIN
+	IF _PastEducationId = 0 then
+INSERT INTO tblpasteducation(Degree,School,TotalMarks,Division,StudentId,CompanyId)
+		VALUES(_Degree,_School,_TotalMarks,_Division,_StudentId,_CompanyId);
+ELSE
+INSERT INTO tblpasteducation(Degree,School,TotalMarks,Division,StudentId,CompanyId)
+		VALUES(_Degree,_School,_TotalMarks,_Division,_StudentId,_CompanyId);
+		end if;
 	END */$$
 DELIMITER ;
 
@@ -4860,57 +3872,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_permanentaddress`(
-
-    in _AddressId int,
-
-    in _Qno varchar(50),
-
-    in _Street varchar(50),
-
-    in _Municipality varchar(50),
-
-    in _State varchar(50),
-
-    in _Country varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_permanentaddress`(
+    in _AddressId int,
+    in _Qno varchar(50),
+    in _Street varchar(50),
+    in _Municipality varchar(50),
+    in _State varchar(50),
+    in _Country varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	IF _AddressId = 0 then
-
-INSERT INTO tblpermanentaddress(Qno,Street,Municipality,State,Country,StudentId,CompanyId)
-
-					VALUES(_Qno,_Street,_Municipality,_State,_Country,_StudentId,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblpermanentaddress
-
-		SET
-
-	Qno = _Qno,
-
-	Street = _Street,
-
-	Municipality =_Municipality,
-
-	State = _State,
-
-	Country = _Country,
-
-	StudentId = _StudentId
-
-	WHERE AddressId = _AddressId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	IF _AddressId = 0 then
+INSERT INTO tblpermanentaddress(Qno,Street,Municipality,State,Country,StudentId,CompanyId)
+					VALUES(_Qno,_Street,_Municipality,_State,_Country,_StudentId,_CompanyId);
+
+ELSE
+UPDATE tblpermanentaddress
+		SET
+	Qno = _Qno,
+	Street = _Street,
+	Municipality =_Municipality,
+	State = _State,
+	Country = _Country,
+	StudentId = _StudentId
+	WHERE AddressId = _AddressId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -4920,57 +3907,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_receiptdetail`(
-
-    in _ReceiptId int,
-
-    in _StudentId varchar(50),
-
-    in _TotalAmount int,
-
-    in _Month varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Date varchar(50),
-
-    in _PaidAmount int,
-
-    in _DueAmount int,
-
-    in _PaymentMethod varchar(50),
-
-    in _BankName varchar(50),
-
-    in _ChequeNo varchar(50),
-
-    in _BillingId int,
-
-    in _Discount int,
-
-    in _Fine int,
-
-    in _CreatedBy varchar(50),
-
-    in _CompanyId int,
-
-    out _id int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_receiptdetail`(
+    in _ReceiptId int,
+    in _StudentId varchar(50),
+    in _TotalAmount int,
+    in _Month varchar(50),
+    in _Batch varchar(50),
+    in _Date varchar(50),
+    in _PaidAmount int,
+    in _DueAmount int,
+    in _PaymentMethod varchar(50),
+    in _BankName varchar(50),
+    in _ChequeNo varchar(50),
+    in _BillingId int,
+    in _Discount int,
+    in _Fine int,
+    in _CreatedBy varchar(50),
+    in _CompanyId int,
+    out _id int    
     )
-BEGIN
-
-	
-
-		INSERT into tblreceipt(StudentId,tblreceipt.`Date`,tblreceipt.`Month`,TotalAmount,PaidAmount,DueAmount,PaymentMethod,BankName,ChequeNo,BillingId,Discount,Fine,Batch,CreatedBy,CompanyId)
-
-				VALUES(_StudentId,_Date,_Month,_TotalAmount,_PaidAmount,_DueAmount,_PaymentMethod,_BankName,_ChequeNo,_BillingId,_Discount,_Fine,_Batch,_CreatedBy,_CompanyId);
-
-				SEt _id = last_insert_id();
-
-				select _id;
-
-				
-
+BEGIN
+	
+		INSERT into tblreceipt(StudentId,tblreceipt.`Date`,tblreceipt.`Month`,TotalAmount,PaidAmount,DueAmount,PaymentMethod,BankName,ChequeNo,BillingId,Discount,Fine,Batch,CreatedBy,CompanyId)
+				VALUES(_StudentId,_Date,_Month,_TotalAmount,_PaidAmount,_DueAmount,_PaymentMethod,_BankName,_ChequeNo,_BillingId,_Discount,_Fine,_Batch,_CreatedBy,_CompanyId);
+				SEt _id = last_insert_id();
+				select _id;
+				
 	END */$$
 DELIMITER ;
 
@@ -4980,35 +3942,21 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_responsetext`(
-
-    in _ResponseTextId int,
-
-    in _ResponseText varchar(200),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_responsetext`(
+    in _ResponseTextId int,
+    in _ResponseText varchar(200),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _ResponseTextId = 0 then
-
-INSERT INTO tblresponsetext(ResponseText,CompanyId)
-
-					VAlues(_ResponseText,_CompanyId);
-
-ELSE
-
-UPDATE tblresponsetext
-
-		set
-
-		ResponseText=_ResponseText
-
-		where ResponseTextId=_ResponseTextId and CompanyId=_CompanyId;
-
-		end if;
-
+BEGIN
+	if _ResponseTextId = 0 then
+INSERT INTO tblresponsetext(ResponseText,CompanyId)
+					VAlues(_ResponseText,_CompanyId);
+ELSE
+UPDATE tblresponsetext
+		set
+		ResponseText=_ResponseText
+		where ResponseTextId=_ResponseTextId and CompanyId=_CompanyId;
+		end if;
 	END */$$
 DELIMITER ;
 
@@ -5018,49 +3966,28 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_scholarship`(
-
-    in _StudentScholarshipId int,
-
-    in _ScholarshipName varchar(50),
-
-    in _Description varchar(50),
-
-    in _DateOfAdmission varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_scholarship`(
+    in _StudentScholarshipId int,
+    in _ScholarshipName varchar(50),
+    in _Description varchar(50),
+    in _DateOfAdmission varchar(50),
+    in _StudentId varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	IF _StudentScholarshipId = 0 then
-
-
-
-INSERT INTO tblscholarship(ScholarshipName,Description,DateOfAdmission,StudentId,CompanyId)
-
-				VALUES(_ScholarshipName,_Description,_DateOfAdmission,_StudentId,_CompanyId);
-
-ELSE
-
-UPDATE tblscholarship
-
-		SET
-
-	ScholarshipName=_ScholarshipName,
-
-	Description=_Description,
-
-	DateOfAdmission=_DateOfAdmission,
-
-	StudentId=_StudentId
-
-	WHERE StudentScholarshipId = _StudentScholarshipId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	IF _StudentScholarshipId = 0 then
+
+INSERT INTO tblscholarship(ScholarshipName,Description,DateOfAdmission,StudentId,CompanyId)
+				VALUES(_ScholarshipName,_Description,_DateOfAdmission,_StudentId,_CompanyId);
+ELSE
+UPDATE tblscholarship
+		SET
+	ScholarshipName=_ScholarshipName,
+	Description=_Description,
+	DateOfAdmission=_DateOfAdmission,
+	StudentId=_StudentId
+	WHERE StudentScholarshipId = _StudentScholarshipId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -5070,37 +3997,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_scholarshipname`(
-
-    IN _ScholarshipId int,
-
-    in _ScholarshipName varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_scholarshipname`(
+    IN _ScholarshipId int,
+    in _ScholarshipName varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _ScholarshipId = 0 then
-
-Insert into tblscholarshipname(ScholarshipName,CompanyId)
-
-					values(_ScholarshipName,_CompanyId);
-
-
-
-else
-
-Update tblscholarshipname
-
-		set
-
-	ScholarshipName=_ScholarshipName
-
-	where ScholarshipId=_ScholarshipId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _ScholarshipId = 0 then
+Insert into tblscholarshipname(ScholarshipName,CompanyId)
+					values(_ScholarshipName,_CompanyId);
+
+else
+Update tblscholarshipname
+		set
+	ScholarshipName=_ScholarshipName
+	where ScholarshipId=_ScholarshipId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -5110,39 +4022,23 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_section`(
-
-    in _SectionId bigint,
-
-    in _SectionName varchar(50),
-
-    in _StudentLimit int,
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_section`(
+    in _SectionId bigint,
+    in _SectionName varchar(50),
+    in _StudentLimit int,
+    in _CompanyId int    
     )
-BEGIN
-
-	if _SectionId = 0 then
-
-Insert into tblsectiondetails(SectionName,StudentLimit,CompanyId)
-
-					values(_SectionName,_StudentLimit,_CompanyId);
-
-else
-
-Update tblsectiondetails
-
-		set
-
-	SectionName=_SectionName,
-
-	StudentLimit=_StudentLimit
-
-	where SectionId=_SectionId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _SectionId = 0 then
+Insert into tblsectiondetails(SectionName,StudentLimit,CompanyId)
+					values(_SectionName,_StudentLimit,_CompanyId);
+else
+Update tblsectiondetails
+		set
+	SectionName=_SectionName,
+	StudentLimit=_StudentLimit
+	where SectionId=_SectionId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -5152,43 +4048,25 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_specialscholarship`(
-
-    in _SpecialScholarshipId int,
-
-    in _Batch varchar(50),
-
-    in _Class varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _StudentId varchar(50),
-
-    IN _BatchClassId int,
-
-    in _FeeStructureName varchar(50),
-
-    in _FeeId int,
-
-    in _Discount int ,
-
-    in _DiscountType varchar(50),
-
-    in _Amount int,
-
-    in _StudentType varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_specialscholarship`(
+    in _SpecialScholarshipId int,
+    in _Batch varchar(50),
+    in _Class varchar(50),
+    in _Faculty varchar(50),
+    in _StudentId varchar(50),
+    IN _BatchClassId int,
+    in _FeeStructureName varchar(50),
+    in _FeeId int,
+    in _Discount int ,
+    in _DiscountType varchar(50),
+    in _Amount int,
+    in _StudentType varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-INSERT INTO tblspecialscholarship(Batch,Class,Faculty,StudentId,FeeStructureName,FeeId,Discount,DiscountType,Amount,StudentType,BatchClassId,CompanyId)
-
-						VALUES(_Batch,_Class,_Faculty,_StudentId,_FeeStructureName,_FeeId,_Discount,_DiscountType,_Amount,_StudentType,_BatchClassId,_CompanyId);
-
-
-
+BEGIN
+INSERT INTO tblspecialscholarship(Batch,Class,Faculty,StudentId,FeeStructureName,FeeId,Discount,DiscountType,Amount,StudentType,BatchClassId,CompanyId)
+						VALUES(_Batch,_Class,_Faculty,_StudentId,_FeeStructureName,_FeeId,_Discount,_DiscountType,_Amount,_StudentType,_BatchClassId,_CompanyId);
+
 	END */$$
 DELIMITER ;
 
@@ -5198,25 +4076,16 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_staffattendance`(
-
-    in _Batch varchar(50),
-
-    in _Date varchar(50),
-
-    in _TeacherId varchar(50),
-
-    in _Attendance varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_staffattendance`(
+    in _Batch varchar(50),
+    in _Date varchar(50),
+    in _TeacherId varchar(50),
+    in _Attendance varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	INSERT INTO tblstaffattendance(Batch,Date,TeacherId,Attendance,CompanyId)
-
-					Values(_Batch,_Date,_TeacherId,_Attendance,_CompanyId);
-
+BEGIN
+	INSERT INTO tblstaffattendance(Batch,Date,TeacherId,Attendance,CompanyId)
+					Values(_Batch,_Date,_TeacherId,_Attendance,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -5226,41 +4095,24 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_startdate`(
-
-    in _StartDateId int,
-
-    in _Date varchar(50),
-
-    in _Batch varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_startdate`(
+    in _StartDateId int,
+    in _Date varchar(50),
+    in _Batch varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _StartDateId = 0 then
-
-
-
-insert into tblstartdate(Date,Batch,CompanyId)
-
-				Values(_Date,_Batch,_CompanyId);
-
-else
-
-update tblstartdate
-
-set
-
-Date=_Date,
-
-Batch=_Batch
-
-where StartDateId=_StartDateId;
-
-end if;
-
+BEGIN
+	if _StartDateId = 0 then
+
+insert into tblstartdate(Date,Batch,CompanyId)
+				Values(_Date,_Batch,_CompanyId);
+else
+update tblstartdate
+set
+Date=_Date,
+Batch=_Batch
+where StartDateId=_StartDateId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -5270,39 +4122,23 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_startpoint`(
-
-    in _Id int,
-
-    in _Place varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_startpoint`(
+    in _Id int,
+    in _Place varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _Id = 0 then
-
-
-
-Insert into tblstartpoint(Place,CompanyId)
-
-		Values(_Place,_CompanyId);
-
-
-
-else
-
-Update tblstartpoint
-
-set
-
-Place=_Place
-
-where PlaceId=_Id and CompanyId=_CompanyId;
-
-End if;
-
+BEGIN
+	if _Id = 0 then
+
+Insert into tblstartpoint(Place,CompanyId)
+		Values(_Place,_CompanyId);
+
+else
+Update tblstartpoint
+set
+Place=_Place
+where PlaceId=_Id and CompanyId=_CompanyId;
+End if;
 	END */$$
 DELIMITER ;
 
@@ -5312,41 +4148,24 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_state`(
-
-    in _StateId int,
-
-    in _StateName varchar(50),
-
-    in _CountryName varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_state`(
+    in _StateId int,
+    in _StateName varchar(50),
+    in _CountryName varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _StateId = 0 then
-
-INSERT INTO tblstatedetails(StateName,CountryName,CompanyId)
-
-				Values(_StateName,_CountryName,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblstatedetails
-
-		SET
-
-	StateName=_StateName,
-
-	CountryName=_CountryName
-
-	where StateId=_StateId and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _StateId = 0 then
+INSERT INTO tblstatedetails(StateName,CountryName,CompanyId)
+				Values(_StateName,_CountryName,_CompanyId);
+
+ELSE
+UPDATE tblstatedetails
+		SET
+	StateName=_StateName,
+	CountryName=_CountryName
+	where StateId=_StateId and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -5356,53 +4175,30 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_student`(
-
-    IN _StudentId VARCHAR(50),
-
-    IN _FirstName VARCHAR(50),
-
-    IN _LastName VARCHAR(50),
-
-    IN _DateOfBirth_BS VARCHAR(50),
-
-    IN _DateOfBirth_AD VARCHAR(50),
-
-    IN _Gender VARCHAR(50),
-
-    IN _EmailId VARCHAR(50),
-
-    IN _Batch VARCHAR(50),
-
-    IN _MobileNo VARCHAR(50),
-
-    IN _FatherName VARCHAR(50),
-
-    IN _FatherNumber VARCHAR(50),
-
-    IN _MotherName VARCHAR(50),
-
-    IN _MotherNumber VARCHAR(50),
-
-    IN _Status VARCHAR(50),
-
-    IN _StudentType VARCHAR(50),
-
-    IN _CompanyId INT,
-
-    out _id int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_student`(
+    IN _StudentId VARCHAR(50),
+    IN _FirstName VARCHAR(50),
+    IN _LastName VARCHAR(50),
+    IN _DateOfBirth_BS VARCHAR(50),
+    IN _DateOfBirth_AD VARCHAR(50),
+    IN _Gender VARCHAR(50),
+    IN _EmailId VARCHAR(50),
+    IN _Batch VARCHAR(50),
+    IN _MobileNo VARCHAR(50),
+    IN _FatherName VARCHAR(50),
+    IN _FatherNumber VARCHAR(50),
+    IN _MotherName VARCHAR(50),
+    IN _MotherNumber VARCHAR(50),
+    IN _Status VARCHAR(50),
+    IN _StudentType VARCHAR(50),
+    IN _CompanyId INT,
+    out _id int
     )
-BEGIN
-
-	INSERT INTO tblstudentinfo(FirstName,LastName,DateOfBirth_BS,DateOfBirth_AD,Gender,EmailId,Batch,MobileNo,FatherName,FatherNumber,MotherName,MotherNumber,Status,StudentType,StudentId,CompanyId)
-
-	               VALUES(_FirstName,_LastName,_DateOfBirth_BS,_DateOfBirth_AD,_Gender,_EmailId,_Batch,_MobileNo,_FatherName,_FatherNumber,_MotherName,_MotherNumber,_Status,_StudentType,_StudentId,_CompanyId);
-
-	SEt _id =last_insert_id();
-
-	select _id;
-
+BEGIN
+	INSERT INTO tblstudentinfo(FirstName,LastName,DateOfBirth_BS,DateOfBirth_AD,Gender,EmailId,Batch,MobileNo,FatherName,FatherNumber,MotherName,MotherNumber,Status,StudentType,StudentId,CompanyId)
+	               VALUES(_FirstName,_LastName,_DateOfBirth_BS,_DateOfBirth_AD,_Gender,_EmailId,_Batch,_MobileNo,_FatherName,_FatherNumber,_MotherName,_MotherNumber,_Status,_StudentType,_StudentId,_CompanyId);
+	SEt _id =last_insert_id();
+	select _id;
 	END */$$
 DELIMITER ;
 
@@ -5412,29 +4208,18 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentextrafee`(
-
-    in _batch varchar(50),
-
-    in _month varchar(50),
-
-    in _studentid varchar(50),
-
-    in _CompanyId int,
-
-    out _id int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentextrafee`(
+    in _batch varchar(50),
+    in _month varchar(50),
+    in _studentid varchar(50),
+    in _CompanyId int,
+    out _id int    
     )
-BEGIN
-
-	insert into tblstudentextrafee(Batch,Month,StudentId,CompanyId)
-
-					values(_batch,_month,_studentid,_CompanyId);
-
-	set _id=last_insert_id();
-
-	select _id;
-
+BEGIN
+	insert into tblstudentextrafee(Batch,Month,StudentId,CompanyId)
+					values(_batch,_month,_studentid,_CompanyId);
+	set _id=last_insert_id();
+	select _id;
 	END */$$
 DELIMITER ;
 
@@ -5444,23 +4229,15 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentextrafeedetails`(
-
-    in _studentextrafeeid int,
-
-    in _feename varchar(50),
-
-    in _amount int,
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentextrafeedetails`(
+    in _studentextrafeeid int,
+    in _feename varchar(50),
+    in _amount int,
+    in _CompanyId int    
     )
-BEGIN
-
-	insert into tblstudentextrafeedetails(StudentExtraFeeId,FeeName,Amount,CompanyId)
-
-								Values(_studentextrafeeid,_feename,_amount,_CompanyId);
-
+BEGIN
+	insert into tblstudentextrafeedetails(StudentExtraFeeId,FeeName,Amount,CompanyId)
+								Values(_studentextrafeeid,_feename,_amount,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -5470,27 +4247,17 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentTransport`(
-
-    in _Batch varchar(50),
-
-    in _StudentId varchar(50),
-
-    in _PlaceTo varchar(50),
-
-    in _Type varchar(50),
-
-    in _Amount varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studentTransport`(
+    in _Batch varchar(50),
+    in _StudentId varchar(50),
+    in _PlaceTo varchar(50),
+    in _Type varchar(50),
+    in _Amount varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	Insert into tblstudenttransport(Batch,StudentId,PlaceTo,tblstudenttransport.Type,Amount,CompanyId)
-
-						Values(_Batch,_StudentId,_PlaceTo,_Type,_Amount,_CompanyId);
-
+BEGIN
+	Insert into tblstudenttransport(Batch,StudentId,PlaceTo,tblstudenttransport.Type,Amount,CompanyId)
+						Values(_Batch,_StudentId,_PlaceTo,_Type,_Amount,_CompanyId);
 	END */$$
 DELIMITER ;
 
@@ -5500,37 +4267,22 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studenttype`(
-
-    in _StudentTypeId bigint,
-
-    in _StudentTypeName varchar(50),
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_studenttype`(
+    in _StudentTypeId bigint,
+    in _StudentTypeName varchar(50),
+    in _CompanyId int
     )
-BEGIN
-
-	if _StudentTypeId = 0 then
-
-INSERT INTO tblstudenttype(StudentTypeName,CompanyId)
-
-		Values(_StudentTypeName,_CompanyId);
-
-
-
-ELSE
-
-UPDATE tblstudenttype
-
-SET
-
-StudentTypeName=_StudentTypeName
-
-WHERE StudentTypeId=_StudentTypeId and CompanyId=_CompanyId;
-
-end if;
-
+BEGIN
+	if _StudentTypeId = 0 then
+INSERT INTO tblstudenttype(StudentTypeName,CompanyId)
+		Values(_StudentTypeName,_CompanyId);
+
+ELSE
+UPDATE tblstudenttype
+SET
+StudentTypeName=_StudentTypeName
+WHERE StudentTypeId=_StudentTypeId and CompanyId=_CompanyId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -5540,47 +4292,27 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teacher`(
-
-    in _FirstName varchar(50),
-
-    in _LastName varchar(50),
-
-    in _Designation varchar(50),
-
-    in _Department varchar(50),
-
-    in _Faculty varchar(50),
-
-    in _Gender varchar(50),
-
-    in _Email varchar(50),
-
-    in _DateOfBirth varchar(50),
-
-    in _Batch varchar(50),
-
-    in _Citizenship varchar(50),
-
-    in _JoiningDate varchar(50),
-
-    in _Status varchar(50),
-
-    in _CompanyId int,
-
-    out _id int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teacher`(
+    in _FirstName varchar(50),
+    in _LastName varchar(50),
+    in _Designation varchar(50),
+    in _Department varchar(50),
+    in _Faculty varchar(50),
+    in _Gender varchar(50),
+    in _Email varchar(50),
+    in _DateOfBirth varchar(50),
+    in _Batch varchar(50),
+    in _Citizenship varchar(50),
+    in _JoiningDate varchar(50),
+    in _Status varchar(50),
+    in _CompanyId int,
+    out _id int
     )
-BEGIN
-
-	Insert into tblteacherinfo(FirstName,LastName,Designation,Department,Faculty,Gender,Email,DateOfBirth,Batch,Citizenship,JoiningDate,Status,CompanyId)
-
-					Values(_FirstName,_LastName,_Designation,_Department,_Faculty,_Gender,_Email,_DateOfBirth,_Batch,_Citizenship,_JoiningDate,_Status,_CompanyId);
-
-	SEt _id =last_insert_id();
-
-	select _id;
-
+BEGIN
+	Insert into tblteacherinfo(FirstName,LastName,Designation,Department,Faculty,Gender,Email,DateOfBirth,Batch,Citizenship,JoiningDate,Status,CompanyId)
+					Values(_FirstName,_LastName,_Designation,_Department,_Faculty,_Gender,_Email,_DateOfBirth,_Batch,_Citizenship,_JoiningDate,_Status,_CompanyId);
+	SEt _id =last_insert_id();
+	select _id;
 	END */$$
 DELIMITER ;
 
@@ -5590,63 +4322,35 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teachercurrentaddress`(
-
-    in _AddressId int,
-
-    in _HouseNo varchar(50),
-
-    in _Street varchaR(50),
-
-    in _Municipality varchar(50),
-
-    in _Country varchar(50),
-
-    in _State varchar(50),
-
-    in _MobileNo varchar(50),
-
-    in _PhoneNo varchar(50),
-
-    in _TeacherId int,
-
-    in _CompanyId int
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teachercurrentaddress`(
+    in _AddressId int,
+    in _HouseNo varchar(50),
+    in _Street varchaR(50),
+    in _Municipality varchar(50),
+    in _Country varchar(50),
+    in _State varchar(50),
+    in _MobileNo varchar(50),
+    in _PhoneNo varchar(50),
+    in _TeacherId int,
+    in _CompanyId int
     )
-BEGIN
-
-	IF _AddressId = 0 then
-
-
-
-insert into tblteachercurrentaddress(HouseNo,Street,Municipality,Country,State,MobileNo,PhoneNo,TeacherId,CompanyId)
-
-						VALUES(_HouseNo,_Street,_Municipality,_Country,_State,_MobileNo,_PhoneNo,_TeacherId,_CompanyId);
-
-ELSE
-
-update tblteachercurrentaddress
-
-	SET
-
-HouseNo=_HouseNo,
-
-Street=_Street,
-
-Municipality=_Municipality,
-
-Country=_Country,
-
-State=_State,
-
-MobileNo=_MobileNo,
-
-PhoneNo=_PhoneNo
-
-where AddressId=_AddressId and CompanyId=_CompanyId;
-
-end if;
-
+BEGIN
+	IF _AddressId = 0 then
+
+insert into tblteachercurrentaddress(HouseNo,Street,Municipality,Country,State,MobileNo,PhoneNo,TeacherId,CompanyId)
+						VALUES(_HouseNo,_Street,_Municipality,_Country,_State,_MobileNo,_PhoneNo,_TeacherId,_CompanyId);
+ELSE
+update tblteachercurrentaddress
+	SET
+HouseNo=_HouseNo,
+Street=_Street,
+Municipality=_Municipality,
+Country=_Country,
+State=_State,
+MobileNo=_MobileNo,
+PhoneNo=_PhoneNo
+where AddressId=_AddressId and CompanyId=_CompanyId;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -5656,63 +4360,35 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teacherpermanentaddress`(
-
-    IN _AddressId INT,
-
-    IN _HouseNo VARCHAR(50),
-
-    IN _Street VARCHAR(50),
-
-    IN _Municipality VARCHAR(50),
-
-    IN _Country VARCHAR(50),
-
-    IN _State VARCHAR(50),
-
-    IN _MobileNo VARCHAR(50),
-
-    IN _PhoneNo VARCHAR(50),
-
-    IN _TeacherId INT,
-
-    IN _CompanyId INT
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_teacherpermanentaddress`(
+    IN _AddressId INT,
+    IN _HouseNo VARCHAR(50),
+    IN _Street VARCHAR(50),
+    IN _Municipality VARCHAR(50),
+    IN _Country VARCHAR(50),
+    IN _State VARCHAR(50),
+    IN _MobileNo VARCHAR(50),
+    IN _PhoneNo VARCHAR(50),
+    IN _TeacherId INT,
+    IN _CompanyId INT
     )
-BEGIN
-
-	IF _AddressId = 0 THEN
-
-
-
-INSERT INTO tblteacherpermanentaddress(HouseNo,Street,Municipality,Country,State,MobileNo,PhoneNo,TeacherId,CompanyId)
-
-						VALUES(_HouseNo,_Street,_Municipality,_Country,_State,_MobileNo,_PhoneNo,_TeacherId,_CompanyId);
-
-ELSE
-
-UPDATE tblteacherpermanentaddress
-
-	SET
-
-HouseNo=_HouseNo,
-
-Street=_Street,
-
-Municipality=_Municipality,
-
-Country=_Country,
-
-State=_State,
-
-MobileNo=_MobileNo,
-
-PhoneNo=_PhoneNo
-
-WHERE AddressId=_AddressId AND CompanyId=_CompanyId;
-
-END IF;
-
+BEGIN
+	IF _AddressId = 0 THEN
+
+INSERT INTO tblteacherpermanentaddress(HouseNo,Street,Municipality,Country,State,MobileNo,PhoneNo,TeacherId,CompanyId)
+						VALUES(_HouseNo,_Street,_Municipality,_Country,_State,_MobileNo,_PhoneNo,_TeacherId,_CompanyId);
+ELSE
+UPDATE tblteacherpermanentaddress
+	SET
+HouseNo=_HouseNo,
+Street=_Street,
+Municipality=_Municipality,
+Country=_Country,
+State=_State,
+MobileNo=_MobileNo,
+PhoneNo=_PhoneNo
+WHERE AddressId=_AddressId AND CompanyId=_CompanyId;
+END IF;
 	END */$$
 DELIMITER ;
 
@@ -5722,57 +4398,32 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_transportdetails`(
-
-    in _TransportationId int,
-
-    in _PlaceTo varchar(50),
-
-    in _DistanceFrom int,
-
-    in _DistanceTo int,
-
-    in _OneWayAmount int,
-
-    in _TwoWayAmount int,
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_transportdetails`(
+    in _TransportationId int,
+    in _PlaceTo varchar(50),
+    in _DistanceFrom int,
+    in _DistanceTo int,
+    in _OneWayAmount int,
+    in _TwoWayAmount int,
+    in _CompanyId int    
     )
-BEGIN
-
-	if _TransportationId = 0 then
-
-
-
-Insert into tbltransportation(PlaceTo,DistanceFrom,DistanceTo,OneWayAmount,TwoWayAmount,CompanyId)
-
-						VALUES(_PlaceTo,_DistanceFrom,_DistanceTo,_OneWayAmount,_TwoWayAmount,_CompanyId);
-
-
-
-else
-
-Update tbltransportation
-
-set 
-
-PlaceTo = _PlaceTo,
-
-DistanceFrom =_DistanceFrom,
-
-DistanceTo = _DistanceTo,
-
-OneWayAmount=_OneWayAmount,
-
-TwoWayAmount=_TwoWayAmount
-
-where TransPortationId=_TransportationId and CompanyId=_CompanyId;
-
-
-
-end if;
-
+BEGIN
+	if _TransportationId = 0 then
+
+Insert into tbltransportation(PlaceTo,DistanceFrom,DistanceTo,OneWayAmount,TwoWayAmount,CompanyId)
+						VALUES(_PlaceTo,_DistanceFrom,_DistanceTo,_OneWayAmount,_TwoWayAmount,_CompanyId);
+
+else
+Update tbltransportation
+set 
+PlaceTo = _PlaceTo,
+DistanceFrom =_DistanceFrom,
+DistanceTo = _DistanceTo,
+OneWayAmount=_OneWayAmount,
+TwoWayAmount=_TwoWayAmount
+where TransPortationId=_TransportationId and CompanyId=_CompanyId;
+
+end if;
 	END */$$
 DELIMITER ;
 
@@ -5800,63 +4451,35 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_userinfo`(
-
-    in _UserID INT,
-
-    IN _Password varchar(50),
-
-    in _Email varchar(50),
-
-    in _Role varchar(50),
-
-    in _CompanyId int    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `save_userinfo`(
+    in _UserID INT,
+    IN _Password varchar(50),
+    in _Email varchar(50),
+    in _Role varchar(50),
+    in _CompanyId int    
     )
-BEGIN
-
-	if _UserID = 0 then
-
-
-
-INSERT INTO tbluserdetail(Email,tbluserdetail.`Password`,Role,CompanyId)
-
-				values(_Email,_Password,_Role,_CompanyId);
-
-
-
-elseif _Password = NULL then 
-
-update tbluserdetail
-
-set
-
-	Email=_Email,
-
-	Role=_Role
-
-	where UserID=_UserID and CompanyId=_CompanyId;
-
-
-
-else
-
-
-
-update tbluserdetail
-
-set
-
-	Email=_Email,
-
-	Role=_Role,
-
-	tbluserdetails.Password=_Password
-
-	where UserID=_UserID and CompanyId=_CompanyId;
-
-	end if;
-
+BEGIN
+	if _UserID = 0 then
+
+INSERT INTO tbluserdetail(Email,tbluserdetail.`Password`,Role,CompanyId)
+				values(_Email,_Password,_Role,_CompanyId);
+
+elseif _Password = NULL then 
+update tbluserdetail
+set
+	Email=_Email,
+	Role=_Role
+	where UserID=_UserID and CompanyId=_CompanyId;
+
+else
+
+update tbluserdetail
+set
+	Email=_Email,
+	Role=_Role,
+	tbluserdetails.Password=_Password
+	where UserID=_UserID and CompanyId=_CompanyId;
+	end if;
 	END */$$
 DELIMITER ;
 
@@ -5866,31 +4489,19 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchCompanyDetails`(
-
-    in _Name varchar(50),
-
-    in _Email varchar(50),
-
-    in _Status varchar(50)    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `SearchCompanyDetails`(
+    in _Name varchar(50),
+    in _Email varchar(50),
+    in _Status varchar(50)    
     )
-BEGIN
-
-	select * from tblcompanydetails
-
-inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
-
-WHERE 
-
-(tbluserdetail.Email=_Email or Email='')
-
-and(tblcompanydetails.Name=_Name or tblcompanydetails.`Name`='')
-
-and(tblcompanydetails.Status=_Status or tblcompanydetails.`Status`='')
-
-and tbluserdetail.Role='Admin';
-
+BEGIN
+	select * from tblcompanydetails
+inner join tbluserdetail on tblcompanydetails.`CompanyId`=tbluserdetail.`CompanyId`
+WHERE 
+(tbluserdetail.Email=_Email or Email='')
+and(tblcompanydetails.Name=_Name or tblcompanydetails.`Name`='')
+and(tblcompanydetails.Status=_Status or tblcompanydetails.`Status`='')
+and tbluserdetail.Role='Admin';
 	END */$$
 DELIMITER ;
 
@@ -5951,41 +4562,24 @@ DELIMITER ;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `updatesuperadmin`(
-
-    IN _UserID INT,
-
-    IN _Password varchar(50),
-
-    in _Email varchar(50)    
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `updatesuperadmin`(
+    IN _UserID INT,
+    IN _Password varchar(50),
+    in _Email varchar(50)    
     )
-BEGIN
-
-	if _Password = null then
-
-
-
-Update tbluserdetail
-
-set
-
-Email=_Email
-
-where UserID=_UserID and Email=_Email;
-
-else
-
-Update tbluserdetail
-
-set
-
-tbluserdetail.`Password`=_Password
-
-where UserID=_UserID and Email=_Email;
-
-end if;
-
+BEGIN
+	if _Password = null then
+
+Update tbluserdetail
+set
+Email=_Email
+where UserID=_UserID and Email=_Email;
+else
+Update tbluserdetail
+set
+tbluserdetail.`Password`=_Password
+where UserID=_UserID and Email=_Email;
+end if;
 	END */$$
 DELIMITER ;
 
@@ -6309,7 +4903,7 @@ DROP TABLE IF EXISTS `_totaldue`;
 /*!50001 DROP TABLE IF EXISTS `_checkmonth` */;
 /*!50001 DROP VIEW IF EXISTS `_checkmonth` */;
 
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_checkmonth` AS select `dbo`.`tblreceipt`.`StudentId` AS `StudentId`,min(`dbo`.`tblreceipt`.`DueAmount`) AS `Due` from `dbo`.`tblreceipt` where (`dbo`.`tblreceipt`.`Month` = '1') group by `dbo`.`tblreceipt`.`StudentId` */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `_checkmonth` AS select `tblreceipt`.`StudentId` AS `StudentId`,min(`tblreceipt`.`DueAmount`) AS `Due` from `tblreceipt` where (`tblreceipt`.`Month` = '1') group by `tblreceipt`.`StudentId` */;
 
 /*View structure for view _getlist */
 
