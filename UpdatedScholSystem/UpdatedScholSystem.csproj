@@ -378,6 +378,7 @@
     <Content Include="Scripts\jquery.serializejson.min.js" />
     <Content Include="Scripts\nepali.datepicker.v2.2.min.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="SqlDatabase\dbschool.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
