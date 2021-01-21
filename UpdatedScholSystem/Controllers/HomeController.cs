@@ -205,7 +205,7 @@ namespace UpdatedScholSystem.Controllers
         public ActionResult StaffAttendance()
         {
             ViewBag.UserFeatures = Utilities.getUserAccessFeatures((int)Session["companyID"], Session["Role"].ToString());
-            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StaffManagement");
+            ViewBag.FeatureActions = Utilities.getUserFeatureActionAccess((int)Session["companyID"], Session["Role"].ToString(), "StaffAttendance");
             return View();
         }
 

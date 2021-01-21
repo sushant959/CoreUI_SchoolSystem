@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
+    string baseUrl = System.Configuration.ConfigurationManager.AppSettings["apiUrl"];
     List<string> actions = ViewBag.FeatureActions as List<string>;
 }
 
@@ -1614,26 +1615,27 @@
                     else if(urlName == "DayOff"){
                         $("#div" + urlName).show();
                         getClassBatchFaculty();
+                        debugger;
                         $.ajax({
-                            url: "/api/GetAllDesignation",
+                            url:'@baseUrl/GetAllDepartments/@Session["companyID"]',
                             method: "GET",
-                            data: {
-                                 CompanyId:@Session["CompanyId"],
-                            },
                             dataType: "json",
-                            success: function (result) {
+                            success: function (result5) {
                                 debugger;
-                                var department = result[0];
-                                var designation = result[1];
-                                if (department != undefined) {
+                                
+                                if (result5 != undefined) {
                                     debugger;
                                     var v = "<option value=''>--select--</option>";
-                                    for (var i in department) {
-                                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                                    for (var i in result5) {
+                                        v += "<option value=" + result5[i]['DepartmentName'] + ">" + result5[i]['DepartmentName'] + "</option>";
                                     }
                                     $("#searchDayoffDepartment").html(v);
                                 }
 
+                            },
+                            error: function (error) {
+                                debugger;
+                                console.log(error);
                             }
                         })
 
@@ -2339,31 +2341,25 @@
         $("[name='DateFrom']").val(datefrom);
         $("[name='DateTo']").val(dateto);
         $("[name='DayOffId']").val(id);
-        $.ajax({
-            url: "/api/GetAllDesignation",
-            method: "GET",
-            data:{
-                CompanyId:@Session["CompanyId"],
-            },
-            dataType: "json",
-            success: function (result) {
-                debugger;
-                var departments = result[0];
-                if (departments != undefined) {
+         $.ajax({
+             url:'@baseUrl/GetAllDepartments/@Session["companyID"]',
+                method: "GET",
+                           
+                dataType: "json",
+                success: function (result) {
                     debugger;
-                    var v = "";
-                    for (var i in departments) {
-                        v += "<option value=" + departments[i]['Department'] + ">" + departments[i]['Department'] + "</option>";
+                                
+                    if (result != undefined) {
+                        debugger;
+                        var v = "<option value=''>--select--</option>";
+                        for (var i in result) {
+                            v += "<option value=" + result[i]['DepartmentName'] + ">" + department[i]['DepartmentName'] + "</option>";
+                        }
+                        $("#dayoffDepartment").html(v);
                     }
-                    $("#dayoffDepartment").html(v);
-                }
 
-            },
-            error: function (e) {
-                console.error(e);
-                alert(e.statusText);
-            }
-        })
+                }
+            })
 
         $.ajax({
             url: "/api/GetClassBatchFaculty",
@@ -3872,28 +3868,25 @@
     }
 
     var getDepartment = function () {
-        $.ajax({
-            url: "/api/GetAllDesignation",
-            data: {
-                CompanyId:@Session["CompanyId"],
-            },
-            method: "GET",
-            dataType: "json",
-            success: function (result) {
-                debugger;
-                var department = result[0];
-                var designation = result[1];
-                if (department != undefined) {
+         $.ajax({
+             url:'@baseUrl/GetAllDepartments/@Session["companyID"]',
+                method: "GET",
+                           
+                dataType: "json",
+                success: function (result) {
                     debugger;
-                    var v = "";
-                    for (var i in department) {
-                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                                
+                    if (result != undefined) {
+                        debugger;
+                        var v = "<option value=''>--select--</option>";
+                        for (var i in result) {
+                            v += "<option value=" + result[i]['DepartmentName'] + ">" + department[i]['DepartmentName'] + "</option>";
+                        }
+                        $("#dayoffDepartment").html(v);
                     }
-                    $("#dayoffDepartment").html(v);
-                }
 
-            }
-        })
+                }
+            })
     }
 
     $("#btnSearchClassFee").on('click', function (e) {

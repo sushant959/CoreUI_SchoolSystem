@@ -720,8 +720,8 @@ namespace UpdatedScholSystem.Controllers
             var Designation = new DataTable();
             var data = HttpContext.Current.Request;
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            Department = BaseDbServices.Instance.GetData("select Department from tbldepartment where CompanyId='"+CompanyId+"'", null);
-            Designation = BaseDbServices.Instance.GetData("select Designation from tbldesignation where CompanyId='"+ CompanyId + "'", null);
+            Department = MasterDbAccess.DepartmentDbService.Instance.GetAllDepartmentsDataTable(CompanyId);
+            Designation = MasterDbAccess.DesignationDbService.Instance.GetAllDesignationsDataTable(CompanyId);
             List<DataTable> lst = new List<DataTable>
             {
                Department,
