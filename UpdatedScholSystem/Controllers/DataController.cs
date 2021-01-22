@@ -4052,7 +4052,7 @@ namespace UpdatedScholSystem.Controllers
             var designation = data["Designation"];
             var date = data["Date"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var list = TeacherDbServices.Instance.GetStaffListByDesignation(batch, department, designation,CompanyId);
+            var list = TeacherDbServices.Instance.GetStaffListByDesignation(department, designation,CompanyId);
             list.Columns.Add("Attendance");
             for (int k = 0; k < list.Rows.Count; k++)
             {
@@ -4117,7 +4117,7 @@ namespace UpdatedScholSystem.Controllers
             var department = data["Department"];
             var date = data["Date"];
             var CompanyId = Convert.ToInt32(data["CompanyId"]);
-            var list = TeacherDbServices.Instance.GetStaffListByDepartment(batch, department,CompanyId);
+            var list = TeacherDbServices.Instance.GetStaffListByDepartment(department,CompanyId);
             list.Columns.Add("Attendance");
             for (int k = 0; k < list.Rows.Count; k++)
             {

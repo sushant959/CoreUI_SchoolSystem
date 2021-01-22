@@ -316,14 +316,13 @@ namespace UpdatedScholSystem.Service
             return dt;
         }
 
-        public DataTable GetStaffListByDepartment(string batch, string department, int CompanyId)
+        public DataTable GetStaffListByDepartment(string department, int CompanyId)
         {
             DataTable dt = new DataTable();
             try
             {
                 MySqlCommand cmd = new MySqlCommand("getstafflistbydepartment", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@_Batch", batch);
                 cmd.Parameters.AddWithValue("@_Department", department);
                 cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);
                 adap.SelectCommand = cmd;
@@ -342,14 +341,13 @@ namespace UpdatedScholSystem.Service
         }
        
 
-        public DataTable GetStaffListByDesignation(string batch, string department, string designation,int CompanyId)
+        public DataTable GetStaffListByDesignation(string department, string designation,int CompanyId)
         {
             DataTable dt = new DataTable();
             try
             {
                 MySqlCommand cmd = new MySqlCommand("getstafflistbydesignation", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@_Batch", batch);
                 cmd.Parameters.AddWithValue("@_Department", department);
                 cmd.Parameters.AddWithValue("@_Designation", designation);
                 cmd.Parameters.AddWithValue("@_CompanyId", CompanyId);

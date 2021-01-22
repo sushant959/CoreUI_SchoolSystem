@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{ 
+    string baseUrl = System.Configuration.ConfigurationManager.AppSettings["apiUrl"];
+}
+
 <div class="row" id="divStaffInfo">
     <div class="col-md-1">
     </div>
@@ -110,31 +114,18 @@
     }
 
     var getDepartment = function () {
-        $.ajax({
-            url: "/api/GetAllDesignation",
+          $.ajax({
+            url:'@baseUrl/GetAllDepartments/@Session["companyID"]',
             method: "GET",
-            data: {
-                CompanyId:@Session["CompanyId"],
-            },
             dataType: "json",
             success: function (result) {
-                var department = result[0];
-                var designation = result[1];
-                if (department != undefined) {
+                if (result != undefined) {
                     debugger;
-                    var v = "<option value=''>--Select--</option>";
-                    for (var i in department) {
-                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                    var v = "<option value='' data-info=''>--select--</option>";
+                    for (var i in result) {
+                        v += "<option value=" + result[i]['DepartmentName'] + " data-info=" + result[i]['DepartmentId'] + ">" + result[i]['DepartmentName'] + "</option>";
                     }
                     $("#department").html(v);
-                }
-                if (designation != undefined) {
-                    debugger;
-                    var v = "<option value=''>--Select--</option>";
-                    for (var i in designation) {
-                        v += "<option value=" + designation[i]['Designation'] + ">" + designation[i]['Designation'] + "</option>";
-                    }
-                    $("#designation").html(v);
                 }
             },
             error: function (e) {
@@ -143,6 +134,33 @@
             }
         })
     }
+
+     $("#department").on('change', function () {
+        debugger;
+        var deptId = $("#department").find(':selected').data("info");
+        if (deptId == "") {
+            $("#designation").html("<option value=''>--select--</option>");
+        }
+        else {
+            $.ajax({
+                url: '@baseUrl/GetAllDesignationsByDepartment/' + deptId + '/@Session["companyID"]',
+                method: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    debugger;
+                    if (result != undefined) {
+                        debugger;
+                        var v = "<option value=''>--select--</option>";
+                        for (var i in result) {
+                            v += "<option value=" + result[i]['DesignationName'] + ">" + result[i]['DesignationName'] + "</option>";
+                        }
+                        $("#designation").html(v);
+                    }
+                }
+            })
+        }
+    })
+
 
     $("#txtdatefield").on('click', function (e) {
         e.preventDefault();
@@ -162,7 +180,7 @@
         $("#department").val('');
         $("#designation").val('');
         $("#tblStaffList").html("");
-        staffListByBatch(batch, date);
+       // staffListByBatch(batch, date);
     })
     $("#department").on('change', function (e) {
         debugger;
@@ -208,11 +226,11 @@
 
                 for (var r in result) {
                     html += `<tr>`;
-                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['StaffId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DepartmentName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DesignationName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
@@ -249,16 +267,16 @@
                 debugger;
                 var i = 0;
                 var html = `<table class="table table-bordered">`;
-                html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
+                html += `<thead><th>Staff Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
                 html += ` <tbody class='rowTable'>`;
 
                 for (var r in result) {
                     html += `<tr>`;
-                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['StaffId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DepartmentName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DesignationName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>
@@ -295,16 +313,16 @@
                 debugger;
                 var i = 0;
                 var html = `<table class="bordered-table table-striped">`;
-                html += `<thead><th>Student Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
+                html += `<thead><th>Staff Id</th><th>FirstName</th><th>LastName</th><th>Department</th><th>Designation</th><th>Attendance</th></thead>`;
                 html += ` <tbody class='rowTable'>`;
 
                 for (var r in result) {
                     html += `<tr>`;
-                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['TeacherId']}" readonly/></td>`;
+                    html += `<td><input type="text" class='form-control'  name='Attendance[${i}][TeacherId]' value="${result[r]['StaffId']}" readonly/></td>`;
                     html += `<td><input type="text" class='form-control'  name='' value="${result[r]['FirstName']}" readonly/></td>`;
                     html += `<td><input type='text' class='form-control ' name='' value="${result[r]['LastName']}" readonly /></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Department']}" readonly/></td>`;
-                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['Designation']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DepartmentName']}" readonly/></td>`;
+                    html += `<td><input type='text' class='form-control ' name='' value="${result[r]['DesignationName']}" readonly/></td>`;
                     html += `<td><select class='form-control Refundable' name='Attendance[${i}][Attendance]'>
                                 <option value="P" ${result[r]['Attendance'] == "P" ? "selected" : ""}>P</option>
                                 <option value="A" ${result[r]['Attendance'] == "A" ? "selected" : ""}>A</option>

@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
+    string baseUrl = System.Configuration.ConfigurationManager.AppSettings["apiUrl"];
     List<string> actions = ViewBag.FeatureActions as List<string>;
 }
 <div id="StaffAttendanceDashboard">
@@ -190,30 +191,17 @@
 
     var getDepartment = function () {
         $.ajax({
-            url: "/api/GetAllDesignation",
+            url:'@baseUrl/GetAllDepartments/@Session["companyID"]',
             method: "GET",
-            data: {
-                CompanyId:@Session["CompanyId"],
-            },
             dataType: "json",
             success: function (result) {
-                var department = result[0];
-                var designation = result[1];
-                if (department != undefined) {
+                if (result != undefined) {
                     debugger;
-                    var v = "<option value=''>--Select--</option>";
-                    for (var i in department) {
-                        v += "<option value=" + department[i]['Department'] + ">" + department[i]['Department'] + "</option>";
+                    var v = "<option value='' data-info=''>--select--</option>";
+                    for (var i in result) {
+                        v += "<option value=" + result[i]['DepartmentName'] + " data-info=" + result[i]['DepartmentId'] + ">" + result[i]['DepartmentName'] + "</option>";
                     }
                     $("#searchDepartment").html(v);
-                }
-                if (designation != undefined) {
-                    debugger;
-                    var v = "<option value=''>--Select--</option>";
-                    for (var i in designation) {
-                        v += "<option value=" + designation[i]['Designation'] + ">" + designation[i]['Designation'] + "</option>";
-                    }
-                    $("#searchDesignation").html(v);
                 }
             },
             error: function (e) {
@@ -222,6 +210,33 @@
             }
         })
     }
+
+    $("#searchDepartment").on('change', function () {
+        debugger;
+        var deptId = $("#searchDepartment").find(':selected').data("info");
+        if (deptId == "") {
+            $("#searchDesignation").html("<option value=''>--select--</option>");
+        }
+        else {
+            $.ajax({
+                url: '@baseUrl/GetAllDesignationsByDepartment/' + deptId + '/@Session["companyID"]',
+                method: 'GET',
+                dataType: 'json',
+                success: function (result) {
+                    debugger;
+                    if (result != undefined) {
+                        debugger;
+                        var v = "<option value=''>--select--</option>";
+                        for (var i in result) {
+                            v += "<option value=" + result[i]['DesignationName'] + ">" + result[i]['DesignationName'] + "</option>";
+                        }
+                        $("#searchDesignation").html(v);
+                    }
+                }
+            })
+        }
+    })
+
 
     $("#btnSearch").on('click', function (e) {
         e.preventDefault();
